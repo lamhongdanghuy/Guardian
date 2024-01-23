@@ -25,8 +25,7 @@ def helloworld():
 def send_data():
     if request.method == 'POST':
         data = request.get_json()
-        # Process the data as needed
-        # For example, you can access data['name'] and data['url']
+
         response_data = {'status': 'success'}
         master_data.name = data['name']
         master_data.url = data['url']
