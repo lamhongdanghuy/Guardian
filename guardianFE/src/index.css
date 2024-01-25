@@ -4,7 +4,7 @@
   font-weight: 400;
 
   width: 100vw;
-  height:100vh;
+  height: 100vh;
   margin: 0;
   text-align: center;
 
@@ -44,7 +44,7 @@ body {
   min-height: 100vh;
 }
 
-.navbar{
+.navbar {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +53,7 @@ body {
 
 h1 {
   /* font-size: 3.2em; */
-  font-size: 4.0em;
+  font-size: 4em;
   line-height: 1.1;
   text-align: center;
   margin: auto;
@@ -66,7 +66,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #2806e6;
   cursor: pointer;
   transition: border-color 0.25s;
 }
