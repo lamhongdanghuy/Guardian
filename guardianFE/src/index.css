@@ -17,6 +17,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+h4 {
+  margin-left: auto;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -46,9 +50,10 @@ body {
 
 .navbar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 1em;
+  justify-content: space-between;
+  width: 50%;
 }
 
 h1 {
