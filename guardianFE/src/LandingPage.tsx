@@ -29,6 +29,20 @@ function LandingPage() {
       <Header />
       {message}
       <h2>Services</h2>
+      <div className="services-container">
+        <div className="policyImage">
+            <img src="/PolicyService.svg" alt="Policy"/>
+            <p>Policy Making</p>
+        </div>
+        <div className="image">
+            <img src="/PolicyService.svg" alt="Policy"/>
+            <p>Policy Making</p>
+        </div>
+        <div className="image">
+            <img src="/PolicyService.svg" alt="Policy"/>
+            <p>Policy Making</p>
+        </div>
+      </div>
       <h2>Mission Statement</h2>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
