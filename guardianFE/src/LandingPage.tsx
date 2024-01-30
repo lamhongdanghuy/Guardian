@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./Header";
+import Footer from "./Footer";
 
 function LandingPage() {
   const [message, setMessage] = useState("");
@@ -50,6 +51,7 @@ function LandingPage() {
       <button style={{ width: "30%" }} onClick={fetchHello}>
         Talk to backend!
       </button>
+      <Footer />
     </div>
   );
 }
