@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -7,6 +8,11 @@ CORS(app)
 users = {
     'user1': {'password': 'password1', 'email': 'user1@example.com'}
 }
+
+@app.route("/")
+def hello():
+    print ("Got Request")
+    return json.dumps("Hello World - From the Backend")
 
 @app.route('/login', methods=['POST'])
 def login():
