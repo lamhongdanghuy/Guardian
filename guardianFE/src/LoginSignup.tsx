@@ -1,15 +1,34 @@
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginSignup() {
   const [login, setLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showResults, setShowResults] = useState(false);
 
-  const sendLogin = () => {
-    console.log(email + password);
+  const navigator = useNavigate();
+
+  const sendLogin = async () => {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const result = await response.json();
+    console.log(result);
+    if (result.message === "Login successful!") {
+      setSuccess("Login Successful");
+      navigator("/dashboard");
+    } else {
+      setSuccess("Login Failed");
+    }
+    setShowResults(true);
   };
 
   return (
@@ -71,6 +90,11 @@ function LoginSignup() {
             Login
           </button>
         </>
+      )}
+      {showResults && (
+        <div>
+          <h1>{success}</h1>
+        </div>
       )}
       <Footer />
     </div>
