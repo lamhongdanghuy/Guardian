@@ -21,17 +21,38 @@ function ClientApply() {
             <div className="clientApply">
                 <h2>Registration for Client</h2>
                 <form>
-                    <label htmlFor="lname">Last Name:</label>
-                    <input type="text" id="lname" name="lname" /> <br />
-
-                    <label htmlFor="fname">First Name:</label>
-                    <input type="text" id="fname" name="fname" /> <br />
-
-                    <label htmlFor="email">Email Address:</label>
-                    <input type="email" id="email" name="email" /> <br />
-
-                    <label htmlFor="pnumber">Phone Number:</label>
+                    <label htmlFor="pnumber">Phone Number: </label>
                     <input type="number" id="pnumber" name="pnumber" /> <br />
+
+                    <label htmlFor="company">Company Name: </label>
+                    <input type="text" id="company" name="company" /> <br />
+                     
+                    <label htmlFor="compURL">Company URL: </label>
+                    <input type="url" id="compURL" name="compURL" /> <br />
+
+                    <p>Company Type: </p>
+                    <input type="radio" id="non-prof" name="compType" value="non-prof"></input>
+                    <label htmlFor="non-prof">Non-Profit </label>
+                    <input type="radio" id="prof" name="compType" value="prof"></input>
+                    <label htmlFor="prof">For Profit</label> <br />
+
+                    <label htmlFor="revenue">Company's Annual Revenue: </label>
+                    <input type="number" id="revenue" name="revenue" /> <br />
+
+                    <label htmlFor="company">Company Name:</label>
+                    <input type="text" id="company" name="company" /> <br />
+
+                    <label htmlFor="company">Company Name:</label>
+                    <input type="text" id="company" name="company" /> <br />
+
+                    <label htmlFor="company">Company Name:</label>
+                    <input type="text" id="company" name="company" /> <br />
+
+                    <label htmlFor="company">Company Name:</label>
+                    <input type="text" id="company" name="company" /> <br />
+
+                    <label htmlFor="company">Company Name:</label>
+                    <input type="text" id="company" name="company" /> <br />
 
                     <label htmlFor="company">Company Name:</label>
                     <input type="text" id="company" name="company" /> <br />
