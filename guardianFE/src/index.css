@@ -39,6 +39,11 @@ header {
   text-align: center;
   margin: auto;
 }
+.services-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+}
 
 body {
   margin: 0;
