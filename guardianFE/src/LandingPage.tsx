@@ -32,17 +32,17 @@ function LandingPage() {
         {message}
         <h2>Services</h2>
         <div className="services-container">
-          <div className="policyImage">
-            <img src="/PolicyService.svg" alt="Policy" />
-            <p>Policy Making</p>
+          <div className="serviceImage">
+            <img src="/PolicyServiceImage.svg" alt="Policy Image" />
+            <p><b>Policy Making</b></p>
           </div>
-          <div className="image">
-            <img src="/PolicyService.svg" alt="Policy" />
-            <p>Policy Making</p>
+          <div className="serviceImage">
+            <img src="/RiskAssessImage.svg" alt="General Security Risk Assessment Image" />
+            <p><b>General Security Risk Assessment</b></p>
           </div>
-          <div className="image">
-            <img src="/PolicyService.svg" alt="Policy" />
-            <p>Policy Making</p>
+          <div className="serviceImage">
+            <img src="/AuditServiceImage.svg" alt="Audit Image" />
+            <p><b>Audit</b></p>
           </div>
         </div>
         <h2>Mission Statement</h2>
