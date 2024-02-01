@@ -16,7 +16,60 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
+}
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  min-height: 100%;
+  border-right: 1px solid #ffffff;
+}
+
+.sidebarTitle {
+  font-size: 48px;
+  font-weight: 650;
+  text-shadow: #0057b7 0 0 2.5em;
+  margin-bottom: 20%;
+}
+
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-bottom: 5em;
+}
+
+.sidebarItem:hover {
+  background-color: #646cff;
+  border-radius: 8px;
+  font-size: 26px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.25s, font-size 0.25s;
+}
+
+.sidebarItem {
+  font-size: 24px;
+  font-weight: 500;
+  align-items: center;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+}
 .clientApply {
   display: flex;
   flex-direction: column;
@@ -52,13 +105,13 @@ header {
   flex-direction: row;
   gap: 10%;
 }
-.servicesImage{
+.servicesImage {
   flex: 1;
-  width: 200px; 
+  width: 200px;
   height: 150px;
   overflow: hidden;
 }
-.servicesImage img{
+.servicesImage img {
   width: 100%;
   height: 100%;
   display: cover;
