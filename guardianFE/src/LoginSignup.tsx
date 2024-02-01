@@ -39,6 +39,7 @@ function LoginSignup() {
         alignItems: "center",
         width: "80%",
         margin: "auto",
+        marginTop: "8em",
       }}
     >
       <Header />
