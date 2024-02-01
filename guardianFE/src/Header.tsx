@@ -10,7 +10,7 @@ function Header() {
         right: "0",
         top: "0",
         bottom: "0",
-        margin: "auto",
+        height: "10em",
       }}
     >
       <header>
