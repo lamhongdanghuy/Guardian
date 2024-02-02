@@ -35,5 +35,45 @@ def login():
             print("Login Failed")
             return jsonify({'message': 'Invalid credentials'}), 401
 
+@app.route('/apply/client', methods=['POST'])
+def client_apply():
+    data = request.get_json()
+    print(data)
+    f_name = data.get('fName')
+    l_name = data.get('lName')
+    email = data.get('email')
+    password = data.get('password')
+    phone_number = data.get('pNumber')
+    org_name = data.get('compName')
+    org_type = data.get('compType')
+    url = data.get('url')
+    revenue = data.get('revenue')
+    num_of_IT = data.get('numOfIT')
+    sen_data = data.get('senData')
+    sra = data.get('sra')
+    project_type = data.get('projectType')
+    curious = data.get('curious')
+    comment = data.get('comment')
+
+    return jsonify({'message': 'Application submitted!'})
+
+@app.route("/apply/student")
+def student_apply():
+    data = request.get_json()
+
+    name = data.get('name')
+    school = data.get('school')
+    major = data.get('major')
+    curr_year = data.get('currentYear')
+    grad_date = data.get('gradYear')
+    prereq = data.get('prereq')
+    project_type = data.get('projectType')
+    hear = data.get('hear')
+    when_hear = data.get('whenHear')
+    gender = data.get('gender')
+    ethnicity = data.get('ethnicity')
+
+    print("Application submitted.")
+
 if __name__ == "__main__":
     app.run()
