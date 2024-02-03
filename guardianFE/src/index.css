@@ -37,23 +37,33 @@
   font-size: 48px;
   font-weight: 650;
   text-shadow: #0057b7 0 0 2.5em;
-  margin-bottom: 20%;
+  margin: 1em 0em;
+}
+
+.userBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  margin: 0.5em 1em;
+  gap: 1em;
+  top: 0;
+  right: 0;
 }
 
 .sidebarMenu {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 1.5em;
   margin-bottom: 5em;
 }
 
 .sidebarItem:hover {
-  background-color: #646cff;
+  background-color: #273239;
+  width: auto;
   border-radius: 8px;
   font-size: 26px;
   font-weight: 500;
-  font-family: inherit;
-  color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.25s, font-size 0.25s;
 }
@@ -146,6 +156,18 @@ h1 {
   line-height: 1.1;
   text-align: center;
   margin: auto;
+}
+
+.logoutButton {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 0.6em 0.6em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #273239;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 button {

@@ -8,10 +8,11 @@ import Apply from "./Apply";
 import StudentApply from "./StudentApply";
 import ClientApply from "./ClientApply";
 import Dashboard from "./Dashboard";
+import { LoginProvider } from "./LoginContextProvider";
 
 function App() {
   return (
-    <>
+    <LoginProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -22,7 +23,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
-    </>
+    </LoginProvider>
   );
 }
 
