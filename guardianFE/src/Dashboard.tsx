@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import HomeView from "./HomeView";
 import ProjectsView from "./ProjectsView";
+import ApplyView from "./ApplyView";
+import ManageView from "./ManageView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 function Dashboard() {
@@ -72,9 +74,9 @@ function Dashboard() {
       ) : activeContainer === "Projects" ? (
         <ProjectsView />
       ) : activeContainer === "Apply" ? (
-        <div>APPLY</div>
+        <ApplyView />
       ) : activeContainer === "Manage Tables" ? (
-        <div>MANAGE TABLES</div>
+        <ManageView />
       ) : null}
     </div>
   );
