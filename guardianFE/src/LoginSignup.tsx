@@ -2,8 +2,17 @@ import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { LoginContext } from "./LoginContextProvider";
 
 function LoginSignup() {
+  interface User {
+    userId: string;
+    email: string;
+  }
+
+  const { user, setUser } = useContext(LoginContext);
+
   const [login, setLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +33,7 @@ function LoginSignup() {
     console.log(result);
     if (result.message === "Login successful!") {
       setSuccess("Login Successful");
+      setUser({ userId: "", email: email });
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
