@@ -7,6 +7,102 @@ function StudentApply() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [verifyPassword, setVerifyPassword] = useState("");
+    const [pNumber, setpNumber] = useState("");
+    const [projectType, setProjectType] = useState("");
+    const [school, setSchool] = useState("");
+    const [major, setMajor] = useState("");
+    const [yearStanding, setYearStanding] = useState("");
+    const [gradDate, setGradDate] = useState("");
+    const [curious, setCurious] = useState("");
+    const [hear, setHear] = useState("");
+    const [eth, setEth] = useState('');
+    const [gen, setGen] = useState('');
+    const [rtnData, setRtnData] = useState("");
+    const [showResults, setShowResults] = useState(false);
+    const [selectedOption, setSelectedOption] = useState("");
+
+    const handleInterestChange = (event) => {
+        setSelectedOption(event.target.value);
+        setProjectType(event.target.value);
+    };
+
+    const handleTextAreaChange = (event) => {
+        setProjectType(event.target.value);
+    };
+
+
+
+    const sendData = async (event) => {
+        const emailPattern = /.+@depaul\.edu/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/;
+        const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+        const gradDatePattern = /(0[1-9]|1[0-2])-[0-9]{4}/;
+        let invalidFields = [];
+        if (school === "Please select one") {
+            invalidFields.push("School Department");
+        }
+        if (yearStanding === "Please select one") {
+            invalidFields.push("Current Year Standing");
+        }
+        if (gen === "Please select one") {
+            invalidFields.push("Gender");
+        }
+        if (eth === "Please select one") {
+            invalidFields.push("Ethnicity");
+        }
+        if (projectType === "Please select one") {
+            invalidFields.push("Project of Interest");
+        }
+        if (invalidFields.length > 0) {
+            alert(`Please select a valid option for the following fields: ${invalidFields.join(", ")}`);
+            return;
+        }
+        if (!gradDatePattern.test(gradDate)) {
+            alert("Please enter a valid graduation date in the format MM-YYYY.");
+            return;
+        }
+        if (!phonePattern.test(pNumber)) {
+            alert("Please enter a valid phone number in the format XXX-XXX-XXXX.");
+            return;
+        }
+        if (!passwordPattern.test(password)) {
+            alert("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and 8-12 characters.");
+            return;
+        }
+        if (!emailPattern.test(email)) {
+            alert("Please use your DePaul email address.");
+            return;
+        }
+        if (password !== verifyPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+        const response = await fetch("http://localhost:5000/apply/student", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fName,
+                lName,
+                email,
+                password,
+                pNumber,
+                school,
+                major,
+                yearStanding,
+                gradDate,
+                projectType,
+                curious,
+                hear,
+                gen,
+                eth
+            }),
+        });
+        setRtnData(await response.json());
+        setShowResults(true);
+
+    };
 
     return (
         <div>
@@ -19,6 +115,7 @@ function StudentApply() {
                     id="fName"
                     name="fName"
                     onChange={(event) => setfName(event.target.value)}
+                    placeholder="John"
                     required
                 ></input>{" "}
                 <br />
@@ -27,6 +124,7 @@ function StudentApply() {
                     type="text"
                     id="lName"
                     name="lName"
+                    placeholder="Doe"
                     onChange={(event) => setlName(event.target.value)}
                     required
                 ></input>{" "}
@@ -36,7 +134,6 @@ function StudentApply() {
                     type="email"
                     id="emailAdd"
                     name="emailAdd"
-                    pattern=".+@depaul\.edu"
                     placeholder="Use your DePaul email address."
                     onChange={(event) => setEmail(event.target.value)}
                     required
@@ -47,7 +144,6 @@ function StudentApply() {
                     type="password"
                     id="passWord"
                     name="passWord"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                     onChange={(event) => setPassword(event.target.value)}
                     required
                 ></input>{" "}
@@ -57,8 +153,17 @@ function StudentApply() {
                     type="password"
                     id="VerfPassWord"
                     name="VerfPassWord"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                     onChange={(event) => setVerifyPassword(event.target.value)}
+                    required
+                ></input>{" "}
+                <br />
+                <label htmlFor="phoneNum">Contact Phone Number: </label>
+                <input
+                    type="tel"
+                    id="phoneNum"
+                    name="phoneNum"
+                    placeholder="XXX-XXX-XXXX"
+                    onChange={(event) => setpNumber(event.target.value)}
                     required
                 ></input>{" "}
                 <br />
@@ -66,6 +171,7 @@ function StudentApply() {
                 <select
                     id="school"
                     name="school"
+                    onChange={(event) => setSchool(event.target.value)}
                     required
                 >
                     <option>Please select one</option>
@@ -80,14 +186,17 @@ function StudentApply() {
                     type="text"
                     id="major"
                     name="major"
-                    onChange={(event) => setlName(event.target.value)}
+                    placeholder="Computer Science, Business, etc."
+                    onChange={(event) => setMajor(event.target.value)}
                     required
                 ></input>{" "}
                 <br />
+
                 <label htmlFor="yearStanding">Current Year Standing: </label>
                 <select
                     id="yearStanding"
                     name="yearStanding"
+                    onChange={(event) => setYearStanding(event.target.value)}
                     required
                 >
                     <option>Please select one</option>
@@ -100,11 +209,11 @@ function StudentApply() {
                 <br />
                 <label htmlFor="gradDate">Anticipated Graduation Date: </label>
                 <input
-                    type="date"
+                    type="text"
                     id="gradDate"
                     name="gradDate"
-                    pattern="[0-9]{2}-[0-9]{4}"
                     placeholder="MM-YYYY"
+                    onChange={(event) => setGradDate(event.target.value)}
                     required >
                 </input>
                 <br />
@@ -112,7 +221,8 @@ function StudentApply() {
 
                 <br />
                 <label htmlFor="interest">Project of Interest: </label>
-                <select id="interest" name="interest" onChange={handleChange} required>
+                <select id="interest" name="interest" onChange={handleInterestChange}
+                    required>
                     <option>Please select one</option>
                     <option value="GRA">General Risk Assessment</option>
                     <option value="audit">Audit</option>
@@ -125,8 +235,8 @@ function StudentApply() {
                         placeholder="Describe here..."
                         rows="5"
                         cols="50"
-                        id="otherNORA"
-                        name="otherNORA"
+                        id="interest"
+                        name="interest"
                         onChange={handleTextAreaChange}
                     ></textarea>
                 )}{" "}
@@ -140,12 +250,19 @@ function StudentApply() {
                 />{" "}
                 <br />
                 <label htmlFor="firstHear">When did you first hear about the Clinic? </label>
-                    
+                <input
+                    type="text"
+                    id="hear"
+                    name="hear"
+                    onChange={(event) => setHear(event.target.value)}
+                />{" "}
+
                 <br />
                 <label htmlFor="gen">Gender: </label>
                 <select
                     id="gen"
                     name="gen"
+                    onChange={(event) => setGen(event.target.value)}
                     required
                 >
                     <option>Please select one</option>
@@ -159,6 +276,7 @@ function StudentApply() {
                 <select
                     id="eth"
                     name="eth"
+                    onChange={(event) => setEth(event.target.value)}
                     required
                 >
                     <option>Please select one</option>
@@ -171,9 +289,15 @@ function StudentApply() {
                     <option value="notSay">I do not want to answer</option>
                 </select>{" "}
                 <br />
-                <button>Apply</button>
+                <button onClick={sendData}>Apply</button>
             </div>
+            {showResults && (
+                <div>
+                    <h1>{rtnData.message}</h1>
+                </div>
+            )}
         </div>
+
     );
 }
 
