@@ -38,7 +38,7 @@ def login():
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    print(data)
+    
     f_name = data.get('fName')
     l_name = data.get('lName')
     email = data.get('email')
@@ -57,23 +57,26 @@ def client_apply():
 
     return jsonify({'message': 'Application submitted!'})
 
-@app.route("/apply/student")
+@app.route("/apply/student", methods=['POST'])
 def student_apply():
     data = request.get_json()
 
-    name = data.get('name')
+    f_name = data.get('fName')
+    l_name = data.get('lName')
+    email = data.get('email')
+    password = data.get('password')
+    phone_number = data.get('pNumber')
+    project_type = data.get('projectType')
     school = data.get('school')
     major = data.get('major')
-    curr_year = data.get('currentYear')
-    grad_date = data.get('gradYear')
-    prereq = data.get('prereq')
-    project_type = data.get('projectType')
+    yearStanding = data.get('yearStanding')
+    grad_date = data.get('gradDate')
+    curious = data.get('curious')
     hear = data.get('hear')
-    when_hear = data.get('whenHear')
-    gender = data.get('gender')
-    ethnicity = data.get('ethnicity')
+    eth = data.get('eth')
+    gen = data.get('gen')
 
-    print("Application submitted.")
+    return jsonify({'message': 'Application submitted!'})
 
 if __name__ == "__main__":
     app.run()

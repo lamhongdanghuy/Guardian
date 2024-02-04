@@ -88,6 +88,14 @@
   margin-top: 8em;
 }
 
+.studentApply {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 8em;
+}
+
 h4 {
   margin-left: auto;
 }
