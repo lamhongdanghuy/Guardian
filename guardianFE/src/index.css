@@ -4,8 +4,8 @@
   font-weight: 400;
 
   width: 100vw;
-  height: 100vh;
   margin: 0;
+  min-height: 100vh;
   text-align: center;
 
   color: rgba(255, 255, 255, 0.87);
@@ -15,6 +15,85 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  min-height: 100%;
+  border-right: 1px solid #ffffff;
+}
+
+.sidebarTitle {
+  font-size: 48px;
+  font-weight: 650;
+  text-shadow: #0057b7 0 0 2.5em;
+  margin: 1em 0em;
+}
+
+.userBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  margin: 0.5em 1em;
+  gap: 1em;
+  top: 0;
+  right: 0;
+}
+
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  margin-bottom: 5em;
+}
+
+.sidebarItem:hover {
+  background-color: #273239;
+  width: auto;
+  border-radius: 8px;
+  font-size: 26px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.25s, font-size 0.25s;
+}
+
+.sidebarItem {
+  font-size: 24px;
+  font-weight: 500;
+  align-items: center;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+}
+.clientApply {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 8em;
+}
+
+.studentApply {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 8em;
 }
 
 h4 {
@@ -39,7 +118,22 @@ header {
   text-align: center;
   margin: auto;
 }
-
+.services-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+}
+.servicesImage {
+  flex: 1;
+  width: 200px;
+  height: 150px;
+  overflow: hidden;
+}
+.servicesImage img {
+  width: 100%;
+  height: 100%;
+  display: cover;
+}
 body {
   margin: 0;
   display: flex;
@@ -56,12 +150,32 @@ body {
   width: 50%;
 }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
 h1 {
   /* font-size: 3.2em; */
   font-size: 4em;
   line-height: 1.1;
   text-align: center;
   margin: auto;
+}
+
+.logoutButton {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 0.6em 0.6em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #273239;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 button {
@@ -93,5 +207,100 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+.footer {
+  display: grid;
+  grid-template-rows: 1fr 10rem auto;
+  grid-template-areas: "main" "." "footer";
+  overflow-x: hidden;
+  background: #f5f7fa;
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  .footer {
+    z-index: 1;
+    --footer-background: #ed5565;
+    display: grid;
+    position: relative;
+    grid-area: footer;
+    min-height: 12rem;
+    .bubbles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1rem;
+      background: var(--footer-background);
+      filter: url("#blob");
+      .bubble {
+        position: absolute;
+        left: var(--position, 50%);
+        background: var(--footer-background);
+        border-radius: 100%;
+        animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s),
+          bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+        transform: translate(-50%, 100%);
+      }
+    }
+    .content {
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-gap: 4rem;
+      padding: 2rem;
+      background: var(--footer-background);
+      a,
+      p {
+        color: #f5f7fa;
+        text-decoration: none;
+      }
+      b {
+        color: white;
+      }
+      p {
+        margin: 0;
+        font-size: 0.75rem;
+      }
+      > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        > div {
+          margin: 0.25rem 0;
+          > * {
+            margin-right: 0.5rem;
+          }
+        }
+        .image {
+          align-self: center;
+          width: 4rem;
+          height: 4rem;
+          margin: 0.25rem 0;
+          background-size: cover;
+          background-position: center;
+        }
+      }
+    }
+  }
+}
+
+@keyframes bubble-size {
+  0%,
+  75% {
+    width: var(--size, 4rem);
+    height: var(--size, 4rem);
+  }
+  100% {
+    width: 0rem;
+    height: 0rem;
+  }
+}
+@keyframes bubble-move {
+  0% {
+    bottom: -4rem;
+  }
+  100% {
+    bottom: var(--distance, 10rem);
   }
 }
