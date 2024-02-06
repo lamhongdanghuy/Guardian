@@ -20,6 +20,15 @@ function StudentApply() {
     const [rtnData, setRtnData] = useState("");
     const [showResults, setShowResults] = useState(false);
     const [selectedOption, setSelectedOption] = useState("");
+    const [courseTaken, setCourseTaken] = useState([]);
+
+    const handleCheckboxChange = (event) => {
+        if (event.target.checked) {
+            setCourseTaken(prevCourses => [...prevCourses, event.target.value]);
+        } else {
+            setCourseTaken(prevCourses => prevCourses.filter(course => course !== event.target.value));
+        }
+    }
 
     const handleInterestChange = (event) => {
         setSelectedOption(event.target.value);
@@ -92,6 +101,7 @@ function StudentApply() {
                 major,
                 yearStanding,
                 gradDate,
+                courseTaken,
                 projectType,
                 curious,
                 hear,
@@ -175,10 +185,9 @@ function StudentApply() {
                     required
                 >
                     <option>Please select one</option>
-                    <option value="SoC">Sociology</option>
+                    <option value="SoC">School of Computing</option>
                     <option value="DCOB">Driehaus College of Business</option>
                     <option value="Law">College of Law</option>
-                    <option value="CDM">College of Computing</option>
                 </select>{" "}
                 <br />
                 <label htmlFor="major">Major: </label>
@@ -218,7 +227,68 @@ function StudentApply() {
                 </input>
                 <br />
                 <label htmlFor="courseTaken">Clinic Pre-requisite Course(s) Taken: </label>
-
+                <div className="taken" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '20px', padding: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="CSEC_390" name="CSEC_390" value="CSEC_390" onChange={handleCheckboxChange} />
+                        <label htmlFor="CSEC_390">CSEC_390</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="CSEC_490" name="CSEC_490" value="CSEC_490" onChange={handleCheckboxChange} />
+                        <label htmlFor="CSEC_490">CSEC_490</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="CSEC_488" name="CSEC_488" value="CSEC_488" onChange={handleCheckboxChange} />
+                        <label htmlFor="CSEC_488">CSEC_488</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="IS_486" name="IS_486" value="IS_486" onChange={handleCheckboxChange} />
+                        <label htmlFor="IS_486">IS_486</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="_487" name="_487" value="IS _487" onChange={handleCheckboxChange} />
+                        <label htmlFor="_487">IS _487</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_374" name="ACC_374" value="ACC_374" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_374">ACC_374</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_376" name="ACC_376" value="ACC_376" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_376">ACC_376</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_378" name="ACC_378" value="ACC_378" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_378">ACC_378</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_636" name="ACC_636" value="ACC_636" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_636">ACC_636</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_638" name="ACC_638" value="ACC_638" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_638">ACC_638</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="ACC_639" name="ACC_639" value="ACC_639" onChange={handleCheckboxChange} />
+                        <label htmlFor="ACC_639">ACC_639</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="FIN_362" name="FIN_362" value="FIN_362" onChange={handleCheckboxChange} />
+                        <label htmlFor="FIN_362">FIN_362</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="SEV_621" name="SEV_621" value="SEV_621" onChange={handleCheckboxChange} />
+                        <label htmlFor="SEV_621">SEV_621</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="Sec_Daemons" name="Sec_Daemons" value="Sec_Daemons" onChange={handleCheckboxChange} />
+                        <label htmlFor="Sec_Daemons">Sec_Daemons</label>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <input type="checkbox" id="WiCyS" name="WiCyS" value="WiCyS" onChange={handleCheckboxChange} />
+                        <label htmlFor="WiCyS">WiCyS</label>
+                    </div>
+                </div>
                 <br />
                 <label htmlFor="interest">Project of Interest: </label>
                 <select id="interest" name="interest" onChange={handleInterestChange}
