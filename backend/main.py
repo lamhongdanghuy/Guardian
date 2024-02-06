@@ -60,6 +60,7 @@ def client_apply():
 @app.route("/apply/student", methods=['POST'])
 def student_apply():
     data = request.get_json()
+    print(data)
 
     f_name = data.get('fName')
     l_name = data.get('lName')
@@ -71,6 +72,7 @@ def student_apply():
     major = data.get('major')
     yearStanding = data.get('yearStanding')
     grad_date = data.get('gradDate')
+    course_taken = data.get('courseTaken')
     curious = data.get('curious')
     hear = data.get('hear')
     eth = data.get('eth')
