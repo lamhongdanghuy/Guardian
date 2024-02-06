@@ -28,7 +28,7 @@ function Header() {
         <nav style={{ alignItems: "flex-start" }}>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/apply">Apply</NavLink>
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/aboutus">About</NavLink>
           <div
             onMouseEnter={() => setServiceOpen(true)}
             onMouseLeave={() => setServiceOpen(false)}
@@ -37,6 +37,7 @@ function Header() {
             {serviceOpen && (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Link to="/services/GRA">General Risk Assessment</Link>
+                <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/audit">Audit</Link>
               </div>
