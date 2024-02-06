@@ -9,6 +9,7 @@ import StudentApply from "./StudentApply";
 import ClientApply from "./ClientApply";
 import Dashboard from "./Dashboard";
 import { LoginProvider } from "./LoginContextProvider";
+import Audit from "./Audit";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/apply/student" element={<StudentApply />} />
           <Route path="/apply/client" element={<ClientApply />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/services/audit" element={<Audit />} />
         </Routes>
       </Router>
     </LoginProvider>
