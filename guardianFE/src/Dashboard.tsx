@@ -3,6 +3,8 @@ import HomeView from "./HomeView";
 import ProjectsView from "./ProjectsView";
 import ApplyView from "./ApplyView";
 import ManageView from "./ManageView";
+import ProjectProposalsView from "./ProjectProposalsView";
+import StudentApplicationsView from "./StudentApplicationsView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 function Dashboard() {
@@ -27,7 +29,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="userBar">
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <div>logged in as: {user.email}</div>
+          <div>logged in as: {user.email} | </div>
           <div>role: {user.role}</div>
         </div>
         <div
@@ -55,18 +57,38 @@ function Dashboard() {
           >
             Projects
           </div>
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("Apply")}
-          >
-            Apply
-          </div>
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("Manage Tables")}
-          >
-            Manage Tables
-          </div>
+          {user.role == "client" && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Apply")}
+            >
+              Apply
+            </div>
+          )}
+          {user.role == "faculty" && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Student Applications")}
+            >
+              Student Applications
+            </div>
+          )}
+          {user.role == "faculty" && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Project Proposals")}
+            >
+              Project Proposal
+            </div>
+          )}
+          {user.role == "faculty" && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Manage Tables")}
+            >
+              Manage Tables
+            </div>
+          )}
         </div>
         {/* <Link to="/dashboard">Dashboard</Link>
         <Link to="/dashboard/clients">Clients</Link>
@@ -81,6 +103,10 @@ function Dashboard() {
         <ApplyView />
       ) : activeContainer === "Manage Tables" ? (
         <ManageView />
+      ) : activeContainer === "Project Proposals" ? (
+        <ProjectProposalsView />
+      ) : activeContainer === "Student Applications" ? (
+        <StudentApplicationsView />
       ) : null}
     </div>
   );

@@ -34,7 +34,7 @@ function LoginSignup() {
     console.log(result);
     if (result.message === "Login successful!") {
       setSuccess("Login Successful");
-      setUser({ userId: "", email: email, role: "student" });
+      setUser({ userId: "", email: email, role: result.role });
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
