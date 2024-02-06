@@ -9,6 +9,7 @@ function Dashboard() {
   interface User {
     userId: string;
     email: string;
+    role: string;
   }
 
   const navigator = useNavigate();
@@ -25,11 +26,14 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="userBar">
-        logged in as: {user.email}
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div>logged in as: {user.email}</div>
+          <div>role: {user.role}</div>
+        </div>
         <div
           className="logoutButton"
           onClick={() => {
-            setUser({ userId: null, email: null });
+            setUser({ userId: null, email: null, role: null });
           }}
         >
           Log Out

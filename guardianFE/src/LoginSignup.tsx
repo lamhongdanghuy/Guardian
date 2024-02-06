@@ -9,6 +9,7 @@ function LoginSignup() {
   interface User {
     userId: string;
     email: string;
+    role: string;
   }
 
   const { user, setUser } = useContext(LoginContext);
@@ -33,7 +34,7 @@ function LoginSignup() {
     console.log(result);
     if (result.message === "Login successful!") {
       setSuccess("Login Successful");
-      setUser({ userId: "", email: email });
+      setUser({ userId: "", email: email, role: "student" });
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
