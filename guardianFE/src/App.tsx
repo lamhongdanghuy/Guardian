@@ -22,6 +22,7 @@ function App() {
           <Route path="/apply/student" element={<StudentApply />} />
           <Route path="/apply/client" element={<ClientApply />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </Router>
     </LoginProvider>
