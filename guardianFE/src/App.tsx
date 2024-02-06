@@ -9,6 +9,7 @@ import StudentApply from "./StudentApply";
 import ClientApply from "./ClientApply";
 import Dashboard from "./Dashboard";
 import { LoginProvider } from "./LoginContextProvider";
+import Services from "./Services";
 
 function App() {
   return (
