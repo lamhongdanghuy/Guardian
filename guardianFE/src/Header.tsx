@@ -35,11 +35,10 @@ function Header() {
           >
             <NavLink to="/services">Services</NavLink>
             {serviceOpen && (
-              <div style={{ display: "flex", flexDirection: "column", background: "#242424", border: "2px solid black"  }}>
-                <Link to="/services/service1">Service 1</Link>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Link to="/services/GRA">General Risk Assessment</Link>
                 <Link to="/services/PR">Policy Review</Link>
-                <Link to="/services/service3">Service 3</Link>
-                <Link to="/services/service2">Service 2</Link>
+                <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/audit">Audit</Link>
               </div>
             )}
