@@ -37,7 +37,7 @@ function Header() {
             {serviceOpen && (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Link to="/services/service1">Service 1</Link>
-                <Link to="/services/service2">Service 2</Link>
+                <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/service3">Service 3</Link>
               </div>
             )}
