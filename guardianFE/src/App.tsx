@@ -10,6 +10,8 @@ import ClientApply from "./ClientApply";
 import Dashboard from "./Dashboard";
 import { LoginProvider } from "./LoginContextProvider";
 import PR from "./PR";
+import Audit from "./Audit";
+import About from "./About";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/apply/client" element={<ClientApply />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="services/PR" element={<PR />} />
+          <Route path="/services/audit" element={<Audit />} />
+          <Route path="/aboutus" element={<About />} />
         </Routes>
       </Router>
     </LoginProvider>

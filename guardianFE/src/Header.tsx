@@ -28,7 +28,7 @@ function Header() {
         <nav style={{ alignItems: "flex-start" }}>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/apply">Apply</NavLink>
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/aboutus">About</NavLink>
           <div
             onMouseEnter={() => setServiceOpen(true)}
             onMouseLeave={() => setServiceOpen(false)}
@@ -39,6 +39,8 @@ function Header() {
                 <Link to="/services/service1">Service 1</Link>
                 <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/service3">Service 3</Link>
+                <Link to="/services/service2">Service 2</Link>
+                <Link to="/services/audit">Audit</Link>
               </div>
             )}
           </div>
