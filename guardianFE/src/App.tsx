@@ -9,7 +9,11 @@ import StudentApply from "./StudentApply";
 import ClientApply from "./ClientApply";
 import Dashboard from "./Dashboard";
 import { LoginProvider } from "./LoginContextProvider";
+import GRA from "./GRA";
 import Services from "./Services";
+import PR from "./PR";
+import Audit from "./Audit";
+import About from "./About";
 
 function App() {
   return (
@@ -22,7 +26,11 @@ function App() {
           <Route path="/apply/student" element={<StudentApply />} />
           <Route path="/apply/client" element={<ClientApply />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/services/GRA" element={<GRA />} />
           <Route path="/services" element={<Services />} />
+          <Route path="services/PR" element={<PR />} />
+          <Route path="/services/audit" element={<Audit />} />
+          <Route path="/aboutus" element={<About />} />
         </Routes>
       </Router>
     </LoginProvider>
