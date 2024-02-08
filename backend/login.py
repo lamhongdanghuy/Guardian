@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
+from datetime import datetime, timedelta
+
 from flask_cors import CORS
 import json
+import jwt
 
 class Login:
     def __init__(self):
         self.app = Flask(__name__)
+        self.app.config['SECRET_KEY'] =  '1234'
         CORS(self.app)
 
         self.users = {
@@ -41,12 +45,21 @@ class Login:
                 print("Email Matched")
             if (user_info['email'] == identifier or user == identifier) and user_info['password'] == password:
                 print("Login Successful")
-                return jsonify({'message': 'Login successful!', 'email': user_info['email'], 'role': user_info['role'], 'id': user_info['id']})
+
+                payload = {'message': 'Login successful!', 
+                           'email': user_info['email'], 
+                           'role': user_info['role'], 
+                           'id': user_info['id'],
+                           'exp': datetime.utcnow() + timedelta(hours=16)}
+                token = jwt.encode(payload, self.app.config['SECRET_KEY'], )
+                
+                return jsonify(token)
             
         
         
         print("Login Failed")
         return jsonify({'message': 'Invalid credentials'}), 401
+
 
     def client_apply(self):
         data = request.get_json()
