@@ -13,13 +13,7 @@ class Login:
             'user3': {'password': 'password3', 'email': 'user3@example.com', 'role': 'client', 'id' : 2 }
         }
 
-    def login(self,key):
-        data = request.get_json()
-        identifier = data.get('email')
-        password = data.get('password')
-        print(identifier)
-        print(password)
-
+    def login(self,identifier,password):
         for user, user_info in self.users.items():
             if user_info['password'] == password:
                 print("Password Matched")
@@ -33,9 +27,7 @@ class Login:
                            'role': user_info['role'], 
                            'id': user_info['id'],
                            'exp': datetime.utcnow() + timedelta(hours=16)}
-                token = jwt.encode(payload, key)
-                
-                return jsonify(token)
+        return payload
             
         
         

@@ -3,9 +3,7 @@ import json
 
 class apply:
 
-    def client_apply(self):
-        
-        data = request.get_json()
+    def client_apply(self,data):
         
         f_name = data.get('fName')
         l_name = data.get('lName')
@@ -23,11 +21,10 @@ class apply:
         curious = data.get('curious')
         comment = data.get('comment')
 
-        return jsonify({'message': 'Application submitted!'})
-    
-    def student_apply(self):
-        data = request.get_json()
-        print(data)
+        return "Application submitted!"
+        
+    def student_apply(self, data):
+
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
@@ -44,7 +41,8 @@ class apply:
         eth = data.get('eth')
         gen = data.get('gen')
 
-        return jsonify({'message': 'Application submitted!'})
+        return "Application submitted!"
+
 
 
 

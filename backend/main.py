@@ -4,27 +4,39 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import jwt
 
+app = Flask(__name__)
+app.config["SECRET KEY"] = "1234"
+CORS(app)
 
-
-def login(key):
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    identifier = data.get('email')
+    password = data.get('password')
+    print(identifier)
+    print(password)
     loginInstance = Login()
-    return loginInstance.login(key)
+    payload = loginInstance.login(identifier,password)
+    token = jwt.encode(payload, app.config["SECRET KEY"])
+    return jsonify(token)
 
+
+@app.route('/apply/client', methods=['POST'])
 def client_apply():
+    data = request.get_json()
     applyInstance = apply()
-    return applyInstance.client_apply()
+    message = applyInstance.client_apply(data)
+    return jsonify({'message': message})
 
+
+@app.route('/apply/student', methods=['POST'])
 def student_apply():
+    data = request.get_json()
     applyInstance = apply()
-    return applyInstance.student_apply()
+    message = applyInstance.student_apply(data)
+    return jsonify({'message': message})
+
 
 
 if __name__ == "__main__":
-    app = Flask(__name__)
-    app.config["Secret Key"] = "1234"
-    CORS(app)
-    
-    app.route('/login', methods=['POST'])(login(app.config["Secret Key"]))
-    app.route('/apply/client', methods=['POST'])(client_apply)
-    app.route('/apply/student', methods=['POST'])(student_apply)
     app.run()
