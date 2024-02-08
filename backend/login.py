@@ -1,5 +1,8 @@
 from flask import request, jsonify
+from datetime import datetime, timedelta
+
 import json
+import jwt
 
 class Login:
     def __init__(self):
@@ -24,7 +27,15 @@ class Login:
                 print("Email Matched")
             if (user_info['email'] == identifier or user == identifier) and user_info['password'] == password:
                 print("Login Successful")
-                return jsonify({'message': 'Login successful!', 'email': user_info['email'], 'role': user_info['role'], 'id': user_info['id']})
+
+                payload = {'message': 'Login successful!', 
+                           'email': user_info['email'], 
+                           'role': user_info['role'], 
+                           'id': user_info['id'],
+                           'exp': datetime.utcnow() + timedelta(hours=16)}
+                token = jwt.encode(payload, self.app.config['SECRET_KEY'], )
+                
+                return jsonify(token)
             
         
         

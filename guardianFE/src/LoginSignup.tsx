@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 function LoginSignup() {
   interface User {
@@ -31,10 +32,19 @@ function LoginSignup() {
       body: JSON.stringify({ email, password }),
     });
     const result = await response.json();
-    console.log(result);
-    if (result.message === "Login successful!") {
+
+    const temp = jwtDecode(result);
+    //////////////////
+    console.log(temp);
+    //////////////////
+    if (temp.message === "Login successful!") {
       setSuccess("Login Successful");
-      setUser({ userId: "", email: email, role: result.role });
+      setUser({
+        token: result.token,
+        email: temp.email,
+        id: temp.id,
+        role: temp.role,
+      });
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
