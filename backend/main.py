@@ -42,7 +42,6 @@ db_name ='CyberSecurity'
 localhost ='127.0.0.1'
 
 # engine = create_engine('http://18.216.233.27')
-query = "SELECT * FROM Login_information"
 
 
 tunnel =SSHTunnelForwarder((ssh_host,ssh_port),ssh_username=ssh_username,ssh_pkey=mypkey,remote_bind_address=(localhost,db_port))
@@ -53,11 +52,12 @@ local_bind_port = int(tunnel.local_bind_port)
 
 # Pass the port number as part of the URL string
 engine = create_engine(f'mysql+pymysql://{db_username}:{db_password}@{localhost}:{local_bind_port}/{db_name}')
-
+query = """
+        SELECT *
+        FROM Login_information;
+        """
 data = pd.read_sql_query(query, engine)
 print(data)
-
-tunnel.close()
 
 
 
@@ -69,7 +69,7 @@ def login():
     print(identifier)
     print(password)
     loginInstance = Login()
-    payload = loginInstance.login(identifier,password)
+    payload = loginInstance.login(identifier,password,engine)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
 
