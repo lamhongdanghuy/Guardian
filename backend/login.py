@@ -1,6 +1,5 @@
 from flask import request, jsonify
 from datetime import datetime, timedelta
-from email_validator import validate_email, EmailNotValidError
 
 import json
 import jwt

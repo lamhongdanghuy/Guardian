@@ -1,26 +1,36 @@
-from login import Login
-from apply import apply
-import jwt
+# Standard library imports
+import json
+import os
+import sys
+from os.path import expanduser
+
+# Third party imports
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import json
+import jwt
 import pandas as pd
 import paramiko
+from paramiko import SSHClient
 import sshtunnel
-import sys
+from sshtunnel import SSHTunnelForwarder
 import mariadb
 import pymysql
-from paramiko import SSHClient
-from sshtunnel import SSHTunnelForwarder
-from os.path import expanduser
 from sqlalchemy import create_engine
+
+# Local application imports
+from login import Login
+from apply import apply
 
 
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lamho\Downloads\DePaul-Guardian-Clinic.pem', password= None)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+filename = os.path.join(parent_dir, 'DePaul-Guardian-Clinic.pem')
+
+mypkey = paramiko.RSAKey.from_private_key_file(filename, password= None)
 ssh_host ='18.216.233.27'
 ssh_username ='ubuntu'
 ssh_password =None
