@@ -20,7 +20,7 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lamho\Downloads\DePaul-Guardian-Clinic.pem', password= None)
+mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lunaa\Downloads\guardian.pem', password= None)
 ssh_host ='18.216.233.27'
 ssh_username ='ubuntu'
 ssh_password =None
@@ -47,8 +47,6 @@ engine = create_engine(f'mysql+pymysql://{db_username}:{db_password}@{localhost}
 data = pd.read_sql_query(query, engine)
 print(data)
 
-tunnel.close()
-
 
 
 @app.route('/login', methods=['POST'])
@@ -67,7 +65,7 @@ def login():
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    applyInstance = apply()
+    applyInstance = apply(engine)
     message = applyInstance.client_apply(data)
     return jsonify({'message': message})
 
@@ -75,7 +73,7 @@ def client_apply():
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
     data = request.get_json()
-    applyInstance = apply()
+    applyInstance = apply(engine)
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
