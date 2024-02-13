@@ -5,8 +5,10 @@ import ApplyView from "./ApplyView";
 import ManageView from "./ManageView";
 import ProjectProposalsView from "./ProjectProposalsView";
 import StudentApplicationsView from "./StudentApplicationsView";
+import ProjectInfoView from "./ProjectInfoView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
   interface User {
     userId: string;
@@ -14,11 +16,17 @@ function Dashboard() {
     role: string;
   }
 
+  const cardClicked = (projectID: string) => {
+    setActiveContainer("Project Info View");
+    setOpenProject(projectID);
+    console.log(projectID);
+  };
+
   const navigator = useNavigate();
 
   const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
-
+  const [openProject, setOpenProject] = useState("");
   useEffect(() => {
     if (user.userId === null) {
       navigator("/login");
@@ -95,19 +103,23 @@ function Dashboard() {
         <Link to="/dashboard/students">Students</Link>
         <Link to="/dashboard/services">Services</Link> */}
       </div>
-      {activeContainer === "Home" ? (
-        <HomeView />
-      ) : activeContainer === "Projects" ? (
-        <ProjectsView />
-      ) : activeContainer === "Apply" ? (
-        <ApplyView />
-      ) : activeContainer === "Manage Tables" ? (
-        <ManageView />
-      ) : activeContainer === "Project Proposals" ? (
-        <ProjectProposalsView />
-      ) : activeContainer === "Student Applications" ? (
-        <StudentApplicationsView />
-      ) : null}
+      <div style={{ flex: "1" }}>
+        {activeContainer === "Home" ? (
+          <HomeView />
+        ) : activeContainer === "Projects" ? (
+          <ProjectsView onClick={cardClicked} />
+        ) : activeContainer === "Apply" ? (
+          <ApplyView />
+        ) : activeContainer === "Manage Tables" ? (
+          <ManageView />
+        ) : activeContainer === "Project Proposals" ? (
+          <ProjectProposalsView />
+        ) : activeContainer === "Student Applications" ? (
+          <StudentApplicationsView />
+        ) : activeContainer === "Project Info View" ? (
+          <ProjectInfoView />
+        ) : null}
+      </div>
     </div>
   );
 }

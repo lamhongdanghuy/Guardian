@@ -1,3 +1,5 @@
+import ProjectCard from "./ProjectCard";
+
 function ProjectProposalsView() {
   return (
     <div>
