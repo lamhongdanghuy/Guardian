@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from datetime import datetime, timedelta
+from email_validator import validate_email, EmailNotValidError
 
 import json
 import jwt
@@ -13,7 +14,17 @@ class Login:
             'user3': {'password': 'password3', 'email': 'user3@example.com', 'role': 'client', 'id' : 2 }
         }
 
+    def email_check(self, email):
+        try:
+            validate_email(email)
+        except EmailNotValidError:
+            return False
+        return True
+
     def login(self,identifier,password):
+        if not self.email_check(identifier):
+            print("Invalid Email Format")
+            return jsonify({'message': 'Invalid email address'}), 40
         for user, user_info in self.users.items():
             if user_info['password'] == password:
                 print("Password Matched")
