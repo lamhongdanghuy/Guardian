@@ -20,7 +20,7 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lunaa\Downloads\guardian.pem', password= None)
+mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lunaa\Downloads\Depaul-Guardian-Clinic.pem', password= None)
 ssh_host ='18.216.233.27'
 ssh_username ='ubuntu'
 ssh_password =None
@@ -44,6 +44,14 @@ local_bind_port = int(tunnel.local_bind_port)
 # Pass the port number as part of the URL string
 engine = create_engine(f'mysql+pymysql://{db_username}:{db_password}@{localhost}:{local_bind_port}/{db_name}')
 
+data = pd.read_sql_query(query, engine)
+print(data)
+
+query = "SELECT * FROM Clients"
+data = pd.read_sql_query(query, engine)
+print(data)
+
+query = "SELECT * FROM Company"
 data = pd.read_sql_query(query, engine)
 print(data)
 
