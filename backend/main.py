@@ -42,9 +42,7 @@ def login():
     print(password)
     loginInstance = Login()
     db_Connection = DatabaseConnection()
-    db_Connection.generate_engine()
-    db_EngineForLogin = db_Connection.engine
-    payload = loginInstance.login(identifier,password,db_EngineForLogin)
+    payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
 

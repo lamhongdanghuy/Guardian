@@ -12,21 +12,23 @@ class Login:
             'user3': {'password': 'password3', 'email': 'user3@example.com', 'role': 'client', 'id' : 2 }
         }
 
-    def login(self,identifier,password,DBengine):
+    def login(self,identifier,password,db_Connection):
         logInQuery = """
                 SELECT *
                 FROM Login_information
                 WHERE Email = '{}' AND Pass_word = '{}';
                 """.format(identifier, password)
+        
+        
         try:
+            LoginData = db_Connection.send_query(logInQuery)
+            
             idQuery = """
                 SELECT *
                 FROM {}
                 WHERE Email = '{}';
                 """.format(LoginData.at[0, 'Account_Type'],identifier)
-            
-            LoginData = pd.read_sql_query(logInQuery, DBengine)
-            userInfo = pd.read_sql_query(idQuery, DBengine)
+            userInfo = db_Connection.send_query(idQuery)
 
             payload = {'message': 'Login successful!', 
                    'email': LoginData.at[0, 'Email'], 
