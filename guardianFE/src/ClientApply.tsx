@@ -245,9 +245,9 @@ function ClientApply() {
         </label>
         <select id="interest" name="interest" onChange={handleChange} required>
           <option>Please select one</option>
-          <option value="GRA">General Risk Assessment</option>
+          <option value="Gra">General Risk Assessment</option>
           <option value="audit">Audit</option>
-          <option value="PR">Policy Review</option>
+          <option value="Policy_Review">Policy Review</option>
           <option value="other">Other</option>
         </select>{" "}
         <br />
