@@ -16,7 +16,7 @@ class Login:
         
         try:
             print("Before LoginData")
-            LoginData = db_Connection.send_query(logInQuery)
+            LoginData = db_Connection.select_query(logInQuery)
             
             print("Checking Password")
             byteDBPassword = LoginData.at[0, 'Pass_word'].encode('utf-8')
@@ -26,8 +26,6 @@ class Login:
                 raise Exception
             
             print("Password Correct")
-
-            LoginData = db_Connection.select_query(logInQuery)
             
             idQuery = """
                 SELECT *
