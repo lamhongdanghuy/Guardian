@@ -2,6 +2,7 @@ from flask import request, jsonify
 import json
 import pandas as pd
 import uuid
+from connectDB import DatabaseConnection
 import bcrypt
 from sqlalchemy import insert, MetaData, Table, create_engine
 
@@ -16,11 +17,8 @@ class apply:
         return hashed_password
 
     def __init__(self,eng):
-        self.engine = eng
-        self.metadata = MetaData()
-        self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
-        self.company = Table('Company', self.metadata, autoload_with=self.engine)
-        self.clients = Table('Clients', self.metadata, autoload_with=self.engine)
+        self.engine = DatabaseConnection()
+
 
     def client_apply(self,data):
         
@@ -42,27 +40,16 @@ class apply:
 
         hashedPass = self.hash(password)
 
-
-
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
-      #  stmt = insert(user_table).values(name="spongebob", fullname="Spongebob Squarepants")
-        stmt1 = insert(self.login_information).values(Email= email, Pass_word = hashedPass, Account_Type = 'Clients', Approved = 0)
-        stmt2 = insert(self.company).values(Company_id = id, C_name = org_name, C_type = org_type, Phone_number = phone_number, C_url = url, revenue = revenue, numeber_of_IT = num_of_IT, sen_Data = sen_data, Last_SRA = sra, Project_type = project_type, How_you_heard = curious, additional_comments = comment)
-        stmt3 = insert(self.clients).values(Client_id = id, Email = email, First_Name = f_name, Last_Name = l_name, Project_role = project_type, Company_working_with = id)
-        with self.engine.connect() as con:
-            result = con.execute(stmt1)
-            print(result)
-            con.commit()
-            result = con.execute(stmt2)
-            print(result)
-            con.commit()
-            result = con.execute(stmt3)
-            print(result)
-            con.commit()
-            con.close()
-        #self.engine.execute(query2)
-        #self.engine.execute(query3)
-
+        stmt1 = """INSERT INTO Login_information (Email, Pass_word, Account_Type, Approved) VALUES ("{}", "{}", "Client", 0)""".format(email,hashedPass)
+        stmt2 = """INSERT INTO Company (Company_id, C_name, C_type, Phone_number, C_url, revenue, numeber_of_IT, sen_Data, Last_SRA, Project_type, How_you_heard, additional_comments)VALUES ('{}', '{}', '{}', '{}', '{}', {}, {}, '{}', '{}', '{}', '{}', '{}')""".format(id, org_name, org_type, phone_number, url, revenue, num_of_IT, sen_data, sra, project_type, curious, comment)
+        stmt3 = """INSERT INTO Client (Client_id, Email, First_Name, Last_Name, Project_role, Company_working_with)VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(id, email, f_name, l_name, project_type, id)
+        stmt4 = "SELECT * FROM Login_information"
+        self.engine.insert_query(stmt1)
+        self.engine.insert_query(stmt2)
+        self.engine.insert_query(stmt3)
+        result = self.engine.select_query(stmt4)
+        print(result)
 
         return "Application submitted!"
         

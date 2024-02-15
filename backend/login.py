@@ -21,14 +21,14 @@ class Login:
         
         
         try:
-            LoginData = db_Connection.send_query(logInQuery)
+            LoginData = db_Connection.select_query(logInQuery)
             
             idQuery = """
                 SELECT *
                 FROM {}
                 WHERE Email = '{}';
                 """.format(LoginData.at[0, 'Account_Type'],identifier)
-            userInfo = db_Connection.send_query(idQuery)
+            userInfo = db_Connection.select_query(idQuery)
 
             payload = {'message': 'Login successful!', 
                    'email': LoginData.at[0, 'Email'], 

@@ -28,12 +28,12 @@ app.config["SECRET KEY"] = "1234"
 CORS(app)
 
 
-query = "SELECT * FROM Clients"
-data = DatabaseConnection().send_query(query)
+query = "SELECT * FROM Client"
+data = DatabaseConnection().select_query(query)
 print(data)
 
 query = "SELECT * FROM Company"
-data = DatabaseConnection().send_query(query)
+data = DatabaseConnection().select_query(query)
 print(data)
 
 
@@ -55,7 +55,7 @@ def login():
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    applyInstance = apply(engine)
+    applyInstance = apply(DatabaseConnection())
     message = applyInstance.client_apply(data)
     return jsonify({'message': message})
 
@@ -63,7 +63,7 @@ def client_apply():
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
     data = request.get_json()
-    applyInstance = apply(engine)
+    applyInstance = apply(DatabaseConnection())
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
