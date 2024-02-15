@@ -1,58 +1,39 @@
-from login import Login
-from apply import apply
-import jwt
+# Standard library imports
+import json
+import os
+import sys
+from os.path import expanduser
+
+# Third party imports
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import json
+import jwt
 import pandas as pd
 import paramiko
+from paramiko import SSHClient
 import sshtunnel
-import sys
+from sshtunnel import SSHTunnelForwarder
 import mariadb
 import pymysql
-from paramiko import SSHClient
-from sshtunnel import SSHTunnelForwarder
-from os.path import expanduser
 from sqlalchemy import create_engine
+
+# Local application imports
+from login import Login
+from apply import apply
+from connectDB import DatabaseConnection
 
 
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-mypkey = paramiko.RSAKey.from_private_key_file(filename=r'C:\Users\lunaa\Downloads\Depaul-Guardian-Clinic.pem', password= None)
-ssh_host ='18.216.233.27'
-ssh_username ='ubuntu'
-ssh_password =None
-ssh_port = 22
-db_port = 3306
-db_username ='Admin'
-db_password ='Hhe^3828jsu37s92j'
-db_name ='CyberSecurity'
-localhost ='127.0.0.1'
-
-# engine = create_engine('http://18.216.233.27')
-query = "SELECT * FROM Login_information"
-
-
-tunnel =SSHTunnelForwarder((ssh_host,ssh_port),ssh_username=ssh_username,ssh_pkey=mypkey,remote_bind_address=(localhost,db_port))
-tunnel.start()
-
-# Convert the port number to an integer
-local_bind_port = int(tunnel.local_bind_port)
-
-# Pass the port number as part of the URL string
-engine = create_engine(f'mysql+pymysql://{db_username}:{db_password}@{localhost}:{local_bind_port}/{db_name}')
-
-data = pd.read_sql_query(query, engine)
-print(data)
 
 query = "SELECT * FROM Clients"
-data = pd.read_sql_query(query, engine)
+data = DatabaseConnection().send_query(query)
 print(data)
 
 query = "SELECT * FROM Company"
-data = pd.read_sql_query(query, engine)
+data = DatabaseConnection().send_query(query)
 print(data)
 
 
@@ -65,7 +46,8 @@ def login():
     print(identifier)
     print(password)
     loginInstance = Login()
-    payload = loginInstance.login(identifier,password)
+    db_Connection = DatabaseConnection()
+    payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
 
