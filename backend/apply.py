@@ -2,6 +2,7 @@ from flask import request, jsonify
 import json
 import pandas as pd
 import uuid
+from connectDB import DatabaseConnection
 import bcrypt
 import datetime
 from sqlalchemy import insert, MetaData, Table, update
@@ -43,8 +44,6 @@ class apply:
         comment = data.get('comment')
 
         hashedPass = self.hash(password)
-
-
 
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 

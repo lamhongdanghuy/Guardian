@@ -1,6 +1,8 @@
 import os
 from sshtunnel import SSHTunnelForwarder
 from sqlalchemy import create_engine, Table, MetaData
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
 import paramiko
 import pandas as pd
 
@@ -35,12 +37,14 @@ class DatabaseConnection:
     def generate_engine(self):
         self.local_bind_port = int(self.tunnel.local_bind_port)
         self.engine = create_engine(f'mysql+pymysql://{self.db_username}:{self.db_password}@{self.localhost}:{self.local_bind_port}/{self.db_name}')
+        self.Session = sessionmaker(bind=self.engine)
 
     def start_connection(self):
         self.create_tunnel()
         self.generate_engine()
+        self.session = self.Session()
         
-    def send_query(self, query):
+    def select_query(self, query):
         self.start_connection()
         data = pd.read_sql_query(query, self.engine)
         self.close_tunnel()

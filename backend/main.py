@@ -29,11 +29,11 @@ CORS(app)
 
 
 query = "SELECT * FROM Client"
-data = DatabaseConnection().send_query(query)
+data = DatabaseConnection().select_query(query)
 print(data)
 
 query = "SELECT * FROM Company"
-data = DatabaseConnection().send_query(query)
+data = DatabaseConnection().select_query(query)
 print(data)
 
 
