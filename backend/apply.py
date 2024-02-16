@@ -3,7 +3,9 @@ import json
 import pandas as pd
 import uuid
 import bcrypt
+import datetime
 from sqlalchemy import insert, MetaData, Table, update
+from connectDB import DatabaseConnection
 
 
 class apply:
@@ -15,12 +17,12 @@ class apply:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
 
-    def __init__(self,eng):
-        self.engine = eng
-        self.metadata = MetaData()
-        self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
-        self.company = Table('Company', self.metadata, autoload_with=self.engine)
-        self.clients = Table('Client', self.metadata, autoload_with=self.engine)
+    # def __init__(self):
+        # self.engine = eng
+        # self.metadata = MetaData()
+        # self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
+        # self.company = Table('Company', self.metadata, autoload_with=self.engine)
+        # self.clients = Table('Client', self.metadata, autoload_with=self.engine)
 
     def client_apply(self,data):
         
@@ -45,25 +47,15 @@ class apply:
 
 
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
-      #  stmt = insert(user_table).values(name="spongebob", fullname="Spongebob Squarepants")
-        stmt1 = insert(self.login_information).values(Email= email, Pass_word = hashedPass, Account_Type = 'Clients', Approved = 0)
-        stmt2 = insert(self.company).values(Company_id = id, C_name = org_name, C_type = org_type, Phone_number = phone_number, C_url = url, revenue = revenue, numeber_of_IT = num_of_IT, sen_Data = sen_data, Last_SRA = sra, Project_type = project_type, How_you_heard = curious, additional_comments = comment)
-        stmt3 = insert(self.clients).values(Client_id = id, Email = email, First_Name = f_name, Last_Name = l_name, Project_role = project_type, Company_working_with = id)
-        with self.engine.connect() as con:
-            result = con.execute(stmt1)
-            print(result)
-            con.commit()
-            result = con.execute(stmt2)
-            print(result)
-            con.commit()
-            result = con.execute(stmt3)
-            print(result)
-            con.commit()
-            con.close()
-        #self.engine.execute(query2)
-        #self.engine.execute(query3)
 
-
+        vals_login = [ email, hashedPass, 'Client', 1]
+        DatabaseConnection().send_insert(vals_login, 'Login_information')
+        print("Login info inserted")
+        vals_company = [id, org_name, org_type, phone_number, url, revenue, num_of_IT, sen_data, sra, project_type, curious, comment]
+        DatabaseConnection().send_insert(vals_company, 'Company')
+        print ("Company info inserted")
+        vals_client = [id, email, f_name, l_name, id, 'Client']
+        DatabaseConnection().send_insert(vals_client, 'Client')
         return "Application submitted!"
         
     def student_apply(self, data):
@@ -77,14 +69,25 @@ class apply:
         school = data.get('school')
         major = data.get('major')
         year_standing = data.get('yearStanding')
-        grad_date = data.get('gradDate')
+        grad_date = pd.to_datetime(data.get('gradDate'))
         course_taken = data.get('courseTaken')
-        curious = data.get('curious')
+        when = data.get('firstHear')
         hear = data.get('hear')
         eth = data.get('eth')
         gen = data.get('gen')
 
-        courses_offered = {
+        hashedPass = self.hash(password)
+        id = uuid.uuid3(uuid.NAMESPACE_OID, email)
+
+        vals_login = [ email, hashedPass, 'Student', 0]
+        DatabaseConnection().send_insert(vals_login, 'Login_information')
+        print('1')
+        vals_student = [id, email, l_name, f_name, school, phone_number, major, 0 , None, hear, grad_date, 'Student' , year_standing, gen, eth, when]
+        DatabaseConnection().send_insert(vals_student, 'Student')
+        print('2')
+
+        vals_student_class_completion = {
+        'S_id' : id,
         'CSEC_390' : 0,
         'CSEC_490' : 0,
         'CSEC_488' : 0,
@@ -97,33 +100,16 @@ class apply:
         'ACC_639' : 0,
         'FIN_362' : 0,
         'SEV_621' : 0,
-     #   'SEC_DAEMONS' : 0,
-      #  'WICYS = 0' : 0
+        #'SEC_DAEMONS' : 0,
+        #'WICYS = 0' : 0
         }
 
         for course in course_taken:
-            if course.upper() in courses_offered:
-                courses_offered[course.upper()] = 1
+            if course.upper() in vals_student_class_completion:
+                vals_student_class_completion[course.upper()] = 1
 
-        hashedPass = self.hash(password)
-        stmt1 = insert(self.login_information).values(Email= email, Pass_word = hashedPass, Account_Type = 'Student', Approved = 0)
-        stmt2 = insert(self.student).values(S_id = id , Email = email, First_Name = f_name, Last_Name = l_name, College = school, Degree_name = major, when_you_heard = firstHear,  Ethnicity = eth, Expected_graduation = grad_date, current_year = year_standing, Gender = gen, Phone_number = p_number, How_you_heard = hear, )
-        stmt3 = insert(self.student_class_completion).values(S_id = id)
-        stmt4 = update(self.student_class_completion).where(self.student_class_completion.c.S_id == id).values(courses_offered)
-        with self.engine.connect() as con:
-            result = con.execute(stmt1)
-            print(result)
-            con.commit()
-            result = con.execute(stmt2)
-            print(result)
-            con.commit()
-            result = con.execute(stmt3)
-            print(result)
-            con.commit()
-            result = con.execute(stmt4)
-            print(result)
-            con.commit()
-        
+        DatabaseConnection().send_insert(vals_student_class_completion, 'Student_class_completion')
+        print('3')
         return "Application submitted!"
 
 

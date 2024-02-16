@@ -55,7 +55,7 @@ def login():
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    applyInstance = apply(engine)
+    applyInstance = apply()
     message = applyInstance.client_apply(data)
     return jsonify({'message': message})
 
@@ -63,7 +63,7 @@ def client_apply():
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
     data = request.get_json()
-    applyInstance = apply(engine)
+    applyInstance = apply()
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
