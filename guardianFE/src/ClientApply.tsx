@@ -14,7 +14,7 @@ function ClientApply() {
   const [revenue, setRevenue] = useState("");
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
-  const [sra, setSRA] = useState("");
+  const [sra, setSRA] = useState(-1);
   const [projectType, setProjectType] = useState("");
   const [curious, setCurious] = useState("");
   const [comment, setComment] = useState("");
@@ -36,7 +36,8 @@ function ClientApply() {
   };
 
   const sendData = async (event) => {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/;
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/;
     const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     let invalidFields = [];
@@ -47,11 +48,15 @@ function ClientApply() {
       invalidFields.push("Project of Interest");
     }
     if (invalidFields.length > 0) {
-      alert(`Please select a valid option for the following fields: ${invalidFields.join(", ")}`);
+      alert(
+        `Please select a valid option for the following fields: ${invalidFields.join(
+          ", "
+        )}`
+      );
       return;
     }
     if (!emailPattern.test(email)) {
-      alert('Please enter a valid email address.');
+      alert("Please enter a valid email address.");
       return;
     }
     if (!phonePattern.test(pNumber)) {
@@ -59,7 +64,9 @@ function ClientApply() {
       return;
     }
     if (!passwordPattern.test(password)) {
-      alert("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and 8-12 characters.");
+      alert(
+        "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and 8-12 characters."
+      );
       return;
     }
     if (password !== verifyPassword) {
@@ -91,7 +98,6 @@ function ClientApply() {
     });
     setRtnData(await response.json());
     setShowResults(true);
-
   };
 
   return (
@@ -206,8 +212,7 @@ function ClientApply() {
           required
         />{" "}
         <br />
-        <label htmlFor="senData">Description of sensitive data: </label>{" "}
-        <br />
+        <label htmlFor="senData">Description of sensitive data: </label> <br />
         <textarea
           placeholder="N/A for nothing"
           id="senData"
@@ -224,14 +229,14 @@ function ClientApply() {
         <select
           id="NORA"
           name="NORA"
-          onChange={(event) => setSRA(event.target.value)}
+          onChange={(event) => setSRA(Number(event.target.value))}
           required
         >
           <option>Please select one</option>
-          <option value="never">Never</option>
-          <option value="1-2">1 - 2 years ago</option>
-          <option value="3-5">3 - 5 years ago</option>
-          <option value="5+">5+ years ago</option>
+          <option value={0}>Never</option>
+          <option value={1}>1 - 2 years ago</option>
+          <option value={3}>3 - 5 years ago</option>
+          <option value={5}>5+ years ago</option>
         </select>{" "}
         <br />
         <label htmlFor="interest">
@@ -240,9 +245,9 @@ function ClientApply() {
         </label>
         <select id="interest" name="interest" onChange={handleChange} required>
           <option>Please select one</option>
-          <option value="GRA">General Risk Assessment</option>
+          <option value="Gra">General Risk Assessment</option>
           <option value="audit">Audit</option>
-          <option value="PR">Policy Review</option>
+          <option value="Policy_Review">Policy Review</option>
           <option value="other">Other</option>
         </select>{" "}
         <br />

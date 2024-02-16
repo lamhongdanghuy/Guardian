@@ -65,7 +65,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {user.role == "client" && (
+          {user.role == "Client" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
