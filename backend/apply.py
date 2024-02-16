@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import uuid
 import bcrypt
-from sqlalchemy import insert, MetaData, Table, create_engine
+from sqlalchemy import insert, MetaData, Table, update
 
 
 class apply:
@@ -20,7 +20,7 @@ class apply:
         self.metadata = MetaData()
         self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
         self.company = Table('Company', self.metadata, autoload_with=self.engine)
-        self.clients = Table('Clients', self.metadata, autoload_with=self.engine)
+        self.clients = Table('Client', self.metadata, autoload_with=self.engine)
 
     def client_apply(self,data):
         
@@ -84,8 +84,47 @@ class apply:
         eth = data.get('eth')
         gen = data.get('gen')
 
-        return "Application submitted!"
+        courses_offered = {
+        'CSEC_390' : 0,
+        'CSEC_490' : 0,
+        'CSEC_488' : 0,
+        'IS_486' : 0,
+        'ACC_374' : 0,
+        'ACC_376' : 0,
+        'ACC_378' : 0,
+        'ACC_636' : 0,
+        'ACC_638' : 0,
+        'ACC_639' : 0,
+        'FIN_362' : 0,
+        'SEV_621' : 0,
+     #   'SEC_DAEMONS' : 0,
+      #  'WICYS = 0' : 0
+        }
 
+        for course in course_taken:
+            if course.upper() in courses_offered:
+                courses_offered[course.upper()] = 1
+
+        hashedPass = self.hash(password)
+        stmt1 = insert(self.login_information).values(Email= email, Pass_word = hashedPass, Account_Type = 'Student', Approved = 0)
+        stmt2 = insert(self.student).values(S_id = id , Email = email, First_Name = f_name, Last_Name = l_name, College = school, Degree_name = major, when_you_heard = firstHear,  Ethnicity = eth, Expected_graduation = grad_date, current_year = year_standing, Gender = gen, Phone_number = p_number, How_you_heard = hear, )
+        stmt3 = insert(self.student_class_completion).values(S_id = id)
+        stmt4 = update(self.student_class_completion).where(self.student_class_completion.c.S_id == id).values(courses_offered)
+        with self.engine.connect() as con:
+            result = con.execute(stmt1)
+            print(result)
+            con.commit()
+            result = con.execute(stmt2)
+            print(result)
+            con.commit()
+            result = con.execute(stmt3)
+            print(result)
+            con.commit()
+            result = con.execute(stmt4)
+            print(result)
+            con.commit()
+        
+        return "Application submitted!"
 
 
 

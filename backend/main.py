@@ -28,7 +28,7 @@ app.config["SECRET KEY"] = "1234"
 CORS(app)
 
 
-query = "SELECT * FROM Clients"
+query = "SELECT * FROM Client"
 data = DatabaseConnection().send_query(query)
 print(data)
 
