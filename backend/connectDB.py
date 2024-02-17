@@ -1,6 +1,6 @@
 import os
 from sshtunnel import SSHTunnelForwarder
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
 import paramiko
@@ -17,6 +17,7 @@ class DatabaseConnection:
         self.db_password = 'Hhe^3828jsu37s92j'
         self.db_name = 'CyberSecurity'
         self.localhost = '127.0.0.1'
+        self.metadata = MetaData()
 
     def get_pem(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,15 +50,23 @@ class DatabaseConnection:
         self.close_tunnel()
         return data
     
-    def insert_query(self, query):
+    def send_insert(self, values, table):
         self.start_connection()
-        self.session.execute(text(query))
-        self.session.commit()
-        self.session.close()
-        self.end_connection() 
-    
-    def end_connection(self):
-        self.session.commit()
-        self.session.close()
+        if table == 'Login_information':
+            targetTable = Table('Login_information', self.metadata, autoload_with=self.engine)
+        elif table == 'Company':
+            targetTable = Table('Company', self.metadata, autoload_with=self.engine)
+        elif table == 'Client':
+            targetTable = Table('Client', self.metadata, autoload_with=self.engine)
+        elif table == 'Student':
+            targetTable = Table('Student', self.metadata, autoload_with=self.engine)
+        elif table == 'Student_class_completion':
+            targetTable = Table('Student_class_completion', self.metadata, autoload_with=self.engine)
+        query = targetTable.insert().values(values)
+        with self.engine.connect() as con:
+            result = con.execute(query)
+            con.commit()
+            con.close()
         self.close_tunnel()
-
+        return result
+    
