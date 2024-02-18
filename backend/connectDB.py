@@ -1,6 +1,8 @@
 import os
 from sshtunnel import SSHTunnelForwarder
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, MetaData
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
 import paramiko
 import pandas as pd
 
@@ -15,6 +17,7 @@ class DatabaseConnection:
         self.db_password = 'Hhe^3828jsu37s92j'
         self.db_name = 'CyberSecurity'
         self.localhost = '127.0.0.1'
+        self.metadata = MetaData()
 
     def get_pem(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -34,13 +37,36 @@ class DatabaseConnection:
     def generate_engine(self):
         self.local_bind_port = int(self.tunnel.local_bind_port)
         self.engine = create_engine(f'mysql+pymysql://{self.db_username}:{self.db_password}@{self.localhost}:{self.local_bind_port}/{self.db_name}')
+        self.Session = sessionmaker(bind=self.engine)
 
     def start_connection(self):
         self.create_tunnel()
         self.generate_engine()
+        self.session = self.Session()
         
-    def send_query(self, query):
+    def select_query(self, query):
         self.start_connection()
         data = pd.read_sql_query(query, self.engine)
         self.close_tunnel()
         return data
+    
+    def send_insert(self, values, table):
+        self.start_connection()
+        if table == 'Login_information':
+            targetTable = Table('Login_information', self.metadata, autoload_with=self.engine)
+        elif table == 'Company':
+            targetTable = Table('Company', self.metadata, autoload_with=self.engine)
+        elif table == 'Client':
+            targetTable = Table('Client', self.metadata, autoload_with=self.engine)
+        elif table == 'Student':
+            targetTable = Table('Student', self.metadata, autoload_with=self.engine)
+        elif table == 'Student_class_completion':
+            targetTable = Table('Student_class_completion', self.metadata, autoload_with=self.engine)
+        query = targetTable.insert().values(values)
+        with self.engine.connect() as con:
+            result = con.execute(query)
+            con.commit()
+            con.close()
+        self.close_tunnel()
+        return result
+    

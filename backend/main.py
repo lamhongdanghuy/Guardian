@@ -27,10 +27,15 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-#Test database connection
-query = "SELECT * FROM Login_information"
-data = DatabaseConnection().send_query(query)
+
+query = "SELECT * FROM Client"
+data = DatabaseConnection().select_query(query)
 print(data)
+
+query = "SELECT * FROM Company"
+data = DatabaseConnection().select_query(query)
+print(data)
+
 
 
 @app.route('/login', methods=['POST'])
