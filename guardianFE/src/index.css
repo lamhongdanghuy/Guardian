@@ -183,6 +183,12 @@ nav {
   justify-content: center;
 }
 
+.cardTop {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5vh;
+}
+
 h1 {
   /* font-size: 3.2em; */
   font-size: 4em;
