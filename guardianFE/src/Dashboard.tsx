@@ -24,6 +24,7 @@ function Dashboard() {
   const cardClicked = (projectID: string) => {
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
+    console.log("card clicked");
     console.log(projectID);
   };
 
@@ -135,7 +136,7 @@ function Dashboard() {
         ) : activeContainer === "Student Applications" ? (
           <StudentApplicationsView />
         ) : activeContainer === "Project Info View" ? (
-          <ProjectInfoView />
+          <ProjectInfoView projectID={openProject} />
         ) : null}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ProjectInfoView(projectID: string) {
+  console.log(projectID);
   let clientName: string | null = null;
   let type: string | null = null;
   let description: string | null = null;

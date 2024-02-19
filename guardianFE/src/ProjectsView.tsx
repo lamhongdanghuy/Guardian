@@ -64,7 +64,7 @@ function ProjectsView(props: projectViewProp) {
           projectLeader={"PERSON"}
           type={"GRA"}
           onClick={props.onClick}
-          projectID="1234"
+          projectID="5678"
         ></ProjectCard>
         <ProjectCard
           name={"Project Name"}
