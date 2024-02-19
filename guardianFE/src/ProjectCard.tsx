@@ -3,12 +3,13 @@ interface ProjectCardProps {
   status: string;
   projectLeader: string;
   type: string;
+  projectID: string;
   onClick: Function;
 }
 
 function ProjectCard(props: ProjectCardProps) {
   const handleClick = () => {
-    props.onClick("1234");
+    props.onClick(props.projectID);
   };
 
   return (
