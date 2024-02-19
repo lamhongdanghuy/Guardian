@@ -97,14 +97,13 @@
   margin-top: 8em;
 }
 
-
 .servicesPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-    margin: auto;
-    margin-top: 8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 8em;
 }
 .studentApply {
   display: flex;
@@ -114,8 +113,7 @@
   margin-top: 8em;
 }
 
-
-.services{
+.services {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -193,6 +191,47 @@ h1 {
   margin: auto;
 }
 
+.projectInfoView {
+  display: flex;
+  flex-wrap: "wrap";
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 70vh;
+  margin: 2em;
+  margin-bottom: "5vh";
+  gap: "7.5vh";
+}
+
+.topInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5vh;
+}
+
+.bottomInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 7.5vh;
+}
+
+.middleInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2em;
+}
 .logoutButton {
   border-radius: 10px;
   border: 1px solid transparent;
