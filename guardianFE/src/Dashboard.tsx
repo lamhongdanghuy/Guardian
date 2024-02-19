@@ -54,13 +54,15 @@ function Dashboard() {
           Log Out
         </div>
       </div>
-      <div
-        className="sidebar"
-        onClick={returnToLandingPage}
-        style={{ cursor: "pointer" }}
-      >
+      <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
-        <div className="sidebarTitle">Depaul Guardian</div>
+        <div
+          className="sidebarTitle"
+          onClick={returnToLandingPage}
+          style={{ cursor: "pointer" }}
+        >
+          Depaul Guardian
+        </div>
         <div className="sidebarMenu">
           <div
             className="sidebarItem"
