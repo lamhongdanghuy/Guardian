@@ -16,9 +16,15 @@ function Dashboard() {
     role: string;
   }
 
+  const returnToLandingPage = () => {
+    setUser({ id: null, email: null, role: null, token: null });
+    navigator("/");
+  };
+
   const cardClicked = (projectID: string) => {
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
+    console.log("card clicked");
     console.log(projectID);
   };
 
@@ -51,7 +57,13 @@ function Dashboard() {
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
-        <div className="sidebarTitle">Depaul Guardian</div>
+        <div
+          className="sidebarTitle"
+          onClick={returnToLandingPage}
+          style={{ cursor: "pointer" }}
+        >
+          Depaul Guardian
+        </div>
         <div className="sidebarMenu">
           <div
             className="sidebarItem"
@@ -103,7 +115,14 @@ function Dashboard() {
         <Link to="/dashboard/students">Students</Link>
         <Link to="/dashboard/services">Services</Link> */}
       </div>
-      <div style={{ flex: "1" }}>
+      <div
+        style={{
+          flex: "1",
+          marginTop: "12.5vh",
+          maxHeight: "87.5vh",
+          overflow: "hidden",
+        }}
+      >
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
@@ -117,7 +136,7 @@ function Dashboard() {
         ) : activeContainer === "Student Applications" ? (
           <StudentApplicationsView />
         ) : activeContainer === "Project Info View" ? (
-          <ProjectInfoView />
+          <ProjectInfoView projectID={openProject} />
         ) : null}
       </div>
     </div>
