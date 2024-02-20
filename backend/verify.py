@@ -56,7 +56,7 @@ def send_verification_email():
         server.quit() #Close the server connection
     return jsonify({'message': 'Email sent successfully!'}), 200
 
-@app.route('/', methods=['GET', 'POST'])
+'''@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
         return '<form action="/" method="POST"><input name="email"><input type="submit"></form>'
@@ -97,7 +97,7 @@ def send_email(to_email, subject, body):
     
     finally:
         #Close the connection to the SMTP server
-        server.quit()
+        server.quit()'''
 
 
 
