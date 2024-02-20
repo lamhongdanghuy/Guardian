@@ -86,7 +86,7 @@ function StudentApply() {
             alert("Passwords do not match!");
             return;
         }
-        const response = await fetch("http://localhost:5000/apply/student", {
+        const response = await fetch("http://localhost:5000/send_verification_email", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
