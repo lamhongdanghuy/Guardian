@@ -5,19 +5,35 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
 import paramiko
 import pandas as pd
+from configparser import ConfigParser
 
-class DatabaseConnection:
+class DatabaseConnection: 
     def __init__(self):
-        self.ssh_host = '18.216.233.27'
-        self.ssh_username = 'ubuntu'
-        self.ssh_password = None
-        self.ssh_port = 22
-        self.db_port = 3306
-        self.db_username = 'Admin'
-        self.db_password = 'Hhe^3828jsu37s92j'
-        self.db_name = 'CyberSecurity'
-        self.localhost = '127.0.0.1'
+        config = ConfigParser()
+        config.read('.env')
+        env_vars = {section: dict(config.items(section)) for section in config.sections()}
+        self.ssh_host = env_vars['SSH']['host']
+        self.ssh_username = env_vars['SSH']['username']
+        self.ssh_password = env_vars['SSH']['password']
+        self.ssh_port = int(env_vars['SSH']['port'])
+        self.db_port = int(env_vars['DB']['port'])
+        self.db_username = env_vars['DB']['username']
+        self.db_password = env_vars['DB']['password']
+        self.db_name = env_vars['DB']['name']
+        self.localhost = env_vars['LOCALHOST']['host']
         self.metadata = MetaData()
+
+    def get_pem(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        parent_dir = os.path.dirname(current_dir)
+        self.filename = os.path.join(parent_dir, 'DePaul-Guardian-Clinic.pem')
+        return self.filename
+        
+    def create_tunnel(self):
+        filename = self.get_pem()
+        mypkey = paramiko.RSAKey.from_private_key_file(filename, password=None)
+        self.tunnel = SSHTunnelForwarder((self.ssh_host, self.ssh_port), ssh_username=self.ssh_username, ssh_pkey=mypkey, remote_bind_address=(self.localhost, self.db_port))
+        self.tunnel.start()
 
     def get_pem(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))

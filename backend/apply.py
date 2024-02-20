@@ -18,13 +18,6 @@ class apply:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
 
-    # def __init__(self):
-        # self.engine = eng
-        # self.metadata = MetaData()
-        # self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
-        # self.company = Table('Company', self.metadata, autoload_with=self.engine)
-        # self.clients = Table('Client', self.metadata, autoload_with=self.engine)
-
     def client_apply(self,data):
         
         f_name = data.get('fName')
