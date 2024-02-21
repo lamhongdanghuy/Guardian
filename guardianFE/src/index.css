@@ -136,6 +136,15 @@
   justify-content: center;
 }
 
+.services-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .services {
   display: flex;
   flex-direction: column;
@@ -223,18 +232,16 @@ nav {
   justify-content: center;
 }
 
-.cardTopProject {
-  display: flex;
-  flex-direction: row;
-  background-color: #646cff;
-}
-.cardTopProposal {
-  display: flex;
-  flex-direction: row;
-  background-color: #741e17;
+.midBanner {
+  width: 80%;
 }
 
-.cardTopApplication {
+.servicePic {
+  height: 24vh;
+  width: auto;
+}
+
+.cardTopProject {
   display: flex;
   flex-direction: row;
   background-color: #17c214;
