@@ -89,6 +89,15 @@
   margin-top: 8em;
 }
 
+.services-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .services {
   display: flex;
   flex-direction: column;
@@ -183,7 +192,20 @@ nav {
   justify-content: center;
 }
 
+<<<<<<< Updated upstream
 .cardTop {
+=======
+.midBanner {
+  width: 80%;
+}
+
+.servicePic {
+  height: 24vh;
+  width: auto;
+}
+
+.cardTopProject {
+>>>>>>> Stashed changes
   display: flex;
   flex-direction: row;
   padding-bottom: 5vh;
