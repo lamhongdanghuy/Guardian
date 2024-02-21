@@ -45,8 +45,8 @@ def login():
     password = data.get('password')
     print(identifier)
     print(password)
-    loginInstance = Login()
-    db_Connection = DatabaseConnection()
+    loginInstance = Login()                         #Create a Login instance for when a user logs in from the website
+    db_Connection = DatabaseConnection()            #Create a database connection to pass into login instance to send queries for identifing person logging in
     payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
