@@ -63,6 +63,11 @@
   cursor: pointer;
 }
 
+.banner {
+  position: relative;
+  width: 100%;
+}
+
 .serviceImageLayer {
   width: 100%;
   height: 300px;
@@ -87,6 +92,40 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
+}
+
+.bannerUpperText {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 36px;
+  text-shadow: #000000 0 0 0.5em;
+}
+
+.bannerMiddleText {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 75%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  text-shadow: #000000 0 0 0.5em;
+}
+
+.bannerLowerText {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  text-shadow: #000000 0 0 0.5em;
 }
 
 .sidebarMenu {
@@ -168,7 +207,7 @@
 
 .applyContainer {
   display: flex;
-  flex: 1;
+  width: 80%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -275,6 +314,7 @@ nav {
   height: 300px;
   object-fit: cover;
   object-position: center;
+  opacity: 0.65;
 }
 
 .servicePic {

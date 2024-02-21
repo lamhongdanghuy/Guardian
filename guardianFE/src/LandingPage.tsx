@@ -31,14 +31,14 @@ function LandingPage() {
         }}
       >
         {message}
-        <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
+        <div className="banner">
+          <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
 
-        <h2 style={{ fontSize: "36px", marginBottom: "0" }}>
-          Welcome to the DePaul Guardian!
-        </h2>
-        <h2 style={{ fontSize: "24px", margin: "0", color: "gray" }}>
-          DePaul University's Cybersecurity Clinic
-        </h2>
+          <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
+          <h2 className="bannerLowerText">
+            DePaul University's Cybersecurity Clinic
+          </h2>
+        </div>
         <p>
           Students: Get real world experience by working on cybersecurity
           projects with real clients.
