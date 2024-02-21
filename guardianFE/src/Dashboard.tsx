@@ -118,6 +118,14 @@ function Dashboard() {
           {user.role === "faculty" && (
             <div
               className="sidebarItem"
+              onClick={() => setActiveContainer("Add Faculty")}
+            >
+              Add Faculty
+            </div>
+          )}
+          {user.role === "faculty" && (
+            <div
+              className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
               Manage Tables
