@@ -124,7 +124,7 @@ function StudentApply() {
     <div>
       <Header />
       <div className="form">
-        <h1>Apply to be a Student</h1>
+        <h2>Apply to be a Student</h2>
         <label htmlFor="fname">First Name:</label>
         <input
           type="text"

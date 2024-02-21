@@ -29,7 +29,7 @@ const Apply: React.FC = () => {
               If you are a client and are interested in working with the DePaul
               Guardian, please fill out the form below.
             </p>
-            <button onClick={() => navigator("/apply/student")}>
+            <button onClick={() => navigator("/apply/client")}>
               {" "}
               Apply As Client
             </button>
