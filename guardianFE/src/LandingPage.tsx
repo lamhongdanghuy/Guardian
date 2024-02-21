@@ -27,14 +27,11 @@ function LandingPage() {
           width: "80%",
           margin: "auto",
           marginTop: "8em",
+          marginBottom: "4em",
         }}
       >
         {message}
-        <img
-          src="/Jarvis-Student-Center-for-Innovation-and-Collaboration-05.jpg"
-          alt="Policy Image"
-          className="midBanner"
-        />
+        <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
 
         <h2 style={{ fontSize: "36px", marginBottom: "0" }}>
           Welcome to the DePaul Guardian!
@@ -95,7 +92,7 @@ function LandingPage() {
           shield our clients from both current and emerging threats to their
           security and privacy.
         </p>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

@@ -40,6 +40,12 @@
   margin: 1em 0em;
 }
 
+.title {
+  font-size: 48px;
+  font-weight: 650;
+  text-shadow: #0057b7 0 0 2.5em;
+}
+
 .userBar {
   display: flex;
   flex-direction: row;
@@ -234,6 +240,9 @@ nav {
 
 .midBanner {
   width: 80%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .servicePic {
