@@ -83,14 +83,11 @@ function LandingPage() {
         </div>
         <h2>Mission Statement</h2>
         <p>
-          The DePaul Cybersecurity Clinic is a hub where users from students to
-          industry organizations can connect, collaborate, and learn within the
-          cybersecurity domain. We want to provide a dynamic space where
-          students and industry professionals can seamlessly come together to
-          exchange ideas, insights, and practical knowledge. At DePaul, we aim
-          to establish a cornerstone within our community while striving to
-          shield our clients from both current and emerging threats to their
-          security and privacy.
+          Raise organizational awareness of information security and privacy
+          risks discovered from a student- led risk assessment so that
+          incremental improvements are made in the client’s security policies
+          and practices while students in turn gain real-world experience that
+          contributes to a cyber security workforce.
         </p>
         {/* <Footer /> */}
       </div>
