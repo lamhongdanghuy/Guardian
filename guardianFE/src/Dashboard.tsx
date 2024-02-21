@@ -6,6 +6,8 @@ import ManageView from "./ManageView";
 import ProjectProposalsView from "./ProjectProposalsView";
 import StudentApplicationsView from "./StudentApplicationsView";
 import ProjectInfoView from "./ProjectInfoView";
+import ApplicationInfoView from "./ApplicationInfoView";
+import ProposalInfoView from "./ProposalInfoView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -21,11 +23,21 @@ function Dashboard() {
     navigator("/");
   };
 
-  const cardClicked = (projectID: string) => {
+  const projectCardClicked = (projectID: string) => {
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
     console.log("card clicked");
     console.log(projectID);
+  };
+
+  const applicationCardClicked = (studentID: string) => {
+    setActiveContainer("Application View");
+    setOpenApplication(studentID);
+  };
+
+  const proposalCardClicked = (proposalID: string) => {
+    setActiveContainer("Proposal Info View");
+    setOpenProposal(proposalID);
   };
 
   const navigator = useNavigate();
@@ -33,6 +45,8 @@ function Dashboard() {
   const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
+  const [openApplication, setOpenApplication] = useState("");
+  const [openProposal, setOpenProposal] = useState("");
   useEffect(() => {
     if (user.userId === null) {
       navigator("/login");
@@ -62,7 +76,7 @@ function Dashboard() {
           onClick={returnToLandingPage}
           style={{ cursor: "pointer" }}
         >
-          Depaul Guardian
+          DePaul Guardian
         </div>
         <div className="sidebarMenu">
           <div
@@ -77,7 +91,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {user.role == "Client" && (
+          {user.role === "Client" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -85,7 +99,7 @@ function Dashboard() {
               Apply
             </div>
           )}
-          {user.role == "faculty" && (
+          {user.role === "faculty" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -93,7 +107,7 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {user.role == "faculty" && (
+          {user.role === "faculty" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -101,7 +115,15 @@ function Dashboard() {
               Project Proposal
             </div>
           )}
-          {user.role == "faculty" && (
+          {user.role === "faculty" && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Add Faculty")}
+            >
+              Add Faculty
+            </div>
+          )}
+          {user.role === "faculty" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
@@ -126,17 +148,21 @@ function Dashboard() {
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
-          <ProjectsView onClick={cardClicked} />
+          <ProjectsView onClick={projectCardClicked} />
         ) : activeContainer === "Apply" ? (
           <ApplyView />
         ) : activeContainer === "Manage Tables" ? (
           <ManageView />
         ) : activeContainer === "Project Proposals" ? (
-          <ProjectProposalsView />
+          <ProjectProposalsView onClick={proposalCardClicked} />
         ) : activeContainer === "Student Applications" ? (
-          <StudentApplicationsView />
+          <StudentApplicationsView onClick={applicationCardClicked} />
         ) : activeContainer === "Project Info View" ? (
           <ProjectInfoView projectID={openProject} />
+        ) : activeContainer === "Application View" ? (
+          <ApplicationInfoView studentID={openApplication} />
+        ) : activeContainer === "Proposal Info View" ? (
+          <ProposalInfoView studentID={openProposal} />
         ) : null}
       </div>
     </div>

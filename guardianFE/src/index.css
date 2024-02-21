@@ -40,6 +40,12 @@
   margin: 1em 0em;
 }
 
+.title {
+  font-size: 48px;
+  font-weight: 650;
+  text-shadow: #0057b7 0 0 2.5em;
+}
+
 .userBar {
   display: flex;
   flex-direction: row;
@@ -49,6 +55,77 @@
   gap: 1em;
   top: 0;
   right: 0;
+}
+
+.serviceInfo {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+}
+
+.serviceImageLayer {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.3;
+}
+
+.servicesText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.servicesTitle {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.bannerUpperText {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 36px;
+  text-shadow: #000000 0 0 0.5em;
+}
+
+.bannerMiddleText {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 75%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  text-shadow: #000000 0 0 0.5em;
+}
+
+.bannerLowerText {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  text-shadow: #000000 0 0 0.5em;
 }
 
 .sidebarMenu {
@@ -81,12 +158,68 @@
   height: 100%;
 }
 
-.clientApply {
+.apply {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: auto;
   margin-top: 8em;
+  gap: 1em;
+}
+
+.studentApply {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  align-items: center;
+  margin-left: 3em;
+  border: solid 1px #ffffff;
+  border-radius: 20px;
+  padding: 1em 1em 4em 1em;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 40vw;
+  align-items: center;
+  margin-top: 8em;
+  margin-right: auto;
+  margin-left: auto;
+  border: solid 1px #ffffff;
+  border-radius: 20px;
+  padding: 1em 1em 4em 1em;
+}
+
+.clientApply {
+  display: flex;
+  width: 40vw;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 3em;
+  margin-left: 3em;
+  border: solid 1px #ffffff;
+  border-radius: 20px;
+  padding: 1em;
+  padding: 1em 1em 4em 1em;
+}
+
+.applyContainer {
+  display: flex;
+  width: 80%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.services-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .services {
@@ -102,13 +235,6 @@
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin: auto;
-  margin-top: 8em;
-}
-.studentApply {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: auto;
   margin-top: 8em;
 }
@@ -183,10 +309,29 @@ nav {
   justify-content: center;
 }
 
-.cardTop {
+.midBanner {
+  width: 80%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.65;
+}
+
+.servicePic {
+  height: 24vh;
+  width: auto;
+}
+
+.cardTopProject {
   display: flex;
   flex-direction: row;
-  padding-bottom: 5vh;
+  background-color: #17c214;
+}
+
+.cardBottom {
+  display: flex;
+  padding-top: 2em;
+  flex-direction: row;
 }
 
 h1 {
@@ -253,12 +398,14 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
+  border-color: #ffffff;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #2806e6;
   cursor: pointer;
+  color: #ffffff;
   transition: border-color 0.25s;
 }
 button:hover {
