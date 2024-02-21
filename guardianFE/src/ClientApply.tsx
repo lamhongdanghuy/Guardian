@@ -103,7 +103,7 @@ function ClientApply() {
   return (
     <div>
       <Header />
-      <div className="clientApply">
+      <div className="form">
         <h2>Registration for First Time Client</h2>
         <label htmlFor="fName">Contact Person First Name: </label>
         <input
