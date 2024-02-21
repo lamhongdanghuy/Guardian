@@ -66,6 +66,7 @@ function About() {
             border: "1px solid white",
             borderRadius: "12px",
             backgroundColor: "navy",
+            overflow: "hidden",
           }}
         >
           <p style={{ fontSize: "18px" }}>

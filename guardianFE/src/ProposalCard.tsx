@@ -13,17 +13,7 @@ function ProposalCard(props: ProposalCardProps) {
   };
 
   return (
-    <div
-      style={{
-        flex: "40%",
-        height: "15em",
-        border: "1px solid white",
-        justifyContent: "center",
-        alignItems: "center",
-        cursor: "pointer",
-      }}
-      onClick={handleClick}
-    >
+    <div className="card" onClick={handleClick}>
       <div className="cardTopProposal">
         <h2
           style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}

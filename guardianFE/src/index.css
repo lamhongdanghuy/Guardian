@@ -73,7 +73,12 @@
   height: 300px;
   object-fit: cover;
   object-position: center;
-  opacity: 0.3;
+  opacity: 0.4;
+}
+
+.serviceImageLayer:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s;
 }
 
 .servicesText {
@@ -128,11 +133,22 @@
   text-shadow: #000000 0 0 0.5em;
 }
 
+.card {
+  flex: 40%;
+  height: 15em;
+  border: 1px solid #ffffff;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 1em;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .sidebarMenu {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
-  margin-bottom: 5em;
 }
 
 .sidebarItem:hover {
@@ -361,6 +377,18 @@ nav {
 }
 
 .cardTopProject {
+  display: flex;
+  flex-direction: row;
+  background-color: #80199a;
+}
+
+.cardTopProposal {
+  display: flex;
+  flex-direction: row;
+  background-color: #860e0e;
+}
+
+.cardTopApplication {
   display: flex;
   flex-direction: row;
   background-color: #17c214;

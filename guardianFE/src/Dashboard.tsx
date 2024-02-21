@@ -47,6 +47,7 @@ function Dashboard() {
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
+  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.userId === null) {
       navigator("/login");
@@ -67,6 +68,15 @@ function Dashboard() {
           }}
         >
           Log Out
+        </div>
+
+        <div
+          className="logoutButton"
+          onClick={() => {
+            setDevMode(!devMode);
+          }}
+        >
+          Dev Mode
         </div>
       </div>
       <div className="sidebar">
@@ -91,7 +101,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {user.role === "Client" && (
+          {(user.role === "Client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -99,7 +109,7 @@ function Dashboard() {
               Apply
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -107,7 +117,7 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -115,7 +125,7 @@ function Dashboard() {
               Project Proposal
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -123,7 +133,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
