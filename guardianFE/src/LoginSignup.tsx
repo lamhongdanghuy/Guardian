@@ -60,9 +60,14 @@ function LoginSignup() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "80%",
-          margin: "auto",
-          marginTop: "8em",
+          width: "35%",
+          margin: "8em ",
+          marginLeft: "auto",
+          marginRight: "auto",
+          border: "1px solid white",
+          gap: ".5em",
+          padding: "2em",
+          borderRadius: "1em",
         }}
       >
         <>
@@ -86,7 +91,11 @@ function LoginSignup() {
           <button onClick={sendLogin}>Log In</button>
           <br />
           <button
-            style={{ color: "gold", backgroundColor: "white" }}
+            style={{
+              color: "gold",
+              backgroundColor: "white",
+              marginBottom: "2em",
+            }}
             onClick={() => navigator("/apply")}
           >
             Apply
@@ -97,7 +106,6 @@ function LoginSignup() {
             <h1>{success}</h1>
           </div>
         )}
-        <Footer />
       </div>
     </>
   );
