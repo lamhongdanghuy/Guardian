@@ -1,15 +1,15 @@
-interface ProjectCardProps {
+interface ProposalCardProps {
   name: string;
   status: string;
-  projectLeader: string;
+  ProposalLeader: string;
   type: string;
-  projectID: string;
   onClick: Function;
+  ProposalID: string;
 }
 
-function ProjectCard(props: ProjectCardProps) {
+function ProposalCard(props: ProposalCardProps) {
   const handleClick = () => {
-    props.onClick(props.projectID);
+    props.onClick(props.ProposalID);
   };
 
   return (
@@ -24,7 +24,7 @@ function ProjectCard(props: ProjectCardProps) {
       }}
       onClick={handleClick}
     >
-      <div className="cardTopProject">
+      <div className="cardTopProposal">
         <h2
           style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
         >
@@ -37,13 +37,10 @@ function ProjectCard(props: ProjectCardProps) {
         </h2>
       </div>
       <div className="cardBottom">
-        <h2 style={{ fontSize: "24px" }}>{props.status}</h2>
-        <h2 style={{ fontSize: "24px" }}>
-          Project Leader: {props.projectLeader}
-        </h2>
+        {/* <h2 style={{ fontSize: "24px" }}>{props.status}</h2> */}
       </div>
     </div>
   );
 }
 
-export default ProjectCard;
+export default ProposalCard;

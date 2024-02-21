@@ -1,15 +1,15 @@
-interface ProjectCardProps {
+interface ApplicationCardProps {
+  studentID: string;
   name: string;
-  status: string;
-  projectLeader: string;
-  type: string;
-  projectID: string;
+  year: string;
+  major: string;
+  gradDate: string;
   onClick: Function;
 }
 
-function ProjectCard(props: ProjectCardProps) {
+function ApplicationCard(props: ApplicationCardProps) {
   const handleClick = () => {
-    props.onClick(props.projectID);
+    props.onClick(props.studentID);
   };
 
   return (
@@ -24,7 +24,7 @@ function ProjectCard(props: ProjectCardProps) {
       }}
       onClick={handleClick}
     >
-      <div className="cardTopProject">
+      <div className="cardTopApplication">
         <h2
           style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
         >
@@ -33,17 +33,23 @@ function ProjectCard(props: ProjectCardProps) {
         <h2
           style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
         >
-          {props.type}
+          {props.major}
         </h2>
       </div>
       <div className="cardBottom">
-        <h2 style={{ fontSize: "24px" }}>{props.status}</h2>
-        <h2 style={{ fontSize: "24px" }}>
-          Project Leader: {props.projectLeader}
+        <h2
+          style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
+        >
+          {props.year}
+        </h2>
+        <h2
+          style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
+        >
+          Grad Date: {props.gradDate}
         </h2>
       </div>
     </div>
   );
 }
 
-export default ProjectCard;
+export default ApplicationCard;

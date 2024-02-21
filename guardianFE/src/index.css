@@ -223,10 +223,27 @@ nav {
   justify-content: center;
 }
 
-.cardTop {
+.cardTopProject {
   display: flex;
   flex-direction: row;
-  padding-bottom: 5vh;
+  background-color: #646cff;
+}
+.cardTopProposal {
+  display: flex;
+  flex-direction: row;
+  background-color: #741e17;
+}
+
+.cardTopApplication {
+  display: flex;
+  flex-direction: row;
+  background-color: #17c214;
+}
+
+.cardBottom {
+  display: flex;
+  padding-top: 2em;
+  flex-direction: row;
 }
 
 h1 {
