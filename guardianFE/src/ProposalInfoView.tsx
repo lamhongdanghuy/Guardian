@@ -39,7 +39,7 @@ function ProposalInfoView(ProposalID: string) {
   const { user, setUser } = useContext(LoginContext);
 
   const getProposalInfo = async () => {
-    const response = await fetch("http://localhost:5000/ProposalInfo", {
+    const response = await fetch("http://localhost:5000/proposalInfo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
