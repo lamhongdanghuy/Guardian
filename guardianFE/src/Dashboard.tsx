@@ -8,6 +8,7 @@ import StudentApplicationsView from "./StudentApplicationsView";
 import ProjectInfoView from "./ProjectInfoView";
 import ApplicationInfoView from "./ApplicationInfoView";
 import ProposalInfoView from "./ProposalInfoView";
+import AddFaculty from "./AddFaculty";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -194,6 +195,8 @@ function Dashboard() {
           <ApplicationInfoView studentID={openApplication} />
         ) : activeContainer === "Proposal Info View" ? (
           <ProposalInfoView studentID={openProposal} />
+        ) : activeContainer === "Add Faculty" ? (
+          <AddFaculty />
         ) : null}
       </div>
     </div>
