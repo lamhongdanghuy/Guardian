@@ -24,7 +24,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
   }, []);
 
   const getApplications = async () => {
-    const response = await fetch("http://localhost:5000/application", {
+    const response = await fetch("http://localhost:5000/getApplications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
