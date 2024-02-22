@@ -21,7 +21,9 @@ from sqlalchemy import create_engine
 from login import Login
 from apply import apply
 from connectDB import DatabaseConnection
-
+# from protector import Protector
+# Test imports 
+from protector import TestProtectorDecorator
 
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
@@ -42,8 +44,8 @@ def login():
     print(password)
     loginInstance = Login()
     db_Connection = DatabaseConnection()
-    payload = loginInstance.login(identifier,password,db_Connection)
-    token = jwt.encode(payload, app.config["SECRET KEY"])
+    payload = loginInstance.login(identifier,password,db_Connection)    
+    token = jwt.encode({'exp': payload}, app.config["SECRET KEY"])
     return jsonify(token)
 
 
@@ -62,7 +64,11 @@ def student_apply():
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
-
+@app.route('/testProject', methods=['POST'])
+def TestProtecter():
+    print("Running tests")
+    test = TestProtectorDecorator()
+    test.RunTests()
 
 if __name__ == "__main__":
     app.run()
