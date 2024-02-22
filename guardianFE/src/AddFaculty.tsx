@@ -30,7 +30,7 @@ function AddFaculty() {
       );
       return;
     }
-    const response = await fetch("http://localhost:5000/propose", {
+    const response = await fetch("http://localhost:5000/addFaculty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
