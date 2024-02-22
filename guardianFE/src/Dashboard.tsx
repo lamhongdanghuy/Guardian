@@ -24,6 +24,7 @@ function Dashboard() {
   };
 
   const projectCardClicked = (projectID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
     console.log("card clicked");
@@ -31,17 +32,19 @@ function Dashboard() {
   };
 
   const applicationCardClicked = (studentID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Application View");
     setOpenApplication(studentID);
   };
 
   const proposalCardClicked = (proposalID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Proposal Info View");
     setOpenProposal(proposalID);
   };
 
   const navigator = useNavigate();
-
+  const [prevContainer, setPrevContainer] = useState("Home");
   const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
@@ -150,11 +153,29 @@ function Dashboard() {
       <div
         style={{
           flex: "1",
-          marginTop: "12.5vh",
+          marginTop: "8vh",
           maxHeight: "87.5vh",
           overflow: "hidden",
+          position: "relative",
         }}
       >
+        {(activeContainer === "Project Info View" ||
+          activeContainer === "Proposal Info View" ||
+          activeContainer === "Application View") && (
+          <button
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "2em",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setActiveContainer(prevContainer);
+            }}
+          >
+            Back
+          </button>
+        )}
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (

@@ -434,6 +434,7 @@ h1 {
   overflow-y: scroll;
   max-height: 70vh;
   margin: 2em;
+  margin-top: 3em;
   margin-bottom: "5vh";
   gap: "7.5vh";
 }
