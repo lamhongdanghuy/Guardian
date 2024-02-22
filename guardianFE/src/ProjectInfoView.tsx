@@ -1,5 +1,12 @@
 import { useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import MemberCard from "./memberCard";
+
+interface Member {
+  name: string;
+  role: string;
+  email: string;
+}
 
 function ProjectInfoView(projectID: string) {
   console.log(projectID);
@@ -83,9 +90,34 @@ function ProjectInfoView(projectID: string) {
       >
         Target Date: {targetDate ? targetDate : "Not Approved"}
       </h1>
-      <h1 style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}>
+      <h1
+        style={{
+          fontSize: "32px",
+          marginLeft: "0vw",
+          marginRight: "auto",
+          paddingBottom: "5vh",
+        }}
+      >
         Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
       </h1>
+      <h1
+        style={{
+          fontSize: "32px",
+          marginLeft: "0vw",
+          marginRight: "auto",
+          paddingBottom: ".5em",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Team:
+      </h1>
+      <div style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}>
+        <MemberCard name="John Doe" role="Leader" email="johnDoe@depaul.edu" />
+        <MemberCard name="John Doe" role="Leader" email="johnDoe@depaul.edu" />
+        <MemberCard name="John Doe" role="Leader" email="johnDoe@depaul.edu" />
+        <MemberCard name="John Doe" role="Leader" email="johnDoe@depaul.edu" />
+      </div>
     </div>
   );
 }

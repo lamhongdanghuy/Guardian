@@ -5,7 +5,10 @@ function ApplicationInfoView(studentID: string) {
   console.log(studentID);
   let studentName: string | null = null;
   let major: string | null = null;
-  let description: string | null = null;
+  let email: string | null = null;
+  let phone: string | null = null;
+  let projectIntrest: string | null = null;
+  let coursesTaken: Array<string> = [];
   let gradDate: string | null = null;
   let year: string | null = null;
   let college: string | null = null;
@@ -25,10 +28,39 @@ function ApplicationInfoView(studentID: string) {
 
     studentName = result.studentName;
     major = result.major;
-    description = result.description;
+    email = result.email;
+    phone = result.phone;
+    projectIntrest = result.projectIntrest;
+    coursesTaken = result.coursesTaken;
     gradDate = result.gradDate;
     year = result.year;
     college = result.college;
+  };
+
+  const approve = async () => {
+    const response = await fetch("http://localhost:5000/approveStudent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ studentID }),
+    });
+    const result = await response.json();
+    return result;
+  };
+
+  const reject = async () => {
+    const response = await fetch("http://localhost:5000/rejectStudent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ studentID }),
+    });
+    const result = await response.json();
+    return result;
   };
 
   useEffect(() => {
@@ -51,28 +83,37 @@ function ApplicationInfoView(studentID: string) {
           Major: {major ? major : "None"}
         </h1>
       </div>
-      <h1
-        style={{
-          fontSize: "32px",
-          marginLeft: "0vw",
-          marginRight: "auto",
-          paddingBottom: "5vh",
-        }}
-      >
-        Year: {year ? year : "No year"}
-      </h1>
-      <div className="middleInfo">
+      <div className="topInfo">
+        <h1
+          style={{ fontSize: "32px", marginRight: "auto", marginLeft: "0vw" }}
+        >
+          Email: {email ? email : "____@____.com"}
+        </h1>
+        <h1
+          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
+        >
+          Phone: {phone ? phone : "000-000-0000"}
+        </h1>
+      </div>
+      <div className="topInfo">
+        <h1
+          style={{ fontSize: "32px", marginRight: "auto", marginLeft: "0vw" }}
+        >
+          Year: {year ? year : "XXXX"}
+        </h1>
+        <h1
+          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
+        >
+          Project Intrest: {projectIntrest ? projectIntrest : "No Intrest"}
+        </h1>
+      </div>
+      {/* <div className="middleInfo">
         <h1
           style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
         >
           Description:
         </h1>
-      </div>
-      <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
-        {description
-          ? description
-          : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-      </p>
+      </div> */}
       <h1
         style={{
           fontSize: "32px",
@@ -83,9 +124,35 @@ function ApplicationInfoView(studentID: string) {
       >
         Grad Date: {gradDate ? gradDate : "Not Approved"}
       </h1>
+      <h1
+        style={{
+          fontSize: "32px",
+          marginLeft: "0vw",
+          marginRight: "auto",
+          paddingBottom: "5vh",
+        }}
+      >
+        Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+      </h1>
       <h1 style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}>
         College: {college ? college : "Not Assigned"}
       </h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "2em",
+          justifyContent: "center",
+          gap: "2em",
+        }}
+      >
+        <button onClick={approve} style={{ backgroundColor: "green" }}>
+          Approve
+        </button>
+        <button onClick={reject} style={{ backgroundColor: "red" }}>
+          Reject
+        </button>
+      </div>
     </div>
   );
 }

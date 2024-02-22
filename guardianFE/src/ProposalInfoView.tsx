@@ -10,6 +10,32 @@ function ProposalInfoView(ProposalID: string) {
   let targetDate: string | null = null;
   let ProposalLeader: string | null = null;
 
+  const approve = async () => {
+    const response = await fetch("http://localhost:5000/approveProposal", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ ProposalID }),
+    });
+    const result = await response.json();
+    return result;
+  };
+
+  const reject = async () => {
+    const response = await fetch("http://localhost:5000/rejectProposal", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ ProposalID }),
+    });
+    const result = await response.json();
+    return result;
+  };
+
   const { user, setUser } = useContext(LoginContext);
 
   const getProposalInfo = async () => {
@@ -86,6 +112,22 @@ function ProposalInfoView(ProposalID: string) {
       <h1 style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}>
         Proposal Leader: {ProposalLeader ? ProposalLeader : "Not Assigned"}
       </h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "2em",
+          justifyContent: "center",
+          gap: "2em",
+        }}
+      >
+        <button onClick={approve} style={{ backgroundColor: "green" }}>
+          Approve
+        </button>
+        <button onClick={reject} style={{ backgroundColor: "red" }}>
+          Reject
+        </button>
+      </div>
     </div>
   );
 }

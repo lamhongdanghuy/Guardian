@@ -4,6 +4,7 @@ import { LoginContext } from "./LoginContextProvider";
 
 interface projectViewProp {
   onClick: Function;
+  setView: Function;
 }
 
 interface Project {

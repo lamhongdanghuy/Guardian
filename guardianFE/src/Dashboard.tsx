@@ -8,6 +8,7 @@ import StudentApplicationsView from "./StudentApplicationsView";
 import ProjectInfoView from "./ProjectInfoView";
 import ApplicationInfoView from "./ApplicationInfoView";
 import ProposalInfoView from "./ProposalInfoView";
+import AddFaculty from "./AddFaculty";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,7 @@ function Dashboard() {
   };
 
   const projectCardClicked = (projectID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
     console.log("card clicked");
@@ -31,22 +33,25 @@ function Dashboard() {
   };
 
   const applicationCardClicked = (studentID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Application View");
     setOpenApplication(studentID);
   };
 
   const proposalCardClicked = (proposalID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Proposal Info View");
     setOpenProposal(proposalID);
   };
 
   const navigator = useNavigate();
-
+  const [prevContainer, setPrevContainer] = useState("Home");
   const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
+  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.userId === null) {
       navigator("/login");
@@ -67,6 +72,15 @@ function Dashboard() {
           }}
         >
           Log Out
+        </div>
+
+        <div
+          className="logoutButton"
+          onClick={() => {
+            setDevMode(!devMode);
+          }}
+        >
+          Dev Mode
         </div>
       </div>
       <div className="sidebar">
@@ -91,7 +105,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {user.role === "Client" && (
+          {(user.role === "Client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -99,7 +113,7 @@ function Dashboard() {
               Apply
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -107,7 +121,7 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -115,7 +129,7 @@ function Dashboard() {
               Project Proposal
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -123,7 +137,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {user.role === "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
@@ -140,11 +154,29 @@ function Dashboard() {
       <div
         style={{
           flex: "1",
-          marginTop: "12.5vh",
+          marginTop: "8vh",
           maxHeight: "87.5vh",
           overflow: "hidden",
+          position: "relative",
         }}
       >
+        {(activeContainer === "Project Info View" ||
+          activeContainer === "Proposal Info View" ||
+          activeContainer === "Application View") && (
+          <button
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "2em",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setActiveContainer(prevContainer);
+            }}
+          >
+            Back
+          </button>
+        )}
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
@@ -163,6 +195,8 @@ function Dashboard() {
           <ApplicationInfoView studentID={openApplication} />
         ) : activeContainer === "Proposal Info View" ? (
           <ProposalInfoView studentID={openProposal} />
+        ) : activeContainer === "Add Faculty" ? (
+          <AddFaculty />
         ) : null}
       </div>
     </div>
