@@ -14,7 +14,6 @@ function About() {
           alignItems: "center",
           width: "90%",
           margin: "auto",
-          marginTop: "8em",
           marginBottom: "5vh",
         }}
       >

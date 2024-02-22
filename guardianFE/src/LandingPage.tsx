@@ -26,7 +26,6 @@ function LandingPage() {
           alignItems: "center",
           width: "80%",
           margin: "auto",
-          marginTop: "8em",
           marginBottom: "4em",
         }}
       >

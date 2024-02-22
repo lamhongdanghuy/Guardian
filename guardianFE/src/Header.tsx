@@ -1,30 +1,30 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 function Header() {
+  const navigator = useNavigate();
   const [serviceOpen, setServiceOpen] = useState(false);
   return (
     <div
       style={{
-        position: "absolute",
+        position: "relative",
         left: "0",
         right: "0",
         top: "0",
         bottom: "0",
-        height: "10em",
+        height: "8em",
       }}
     >
+      <button
+        onClick={() => navigator("/login")}
+        style={{ position: "absolute", top: "1em", right: "1em" }}
+      >
+        Log In
+      </button>
       <header>
-        <Link
-          to="/login"
-          style={{
-            marginLeft: "auto",
-            marginRight: "2em",
-            marginBottom: "0",
-          }}
-        >
-          Log In
-        </Link>
-        <h1 className="title">DePaul Guardian</h1>
+        <h1 className="title" style={{ marginTop: ".5em" }}>
+          DePaul Guardian
+        </h1>
         <nav style={{ alignItems: "flex-start" }}>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/apply">Apply</NavLink>
