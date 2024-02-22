@@ -9,9 +9,7 @@ function AddFaculty() {
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
   const [Role, setRole] = useState("");
-  const [Status, setStatus] = useState("");
   const [Email_verified, setEmail_verified] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
 
@@ -46,7 +44,6 @@ function AddFaculty() {
       Email,
       P_Number,
       Role,
-      Status,
       Email_verified
     );
     const response = await fetch("http://localhost:5000/addFaculty", {
@@ -61,7 +58,6 @@ function AddFaculty() {
         Email,
         P_Number,
         Role,
-        Status,
       }),
     });
     setRtnData(await response.json());
@@ -116,20 +112,18 @@ function AddFaculty() {
           name="P_Number"
           onChange={(e) => setP_Number(e.target.value)}
         />
-        <label htmlFor="Role">Role</label>
-        <input
-          type="text"
-          id="Role"
-          name="Role"
-          onChange={(e) => setRole(e.target.value)}
-        />
-        <label htmlFor="Status">Status</label>
-        <input
-          type="text"
-          id="Status"
-          name="Status"
-          onChange={(e) => setStatus(e.target.value)}
-        />
+        <label htmlFor="role">Role: </label>
+        <select
+          id="school"
+          name="school"
+          onChange={(event) => setRole(event.target.value)}
+          required
+        >
+          <option>Please select one</option>
+          <option value="AA">Admin Assistant</option>
+          <option value="CD">Clinic Director</option>
+          <option value="BD">Board of Director</option>
+        </select>{" "}
         <br />
         <button onClick={sendData}>Submit</button>
       </div>
