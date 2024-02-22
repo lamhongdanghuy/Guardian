@@ -32,6 +32,7 @@ query = "SELECT * FROM CLIENT"
 data = DatabaseConnection().select_query(query)
 print(data)
 
+
 query = "SELECT * FROM COMPANY"
 data = DatabaseConnection().select_query(query)
 print(data)
@@ -67,6 +68,13 @@ def student_apply():
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
+
+@app.route('/addFaculty', methods=['POST'])
+def faculty_apply():
+    data = request.get_json()
+    applyInstance = apply()
+    message = applyInstance.faculty_apply(data)
+    return jsonify({'message': message})
 
 
 if __name__ == "__main__":

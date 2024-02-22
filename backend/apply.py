@@ -157,7 +157,29 @@ class apply:
         print(data)
 
         return "Application submitted!"
+    
+    def faculty_apply(self, data):
+        print(data)
+        f_name = data.get('F_Name')
+        l_name = data.get('L_Name')
+        email = data.get('Email')
+        password = data.get('password')
+        phone_number = data.get('P_Number')
+        role = data.get('Role')
+        print("Role: {}".format(role))
+        hashedPass = self.hash(password)
+        id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
+        try:
+            vals_login = [email, hashedPass, 'Faculty']
+            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+            print("Login info inserted")
+            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
+            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+            print("Faculty info inserted")
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
 
 
     

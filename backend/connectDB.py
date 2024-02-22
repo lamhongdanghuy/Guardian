@@ -62,6 +62,7 @@ class DatabaseConnection:
         
     def send_insert(self, values, table):
         self.start_connection()
+        print("This is the table: {}".format(table))
         try:
             if table == 'LOGIN_INFORMATION':
                 targetTable = Table('LOGIN_INFORMATION', self.metadata, autoload_with=self.engine)
@@ -75,6 +76,8 @@ class DatabaseConnection:
                 targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
             elif table == 'PROJECT':
                 targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
+            elif table == 'FACULTY':
+                targetTable = Table('FACULTY', self.metadata, autoload_with=self.engine)
             query = targetTable.insert().values(values)
             self.session.execute(query)
             self.session.commit()
@@ -105,6 +108,8 @@ class DatabaseConnection:
             targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
         elif table == 'PROJECT':
             targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
+        elif table == 'FACULTY':
+            targetTable = Table('FACULTY', self.metadata, autoload_with=self.engine)
         query = targetTable.insert().values(values)
         with self.engine.connect() as con:
             result = con.execute(query)

@@ -9,7 +9,6 @@ function AddFaculty() {
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
   const [Role, setRole] = useState("");
-  const [Email_verified, setEmail_verified] = useState(false);
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
 
@@ -43,8 +42,7 @@ function AddFaculty() {
       L_Name,
       Email,
       P_Number,
-      Role,
-      Email_verified
+      Role
     );
     const response = await fetch("http://localhost:5000/addFaculty", {
       method: "POST",
@@ -120,9 +118,9 @@ function AddFaculty() {
           required
         >
           <option>Please select one</option>
-          <option value="AA">Admin Assistant</option>
-          <option value="CD">Clinic Director</option>
-          <option value="BD">Board of Director</option>
+          <option value="Admin_Assistant">Admin Assistant</option>
+          <option value="Clinic_Director">Clinic Director</option>
+          <option value="Board_Of_Director">Board of Director</option>
         </select>{" "}
         <br />
         <button onClick={sendData}>Submit</button>
