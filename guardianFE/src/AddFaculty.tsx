@@ -58,13 +58,6 @@ function AddFaculty() {
         style={{ overflowY: "scroll", maxHeight: "70vh", marginBottom: "5vh" }}
       >
         <h2>Add Faculty Member</h2>
-        <label htmlFor="facultyID">Faculty ID</label>
-        <input
-          type="text"
-          id="facultyID"
-          name="facultyID"
-          onChange={(e) => setFacultyID(e.target.value)}
-        />
         <label htmlFor="F_Name">First Name</label>
         <input
           type="text"
