@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
   const [message, setMessage] = useState("");
+  const navigator = useNavigate();
 
   const fetchHello = async () => {
     try {
@@ -53,7 +54,10 @@ function LandingPage() {
         <h2>Services</h2>
 
         <div className="services-container">
-          <div className="serviceImage">
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/PR")}
+          >
             <img
               src="/policy-making.jpg"
               alt="Policy Image"
@@ -63,7 +67,10 @@ function LandingPage() {
               <b>Policy Making</b>
             </p>
           </div>
-          <div className="serviceImage">
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/GRA")}
+          >
             <img
               src="/general-risk-assement.jpg"
               alt="General Security Risk Assessment Image"
@@ -73,7 +80,10 @@ function LandingPage() {
               <b>General Security Risk Assessment</b>
             </p>
           </div>
-          <div className="serviceImage">
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/audit")}
+          >
             <img
               src="/audit-realistic.jpg"
               alt="Audit Image"
