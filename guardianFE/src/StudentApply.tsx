@@ -43,8 +43,8 @@ function StudentApply() {
 
     const sendData = async (event) => {
         const emailPattern = /.+@depaul\.edu/;
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/;
-        const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
+        const phonePattern = /^\d{10}$/;
         const gradDatePattern = /(0[1-9]|1[0-2])-[0-9]{4}/;
         let invalidFields = [];
         if (school === "Please select one") {
@@ -209,11 +209,11 @@ function StudentApply() {
                     required
                 >
                     <option>Please select one</option>
-                    <option value="freshman">Freshman</option>
-                    <option value="sopho">Sophomore</option>
-                    <option value="junior">Junior</option>
-                    <option value="senior">Senior</option>
-                    <option value="grad">Graduate</option>
+                    <option value="Freshman">Freshman</option>
+                    <option value="Sophomore">Sophomore</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Senior">Senior</option>
+                    <option value="Graduate">Graduate</option>
                 </select>{" "}
                 <br />
                 <label htmlFor="gradDate">Anticipated Graduation Date: </label>
@@ -245,8 +245,8 @@ function StudentApply() {
                         <label htmlFor="IS_486">IS_486</label>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <input type="checkbox" id="_487" name="_487" value="IS _487" onChange={handleCheckboxChange} />
-                        <label htmlFor="_487">IS _487</label>
+                        <input type="checkbox" id="IS_487" name="IS_487" value="IS_487" onChange={handleCheckboxChange} />
+                        <label htmlFor="IS_487">IS_487</label>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <input type="checkbox" id="ACC_374" name="ACC_374" value="ACC_374" onChange={handleCheckboxChange} />
@@ -294,10 +294,10 @@ function StudentApply() {
                 <select id="interest" name="interest" onChange={handleInterestChange}
                     required>
                     <option>Please select one</option>
-                    <option value="GRA">General Risk Assessment</option>
-                    <option value="audit">Audit</option>
-                    <option value="PR">Policy Review</option>
-                    <option value="other">Other</option>
+                    <option value="General Risk Assessment">General Risk Assessment</option>
+                    <option value="Audit">Audit</option>
+                    <option value="Policy Review">Policy Review</option>
+                    <option value="Other">Other</option>
                 </select>{" "}
                 <br />
                 {selectedOption === "other" && (
@@ -336,10 +336,10 @@ function StudentApply() {
                     required
                 >
                     <option>Please select one</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                    <option value="notSay">I do not want to answer</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="N/A">I do not want to answer</option>
                 </select>{" "}
                 <br />
                 <label htmlFor="eth">Ethnicity: </label>
@@ -350,13 +350,15 @@ function StudentApply() {
                     required
                 >
                     <option>Please select one</option>
-                    <option value="americanIndian">American Indian</option>
+                    <option value="American Indian or Alaska Native">American Indian or Alaska Native</option>
                     <option value="white">White</option>
-                    <option value="asian">Asian</option>
-                    <option value="bOrAA">Black or African American</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Black or Afican American">Black or African American</option>
                     <option value="nativeOrPI">Native Hawaiian or Other Pacific Islander</option>
-                    <option value="hisp">Hispanic or Latino</option>
-                    <option value="notSay">I do not want to answer</option>
+                    <option value="Hispanic">Hispanic</option>
+                    <option value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</option>
+                    <option value="Other">Other</option>
+                    <option value="N/A">I do not want to answer</option>
                 </select>{" "}
                 <br />
                 <button onClick={sendData}>Apply</button>

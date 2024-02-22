@@ -60,6 +60,31 @@ class DatabaseConnection:
         self.generate_engine()
         self.session = self.Session()
         
+    def send_insert(self, values, table):
+        self.start_connection()
+        try:
+            if table == 'LOGIN_INFORMATION':
+                targetTable = Table('LOGIN_INFORMATION', self.metadata, autoload_with=self.engine)
+            elif table == 'COMPANY':
+                targetTable = Table('COMPANY', self.metadata, autoload_with=self.engine)
+            elif table == 'CLIENT':
+                targetTable = Table('CLIENT', self.metadata, autoload_with=self.engine)
+            elif table == 'STUDENT':
+                targetTable = Table('STUDENT', self.metadata, autoload_with=self.engine)
+            elif table == 'STUDENT_CLASS':
+                targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
+            elif table == 'PROJECT':
+                targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
+            query = targetTable.insert().values(values)
+            self.session.execute(query)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            print(f"An error occurred: {e}")
+        finally:
+            self.session.close()
+            self.close_tunnel()
+        
     def select_query(self, query):
         self.start_connection()
         data = pd.read_sql_query(query, self.engine)
@@ -68,16 +93,18 @@ class DatabaseConnection:
     
     def send_insert(self, values, table):
         self.start_connection()
-        if table == 'Login_information':
-            targetTable = Table('Login_information', self.metadata, autoload_with=self.engine)
-        elif table == 'Company':
-            targetTable = Table('Company', self.metadata, autoload_with=self.engine)
-        elif table == 'Client':
-            targetTable = Table('Client', self.metadata, autoload_with=self.engine)
-        elif table == 'Student':
-            targetTable = Table('Student', self.metadata, autoload_with=self.engine)
-        elif table == 'Student_class_completion':
-            targetTable = Table('Student_class_completion', self.metadata, autoload_with=self.engine)
+        if table == 'LOGIN_INFORMATION':
+            targetTable = Table('LOGIN_INFORMATION', self.metadata, autoload_with=self.engine)
+        elif table == 'COMPANY':
+            targetTable = Table('COMPANY', self.metadata, autoload_with=self.engine)
+        elif table == 'CLIENT':
+            targetTable = Table('CLIENT', self.metadata, autoload_with=self.engine)
+        elif table == 'STUDENT':
+            targetTable = Table('STUDENT', self.metadata, autoload_with=self.engine)
+        elif table == 'STUDENT_CLASS':
+            targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
+        elif table == 'PROJECT':
+            targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
         query = targetTable.insert().values(values)
         with self.engine.connect() as con:
             result = con.execute(query)
