@@ -24,7 +24,7 @@ function Header() {
         >
           Log In
         </Link>
-        <h1>DePaul Guardian</h1>
+        <h1 className="title">DePaul Guardian</h1>
         <nav style={{ alignItems: "flex-start" }}>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/apply">Apply</NavLink>
@@ -35,7 +35,14 @@ function Header() {
           >
             <NavLink to="/services">Services</NavLink>
             {serviceOpen && (
-              <div style={{ display: "flex", flexDirection: "column", background: "#242424", border: "2px solid black"}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "#242424",
+                  border: "2px solid black",
+                }}
+              >
                 <Link to="/services/GRA">General Risk Assessment</Link>
                 <Link to="/services/PR">Policy Review</Link>
                 <Link to="/services/audit">Audit</Link>

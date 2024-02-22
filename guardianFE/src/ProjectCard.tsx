@@ -24,19 +24,19 @@ function ProjectCard(props: ProjectCardProps) {
       }}
       onClick={handleClick}
     >
-      <div className="cardTop">
+      <div className="cardTopProject">
         <h2
-          style={{ fontSize: "30px", marginLeft: "1vw", marginRight: "auto" }}
+          style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
         >
           {props.name}
         </h2>
         <h2
-          style={{ fontSize: "30px", marginRight: "1vw", marginLeft: "auto" }}
+          style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
         >
           {props.type}
         </h2>
       </div>
-      <div className="cardTop">
+      <div className="cardBottom">
         <h2 style={{ fontSize: "24px" }}>{props.status}</h2>
         <h2 style={{ fontSize: "24px" }}>
           Project Leader: {props.projectLeader}
