@@ -11,7 +11,7 @@ class Login:
         #This is to look into the Login_Information table with the 'identifier' which is the entered email.
         logInQuery = """
                 SELECT *
-                FROM Login_information
+                FROM LOGIN_INFORMATION
                 WHERE Email = '{}';
                 """.format(identifier)
         
@@ -20,7 +20,7 @@ class Login:
             LoginData = db_Connection.select_query(logInQuery)   #This gets the information of the users login data if the email they entered exists 
             
             print("Checking Password")                           #Check for password in Login_Information table
-            byteDBPassword = LoginData.at[0, 'Pass_word'].encode('utf-8')   #Looks at retrieved dataframe 'LoginData' at the first row and column 'Pass_word' then encodes it into bytes since it is retrieved as a string
+            byteDBPassword = LoginData.at[0, 'Password'].encode('utf-8')   #Looks at retrieved dataframe 'LoginData' at the first row and column 'Pass_word' then encodes it into bytes since it is retrieved as a string
             bytePassword = password.encode('utf-8')                         #This encodes the user entered password into bytes so it is comparable to the hashed password in the Login_Information table
             if not bcrypt.checkpw(bytePassword, byteDBPassword):            #Compares
                 print("The bcrypt check failed")
@@ -32,7 +32,7 @@ class Login:
                 SELECT *
                 FROM {}
                 WHERE Email = '{}';
-                """.format(LoginData.at[0, 'Account_Type'],identifier)
+                """.format(LoginData.at[0, 'Account_Type'].upper(),identifier)
             userInfo = db_Connection.select_query(idQuery)
 
             print("Creating Payload")
