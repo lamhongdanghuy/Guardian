@@ -1,14 +1,40 @@
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 function PR() {
-    return (
-      <div className="services">
-        <Header />
-        <h1>Policy Review</h1>
-        <p>DePaul collaborates with a wide range of both internal and external stakeholders to establish, record, approve, publish, and raise awareness of information technology work practices, policies, and procedures. We not only solidify governance frameworks but also ensure that our IT strategies align seamlessly with the ever-evolving challenges.</p>
+  const navigator = useNavigate();
+
+  return (
+    <div className="services">
+      <Header />
+      <h1>Policy Review</h1>
+      <p>
+        DePaul collaborates with a wide range of both internal and external
+        stakeholders to establish, record, approve, publish, and raise awareness
+        of information technology work practices, policies, and procedures. We
+        not only solidify governance frameworks but also ensure that our IT
+        strategies align seamlessly with the ever-evolving challenges.
+      </p>
+      <div className="splitImageContainer">
+        <div className="splitImage" onClick={() => navigator("/apply")}>
+          <img
+            src="/policy-making.jpg"
+            alt="Policy Image"
+            className="splitImagePic"
+          />
+          <h2 className="splitImageLabel">Apply</h2>
+        </div>
+        <div className="splitImage" onClick={() => navigator("/services")}>
+          <img
+            src="/general-risk-assement.jpg"
+            alt="General Security Risk Assessment Image"
+            className="splitImagePic"
+          />
+          <h2 className="splitImageLabel">Services</h2>
+        </div>
       </div>
-    );
-  }
-  
-  export default PR;
-  
+    </div>
+  );
+}
+
+export default PR;

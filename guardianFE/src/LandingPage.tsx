@@ -39,14 +39,18 @@ function LandingPage() {
             DePaul University's Cybersecurity Clinic
           </h2>
         </div>
-        <p>
-          Students: Get real world experience by working on cybersecurity
-          projects with real clients.
-        </p>
-        <p>
-          Clients: Get help with your cybersecurity needs from DePaul students
-          at affordable rates.
-        </p>
+        <div>
+          <h3>
+            Students: Get real world experience by working on cybersecurity
+            projects with real clients.
+          </h3>
+        </div>
+        <div>
+          <h3>
+            Clients: Get help with your cybersecurity needs from DePaul students
+            at affordable rates.
+          </h3>
+        </div>
         <h2>Services</h2>
 
         <div className="services-container">
@@ -56,7 +60,7 @@ function LandingPage() {
               alt="Policy Image"
               className="servicePic"
             />
-            <p>
+            <p className="servicePicLabel">
               <b>Policy Making</b>
             </p>
           </div>
@@ -66,7 +70,7 @@ function LandingPage() {
               alt="General Security Risk Assessment Image"
               className="servicePic"
             />
-            <p>
+            <p className="servicePicLabel">
               <b>General Security Risk Assessment</b>
             </p>
           </div>
@@ -76,19 +80,49 @@ function LandingPage() {
               alt="Audit Image"
               className="servicePic"
             />
-            <p>
+            <p className="servicePicLabel">
               <b>Audit</b>
             </p>
           </div>
         </div>
-        <h2>Mission Statement</h2>
-        <p>
-          Raise organizational awareness of information security and privacy
-          risks discovered from a student- led risk assessment so that
-          incremental improvements are made in the client’s security policies
-          and practices while students in turn gain real-world experience that
-          contributes to a cyber security workforce.
-        </p>
+        <div
+          style={{
+            width: "80%",
+            border: "1px solid white",
+            borderRadius: "12px",
+            backgroundColor: "navy",
+            overflow: "hidden",
+            marginTop: "2em",
+          }}
+        >
+          <p style={{ fontSize: "18px" }}>
+            As the ever-changing threat landscape continues to evolve, it
+            necessitates continuous engagement and innovation with careful
+            consideration of emerging cybersecurity challenges. At DePaul, we
+            aim to establish a cornerstone within our community while striving
+            to shield our clients from both current and emerging threats to
+            their security and privacy. If you would like to learn more about
+            our services or how to get involved, please visit the links below.
+          </p>
+          <div className="splitImageContainer">
+            <div className="splitImage" onClick={() => navigator("/apply")}>
+              <img
+                src="/policy-making.jpg"
+                alt="Policy Image"
+                className="splitImagePic"
+              />
+              <h2 className="splitImageLabel">Apply</h2>
+            </div>
+            <div className="splitImage" onClick={() => navigator("/services")}>
+              <img
+                src="/general-risk-assement.jpg"
+                alt="General Security Risk Assessment Image"
+                className="splitImagePic"
+              />
+              <h2 className="splitImageLabel">Services</h2>
+            </div>
+          </div>
+        </div>
         {/* <Footer /> */}
       </div>
     </>

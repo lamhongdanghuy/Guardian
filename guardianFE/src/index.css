@@ -68,6 +68,10 @@
   width: 100%;
 }
 
+.serviceImage {
+  position: relative;
+}
+
 .serviceImageLayer {
   width: 100%;
   height: 300px;
@@ -301,8 +305,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
   margin: auto;
   margin-top: 8em;
+  gap: 2em;
 }
 
 h4 {
@@ -371,9 +377,27 @@ nav {
   opacity: 0.65;
 }
 
+.servicePicLabel {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  text-shadow: #000000 0 0 0.5em;
+}
+
 .servicePic {
   height: 24vh;
   width: auto;
+  opacity: 0.65;
+  cursor: pointer;
+}
+
+.servicePic:hover {
+  opacity: 0.9;
+  transition: opacity 0.3s;
 }
 
 .cardTopProject {
