@@ -113,7 +113,7 @@ function Dashboard() {
               Propose a Project
             </div>
           )}
-          {(user.role === "aculty" || devMode) && (
+          {(user.role === "Faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
