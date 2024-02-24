@@ -24,18 +24,14 @@ from email.mime.text import MIMEText
 from login import Login
 from apply import apply
 from connectDB import DatabaseConnection
-
+from proposal import proposal
 
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-
-
-
-
-query = "SELECT * FROM LOGIN_INFORMATION"
-data = DatabaseConnection().select_query(query)
+query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
+data = DatabaseConnection().select_query(query).at[0, 'F_Name']
 print(data)
 
 #SMTP server configuration
@@ -46,6 +42,30 @@ password = 'snmz oioc xwoa nvhp'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
+
+@app.route('/approveProposal', methods=['POST'])
+def proposalInfo():
+    data = request.get_json()
+    proposal_ID = data.get('ProposalID')
+    approve = proposal()
+    respone = approve.approve_proposal(proposal_ID)
+    return respone, 200
+
+@app.route('/rejectProposal', methods=['POST'])
+def proposalInfo():
+    data = request.get_json()
+    proposal_ID = data.get('ProposalID')
+    reject = proposal()
+    respone = reject.reject_proposal(proposal_ID)
+    return respone, 200
+
+@app.route('/proposalInfo', methods=['POST'])
+def proposalInfo():
+    data = request.get_json()
+    proposal_ID = data.get('ProposalID')
+    get_Info = proposal()
+    respone = get_Info.get_proposal_info(proposal_ID)
+    return respone, 200
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -67,7 +87,6 @@ def student_apply():
     applyInstance.student_apply(data)
     email = data.get('email')
     verify_email(email)
-        
     return jsonify({'message': 'Please confirm you email!'}), 200
 
 @app.route('/apply/client', methods=['POST'])
