@@ -42,6 +42,7 @@ class apply:
 
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
+        project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(datetime.datetime.now()))
         
         vals_login = [ email, hashedPass, 'Client']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
@@ -52,6 +53,8 @@ class apply:
         vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
         DatabaseConnection().send_insert(vals_company, 'COMPANY')
         print ("Company info inserted")
+        vals_project = [project_id, org_name, company_id, client_id, "", project_type,datetime.date(2000, 1, 1), datetime.datetime.now(), sen_data , 'In Review']
+        DatabaseConnection().send_insert(vals_project, 'PROJECT')
         
         query = "SELECT * FROM LOGIN_INFORMATION"
         data = DatabaseConnection().select_query(query)
