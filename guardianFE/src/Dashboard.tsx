@@ -110,7 +110,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
             >
-              Apply
+              Propose a Project
             </div>
           )}
           {(user.role === "faculty" || devMode) && (
@@ -126,7 +126,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
             >
-              Project Proposal
+              Project Proposals
             </div>
           )}
           {(user.role === "faculty" || devMode) && (
