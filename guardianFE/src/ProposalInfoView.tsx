@@ -1,15 +1,33 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ProposalInfoView(ProposalID: string) {
+  interface Member {
+    Full_Name: string;
+    Email: string;
+  }
+
+  let member1: Member = {
+    Full_Name: "John Doe",
+    Email: "john.doe@example.com",
+  };
+
+  let member2: Member = {
+    Full_Name: "Jane Doe",
+    Email: "jane.doe@example.com",
+  };
+
+  let sample_leaders: Member[] = [member1, member2];
+
   console.log(ProposalID);
-  let clientName: string | null = null;
+  let companyName: string | null = null;
   let type: string | null = null;
   let description: string | null = null;
   let status: string | null = null;
   let targetDate: string | null = null;
-  let ProposalLeader: string | null = null;
+  let av_leaders: Member[] = [];
 
+  const [leaderEmail, setLeaderEmail] = useState("");
   const approve = async () => {
     const response = await fetch("http://localhost:5000/approveProposal", {
       method: "POST",
@@ -17,7 +35,7 @@ function ProposalInfoView(ProposalID: string) {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ ProposalID }),
+      body: JSON.stringify({ ProposalID, leaderEmail }),
     });
     const result = await response.json();
     return result;
@@ -49,12 +67,12 @@ function ProposalInfoView(ProposalID: string) {
     });
     const result = await response.json();
 
-    clientName = result.clientName;
-    type = result.type;
-    description = result.description;
-    status = result.status;
-    targetDate = result.targetDate;
-    ProposalLeader = result.ProposalLeader;
+    companyName = result.Company_Name;
+    type = result.Project_Type;
+    description = result.Project_Description;
+    status = result.Project_Status;
+    targetDate = result.Target_Date;
+    av_leaders = result.av_leaders;
   };
 
   useEffect(() => {
@@ -69,7 +87,7 @@ function ProposalInfoView(ProposalID: string) {
         <h1
           style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
         >
-          Client: {clientName ? clientName : "Default"}
+          Company: {companyName ? companyName : "Default"}
         </h1>
         <h1
           style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
@@ -109,9 +127,40 @@ function ProposalInfoView(ProposalID: string) {
       >
         Target Date: {targetDate ? targetDate : "Not Approved"}
       </h1>
-      <h1 style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}>
-        Proposal Leader: {ProposalLeader ? ProposalLeader : "Not Assigned"}
-      </h1>
+      <div
+        style={{
+          marginRight: "auto",
+          display: "flex",
+          justifyContent: "center",
+          gap: "1em",
+          alignItems: "center",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "32px",
+            marginLeft: "0vw",
+            marginRight: "auto",
+          }}
+        >
+          Project Leader:
+        </h1>
+        <div>
+          <select
+            id="leader"
+            name="leader"
+            onChange={(event) => setLeaderEmail(event.target.value)}
+            required
+            style={{ height: "32px", borderRadius: "5px", fontSize: "20px" }}
+          >
+            <option value="">Please Select A Leader</option>
+            {av_leaders.map((leader) => (
+              <option value={leader.Email}>{leader.Full_Name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div
         style={{
           display: "flex",
