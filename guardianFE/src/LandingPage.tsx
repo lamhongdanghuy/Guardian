@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
   const [message, setMessage] = useState("");
+  const navigator = useNavigate();
 
   const fetchHello = async () => {
     try {
@@ -26,48 +27,112 @@ function LandingPage() {
           alignItems: "center",
           width: "80%",
           margin: "auto",
-          marginTop: "8em",
+          marginBottom: "4em",
         }}
       >
         {message}
+        <div className="banner">
+          <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
+
+          <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
+          <h2 className="bannerLowerText">
+            DePaul University's Cybersecurity Clinic
+          </h2>
+        </div>
+        <div>
+          <h3>
+            Students: Get real world experience by working on cybersecurity
+            projects with real clients.
+          </h3>
+        </div>
+        <div>
+          <h3>
+            Clients: Get help with your cybersecurity needs from DePaul students
+            at affordable rates.
+          </h3>
+        </div>
         <h2>Services</h2>
+
         <div className="services-container">
-          <div className="serviceImage">
-            <img src="/PolicyServiceImage.svg" alt="Policy Image" />
-            <p><b>Policy Making</b></p>
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/PR")}
+          >
+            <img
+              src="/policy-making.jpg"
+              alt="Policy Image"
+              className="servicePic"
+            />
+            <p className="servicePicLabel">
+              <b>Policy Making</b>
+            </p>
           </div>
-          <div className="serviceImage">
-            <img src="/RiskAssessImage.svg" alt="General Security Risk Assessment Image" />
-            <p><b>General Security Risk Assessment</b></p>
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/GRA")}
+          >
+            <img
+              src="/general-risk-assement.jpg"
+              alt="General Security Risk Assessment Image"
+              className="servicePic"
+            />
+            <p className="servicePicLabel">
+              <b>General Security Risk Assessment</b>
+            </p>
           </div>
-          <div className="serviceImage">
-            <img src="/AuditServiceImage.svg" alt="Audit Image" />
-            <p><b>Audit</b></p>
+          <div
+            className="serviceImage"
+            onClick={() => navigator("services/audit")}
+          >
+            <img
+              src="/audit-realistic.jpg"
+              alt="Audit Image"
+              className="servicePic"
+            />
+            <p className="servicePicLabel">
+              <b>Audit</b>
+            </p>
           </div>
         </div>
-        <h2>Mission Statement</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan
-          tortor posuere ac ut. Suspendisse in est ante in nibh mauris cursus.
-          Quam vulputate dignissim suspendisse in est ante in nibh. Faucibus
-          nisl tincidunt eget nullam non. Lectus mauris ultrices eros in. Arcu
-          cursus euismod quis viverra nibh. Eleifend donec pretium vulputate
-          sapien nec sagittis aliquam malesuada. Eget nunc scelerisque viverra
-          mauris in aliquam sem fringilla. Consequat mauris nunc congue nisi
-          vitae suscipit tellus. Quis vel eros donec ac odio tempor orci dapibus
-          ultrices. Amet nulla facilisi morbi tempus iaculis urna id volutpat
-          lacus. Nisi scelerisque eu ultrices vitae. Nam at lectus urna duis
-          convallis convallis. Dui nunc mattis enim ut tellus elementum
-          sagittis. Etiam sit amet nisl purus in mollis. Cras adipiscing enim eu
-          turpis egestas pretium. Sed felis eget velit aliquet sagittis id
-          consectetur purus. At volutpat diam ut venenatis tellus in metus.
-          Dictum varius duis at consectetur lorem donec.
-        </p>
-        <button style={{ width: "30%" }} onClick={fetchHello}>
-          Talk to backend!
-        </button>
-        <Footer />
+        <div
+          style={{
+            width: "80%",
+            border: "1px solid white",
+            borderRadius: "12px",
+            backgroundColor: "navy",
+            overflow: "hidden",
+            marginTop: "2em",
+          }}
+        >
+          <p style={{ fontSize: "18px" }}>
+            As the ever-changing threat landscape continues to evolve, it
+            necessitates continuous engagement and innovation with careful
+            consideration of emerging cybersecurity challenges. At DePaul, we
+            aim to establish a cornerstone within our community while striving
+            to shield our clients from both current and emerging threats to
+            their security and privacy. If you would like to learn more about
+            our services or how to get involved, please visit the links below.
+          </p>
+          <div className="splitImageContainer">
+            <div className="splitImage" onClick={() => navigator("/apply")}>
+              <img
+                src="/policy-making.jpg"
+                alt="Policy Image"
+                className="splitImagePic"
+              />
+              <h2 className="splitImageLabel">Apply</h2>
+            </div>
+            <div className="splitImage" onClick={() => navigator("/services")}>
+              <img
+                src="/general-risk-assement.jpg"
+                alt="General Security Risk Assessment Image"
+                className="splitImagePic"
+              />
+              <h2 className="splitImageLabel">Services</h2>
+            </div>
+          </div>
+        </div>
+        {/* <Footer /> */}
       </div>
     </>
   );

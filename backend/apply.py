@@ -1,3 +1,4 @@
+import decimal
 from flask import request, jsonify
 import json
 import pandas as pd
@@ -18,14 +19,8 @@ class apply:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
 
-    # def __init__(self):
-        # self.engine = eng
-        # self.metadata = MetaData()
-        # self.login_information = Table('Login_information', self.metadata, autoload_with=self.engine)
-        # self.company = Table('Company', self.metadata, autoload_with=self.engine)
-        # self.clients = Table('Client', self.metadata, autoload_with=self.engine)
-
     def client_apply(self,data):
+        print(data)
         
         f_name = data.get('fName')
         l_name = data.get('lName')
@@ -45,20 +40,36 @@ class apply:
 
         hashedPass = self.hash(password)
 
-        id = uuid.uuid3(uuid.NAMESPACE_OID, email)
+        client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
+        company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
+        try:
+            vals_login = [ email, hashedPass, 'Client']
+            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+            print("Login info inserted")
+            vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
+            DatabaseConnection().send_insert(vals_client, 'CLIENT')
+            print("Client info inserted")
+            vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
+            DatabaseConnection().send_insert(vals_company, 'COMPANY')
+            print ("Company info inserted")
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
+        
+        query = "SELECT * FROM LOGIN_INFORMATION"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM CLIENT"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM COMPANY"
+        data = DatabaseConnection().select_query(query)
+        print(data)
 
-        vals_login = [ email, hashedPass, 'Client', 1]
-        DatabaseConnection().send_insert(vals_login, 'Login_information')
-        print("Login info inserted")
-        vals_company = [id, org_name, org_type, phone_number, url, revenue, num_of_IT, sen_data, sra, project_type, curious, comment]
-        DatabaseConnection().send_insert(vals_company, 'Company')
-        print ("Company info inserted")
-        vals_client = [id, email, f_name, l_name, id, 'Client']
-        DatabaseConnection().send_insert(vals_client, 'Client')
         return "Application submitted!"
         
     def student_apply(self, data):
-
+        print(data)
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
@@ -77,40 +88,98 @@ class apply:
 
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
+        
+        CSEC390 = 0
+        CSEC490 = 0
+        CSEC488 = 0
+        IS486 = 0
+        IS487 = 0
+        ACC374 = 0
+        ACC376 = 0
+        ACC378 = 0
+        ACC636 = 0
+        ACC638 = 0
+        ACC639 = 0
+        FIN362 = 0
+        SEV621 = 0
+        SEC_DAEMONS = 0
+        WICYS = 0
+        
+        if 'CSEC_390' in course_taken:
+            CSEC390 = 1
+        if 'CSEC_490' in course_taken:
+            CSEC490 = 1
+        if 'CSEC_488' in course_taken:
+            CSEC488 = 1
+        if 'IS_486' in course_taken:
+            IS486 = 1
+        if 'IS_487' in course_taken:
+            IS487 = 1
+        if 'ACC_374' in course_taken:
+            ACC374 = 1
+        if 'ACC_376' in course_taken:
+            ACC376 = 1
+        if 'ACC_378' in course_taken:
+            ACC378 = 1
+        if 'ACC_636' in course_taken:
+            ACC636 = 1
+        if 'ACC_638' in course_taken:
+            ACC638 = 1
+        if 'ACC_639' in course_taken:
+            ACC639 = 1
+        if 'FIN_362' in course_taken:
+            FIN362 = 1
+        if 'SEV_621' in course_taken:
+            SEV621 = 1
+        if 'SEC_DAEMONS' in course_taken:
+            SEC_DAEMONS = 1
+        if 'WICYS' in course_taken:
+            WICYS = 1
+    
+        vals_login = [ email, hashedPass, 'Student']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        print("Login info inserted")
+        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, hear, when, gen, eth, 'Student', 'In Review', 0]
+        DatabaseConnection().send_insert(vals_student, 'STUDENT')
+        print("Student info inserted")
+        vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
+        DatabaseConnection().send_insert(vals_courses, 'STUDENT_CLASS')
+        print("Student Class inserted")
+            
+        query = "SELECT * FROM LOGIN_INFORMATION"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM STUDENT"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM STUDENT_CLASS"
+        data = DatabaseConnection().select_query(query)
+        print(data)
 
-        vals_login = [ email, hashedPass, 'Student', 0]
-        DatabaseConnection().send_insert(vals_login, 'Login_information')
-        print('1')
-        vals_student = [id, email, l_name, f_name, school, phone_number, major, 0 , None, hear, grad_date, 'Student' , year_standing, gen, eth, when]
-        DatabaseConnection().send_insert(vals_student, 'Student')
-        print('2')
-
-        vals_student_class_completion = {
-        'S_id' : id,
-        'CSEC_390' : 0,
-        'CSEC_490' : 0,
-        'CSEC_488' : 0,
-        'IS_486' : 0,
-        'ACC_374' : 0,
-        'ACC_376' : 0,
-        'ACC_378' : 0,
-        'ACC_636' : 0,
-        'ACC_638' : 0,
-        'ACC_639' : 0,
-        'FIN_362' : 0,
-        'SEV_621' : 0,
-        #'SEC_DAEMONS' : 0,
-        #'WICYS = 0' : 0
-        }
-
-        for course in course_taken:
-            if course.upper() in vals_student_class_completion:
-                vals_student_class_completion[course.upper()] = 1
-
-        DatabaseConnection().send_insert(vals_student_class_completion, 'Student_class_completion')
-        print('3')
         return "Application submitted!"
+    
+    def faculty_apply(self, data):
+        print(data)
+        f_name = data.get('F_Name')
+        l_name = data.get('L_Name')
+        email = data.get('Email')
+        password = data.get('password')
+        phone_number = data.get('P_Number')
+        role = data.get('Role')
+        print("Role: {}".format(role))
+        hashedPass = self.hash(password)
+        id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
+        try:
+            vals_login = [email, hashedPass, 'Faculty']
+            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+            print("Login info inserted")
+            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
+            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+            print("Faculty info inserted")
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
 
 
     

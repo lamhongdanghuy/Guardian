@@ -28,11 +28,12 @@ app.config["SECRET KEY"] = "1234"
 CORS(app)
 
 
-query = "SELECT * FROM Client"
+query = "SELECT * FROM CLIENT"
 data = DatabaseConnection().select_query(query)
 print(data)
 
-query = "SELECT * FROM Company"
+
+query = "SELECT * FROM COMPANY"
 data = DatabaseConnection().select_query(query)
 print(data)
 
@@ -45,8 +46,8 @@ def login():
     password = data.get('password')
     print(identifier)
     print(password)
-    loginInstance = Login()
-    db_Connection = DatabaseConnection()
+    loginInstance = Login()                         #Create a Login instance for when a user logs in from the website
+    db_Connection = DatabaseConnection()            #Create a database connection to pass into login instance to send queries for identifing person logging in
     payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
@@ -67,6 +68,13 @@ def student_apply():
     message = applyInstance.student_apply(data)
     return jsonify({'message': message})
 
+
+@app.route('/addFaculty', methods=['POST'])
+def faculty_apply():
+    data = request.get_json()
+    applyInstance = apply()
+    message = applyInstance.faculty_apply(data)
+    return jsonify({'message': message})
 
 
 if __name__ == "__main__":
