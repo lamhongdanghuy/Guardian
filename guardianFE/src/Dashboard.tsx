@@ -6,6 +6,9 @@ import ManageView from "./ManageView";
 import ProjectProposalsView from "./ProjectProposalsView";
 import StudentApplicationsView from "./StudentApplicationsView";
 import ProjectInfoView from "./ProjectInfoView";
+import ApplicationInfoView from "./ApplicationInfoView";
+import ProposalInfoView from "./ProposalInfoView";
+import AddFaculty from "./AddFaculty";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -16,17 +19,39 @@ function Dashboard() {
     role: string;
   }
 
-  const cardClicked = (projectID: string) => {
+  const returnToLandingPage = () => {
+    setUser({ id: null, email: null, role: null, token: null });
+    navigator("/");
+  };
+
+  const projectCardClicked = (projectID: string) => {
+    setPrevContainer(activeContainer);
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
+    console.log("card clicked");
     console.log(projectID);
   };
 
-  const navigator = useNavigate();
+  const applicationCardClicked = (studentID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Application View");
+    setOpenApplication(studentID);
+  };
 
+  const proposalCardClicked = (proposalID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Proposal Info View");
+    setOpenProposal(proposalID);
+  };
+
+  const navigator = useNavigate();
+  const [prevContainer, setPrevContainer] = useState("Home");
   const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
+  const [openApplication, setOpenApplication] = useState("");
+  const [openProposal, setOpenProposal] = useState("");
+  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.userId === null) {
       navigator("/login");
@@ -48,10 +73,25 @@ function Dashboard() {
         >
           Log Out
         </div>
+
+        <div
+          className="logoutButton"
+          onClick={() => {
+            setDevMode(!devMode);
+          }}
+        >
+          Dev Mode
+        </div>
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
-        <div className="sidebarTitle">Depaul Guardian</div>
+        <div
+          className="sidebarTitle"
+          onClick={returnToLandingPage}
+          style={{ cursor: "pointer" }}
+        >
+          DePaul Guardian
+        </div>
         <div className="sidebarMenu">
           <div
             className="sidebarItem"
@@ -65,7 +105,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {user.role == "client" && (
+          {(user.role === "Client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -73,7 +113,7 @@ function Dashboard() {
               Apply
             </div>
           )}
-          {user.role == "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -81,7 +121,7 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {user.role == "faculty" && (
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -89,7 +129,15 @@ function Dashboard() {
               Project Proposal
             </div>
           )}
-          {user.role == "faculty" && (
+          {(user.role === "faculty" || devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Add Faculty")}
+            >
+              Add Faculty
+            </div>
+          )}
+          {(user.role === "faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
@@ -103,21 +151,52 @@ function Dashboard() {
         <Link to="/dashboard/students">Students</Link>
         <Link to="/dashboard/services">Services</Link> */}
       </div>
-      <div style={{ flex: "1" }}>
+      <div
+        style={{
+          flex: "1",
+          marginTop: "8vh",
+          maxHeight: "87.5vh",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {(activeContainer === "Project Info View" ||
+          activeContainer === "Proposal Info View" ||
+          activeContainer === "Application View") && (
+          <button
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "2em",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setActiveContainer(prevContainer);
+            }}
+          >
+            Back
+          </button>
+        )}
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
-          <ProjectsView onClick={cardClicked} />
+          <ProjectsView onClick={projectCardClicked} />
         ) : activeContainer === "Apply" ? (
           <ApplyView />
         ) : activeContainer === "Manage Tables" ? (
           <ManageView />
         ) : activeContainer === "Project Proposals" ? (
-          <ProjectProposalsView />
+          <ProjectProposalsView onClick={proposalCardClicked} />
         ) : activeContainer === "Student Applications" ? (
-          <StudentApplicationsView />
+          <StudentApplicationsView onClick={applicationCardClicked} />
         ) : activeContainer === "Project Info View" ? (
-          <ProjectInfoView />
+          <ProjectInfoView projectID={openProject} />
+        ) : activeContainer === "Application View" ? (
+          <ApplicationInfoView studentID={openApplication} />
+        ) : activeContainer === "Proposal Info View" ? (
+          <ProposalInfoView studentID={openProposal} />
+        ) : activeContainer === "Add Faculty" ? (
+          <AddFaculty />
         ) : null}
       </div>
     </div>
