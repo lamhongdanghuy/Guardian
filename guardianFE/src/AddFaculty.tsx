@@ -36,14 +36,7 @@ function AddFaculty() {
       return;
     }
     console.log("sending data");
-    console.log(
-      password,
-      F_Name,
-      L_Name,
-      Email,
-      P_Number,
-      Role
-    );
+    console.log(password, F_Name, L_Name, Email, P_Number, Role);
     const response = await fetch("http://localhost:5000/addFaculty", {
       method: "POST",
       headers: {
@@ -64,70 +57,76 @@ function AddFaculty() {
 
   return (
     <div>
-      <div
-        className="form"
-        style={{ overflowY: "scroll", maxHeight: "70vh", marginBottom: "5vh" }}
-      >
-        <h2>Add Faculty Member</h2>
-        <label htmlFor="F_Name">First Name</label>
-        <input
-          type="text"
-          id="F_Name"
-          name="F_Name"
-          onChange={(e) => setF_Name(e.target.value)}
-        />
-        <label htmlFor="L_Name">Last Name</label>
-        <input
-          type="text"
-          id="L_Name"
-          name="L_Name"
-          onChange={(e) => setL_Name(e.target.value)}
-        />
-        <label htmlFor="Email">Email</label>
-        <input
-          type="email"
-          id="Email"
-          name="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <label>Verify Password</label>
-        <input
-          type="password"
-          onChange={(e) => setVerifyPassword(e.target.value)}
-          required
-        />
-        <label htmlFor="P_Number">Phone Number</label>
-        <input
-          type="tel"
-          id="P_Number"
-          name="P_Number"
-          onChange={(e) => setP_Number(e.target.value)}
-        />
-        <label htmlFor="role">Role: </label>
-        <select
-          id="school"
-          name="school"
-          onChange={(event) => setRole(event.target.value)}
-          required
+      {!showResults ? (
+        <div
+          className="form"
+          style={{
+            overflowY: "scroll",
+            maxHeight: "70vh",
+            marginBottom: "5vh",
+          }}
         >
-          <option>Please select one</option>
-          <option value="Admin_Assistant">Admin Assistant</option>
-          <option value="Clinic_Director">Clinic Director</option>
-          <option value="Board_Of_Director">Board of Director</option>
-        </select>{" "}
-        <br />
-        <button onClick={sendData}>Submit</button>
-      </div>
-      {showResults && (
+          <h2>Add Faculty Member</h2>
+          <label htmlFor="F_Name">First Name</label>
+          <input
+            type="text"
+            id="F_Name"
+            name="F_Name"
+            onChange={(e) => setF_Name(e.target.value)}
+          />
+          <label htmlFor="L_Name">Last Name</label>
+          <input
+            type="text"
+            id="L_Name"
+            name="L_Name"
+            onChange={(e) => setL_Name(e.target.value)}
+          />
+          <label htmlFor="Email">Email</label>
+          <input
+            type="email"
+            id="Email"
+            name="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label>Verify Password</label>
+          <input
+            type="password"
+            onChange={(e) => setVerifyPassword(e.target.value)}
+            required
+          />
+          <label htmlFor="P_Number">Phone Number</label>
+          <input
+            type="tel"
+            id="P_Number"
+            name="P_Number"
+            onChange={(e) => setP_Number(e.target.value)}
+          />
+          <label htmlFor="role">Role: </label>
+          <select
+            id="school"
+            name="school"
+            onChange={(event) => setRole(event.target.value)}
+            required
+          >
+            <option>Please select one</option>
+            <option value="Admin_Assistant">Admin Assistant</option>
+            <option value="Clinic_Director">Clinic Director</option>
+            <option value="Board_Of_Director">Board of Director</option>
+          </select>{" "}
+          <br />
+          <button onClick={sendData}>Submit</button>
+        </div>
+      ) : (
         <div>
-          <h1>{rtnData}</h1>
+          <h1>Faculty Member Added!</h1>
+          <h2>{rtnData.message}</h2>
         </div>
       )}
     </div>

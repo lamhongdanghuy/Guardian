@@ -104,188 +104,198 @@ function ClientApply() {
   return (
     <div>
       <Header />
-      <div className="form">
-        <h2>Registration for First Time Client</h2>
-        <label htmlFor="fName">Contact Person First Name: </label>
-        <input
-          type="text"
-          id="fName"
-          name="fName"
-          onChange={(event) => setfName(event.target.value)}
-          required
-        ></input>{" "}
-        <br />
-        <label htmlFor="LName">Contact Person Last Name: </label>
-        <input
-          type="text"
-          id="lName"
-          name="lName"
-          onChange={(event) => setlName(event.target.value)}
-          required
-        ></input>{" "}
-        <br />
-        <label htmlFor="emailAdd">Contact Person Email: </label>
-        <input
-          type="email"
-          id="emailAdd"
-          name="emailAdd"
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        ></input>{" "}
-        <br />
-        <label htmlFor="passWord">Password: </label>
-        <input
-          type="password"
-          id="passWord"
-          name="passWord"
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        ></input>{" "}
-        <br />
-        <label htmlFor="VerfPassWord">Verify Password: </label>
-        <input
-          type="password"
-          id="VerfPassWord"
-          name="VerfPassWord"
-          onChange={(event) => setVerifyPassword(event.target.value)}
-          required
-        ></input>{" "}
-        <br />
-        <label htmlFor="phoneNum">Contact Person Phone Number: </label>
-        <input
-          type="tel"
-          id="phoneNum"
-          name="phoneNum"
-          onChange={(event) => setpNumber(event.target.value)}
-          required
-        ></input>{" "}
-        <label htmlFor="company">Company Name: </label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          onChange={(event) => setCompName(event.target.value)}
-          required
-        />{" "}
-        <br />
-        <label htmlFor="compURL">Company URL: </label>
-        <input
-          type="url"
-          id="compURL"
-          name="compURL"
-          onChange={(event) => setURL(event.target.value)}
-          required
-        />{" "}
-        <br />
-        <p>Company Type: </p>
-        <input
-          type="radio"
-          id="Non-Profit"
-          name="compType"
-          value="Non-Profit"
-          required="required"
-          onChange={handleCompTypeChange}
-        ></input>
-        <label htmlFor="Non-Profit">Non-Profit</label>
-        <input
-          type="radio"
-          id="For Profit"
-          name="compType"
-          value="For Profit"
-          onChange={handleCompTypeChange}
-        ></input>
-        <label htmlFor="For Profit">For Profit</label> <br />
-        <label htmlFor="revenue">Company's Annual Revenue: </label>
-        <input
-          type="number"
-          id="revenue"
-          name="revenue"
-          onChange={(event) => setRevenue(event.target.value)}
-          required
-        />{" "}
-        <br />
-        <label htmlFor="numOfIT">Number of IT staff: </label>
-        <input
-          type="number"
-          id="numOfIT"
-          name="numOfIT"
-          onChange={(event) => setNumOfIT(event.target.value)}
-          required
-        />{" "}
-        <br />
-        <label htmlFor="senData">Description of sensitive data: </label> <br />
-        <textarea
-          placeholder="N/A for nothing"
-          id="senData"
-          name="senData"
-          rows="5"
-          cols="50"
-          onChange={(event) => setSenData(event.target.value)}
-          required
-        ></textarea>{" "}
-        <br />
-        <label htmlFor="NORA">
-          Has your organization had a security risk assessment?{" "}
-        </label>
-        <select
-          id="NORA"
-          name="NORA"
-          onChange={(event) => setSRA(Number(event.target.value))}
-          required
-        >
-          <option>Please select one</option>
-          <option value='Never'>Never</option>
-          <option value='1-2'>1 - 2 years ago</option>
-          <option value='3-5'>3 - 5 years ago</option>
-          <option value='More than 5'>5+ years ago</option>
-        </select>{" "}
-        <br />
-        <label htmlFor="interest">
-          Project type of interest general risk assessment; audit; policy
-          review; other; if other, briefly describe:
-        </label>
-        <select id="interest" name="interest" onChange={handleChange} required>
-          <option>Please select one</option>
-          <option value="General Risk Assessment">General Risk Assessment</option>
-          <option value="Audit">Audit</option>
-          <option value="Policy Review">Policy Review</option>
-          <option value="Other">Other</option>
-        </select>{" "}
-        <br />
-        {selectedOption === "other" && (
+      {!showResults ? (
+        <div className="form">
+          <h2>Registration for First Time Client</h2>
+          <label htmlFor="fName">Contact Person First Name: </label>
+          <input
+            type="text"
+            id="fName"
+            name="fName"
+            onChange={(event) => setfName(event.target.value)}
+            required
+          ></input>{" "}
+          <br />
+          <label htmlFor="LName">Contact Person Last Name: </label>
+          <input
+            type="text"
+            id="lName"
+            name="lName"
+            onChange={(event) => setlName(event.target.value)}
+            required
+          ></input>{" "}
+          <br />
+          <label htmlFor="emailAdd">Contact Person Email: </label>
+          <input
+            type="email"
+            id="emailAdd"
+            name="emailAdd"
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          ></input>{" "}
+          <br />
+          <label htmlFor="passWord">Password: </label>
+          <input
+            type="password"
+            id="passWord"
+            name="passWord"
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          ></input>{" "}
+          <br />
+          <label htmlFor="VerfPassWord">Verify Password: </label>
+          <input
+            type="password"
+            id="VerfPassWord"
+            name="VerfPassWord"
+            onChange={(event) => setVerifyPassword(event.target.value)}
+            required
+          ></input>{" "}
+          <br />
+          <label htmlFor="phoneNum">Contact Person Phone Number: </label>
+          <input
+            type="tel"
+            id="phoneNum"
+            name="phoneNum"
+            onChange={(event) => setpNumber(event.target.value)}
+            required
+          ></input>{" "}
+          <label htmlFor="company">Company Name: </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            onChange={(event) => setCompName(event.target.value)}
+            required
+          />{" "}
+          <br />
+          <label htmlFor="compURL">Company URL: </label>
+          <input
+            type="url"
+            id="compURL"
+            name="compURL"
+            onChange={(event) => setURL(event.target.value)}
+            required
+          />{" "}
+          <br />
+          <p>Company Type: </p>
+          <input
+            type="radio"
+            id="Non-Profit"
+            name="compType"
+            value="Non-Profit"
+            required="required"
+            onChange={handleCompTypeChange}
+          ></input>
+          <label htmlFor="Non-Profit">Non-Profit</label>
+          <input
+            type="radio"
+            id="For Profit"
+            name="compType"
+            value="For Profit"
+            onChange={handleCompTypeChange}
+          ></input>
+          <label htmlFor="For Profit">For Profit</label> <br />
+          <label htmlFor="revenue">Company's Annual Revenue: </label>
+          <input
+            type="number"
+            id="revenue"
+            name="revenue"
+            onChange={(event) => setRevenue(event.target.value)}
+            required
+          />{" "}
+          <br />
+          <label htmlFor="numOfIT">Number of IT staff: </label>
+          <input
+            type="number"
+            id="numOfIT"
+            name="numOfIT"
+            onChange={(event) => setNumOfIT(event.target.value)}
+            required
+          />{" "}
+          <br />
+          <label htmlFor="senData">Description of sensitive data: </label>{" "}
+          <br />
           <textarea
-            placeholder="Describe here..."
+            placeholder="N/A for nothing"
+            id="senData"
+            name="senData"
             rows="5"
             cols="50"
-            id="otherNORA"
-            name="otherNORA"
-            onChange={handleTextAreaChange}
-          ></textarea>
-        )}{" "}
-        <br />
-        <label htmlFor="curious">How did you hear about our clinic: </label>
-        <input
-          type="text"
-          id="curious"
-          name="curious"
-          onChange={(event) => setCurious(event.target.value)}
-        />{" "}
-        <br />
-        <label htmlFor="comment">
-          Any other comments or request for the clinic?{" "}
-        </label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          onChange={(event) => setComment(event.target.value)}
-        />{" "}
-        <br />
-        <button onClick={sendData}>Submit</button>
-      </div>
-      {showResults && (
-        <div>
-          <h1>{rtnData.message}</h1>
+            onChange={(event) => setSenData(event.target.value)}
+            required
+          ></textarea>{" "}
+          <br />
+          <label htmlFor="NORA">
+            Has your organization had a security risk assessment?{" "}
+          </label>
+          <select
+            id="NORA"
+            name="NORA"
+            onChange={(event) => setSRA(Number(event.target.value))}
+            required
+          >
+            <option>Please select one</option>
+            <option value="Never">Never</option>
+            <option value="1-2">1 - 2 years ago</option>
+            <option value="3-5">3 - 5 years ago</option>
+            <option value="More than 5">5+ years ago</option>
+          </select>{" "}
+          <br />
+          <label htmlFor="interest">
+            Project type of interest general risk assessment; audit; policy
+            review; other; if other, briefly describe:
+          </label>
+          <select
+            id="interest"
+            name="interest"
+            onChange={handleChange}
+            required
+          >
+            <option>Please select one</option>
+            <option value="General Risk Assessment">
+              General Risk Assessment
+            </option>
+            <option value="Audit">Audit</option>
+            <option value="Policy Review">Policy Review</option>
+            <option value="Other">Other</option>
+          </select>{" "}
+          <br />
+          {selectedOption === "other" && (
+            <textarea
+              placeholder="Describe here..."
+              rows="5"
+              cols="50"
+              id="otherNORA"
+              name="otherNORA"
+              onChange={handleTextAreaChange}
+            ></textarea>
+          )}{" "}
+          <br />
+          <label htmlFor="curious">How did you hear about our clinic: </label>
+          <input
+            type="text"
+            id="curious"
+            name="curious"
+            onChange={(event) => setCurious(event.target.value)}
+          />{" "}
+          <br />
+          <label htmlFor="comment">
+            Any other comments or request for the clinic?{" "}
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            onChange={(event) => setComment(event.target.value)}
+          />{" "}
+          <br />
+          <button onClick={sendData}>Submit</button>
+        </div>
+      ) : (
+        <div style={{ marginTop: "20vh" }}>
+          <h1>Form Submitted!</h1>
+          <h2>{rtnData.message}</h2>
         </div>
       )}
     </div>
