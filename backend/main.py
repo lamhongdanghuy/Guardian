@@ -24,6 +24,7 @@ from email.mime.text import MIMEText
 from Projects import Project
 from login import Login
 from apply import apply
+from protector import Protector
 from connectDB import DatabaseConnection
 # from protector import Protector
 # Test imports 
@@ -83,6 +84,7 @@ def client_apply():
     return jsonify({'message': 'Please confirm you email!'}), 200
 
 @app.route('/getProjects', methods=['POST'])
+@Protector
 def get_projects():
     data = request.get_json()
     projectInstance = Project()

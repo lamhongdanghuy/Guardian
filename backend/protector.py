@@ -1,6 +1,6 @@
 import functools
 import jwt
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 
 import unittest
@@ -12,27 +12,25 @@ CORS(app)
 
 # Protecter Decorator
 # Meant to test whether token is expired or has been tampered with 
-def Protector(*expected_args):
-    """Make sure token is valid before proceeding"""
-    def ProtectorDecorator(func):
-        @functools.wraps(func)
-        def ProtectorWrapper(*args, **kwargs):
-            try:
-                token = args[0]
-                # Decode the token
-                decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=['HS256'])  # Corrected the key name
-                # If decoding is successful, the token is valid
-                return func(*args, **kwargs)
+def Protector(func):
+    @functools.wraps(func)
+    def ProtectorWrapper(*args, **kwargs):
+        try:
+            token = request.headers.get('token')
+            # Decode the token
+            decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=['HS256'])  # Corrected the key name
+            # If decoding is successful, the token is valid
+            return func(*args, **kwargs)
 
-            except jwt.ExpiredSignatureError:
-                # If the token has expired
-                print("Token has expired")
+        except jwt.ExpiredSignatureError:
+            # If the token has expired
+            print("Token has expired")
 
-            except jwt.InvalidTokenError:
-                # If the token is invalid for any other reason
-                print("Invalid token")
-        return ProtectorWrapper
-    return ProtectorDecorator
+        except jwt.InvalidTokenError:
+            # If the token is invalid for any other reason
+            print("Invalid token")
+    return ProtectorWrapper
+    
 
 
 # Sample function to test with the decorator
