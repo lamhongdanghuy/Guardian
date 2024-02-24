@@ -43,25 +43,25 @@ class apply:
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
         
-        # vals_login = [ email, hashedPass, 'Client']
-        # DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        vals_login = [ email, hashedPass, 'Client']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        # vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
-        # DatabaseConnection().send_insert(vals_client, 'CLIENT')
+        vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
+        DatabaseConnection().send_insert(vals_client, 'CLIENT')
         print("Client info inserted")
-        # vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
-        # DatabaseConnection().send_insert(vals_company, 'COMPANY')
+        vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
+        DatabaseConnection().send_insert(vals_company, 'COMPANY')
         print ("Company info inserted")
         
-        # query = "SELECT * FROM LOGIN_INFORMATION"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
-        # query = "SELECT * FROM CLIENT"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
-        # query = "SELECT * FROM COMPANY"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
+        query = "SELECT * FROM LOGIN_INFORMATION"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM CLIENT"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM COMPANY"
+        data = DatabaseConnection().select_query(query)
+        print(data)
 
         
     def student_apply(self, data):
@@ -132,25 +132,25 @@ class apply:
         if 'WICYS' in course_taken:
             WICYS = 1
     
-        # vals_login = [ email, hashedPass, 'Student']
-        # DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        vals_login = [ email, hashedPass, 'Student']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        # vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, hear, when, gen, eth, 'Student', 'In Review', 0]
-        # DatabaseConnection().send_insert(vals_student, 'STUDENT')
+        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, hear, when, gen, eth, 'Student', 'In Review', 0]
+        DatabaseConnection().send_insert(vals_student, 'STUDENT')
         print("Student info inserted")
-        # vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
-        # DatabaseConnection().send_insert(vals_courses, 'STUDENT_CLASS')
+        vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
+        DatabaseConnection().send_insert(vals_courses, 'STUDENT_CLASS')
         print("Student Class inserted")
             
-        # query = "SELECT * FROM LOGIN_INFORMATION"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
-        # query = "SELECT * FROM STUDENT"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
-        # query = "SELECT * FROM STUDENT_CLASS"
-        # data = DatabaseConnection().select_query(query)
-        # print(data)
+        query = "SELECT * FROM LOGIN_INFORMATION"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM STUDENT"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM STUDENT_CLASS"
+        data = DatabaseConnection().select_query(query)
+        print(data)
     
     def faculty_apply(self, data):
         print(data)
