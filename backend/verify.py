@@ -1,4 +1,5 @@
-from flask import Flask, request, url_for
+from flask import Flask, request, url_for, jsonify
+from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
@@ -7,13 +8,55 @@ import os
 #Generate a random secret key
 secret_key = os.urandom(24)
 
+#SMTP server configuration
+smtp_server = 'smtp.gmail.com'
+smtp_port = 465
+sender_email = 'phuonghaodinh2002@gmail.com'
+password = 'snmz oioc xwoa nvhp'
+
+
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = secret_key
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/send_verification_email', methods=['POST'])
+def send_verification_email():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+
+
+        # Generate verification token
+        token = s.dumps(email, salt='email-confirm')
+
+        # Construct verification link
+        link = url_for('confirm_email', token=token, _external=True)
+
+        # Email body
+        msg_body = 'Click the following link to confirm your email: {}'.format(link)
+
+        # Send email
+        msg = MIMEText(msg_body)
+        msg['Subject'] = 'Confirm Your Email'
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port) #Connect to the SMTP server
+        server.login(sender_email, password) #Login to email account
+        server.sendmail(sender_email, email, msg.as_string()) #Send the email
+        print('Email sent successfully!') #Print success message
+        
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        #Close the connection to the SMTP server
+        server.quit() #Close the server connection
+    return jsonify({'message': 'Email sent successfully!'}), 200
+
+'''@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
         return '<form action="/" method="POST"><input name="email"><input type="submit"></form>'
@@ -30,11 +73,6 @@ def index():
     return '<h1>Email verification link sent to {}</h1>'.format(email)
 
 def send_email(to_email, subject, body):
-    #SMTP server configuration
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 465
-    sender_email = 'phuonghaodinh2002@gmail.com'
-    password = 'snmz oioc xwoa nvhp'
 
     #Create a text object
     msg = MIMEText(body)
@@ -59,7 +97,10 @@ def send_email(to_email, subject, body):
     
     finally:
         #Close the connection to the SMTP server
-        server.quit()
+        server.quit()'''
+
+
+
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
