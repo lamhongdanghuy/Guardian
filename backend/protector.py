@@ -32,7 +32,7 @@ def Protector(*expected_args):
                 # If the token is invalid for any other reason
                 print("Invalid token")
         return ProtectorWrapper
-    return wrapper_login_required
+    return ProtectorDecorator
 
 
 # Sample function to test with the decorator

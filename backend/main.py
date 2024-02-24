@@ -21,6 +21,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 # Local application imports
+from Projects import Project
 from login import Login
 from apply import apply
 from connectDB import DatabaseConnection
@@ -59,7 +60,7 @@ def login():
     loginInstance = Login()
     db_Connection = DatabaseConnection()
     payload = loginInstance.login(identifier,password,db_Connection)    
-    token = jwt.encode({'exp': payload}, app.config["SECRET KEY"])
+    token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
 
 @app.route('/apply/student', methods=['POST'])
@@ -80,6 +81,14 @@ def client_apply():
     email = data.get('email')
     verify_email(email)
     return jsonify({'message': 'Please confirm you email!'}), 200
+
+@app.route('/getProjects', methods=['POST'])
+def get_projects():
+    data = request.get_json()
+    projectInstance = Project()
+    db_Connection = DatabaseConnection()
+    payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    return jsonify(payload), 200
 
 
 def verify_email(email):

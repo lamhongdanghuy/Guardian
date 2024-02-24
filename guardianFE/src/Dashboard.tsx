@@ -113,7 +113,7 @@ function Dashboard() {
               Apply
             </div>
           )}
-          {(user.role === "faculty" || devMode) && (
+          {(user.role === "aculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -121,7 +121,7 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {(user.role === "faculty" || devMode) && (
+          {(user.role === "Faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -129,7 +129,7 @@ function Dashboard() {
               Project Proposal
             </div>
           )}
-          {(user.role === "faculty" || devMode) && (
+          {(user.role === "Faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -137,7 +137,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {(user.role === "faculty" || devMode) && (
+          {(user.role === "Faculty" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
