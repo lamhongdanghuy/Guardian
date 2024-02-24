@@ -47,8 +47,9 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 def proposalInfo():
     data = request.get_json()
     proposal_ID = data.get('ProposalID')
+    leader_email = data.get('Email')
     approve = proposal()
-    respone = approve.approve_proposal(proposal_ID)
+    respone = approve.approve_proposal(proposal_ID, leader_email)
     return respone, 200
 
 @app.route('/rejectProposal', methods=['POST'])
