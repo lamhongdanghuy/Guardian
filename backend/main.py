@@ -31,13 +31,12 @@ app.config["SECRET KEY"] = "1234"
 CORS(app)
 
 
-# query = "SELECT * FROM Client"
-# data = DatabaseConnection().select_query(query)
-# print(data)
 
-# query = "SELECT * FROM Company"
-# data = DatabaseConnection().select_query(query)
-# print(data)
+
+
+query = "SELECT * FROM LOGIN_INFORMATION"
+data = DatabaseConnection().select_query(query)
+print(data)
 
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
@@ -47,15 +46,6 @@ password = 'snmz oioc xwoa nvhp'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
-
-@app.route('/confirm_email/<token>')
-def confirm_email(token):
-    try:
-        email = s.loads(token, salt='email-confirm', max_age=3600)
-        print(email)
-    except SignatureExpired:
-        return '<h1>The token is expired!</h1>'
-    return '<h1>The email is confirmed!</h1>'
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -118,6 +108,16 @@ def verify_email(email):
     finally:
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
+            
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    try:
+        email = s.loads(token, salt='email-confirm', max_age=3600)
+        query = "UPDATE LOGIN_INFORMATION SET Email_Verified = 1 WHERE email = '{}'".format(email)
+        DatabaseConnection().update_query(query)
+    except SignatureExpired:
+        return '<h1>The token is expired!</h1>'
+    return '<h1>The email is confirmed!</h1>'
 
 if __name__ == "__main__":
     app.run(debug=True)
