@@ -62,7 +62,7 @@ function ApplyView() {
 
   return (
     <div>
-      {showResults ? (
+      {!showResults ? (
         <div
           className="form"
           style={{
