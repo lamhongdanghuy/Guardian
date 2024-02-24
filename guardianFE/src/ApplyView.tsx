@@ -1,7 +1,8 @@
-import Header from "./Header";
+import { LoginContext } from "./LoginContextProvider";
 import { useState } from "react";
 
 function ApplyView() {
+  const { user, setUser } = useContext(LoginContext);
   const [url, setURL] = useState("");
   const [compName, setCompName] = useState("");
   const [revenue, setRevenue] = useState("");
@@ -46,6 +47,7 @@ function ApplyView() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        email: user.email,
         compName,
         url,
         revenue,

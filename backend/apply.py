@@ -175,5 +175,22 @@ class apply:
             DatabaseConnection().rollback()
             print(f"An error occurred: {e}")
 
+    def propose_project(self, data):
+        print (data)
+        email = data.get('email')
+        org_name = data.get('compName')
+        url = data.get('url')
+        revenue = data.get('revenue')
+        num_of_IT = data.get('numOfIT')
+        sen_data = data.get('senData')
+        sra = data.get('sra')
+        project_type = data.get('projectType')
+        comment = data.get('comment')
 
+        client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
+        company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
+        project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(datetime.datetime.now()))
+
+        vals_project = [project_id, org_name, company_id, client_id, "", project_type,datetime.date(2000, 1, 1), datetime.datetime.now(), sen_data , 'In Review']
+        DatabaseConnection().send_insert(vals_project, 'PROJECT')
     
