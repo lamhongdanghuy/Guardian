@@ -19,7 +19,7 @@ class Project:
                 'proj_name': project_Data['C_Name'],
                 'status': project_Data['Status'],
                 'stu_lead': project_Data['Stu_Lead_ID'],
-                'exp': 100 # datetime.utcnow() + timedelta(hours=16)
+                'exp': datetime.utcnow() + timedelta(hours=16)
             }
             return payload
         except Exception as e:
