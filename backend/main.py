@@ -22,6 +22,7 @@ from email.mime.text import MIMEText
 
 # Local application imports
 from Projects import Project
+from Applications import Application
 from login import Login
 from apply import apply
 from protector import Protector
@@ -72,8 +73,6 @@ def student_info_get():
     payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
     return jsonify(payload), 200
 
-
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -115,6 +114,14 @@ def get_projects():
     payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
+@app.route('/getApplications', methods=['POST'])
+@Protector
+def get_applications():
+    data = request.get_json()
+    applicationInstance = Application()
+    db_Connection = DatabaseConnection()
+    payload = applicationInstance.get_student_applications(data['userID'], db_Connection)
+    return jsonify(payload), 200
 
 def verify_email(email):
     server = None
