@@ -13,6 +13,7 @@ interface Project {
   Stu_Lead_ID: string;
   Pro_Type: string;
   projectID: string;
+  Proj_ID: string;
 }
 
 function ProjectsView(props: projectViewProp) {
@@ -96,7 +97,7 @@ function ProjectsView(props: projectViewProp) {
             projectLeader={project.Stu_Lead_ID}
             type={project.Pro_Type}
             onClick={props.onClick}
-            projectID={project.projectID}
+            projectID={project.Proj_ID}
           />
         ))}
       </div>

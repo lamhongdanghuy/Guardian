@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./memberCard";
 
@@ -10,12 +10,12 @@ interface Member {
 
 function ProjectInfoView(projectID: string) {
   console.log(projectID);
-  let clientName: string | null = null;
-  let type: string | null = null;
-  let description: string | null = null;
-  let status: string | null = null;
-  let targetDate: string | null = null;
-  let projectLeader: string | null = null;
+  const [clientName, setClientName] = useState<string | null>("");
+  const [type, setType] = useState<string | null>("");
+  const [description, setDescription] = useState<string | null>("");
+  const [status, setStatus] = useState<string | null>("");
+  const [targetDate, setTargetDate] = useState<string | null>("");
+  const [projectLeader, setProjectLeader] = useState<string | null>("");
 
   const { user, setUser } = useContext(LoginContext);
 
@@ -29,13 +29,14 @@ function ProjectInfoView(projectID: string) {
       body: JSON.stringify({ projectID }),
     });
     const result = await response.json();
+    console.log(result);
 
-    clientName = result.clientName;
-    type = result.type;
-    description = result.description;
-    status = result.status;
-    targetDate = result.targetDate;
-    projectLeader = result.projectLeader;
+    setClientName(result[0].C_Name);
+    setType(result[0].Pro_Type);
+    setDescription(result[0].Description);
+    setStatus(result[0].Status);
+    setTargetDate(result[0].Target_Date);
+    setProjectLeader(result[0].Stu_Lead_ID);
   };
 
   useEffect(() => {

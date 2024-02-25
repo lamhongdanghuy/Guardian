@@ -61,6 +61,7 @@ def project_info_get():
     print(data['projectID'])
     id = data['projectID']
     payload = infoInstance.getprojectinfo(id,dbconnect)
+    print(payload)
     return jsonify(payload), 200
 
 @app.route('/studentInfo', methods =['POST'])

@@ -11,7 +11,6 @@ class infoGetter:
         #         # """.format(identifier)
         project_info = db_connection.select_query(queryP)
         payload = project_info.to_dict(orient='records')
-        print(payload)
         return payload
     
     def getstudentinfo(self,id,db_connection):
