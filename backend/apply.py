@@ -174,6 +174,53 @@ class apply:
         except Exception as e:
             DatabaseConnection().rollback()
             print(f"An error occurred: {e}")
+    
+     #adds new project to PROJECT table. Similar to client_apply except existing client is assigned to project
+    def add_project(self, data, client_id):
+        query_id = """SELECT Company_ID  FROM COMPANY
+                    WHERE Client_ID = {} """.format(client_id)
+        company_id_data = DatabaseConnection().select_query(query_id)
+        company_id = company_id_data.at[0, 'C_name']
+        query_email = """SELECT Email  FROM COMPANY
+                    WHERE Client_ID = {} """.format(client_id)
+        email_data = DatabaseConnection().select_query(query_email)
+
+        email = email_data.at[0, 'Email']
+        
+
+        date_submitted = datetime.today().strftime('%Y-%m-%d')
+        project_id = client_id.append(email)
+        project_id = uuid.uuid3(uuid.NAMESPACE_OID, project_id)
+
+
+        org_name = data.get('compName')
+        org_type = data.get('compType')
+        url = data.get('url')
+        revenue = data.get('revenue')
+        num_of_IT = data.get('numOfIT')
+        sen_data = data.get('senData')
+        sra = data.get('sra')
+        project_type = data.get('projectType')
+        comment = data.get('comment')
+        date_submitted = datetime.today().strftime('%Y-%m-%d')
+
+        update_query = """UPDATE COMPANY
+                        SET C_Type = {},
+                            C_URL = {},
+                            C_Revnue = {},
+                            C_IT = {},
+                            C_SRA = {},
+                            Comment = {}
+                        WHERE Client_ID = {} """.format(org_type, url, revenue, num_of_IT, sra, comment, client_id)
+        DatabaseConnection.update_query(update_query)
+
+        try:
+            vals_new_project = [project_type, org_name, company_id, client_id, '', project_type, '', date_submitted, sen_data, "In Review"]
+            DatabaseConnection.send_insert(vals_new_project, 'PROJECT')
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
+
 
 
     

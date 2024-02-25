@@ -146,5 +146,12 @@ def confirm_email(token):
         return '<h1>The token is expired!</h1>'
     return '<h1>The email is confirmed!</h1>'
 
+@app.route('/propose', methods=['POST'])
+def new_project():
+    data = request.get_json()
+    applyInstance = apply()
+    client = ""
+    applyInstance.add_project(data, client)
+
 if __name__ == "__main__":
     app.run(debug=True)
