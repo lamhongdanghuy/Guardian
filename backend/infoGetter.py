@@ -4,7 +4,7 @@ class infoGetter:
     @staticmethod
     def getprojectinfo(id,db_connection):
         queryP="SELECT C_Name,Pro_Type,Description,Status,Due_Date,Stu_Lead_ID " \
-               "From Project " \
+               "From PROJECT " \
                "Where Proj_ID = '{}';".format(id)
 
         project_info = db_connection.select_query(queryP)
@@ -20,11 +20,11 @@ class infoGetter:
         return payload
     @staticmethod
     def getstudentinfo(id,db_connection):
-        queryS = "SELECT F_Name,L_Name,Major,Email,P_Number,Proj_Interest,Grad_Date,Year_standing,school " \
-                 "From Student " \
+        queryS = "SELECT F_Name,L_Name,Major,Email,P_Number,Proj_Interest,Grad_Date,Year_Standing,School " \
+                 "From STUDENT " \
                  "Where Student_ID = '{}';".format(id)
         queryL = "Select * " \
-                 "From Student_Class" \
+                 "From STUDENT_CLASS" \
                  "Where Student_ID = '{}'; ".format(id)
         Student_info = db_connection.select_query(queryS)
         CLass_Student_Info = db_connection.select_query(queryL)
