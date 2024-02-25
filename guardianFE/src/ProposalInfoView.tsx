@@ -2,7 +2,8 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ProposalInfoView(ProposalID: string) {
-  ProposalID = "fcec673f-d49b-3ee3-9352-3a4bf9e485ce";
+  console.log(ProposalID);
+  console.log("reading proposalID");
   interface Member {
     Full_Name: string;
     Email: string;
@@ -60,6 +61,7 @@ function ProposalInfoView(ProposalID: string) {
       body: JSON.stringify({ ProposalID }),
     });
     const result = await response.json();
+    console.log(result);
 
     setCompanyName(result.project_info.Company_Name);
     setType(result.project_info.Project_Type);

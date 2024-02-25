@@ -39,6 +39,8 @@ function Dashboard() {
   };
 
   const proposalCardClicked = (proposalID: string) => {
+    console.log("proposal card clicked");
+    console.log(proposalID);
     setPrevContainer(activeContainer);
     setActiveContainer("Proposal Info View");
     setOpenProposal(proposalID);
@@ -194,7 +196,7 @@ function Dashboard() {
         ) : activeContainer === "Application View" ? (
           <ApplicationInfoView studentID={openApplication} />
         ) : activeContainer === "Proposal Info View" ? (
-          <ProposalInfoView studentID={openProposal} />
+          <ProposalInfoView proposalID={openProposal} />
         ) : activeContainer === "Add Faculty" ? (
           <AddFaculty />
         ) : null}
