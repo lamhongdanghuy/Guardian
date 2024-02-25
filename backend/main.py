@@ -21,10 +21,16 @@ import smtplib
 from email.mime.text import MIMEText
 
 # Local application imports
+from Projects import Project
 from login import Login
 from apply import apply
+from protector import Protector
 from connectDB import DatabaseConnection
 from proposal import proposal
+import infoGetter
+# from protector import Protector
+# Test imports 
+from protector import TestProtectorDecorator
 
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
@@ -32,6 +38,9 @@ CORS(app)
 
 query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
 data = DatabaseConnection().select_query(query).at[0, 'F_Name']
+
+query = "SELECT * FROM LOGIN_INFORMATION"
+data = DatabaseConnection().select_query(query)
 print(data)
 
 #SMTP server configuration
@@ -67,6 +76,21 @@ def proposalInfo():
     get_Info = proposal()
     respone = get_Info.get_proposal_info(proposal_ID)
     return respone, 200
+@app.route('/projectInfo', methods =['POST'])
+def project_info_get():
+    data = request.get_json();
+    dbconnect = DatabaseConnection()
+    payload = infoGetter.getprojectinfo(data['projectID'],dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/studentInfo', methods =['POST'])
+def student_info_get():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = infoGetter.getprojectinfo(data['studentID'], dbconnect)
+    return jsonify(payload), 200
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -99,6 +123,15 @@ def client_apply():
     verify_email(email)
     return jsonify({'message': 'Please confirm you email!'}), 200
 
+@app.route('/getProjects', methods=['POST'])
+@Protector
+def get_projects():
+    data = request.get_json()
+    projectInstance = Project()
+    db_Connection = DatabaseConnection()
+    payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    return jsonify(payload), 200
+
 
 def verify_email(email):
     server = None
@@ -122,13 +155,13 @@ def verify_email(email):
         server.login(sender_email, password) #Login to email account
         server.sendmail(sender_email, email, msg.as_string()) #Send the email
         print('Email sent successfully!') #Print success message
-        
+
     except Exception as e:
         print(f'An error occurred: {e}')
     finally:
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
-            
+
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:

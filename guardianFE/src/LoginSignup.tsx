@@ -39,7 +39,7 @@ function LoginSignup() {
     if (temp.message === "Login successful!") {
       setSuccess("Login Successful");
       setUser({
-        token: result.token,
+        token: result,
         email: temp.email,
         id: temp.id,
         role: temp.role,
