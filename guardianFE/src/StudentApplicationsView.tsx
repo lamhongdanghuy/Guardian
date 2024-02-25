@@ -7,17 +7,19 @@ interface studentAppViewProp {
 }
 
 interface Student {
-  name: string;
-  year: string;
-  major: string;
+  F_Name: string;
+  L_Name: string;
+  Year_Standing: string;
+  Major: string;
   gradDate: string;
-  studentID: string;
+  Student_ID: string;
   onClick: Function;
 }
 
 function StudentApplicationsView(props: studentAppViewProp) {
   const { user, setUser } = useContext(LoginContext);
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
+  console.log(applicationsList);
 
   useEffect(() => {
     getApplications();
@@ -33,7 +35,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
       body: JSON.stringify({ userID: user.id }),
     });
     const result = await response.json();
-    setApplicationsList(result);
+    setApplicationsList(result.applications);
   };
 
   return (
@@ -86,10 +88,10 @@ function StudentApplicationsView(props: studentAppViewProp) {
 
         {applicationsList.map((student: Student) => (
           <ApplicationCard
-            name={student.name}
-            studentID={student.studentID}
-            year={student.year}
-            major={student.major}
+            name={student.F_Name + " " + student.L_Name}
+            studentID={student.Student_ID}
+            year={student.Year_Standing}
+            major={student.Major}
             gradDate={student.gradDate}
             onClick={props.onClick}
           />
