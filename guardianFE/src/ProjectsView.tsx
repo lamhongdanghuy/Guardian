@@ -24,16 +24,21 @@ function ProjectsView(props: projectViewProp) {
   }, []);
 
   const getProjects = async () => {
-    const response = await fetch("http://localhost:5000/projects", {
+    const response = await fetch("http://localhost:5000/getProjects", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ userID: user.id }),
+      body: JSON.stringify({
+        userID: user.role !== "Faculty" ? user.id : null,
+      }),
     });
     const result = await response.json();
-    setProjectsList(result);
+    console.log(result);
+    console.log("reading projects");
+    console.log(result.projects);
+    setProjectsList(result.projects);
   };
 
   return (

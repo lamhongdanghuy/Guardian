@@ -42,19 +42,16 @@ class apply:
 
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
-        try:
-            vals_login = [ email, hashedPass, 'Client']
-            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
-            print("Login info inserted")
-            vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
-            DatabaseConnection().send_insert(vals_client, 'CLIENT')
-            print("Client info inserted")
-            vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
-            DatabaseConnection().send_insert(vals_company, 'COMPANY')
-            print ("Company info inserted")
-        except Exception as e:
-            DatabaseConnection().rollback()
-            print(f"An error occurred: {e}")
+        
+        vals_login = [ email, hashedPass, 'Client']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        print("Login info inserted")
+        vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
+        DatabaseConnection().send_insert(vals_client, 'CLIENT')
+        print("Client info inserted")
+        vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
+        DatabaseConnection().send_insert(vals_company, 'COMPANY')
+        print ("Company info inserted")
         
         query = "SELECT * FROM LOGIN_INFORMATION"
         data = DatabaseConnection().select_query(query)
@@ -66,7 +63,6 @@ class apply:
         data = DatabaseConnection().select_query(query)
         print(data)
 
-        return "Application submitted!"
         
     def student_apply(self, data):
         print(data)
@@ -155,9 +151,29 @@ class apply:
         query = "SELECT * FROM STUDENT_CLASS"
         data = DatabaseConnection().select_query(query)
         print(data)
+    
+    def faculty_apply(self, data):
+        print(data)
+        f_name = data.get('F_Name')
+        l_name = data.get('L_Name')
+        email = data.get('Email')
+        password = data.get('password')
+        phone_number = data.get('P_Number')
+        role = data.get('Role')
+        print("Role: {}".format(role))
+        hashedPass = self.hash(password)
+        id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
-        return "Application submitted!"
-
+        try:
+            vals_login = [email, hashedPass, 'Faculty']
+            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+            print("Login info inserted")
+            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
+            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+            print("Faculty info inserted")
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
 
 
     

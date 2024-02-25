@@ -62,6 +62,7 @@ class DatabaseConnection:
         
     def send_insert(self, values, table):
         self.start_connection()
+        print("This is the table: {}".format(table))
         try:
             if table == 'LOGIN_INFORMATION':
                 targetTable = Table('LOGIN_INFORMATION', self.metadata, autoload_with=self.engine)
@@ -75,6 +76,8 @@ class DatabaseConnection:
                 targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
             elif table == 'PROJECT':
                 targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
+            elif table == 'FACULTY':
+                targetTable = Table('FACULTY', self.metadata, autoload_with=self.engine)
             query = targetTable.insert().values(values)
             self.session.execute(query)
             self.session.commit()
@@ -91,25 +94,16 @@ class DatabaseConnection:
         self.close_tunnel()
         return data
     
-    def send_insert(self, values, table):
+    def update_query(self, query):
         self.start_connection()
-        if table == 'LOGIN_INFORMATION':
-            targetTable = Table('LOGIN_INFORMATION', self.metadata, autoload_with=self.engine)
-        elif table == 'COMPANY':
-            targetTable = Table('COMPANY', self.metadata, autoload_with=self.engine)
-        elif table == 'CLIENT':
-            targetTable = Table('CLIENT', self.metadata, autoload_with=self.engine)
-        elif table == 'STUDENT':
-            targetTable = Table('STUDENT', self.metadata, autoload_with=self.engine)
-        elif table == 'STUDENT_CLASS':
-            targetTable = Table('STUDENT_CLASS', self.metadata, autoload_with=self.engine)
-        elif table == 'PROJECT':
-            targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
-        query = targetTable.insert().values(values)
-        with self.engine.connect() as con:
-            result = con.execute(query)
-            con.commit()
-            con.close()
-        self.close_tunnel()
-        return result
+        try:
+            # Use text() to declare the SQL query explicitly
+            stmt = text(query)
+            self.session.execute(stmt)
+            self.session.commit()
+        except Exception as e:
+            self.session.rollback()
+            print(f"An error occurred: {e}")
+        finally:
+            self.close_tunnel()
     

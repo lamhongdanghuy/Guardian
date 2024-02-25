@@ -16,7 +16,7 @@ function ApplicationInfoView(studentID: string) {
   const { user, setUser } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch("http://localhost:5000/projectInfo", {
+    const response = await fetch("http://localhost:5000/studentInfo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
