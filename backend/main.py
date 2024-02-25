@@ -26,7 +26,7 @@ from login import Login
 from apply import apply
 from protector import Protector
 from connectDB import DatabaseConnection
-import infoGetter
+from infoGetter import infoGetter
 # from protector import Protector
 # Test imports 
 from protector import TestProtectorDecorator
@@ -51,16 +51,20 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
 @app.route('/projectInfo', methods =['POST'])
 def project_info_get():
-    data = request.get_json();
+    data = request.get_json()
     dbconnect = DatabaseConnection()
-    payload = infoGetter.getprojectinfo(data['projectID'],dbconnect)
+    infoInstance = infoGetter()
+    print(data['projectID'])
+    id = data['projectID']
+    payload = infoInstance.getprojectinfo(id,dbconnect)
     return jsonify(payload), 200
 
 @app.route('/studentInfo', methods =['POST'])
 def student_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
-    payload = infoGetter.getprojectinfo(data['studentID'], dbconnect)
+    infoInstance = infoGetter()
+    payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
     return jsonify(payload), 200
 
 
