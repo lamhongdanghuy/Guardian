@@ -39,7 +39,7 @@ class infoGetter:
         'major': Student_info.at[0,"Major"],
         'email': Student_info.at[0,"Email"],
         'phone': Student_info.at[0,"P_Number"],
-        'projectIntrest': Student_info.at[0,"Proj_Interest"],
+        'projectInterest': Student_info.at[0,"Proj_Interest"],
         'coursesTaken':Clist,
         'gradDate': Student_info.at[0,"Grad_Date"],
         'year': Student_info.at[0,"Year_standing"],
