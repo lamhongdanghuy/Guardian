@@ -2,33 +2,27 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ProposalInfoView(ProposalID: string) {
+  ProposalID = 'fcec673f-d49b-3ee3-9352-3a4bf9e485ce';
   interface Member {
     Full_Name: string;
     Email: string;
   }
 
-  let member1: Member = {
-    Full_Name: "John Doe",
-    Email: "john.doe@example.com",
-  };
+  const [companyName, setCompanyName] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+  const [targetDate, setTargetDate] = useState<string | null>(null);
+  const [av_leaders, setAvLeaders] = useState<Member[]>([]);
+  const [leaderEmail, setLeaderEmail] = useState<string>("");
+  const [shouldApprove, setShouldApprove] = useState(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  let member2: Member = {
-    Full_Name: "Jane Doe",
-    Email: "jane.doe@example.com",
-  };
-
-  let sample_leaders: Member[] = [member1, member2];
-
-  console.log(ProposalID);
-  let companyName: string | null = null;
-  let type: string | null = null;
-  let description: string | null = null;
-  let status: string | null = null;
-  let targetDate: string | null = null;
-  let av_leaders: Member[] = [];
-
-  const [leaderEmail, setLeaderEmail] = useState("");
   const approve = async () => {
+    if (leaderEmail === null || leaderEmail === "") {
+      alert('Please select a project leader before approving the proposal.');
+    }
+
     const response = await fetch("http://localhost:5000/approveProposal", {
       method: "POST",
       headers: {
@@ -67,19 +61,26 @@ function ProposalInfoView(ProposalID: string) {
     });
     const result = await response.json();
 
-    companyName = result.Company_Name;
-    type = result.Project_Type;
-    description = result.Project_Description;
-    status = result.Project_Status;
-    targetDate = result.Target_Date;
-    av_leaders = result.av_leaders;
+    setCompanyName(result.project_info.Company_Name);
+    setType(result.project_info.Project_Type);
+    setDescription(result.project_info.Project_Description);
+    setStatus(result.project_info.Project_Status);
+    const targetDateObj = new Date(result.project_info.Target_Date);
+    const formattedTargetDate = `${targetDateObj.getMonth() + 1}-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    setTargetDate(formattedTargetDate);
+    setAvLeaders(result.av_leaders);
   };
 
   useEffect(() => {
-    console.log("feting info");
     getProposalInfo();
-    console.log(ProposalID);
   }, []);
+
+  useEffect(() => {
+    if (shouldApprove) {
+      approve();
+      setShouldApprove(false);
+    }
+  }, [shouldApprove]);
 
   return (
     <div className="projectInfoView">
@@ -87,12 +88,12 @@ function ProposalInfoView(ProposalID: string) {
         <h1
           style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
         >
-          Company: {companyName ? companyName : "Default"}
+          Company Name: {companyName}
         </h1>
         <h1
           style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
         >
-          Type: {type ? type : "Default"}
+          Type: {type}
         </h1>
       </div>
       <h1
@@ -103,7 +104,7 @@ function ProposalInfoView(ProposalID: string) {
           paddingBottom: "5vh",
         }}
       >
-        Status: {status ? status : "Not Approved"}
+        Status: {status}
       </h1>
       <div className="middleInfo">
         <h1
@@ -113,9 +114,7 @@ function ProposalInfoView(ProposalID: string) {
         </h1>
       </div>
       <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
-        {description
-          ? description
-          : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+        {description}
       </p>
       <h1
         style={{
@@ -125,7 +124,7 @@ function ProposalInfoView(ProposalID: string) {
           paddingBottom: "5vh",
         }}
       >
-        Target Date: {targetDate ? targetDate : "Not Approved"}
+        Target Date: {targetDate}
       </h1>
       <div
         style={{
@@ -149,7 +148,10 @@ function ProposalInfoView(ProposalID: string) {
           <select
             id="leader"
             name="leader"
-            onChange={(event) => setLeaderEmail(event.target.value)}
+            onChange={(event) => {
+              setLeaderEmail(event.target.value);
+              setIsSubmitDisabled(false);
+            }}
             required
             style={{ height: "32px", borderRadius: "5px", fontSize: "20px" }}
           >
@@ -170,10 +172,10 @@ function ProposalInfoView(ProposalID: string) {
           gap: "2em",
         }}
       >
-        <button onClick={approve} style={{ backgroundColor: "green" }}>
+        <button onClick={approve} style={{ backgroundColor: "green", opacity: isSubmitDisabled ? 0.5 : 1, cursor: isSubmitDisabled ? 'not-allowed' : 'pointer' }}>
           Approve
         </button>
-        <button onClick={reject} style={{ backgroundColor: "red" }}>
+        <button onClick={reject} style={{ backgroundColor: "red", opacity: isSubmitDisabled ? 0.5 : 1, cursor: isSubmitDisabled ? 'not-allowed' : 'pointer' }}>
           Reject
         </button>
       </div>

@@ -14,13 +14,14 @@ function ClientApply() {
   const [revenue, setRevenue] = useState("");
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
-  const [sra, setSRA] = useState(-1);
+  const [sra, setSRA] = useState();
   const [projectType, setProjectType] = useState("");
   const [curious, setCurious] = useState("");
   const [comment, setComment] = useState("");
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -36,6 +37,8 @@ function ClientApply() {
   };
 
   const sendData = async (event) => {
+    const enteredDate = new Date(dueDate);
+    const currentDate = new Date();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
     const phonePattern = /^\d{10}$/;
@@ -53,6 +56,10 @@ function ClientApply() {
           ", "
         )}`
       );
+      return;
+    }
+    if (enteredDate <= currentDate) {
+      alert("Please enter a future date.");
       return;
     }
     if (!emailPattern.test(email)) {
@@ -93,6 +100,7 @@ function ClientApply() {
         senData,
         sra,
         projectType,
+        dueDate,
         curious,
         comment,
       }),
@@ -232,7 +240,7 @@ function ClientApply() {
           <select
             id="NORA"
             name="NORA"
-            onChange={(event) => setSRA(Number(event.target.value))}
+            onChange={(event) => setSRA(event.target.value)}
             required
           >
             <option>Please select one</option>
@@ -270,16 +278,26 @@ function ClientApply() {
               name="otherNORA"
               onChange={handleTextAreaChange}
             ></textarea>
-          )}{" "}
+          )}
           <br />
-          <label htmlFor="curious">How did you hear about our clinic: </label>
+          <label htmlFor="dueDate">Due Date: </label>
+          <input
+            type="date"
+            id="dueDate"
+            name="dueDate"
+            onChange={(event) => setDueDate(event.target.value)}
+            required
+          />
+          <br />
+          <label htmlFor="curious">
+            How did you hear about Clinic?{" "}
+          </label>
           <input
             type="text"
             id="curious"
             name="curious"
             onChange={(event) => setCurious(event.target.value)}
-          />{" "}
-          <br />
+          />
           <label htmlFor="comment">
             Any other comments or request for the clinic?{" "}
           </label>
