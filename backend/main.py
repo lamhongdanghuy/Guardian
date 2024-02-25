@@ -147,11 +147,10 @@ def confirm_email(token):
     return '<h1>The email is confirmed!</h1>'
 
 @app.route('/propose', methods=['POST'])
-def new_project():
+def propose_project():
     data = request.get_json()
     applyInstance = apply()
-    client = data.get('clientID')
-    applyInstance.add_project(data, client)
+    applyInstance.add_project(data)
 
 if __name__ == "__main__":
     app.run(debug=True)

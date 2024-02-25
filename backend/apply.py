@@ -175,8 +175,9 @@ class apply:
             DatabaseConnection().rollback()
             print(f"An error occurred: {e}")
     
-     #adds new project to PROJECT table. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
-    def add_project(self, data, client_id):
+     #adds new project to PROJECT table to in review. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
+    def add_project(self, data):
+        client_id = data.get('clientID')
         query_id = """SELECT Company_ID  FROM COMPANY
                     WHERE Client_ID = {} """.format(client_id)
         
@@ -197,12 +198,12 @@ class apply:
         project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(date_submitted))
 
         update_query = """UPDATE COMPANY
-                        SET C_Type = {},
-                            C_URL = {},
+                        SET C_Type = '{}',
+                            C_URL = '{}',
                             C_Revnue = {},
                             C_IT = {},
-                            C_SRA = {},
-                            Comment = {}
+                            C_SRA = '{}',
+                            Comment = '{}'
                         WHERE Client_ID = {} """.format(org_type, url, revenue, num_of_IT, sra, comment, client_id)
         try:
             vals_new_project = [project_id, org_name, company_id, client_id, '', project_type, '', date_submitted, sen_data, "In Review"]
