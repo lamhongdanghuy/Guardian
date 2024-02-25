@@ -24,3 +24,21 @@ class Project:
                        'projects': projectData.to_dict(orient='records')}
         print(payload)
         return payload
+    
+    def get_proposals(self, db_Connection):
+        query = """
+            SELECT *
+            FROM PROJECT
+            WHERE Status = "In Review";
+            """
+
+        print(query)
+        projectData = db_Connection.select_query(query)
+        if projectData.empty:
+            payload = {'message': 'Proposals not found', 'projects': []}
+        else:
+            payload = {'message': 'Proposals Successfully Retrieved!',
+                       'projects': projectData.to_dict(orient='records')}
+        print(payload)
+        return payload
+    

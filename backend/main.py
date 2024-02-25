@@ -65,26 +65,26 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():
     data = request.get_json()
-    proposal_ID = data.get('ProposalID')
+    proposal_ID = data['ProposalID']
     leader_email = data.get('leaderEmail')
     approve = proposal()
-    respone = approve.approve_proposal(proposal_ID, leader_email)
+    respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email)
     return respone, 200
 
 @app.route('/rejectProposal', methods=['POST'])
 def rejectProposal():
     data = request.get_json()
-    proposal_ID = data.get('ProposalID')
+    proposal_ID = data['ProposalID']
     reject = proposal()
-    respone = reject.reject_proposal(proposal_ID)
+    respone = reject.reject_proposal(proposal_ID['proposalID'])
     return respone, 200
 
 @app.route('/proposalInfo', methods=['POST'])
 def proposalInfo():
     data = request.get_json()
-    proposal_ID = data.get('ProposalID')
+    proposal_ID = data['ProposalID']
     get_Info = proposal()
-    respone = get_Info.get_proposal_info(proposal_ID)
+    respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
     return respone, 200
 
 @app.route('/projectInfo', methods =['POST'])
@@ -162,6 +162,15 @@ def get_applications():
     applicationInstance = Application()
     db_Connection = DatabaseConnection()
     payload = applicationInstance.get_student_applications(db_Connection)
+    return jsonify(payload), 200
+
+@app.route('/getProposals', methods=['POST'])
+@Protector
+def get_proposals():
+    data = request.get_json()
+    proposalInstance = Project()
+    db_Connection = DatabaseConnection()
+    payload = proposalInstance.get_proposals(db_Connection)
     return jsonify(payload), 200
 
 def verify_email(email):

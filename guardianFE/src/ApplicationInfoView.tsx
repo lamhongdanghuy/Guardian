@@ -1,17 +1,52 @@
-import { useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ApplicationInfoView(studentID: string) {
-  console.log(studentID);
-  let studentName: string | null = null;
-  let major: string | null = null;
-  let email: string | null = null;
-  let phone: string | null = null;
-  let projectIntrest: string | null = null;
-  let coursesTaken: Array<string> = [];
-  let gradDate: string | null = null;
-  let year: string | null = null;
-  let college: string | null = null;
+  const [loading, setLoading] = useState<boolean>(true);
+
+  interface Student {
+    F_Name: string;
+    L_Name: string;
+    Major: string;
+    Email: string;
+    P_Number: string;
+    Proj_Interest: string;
+    coursesTaken: string;
+    Grad_Date: string;
+    Year_Standing: string;
+    School: string;
+  }
+
+  interface CourseList {
+    ACC_374: number;
+    ACC_376: number;
+    ACC_378: number;
+    ACC_636: number;
+    ACC_638: number;
+    ACC_639: number;
+    CSEC_390: number;
+    CSEC_488: number;
+    CSEC_490: number;
+    FIN_362: number;
+    IS_486: number;
+    IS_487: number;
+    SEC_Dae: number;
+    SEV_621: number;
+    Student_ID: string;
+    WiCyS: number;
+  }
+
+  const [studentInfo, setStudentInfo] = useState<Student[]>([]);
+  const [classInfo, setClassInfo] = useState<CourseList[]>([]);
+  const [studentName, setStudentName] = useState<string | null>("");
+  const [major, setMajor] = useState<string | null>("");
+  const [email, setEmail] = useState<string | null>("");
+  const [phone, setPhone] = useState<number | null>();
+  const [projectIntrest, setProjectIntrest] = useState<string | null>("");
+  const [coursesTaken, setCoursesTaken] = useState<string | null>("");
+  const [gradDate, setGradDate] = useState<string | null>("");
+  const [year, setYear] = useState<string | null>("");
+  const [college, setCollege] = useState<string | null>("");
 
   const { user, setUser } = useContext(LoginContext);
 
@@ -25,18 +60,31 @@ function ApplicationInfoView(studentID: string) {
       body: JSON.stringify({ studentID }),
     });
     const result = await response.json();
+    console.log("hi");
+    console.log(result);
+    setStudentName(
+      result.student_info[0].F_Name + " " + result.student_info[0].L_Name
+    );
+    setMajor(result.student_info[0].Major);
+    setEmail(result.student_info[0].Email);
+    setPhone(result.student_info[0].P_Number);
+    setProjectIntrest(result.student_info[0].Proj_Interest);
+    setGradDate(result.student_info[0].Grad_Date);
+    setYear(result.student_info[0].Year_Standing);
+    setCollege(result.student_info[0].School);
+    setCoursesTaken(result.class_info[0]);
+    setLoading(false);
 
-    studentName = result.studentName;
-    major = result.major;
-    email = result.email;
-    phone = result.phone;
-    projectIntrest = result.projectIntrest;
-    coursesTaken = result.coursesTaken;
-    gradDate = result.gradDate;
-    year = result.year;
-    college = result.college;
+    let takenList: String[] = [];
+    if (result.class_info && result.class_info.length > 0) {
+      for (let key in result.class_info[0]) {
+        if (result.class_info[0][key] === 1) {
+          takenList.push(key);
+        }
+      }
+    }
+    setCoursesTaken(takenList.join(", "));
   };
-
   const approve = async () => {
     const response = await fetch("http://localhost:5000/approveStudent", {
       method: "POST",
@@ -70,89 +118,121 @@ function ApplicationInfoView(studentID: string) {
   }, []);
 
   return (
-    <div className="projectInfoView">
-      <div className="topInfo">
-        <h1
-          style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Student: {studentName ? studentName : "Default"}
-        </h1>
-        <h1
-          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
-        >
-          Major: {major ? major : "None"}
-        </h1>
-      </div>
-      <div className="topInfo">
-        <h1
-          style={{ fontSize: "32px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Email: {email ? email : "____@____.com"}
-        </h1>
-        <h1
-          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
-        >
-          Phone: {phone ? phone : "000-000-0000"}
-        </h1>
-      </div>
-      <div className="topInfo">
-        <h1
-          style={{ fontSize: "32px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Year: {year ? year : "XXXX"}
-        </h1>
-        <h1
-          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
-        >
-          Project Intrest: {projectIntrest ? projectIntrest : "No Intrest"}
-        </h1>
-      </div>
-      {/* <div className="middleInfo">
+    <div>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="projectInfoView">
+          <div className="topInfo">
+            <h1
+              style={{
+                fontSize: "48px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Student: {studentName}
+            </h1>
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "auto",
+                marginRight: "1vw",
+              }}
+            >
+              Major: {major}
+            </h1>
+          </div>
+          <div className="topInfo">
+            <h1
+              style={{
+                fontSize: "32px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Email: {email}
+            </h1>
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "auto",
+                marginRight: "1vw",
+              }}
+            >
+              Phone: {phone}
+            </h1>
+          </div>
+          <div className="topInfo">
+            <h1
+              style={{
+                fontSize: "32px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Year: {year}
+            </h1>
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "auto",
+                marginRight: "1vw",
+              }}
+            >
+              Project Intrest: {projectIntrest}
+            </h1>
+          </div>
+          {/* <div className="middleInfo">
         <h1
           style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
         >
           Description:
         </h1>
       </div> */}
-      <h1
-        style={{
-          fontSize: "32px",
-          marginLeft: "0vw",
-          marginRight: "auto",
-          paddingBottom: "5vh",
-        }}
-      >
-        Grad Date: {gradDate ? gradDate : "Not Approved"}
-      </h1>
-      <h1
-        style={{
-          fontSize: "32px",
-          marginLeft: "0vw",
-          marginRight: "auto",
-          paddingBottom: "5vh",
-        }}
-      >
-        Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
-      </h1>
-      <h1 style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}>
-        College: {college ? college : "Not Assigned"}
-      </h1>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: "2em",
-          justifyContent: "center",
-          gap: "2em",
-        }}
-      >
-        <button onClick={approve} style={{ backgroundColor: "green" }}>
-          Approve
-        </button>
-        <button onClick={reject} style={{ backgroundColor: "red" }}>
-          Reject
-        </button>
-      </div>
+          <h1
+            style={{
+              fontSize: "32px",
+              marginLeft: "0vw",
+              marginRight: "auto",
+              paddingBottom: "5vh",
+            }}
+          >
+            Grad Date: {gradDate ? gradDate : "Not Approved"}
+          </h1>
+          <h1
+            style={{
+              fontSize: "32px",
+              marginLeft: "0vw",
+              marginRight: "auto",
+              paddingBottom: "5vh",
+            }}
+          >
+            Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+          </h1>
+          <h1
+            style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}
+          >
+            College: {college ? college : "Not Assigned"}
+          </h1>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "2em",
+              justifyContent: "center",
+              gap: "2em",
+            }}
+          >
+            <button onClick={approve} style={{ backgroundColor: "green" }}>
+              Approve
+            </button>
+            <button onClick={reject} style={{ backgroundColor: "red" }}>
+              Reject
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
