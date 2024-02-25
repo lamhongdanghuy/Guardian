@@ -164,6 +164,15 @@ def get_applications():
     payload = applicationInstance.get_student_applications(db_Connection)
     return jsonify(payload), 200
 
+@app.route('/getProposals', methods=['POST'])
+@Protector
+def get_proposals():
+    data = request.get_json()
+    proposalInstance = Project()
+    db_Connection = DatabaseConnection()
+    payload = proposalInstance.get_proposals(db_Connection)
+    return jsonify(payload), 200
+
 def verify_email(email):
     server = None
     try:

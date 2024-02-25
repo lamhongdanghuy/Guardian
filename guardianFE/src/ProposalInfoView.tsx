@@ -2,12 +2,12 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
 function ProposalInfoView(ProposalID: string) {
-  ProposalID = 'fcec673f-d49b-3ee3-9352-3a4bf9e485ce';
+  ProposalID = "fcec673f-d49b-3ee3-9352-3a4bf9e485ce";
   interface Member {
     Full_Name: string;
     Email: string;
   }
-
+  const [loading, setLoading] = useState<boolean>(true);
   const [companyName, setCompanyName] = useState<string | null>(null);
   const [type, setType] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
@@ -20,7 +20,7 @@ function ProposalInfoView(ProposalID: string) {
 
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
-      alert('Please select a project leader before approving the proposal.');
+      alert("Please select a project leader before approving the proposal.");
     }
 
     const response = await fetch("http://localhost:5000/approveProposal", {
@@ -66,9 +66,12 @@ function ProposalInfoView(ProposalID: string) {
     setDescription(result.project_info.Project_Description);
     setStatus(result.project_info.Project_Status);
     const targetDateObj = new Date(result.project_info.Target_Date);
-    const formattedTargetDate = `${targetDateObj.getMonth() + 1}-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    const formattedTargetDate = `${
+      targetDateObj.getMonth() + 1
+    }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -83,102 +86,138 @@ function ProposalInfoView(ProposalID: string) {
   }, [shouldApprove]);
 
   return (
-    <div className="projectInfoView">
-      <div className="topInfo">
-        <h1
-          style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Company Name: {companyName}
-        </h1>
-        <h1
-          style={{ fontSize: "32px", marginLeft: "auto", marginRight: "1vw" }}
-        >
-          Type: {type}
-        </h1>
-      </div>
-      <h1
-        style={{
-          fontSize: "32px",
-          marginLeft: "0vw",
-          marginRight: "auto",
-          paddingBottom: "5vh",
-        }}
-      >
-        Status: {status}
-      </h1>
-      <div className="middleInfo">
-        <h1
-          style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Description:
-        </h1>
-      </div>
-      <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
-        {description}
-      </p>
-      <h1
-        style={{
-          fontSize: "32px",
-          marginLeft: "0vw",
-          marginRight: "auto",
-          paddingBottom: "5vh",
-        }}
-      >
-        Target Date: {targetDate}
-      </h1>
-      <div
-        style={{
-          marginRight: "auto",
-          display: "flex",
-          justifyContent: "center",
-          gap: "1em",
-          alignItems: "center",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "32px",
-            marginLeft: "0vw",
-            marginRight: "auto",
-          }}
-        >
-          Project Leader:
-        </h1>
-        <div>
-          <select
-            id="leader"
-            name="leader"
-            onChange={(event) => {
-              setLeaderEmail(event.target.value);
-              setIsSubmitDisabled(false);
+    <div>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="projectInfoView">
+          <div className="topInfo">
+            <h1
+              style={{
+                fontSize: "48px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Company Name: {companyName}
+            </h1>
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "auto",
+                marginRight: "1vw",
+              }}
+            >
+              Type: {type}
+            </h1>
+          </div>
+          <h1
+            style={{
+              fontSize: "32px",
+              marginLeft: "0vw",
+              marginRight: "auto",
+              paddingBottom: "5vh",
             }}
-            required
-            style={{ height: "32px", borderRadius: "5px", fontSize: "20px" }}
           >
-            <option value="">Please Select A Leader</option>
-            {av_leaders.map((leader) => (
-              <option value={leader.Email}>{leader.Full_Name}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+            Status: {status}
+          </h1>
+          <div className="middleInfo">
+            <h1
+              style={{
+                fontSize: "48px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Description:
+            </h1>
+          </div>
+          <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
+            {description}
+          </p>
+          <h1
+            style={{
+              fontSize: "32px",
+              marginLeft: "0vw",
+              marginRight: "auto",
+              paddingBottom: "5vh",
+            }}
+          >
+            Target Date: {targetDate}
+          </h1>
+          <div
+            style={{
+              marginRight: "auto",
+              display: "flex",
+              justifyContent: "center",
+              gap: "1em",
+              alignItems: "center",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+              }}
+            >
+              Project Leader:
+            </h1>
+            <div>
+              <select
+                id="leader"
+                name="leader"
+                onChange={(event) => {
+                  setLeaderEmail(event.target.value);
+                  setIsSubmitDisabled(false);
+                }}
+                required
+                style={{
+                  height: "32px",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                }}
+              >
+                <option value="">Please Select A Leader</option>
+                {av_leaders.map((leader) => (
+                  <option value={leader.Email}>{leader.Full_Name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: "2em",
-          justifyContent: "center",
-          gap: "2em",
-        }}
-      >
-        <button onClick={approve} style={{ backgroundColor: "green", opacity: isSubmitDisabled ? 0.5 : 1, cursor: isSubmitDisabled ? 'not-allowed' : 'pointer' }}>
-          Approve
-        </button>
-        <button onClick={reject} style={{ backgroundColor: "red", opacity: isSubmitDisabled ? 0.5 : 1, cursor: isSubmitDisabled ? 'not-allowed' : 'pointer' }}>
-          Reject
-        </button>
-      </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "2em",
+              justifyContent: "center",
+              gap: "2em",
+            }}
+          >
+            <button
+              onClick={approve}
+              style={{
+                backgroundColor: "green",
+                opacity: isSubmitDisabled ? 0.5 : 1,
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+              }}
+            >
+              Approve
+            </button>
+            <button
+              onClick={reject}
+              style={{
+                backgroundColor: "red",
+                opacity: isSubmitDisabled ? 0.5 : 1,
+                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+              }}
+            >
+              Reject
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
