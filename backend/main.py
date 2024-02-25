@@ -161,7 +161,7 @@ def get_applications():
     data = request.get_json()
     applicationInstance = Application()
     db_Connection = DatabaseConnection()
-    payload = applicationInstance.get_student_applications(data['userID'], db_Connection)
+    payload = applicationInstance.get_student_applications(db_Connection)
     return jsonify(payload), 200
 
 def verify_email(email):

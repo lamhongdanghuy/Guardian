@@ -1,16 +1,9 @@
 class Application:
-    def get_student_applications(self, Student_ID, db_Connection):
-        if not Student_ID:
-            query = """
-                SELECT *
-                FROM STUDENT;
-                """
-        else:
-            query = """
-                SELECT *
-                FROM STUDENT
-                WHERE Student_ID = '{}';
-                """.format(Student_ID)
+    def get_student_applications(self, db_Connection):
+        query = """
+            SELECT *
+            FROM STUDENT;
+            """
         
         print(query)
         projectData = db_Connection.select_query(query)
