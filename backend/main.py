@@ -1,4 +1,5 @@
 # Standard library imports
+import datetime
 import json
 import os
 import sys
@@ -53,7 +54,7 @@ password = 'snmz oioc xwoa nvhp'
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
 @app.route('/approveProposal', methods=['POST'])
-def proposalInfo():
+def approveProposal():
     data = request.get_json()
     proposal_ID = data.get('ProposalID')
     leader_email = data.get('Email')
@@ -62,7 +63,7 @@ def proposalInfo():
     return respone, 200
 
 @app.route('/rejectProposal', methods=['POST'])
-def proposalInfo():
+def rejectProposal():
     data = request.get_json()
     proposal_ID = data.get('ProposalID')
     reject = proposal()
@@ -76,6 +77,7 @@ def proposalInfo():
     get_Info = proposal()
     respone = get_Info.get_proposal_info(proposal_ID)
     return respone, 200
+
 @app.route('/projectInfo', methods =['POST'])
 def project_info_get():
     data = request.get_json();

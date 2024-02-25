@@ -1,7 +1,7 @@
 from connectDB import DatabaseConnection
 from flask import jsonify
 
-class proposalInfo:
+class proposal:
     def get_proposal_info(self, proposal_ID):
         proj_type_query = "SELECT Pro_Type FROM PROJECT WHERE Proj_ID = '{}'".format(proposal_ID)
         proj_type = DatabaseConnection().select_query(proj_type_query).at[0, 'Pro_Type']

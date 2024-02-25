@@ -35,6 +35,7 @@ class apply:
         sen_data = data.get('senData')
         sra = data.get('sra')
         project_type = data.get('projectType')
+        due_date = data.get('dueDate')
         curious = data.get('curious')
         comment = data.get('comment')
 
@@ -46,12 +47,19 @@ class apply:
         vals_login = [ email, hashedPass, 'Client']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
+        
         vals_client = [client_id, f_name, l_name, email, phone_number, 'In Review', 1]
         DatabaseConnection().send_insert(vals_client, 'CLIENT')
         print("Client info inserted")
+        
         vals_company = [company_id, client_id, org_name, org_type, url, revenue, num_of_IT, sen_data, sra, curious, comment, 'In Review']
         DatabaseConnection().send_insert(vals_company, 'COMPANY')
         print ("Company info inserted")
+        
+        project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(datetime.datetime.now()))
+        vals_project = [project_id, org_name, company_id, client_id, None, project_type, due_date, datetime.datetime.now(), sen_data , 'In Review']
+        DatabaseConnection().send_insert(vals_project, 'PROJECT')
+        print("Project info inserted")
         
         query = "SELECT * FROM LOGIN_INFORMATION"
         data = DatabaseConnection().select_query(query)
@@ -60,6 +68,9 @@ class apply:
         data = DatabaseConnection().select_query(query)
         print(data)
         query = "SELECT * FROM COMPANY"
+        data = DatabaseConnection().select_query(query)
+        print(data)
+        query = "SELECT * FROM PROJECT"
         data = DatabaseConnection().select_query(query)
         print(data)
 
@@ -186,11 +197,12 @@ class apply:
         sra = data.get('sra')
         project_type = data.get('projectType')
         comment = data.get('comment')
+        due_date = data.get('dueDate')
 
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
         project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(datetime.datetime.now()))
 
-        vals_project = [project_id, org_name, company_id, client_id, "", project_type,datetime.date(2000, 1, 1), datetime.datetime.now(), sen_data , 'In Review']
+        vals_project = [project_id, org_name, company_id, client_id, None, project_type, due_date, datetime.datetime.now(), sen_data , 'In Review']
         DatabaseConnection().send_insert(vals_project, 'PROJECT')
     
