@@ -1,4 +1,4 @@
-import Header from "./Header";
+import { LoginContext } from "./LoginContextProvider";
 import { useState } from "react";
 
 function ApplyView() {
@@ -14,6 +14,7 @@ function ApplyView() {
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [user, setUser] = useContext(LoginContext);
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
@@ -46,6 +47,7 @@ function ApplyView() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        clientID: user.id,
         compName,
         url,
         revenue,

@@ -150,7 +150,7 @@ def confirm_email(token):
 def new_project():
     data = request.get_json()
     applyInstance = apply()
-    client = ""
+    client = data.get('clientID')
     applyInstance.add_project(data, client)
 
 if __name__ == "__main__":
