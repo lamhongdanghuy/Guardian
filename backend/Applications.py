@@ -2,7 +2,8 @@ class Application:
     def get_student_applications(self, db_Connection):
         query = """
             SELECT *
-            FROM STUDENT;
+            FROM STUDENT
+            WHERE Status = "In Review";
             """
         
         print(query)
