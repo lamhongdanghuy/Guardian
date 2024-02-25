@@ -175,16 +175,12 @@ class apply:
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
-        try:
-            vals_login = [email, hashedPass, 'Faculty']
-            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
-            print("Login info inserted")
-            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
-            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
-            print("Faculty info inserted")
-        except Exception as e:
-            DatabaseConnection().rollback()
-            print(f"An error occurred: {e}")
+        vals_login = [email, hashedPass, 'Faculty']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        print("Login info inserted")
+        vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
+        DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+        print("Faculty info inserted")
 
     def propose_project(self, data):
         print (data)

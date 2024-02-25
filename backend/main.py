@@ -4,6 +4,7 @@ import json
 import os
 import sys
 from os.path import expanduser
+import uuid
 
 # Third party imports
 from flask import Flask, request, jsonify, url_for
@@ -37,12 +38,14 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
-data = DatabaseConnection().select_query(query).at[0, 'F_Name']
+print(apply().hash('Abc123123!'))
 
-query = "SELECT * FROM LOGIN_INFORMATION"
-data = DatabaseConnection().select_query(query)
-print(data)
+# query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
+# data = DatabaseConnection().select_query(query).at[0, 'F_Name']
+
+# query = "SELECT * FROM LOGIN_INFORMATION"
+# data = DatabaseConnection().select_query(query)
+# print(data)
 
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
@@ -106,6 +109,15 @@ def login():
     payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
+
+@app.route('/apply/faculty', methods=['POST'])
+def faculty_apply():
+    data = request.get_json()
+    applyInstance = apply()
+    applyInstance.faculty_apply(data)
+    email = data.get('email')
+    verify_email(email)
+    return jsonify({'message': 'Please confirm you email!'}), 200
 
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
