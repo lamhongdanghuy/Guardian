@@ -26,6 +26,7 @@ from login import Login
 from apply import apply
 from protector import Protector
 from connectDB import DatabaseConnection
+import infoGetter
 # from protector import Protector
 # Test imports 
 from protector import TestProtectorDecorator
@@ -33,9 +34,6 @@ from protector import TestProtectorDecorator
 app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
-
-
-
 
 
 query = "SELECT * FROM LOGIN_INFORMATION"
@@ -51,6 +49,22 @@ password = 'snmz oioc xwoa nvhp'
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
+@app.route('/projectInfo', methods =['POST'])
+def project_info_get():
+    data = request.get_json();
+    dbconnect = DatabaseConnection()
+    payload = infoGetter.getprojectinfo(data['projectID'],dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/studentInfo', methods =['POST'])
+def student_info_get():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = infoGetter.getprojectinfo(data['studentID'], dbconnect)
+    return jsonify(payload), 200
+
+
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -60,7 +74,7 @@ def login():
     print(password)
     loginInstance = Login()
     db_Connection = DatabaseConnection()
-    payload = loginInstance.login(identifier,password,db_Connection)    
+    payload = loginInstance.login(identifier,password,db_Connection)
     token = jwt.encode(payload, app.config["SECRET KEY"])
     return jsonify(token)
 
@@ -71,7 +85,7 @@ def student_apply():
     applyInstance.student_apply(data)
     email = data.get('email')
     verify_email(email)
-        
+
     return jsonify({'message': 'Please confirm you email!'}), 200
 
 @app.route('/apply/client', methods=['POST'])
@@ -115,13 +129,13 @@ def verify_email(email):
         server.login(sender_email, password) #Login to email account
         server.sendmail(sender_email, email, msg.as_string()) #Send the email
         print('Email sent successfully!') #Print success message
-        
+
     except Exception as e:
         print(f'An error occurred: {e}')
     finally:
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
-            
+
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
