@@ -30,6 +30,7 @@ from protector import Protector
 from connectDB import DatabaseConnection
 from proposal import proposal
 import infoGetter
+from infoGetter import infoGetter
 # from protector import Protector
 # Test imports 
 from protector import TestProtectorDecorator
@@ -46,6 +47,10 @@ print(apply().hash('Abc123123!'))
 # query = "SELECT * FROM LOGIN_INFORMATION"
 # data = DatabaseConnection().select_query(query)
 # print(data)
+
+query = "SELECT * FROM PROJECT"
+data = DatabaseConnection().select_query(query)
+print(data)
 
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
@@ -83,16 +88,20 @@ def proposalInfo():
 
 @app.route('/projectInfo', methods =['POST'])
 def project_info_get():
-    data = request.get_json();
+    data = request.get_json()
     dbconnect = DatabaseConnection()
-    payload = infoGetter.getprojectinfo(data['projectID'],dbconnect)
+    infoInstance = infoGetter()
+    print(data['projectID'])
+    id = data['projectID']
+    payload = infoInstance.getprojectinfo(id,dbconnect)
     return jsonify(payload), 200
 
 @app.route('/studentInfo', methods =['POST'])
 def student_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
-    payload = infoGetter.getprojectinfo(data['studentID'], dbconnect)
+    infoInstance = infoGetter()
+    payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
     return jsonify(payload), 200
 
 

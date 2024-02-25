@@ -28,9 +28,7 @@ function ProjectCard(props: ProjectCardProps) {
       </div>
       <div className="cardBottom">
         <h2 style={{ fontSize: "24px" }}>{props.status}</h2>
-        <h2 style={{ fontSize: "24px" }}>
-          Project Leader: {props.projectLeader}
-        </h2>
+        <h2 style={{ fontSize: "24px" }}>Leader: {props.projectLeader}</h2>
       </div>
     </div>
   );
