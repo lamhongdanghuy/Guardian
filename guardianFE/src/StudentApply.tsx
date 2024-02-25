@@ -561,9 +561,6 @@ function StudentApply() {
             <option value="Black or Afican American">
               Black or African American
             </option>
-            <option value="nativeOrPI">
-              Native Hawaiian or Other Pacific Islander
-            </option>
             <option value="Hispanic">Hispanic</option>
             <option value="Native Hawaiian or Other Pacific Islander">
               Native Hawaiian or Other Pacific Islander

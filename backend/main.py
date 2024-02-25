@@ -65,7 +65,7 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 def approveProposal():
     data = request.get_json()
     proposal_ID = data.get('ProposalID')
-    leader_email = data.get('Email')
+    leader_email = data.get('leaderEmail')
     approve = proposal()
     respone = approve.approve_proposal(proposal_ID, leader_email)
     return respone, 200
