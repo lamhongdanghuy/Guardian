@@ -8,10 +8,10 @@ interface projectViewProp {
 }
 
 interface Project {
-  name: string;
-  status: string;
-  projectLeader: string;
-  type: string;
+  C_Name: string;
+  Status: string;
+  Stu_Lead_ID: string;
+  Pro_Type: string;
   projectID: string;
 }
 
@@ -91,10 +91,10 @@ function ProjectsView(props: projectViewProp) {
 
         {projectsList.map((project: Project) => (
           <ProjectCard
-            name={project.name}
-            status={project.status}
-            projectLeader={project.projectLeader}
-            type={project.type}
+            name={project.C_Name}
+            status={project.Status}
+            projectLeader={project.Stu_Lead_ID}
+            type={project.Pro_Type}
             onClick={props.onClick}
             projectID={project.projectID}
           />

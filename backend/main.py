@@ -40,6 +40,10 @@ query = "SELECT * FROM LOGIN_INFORMATION"
 data = DatabaseConnection().select_query(query)
 print(data)
 
+query = "SELECT * FROM PROJECT"
+data = DatabaseConnection().select_query(query)
+print(data)
+
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
 smtp_port = 465
