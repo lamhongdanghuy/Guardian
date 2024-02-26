@@ -7,17 +7,18 @@ interface proposalProposalViewProp {
 }
 
 interface Proposal {
-  name: string;
-  status: string;
-  ProposalLeader: string;
-  type: string;
-  onClick: Function;
-  ProposalID: string;
+  C_Name: string;
+  Status: string;
+  Stu_Lead_ID: string;
+  Pro_Type: string;
+  projectID: string;
+  Proj_ID: string;
 }
 
 function ProposalsView(props: proposalProposalViewProp) {
   const { user, setUser } = useContext(LoginContext);
   const [proposalsList, setProposalsList] = useState<Proposal[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getProposals();
@@ -27,74 +28,51 @@ function ProposalsView(props: proposalProposalViewProp) {
     const response = await fetch("http://localhost:5000/getProposals", {
       method: "POST",
       headers: {
-        "Content-Type": "proposal/json",
+        "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ userID: user.id }),
+      body: JSON.stringify({
+        userID: user.role !== "Faculty" ? user.id : null,
+      }),
     });
     const result = await response.json();
-    setProposalsList(result);
+    console.log(result);
+    setProposalsList(result.projects);
+    setLoading(false);
   };
 
   return (
     <div>
-      <h1 style={{ fontSize: "10vh" }}>Proposals</h1>
-      <div
-        style={{
-          margin: "0 5vw",
-          display: "flex",
-          flexWrap: "wrap",
-          textAlign: "center",
-          overflowY: "scroll",
-          maxHeight: "70vh",
-          marginBottom: "5vh",
-          gap: "5vh",
-        }}
-      >
-        <ProposalCard
-          name={"Parsons"}
-          status={"Current Status"}
-          ProposalLeader={"PERSON"}
-          type={"GRA"}
-          onClick={props.onClick}
-          ProposalID="1234"
-        />
-        <ProposalCard
-          name={"Parsons"}
-          status={"Current Status"}
-          ProposalLeader={"PERSON"}
-          type={"GRA"}
-          onClick={props.onClick}
-          ProposalID="1234"
-        />
-        <ProposalCard
-          name={"Parsons"}
-          status={"Current Status"}
-          ProposalLeader={"PERSON"}
-          type={"GRA"}
-          onClick={props.onClick}
-          ProposalID="1234"
-        />
-        <ProposalCard
-          name={"Parsons"}
-          status={"Current Status"}
-          ProposalLeader={"PERSON"}
-          type={"GRA"}
-          onClick={props.onClick}
-          ProposalID="1234"
-        />
-
-        {proposalsList.map((proposal: Proposal) => (
-          <ProposalCard
-            name={proposal.name}
-            status={proposal.status}
-            ProposalLeader={proposal.ProposalLeader}
-            type={proposal.type}
-            onClick={props.onClick}
-            ProposalID={proposal.ProposalID}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <h1 style={{ fontSize: "10vh" }}>Proposals</h1>
+          <div
+            style={{
+              margin: "0 5vw",
+              display: "flex",
+              flexWrap: "wrap",
+              textAlign: "center",
+              overflowY: "scroll",
+              maxHeight: "70vh",
+              marginBottom: "5vh",
+              gap: "5vh",
+            }}
+          >
+            {proposalsList.map((proposal: Proposal) => (
+              <ProposalCard
+                name={proposal.C_Name}
+                status={proposal.Status}
+                ProposalLeader={proposal.Stu_Lead_ID}
+                type={proposal.Pro_Type}
+                onClick={props.onClick}
+                ProposalID={proposal.Proj_ID}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

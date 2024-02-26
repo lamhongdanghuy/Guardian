@@ -37,7 +37,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number, Role);
-    const response = await fetch("http://localhost:5000/addFaculty", {
+    const response = await fetch("http://localhost:5000/apply/faculty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

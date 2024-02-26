@@ -399,18 +399,23 @@ nav {
 
 .cardTopProject {
   display: flex;
+  height: 40%;
   flex-direction: row;
   background-color: #80199a;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardTopProposal {
   display: flex;
+  height: 40%;
   flex-direction: row;
   background-color: #860e0e;
 }
 
 .cardTopApplication {
   display: flex;
+  height: 40%;
   flex-direction: row;
   background-color: #17c214;
 }
