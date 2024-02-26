@@ -175,17 +175,30 @@ class apply:
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
-        vals_login = [email, hashedPass, 'Faculty']
-        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
-        print("Login info inserted")
-        vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
-        DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
-        print("Faculty info inserted")
+        try:
+            vals_login = [email, hashedPass, 'Faculty']
+            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+            print("Login info inserted")
+            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
+            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+            print("Faculty info inserted")
+        except Exception as e:
+            DatabaseConnection().rollback()
+            print(f"An error occurred: {e}")
+    
+     #adds new project to PROJECT table to in review. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
+    def add_project(self, data):
+        client_id = data.get('clientID')
+        query_id = """SELECT Company_ID FROM COMPANY
+                    WHERE Client_ID = "{}" """.format(client_id)
+        
+        company_id_data = DatabaseConnection().select_query(query_id)
+        print(company_id_data)
+        company_id = company_id_data.at[0, 'Company_ID']
 
-    def propose_project(self, data):
-        print (data)
-        email = data.get('email')
+        
         org_name = data.get('compName')
+        org_type = data.get('compType')
         url = data.get('url')
         revenue = data.get('revenue')
         num_of_IT = data.get('numOfIT')
@@ -193,12 +206,27 @@ class apply:
         sra = data.get('sra')
         project_type = data.get('projectType')
         comment = data.get('comment')
-        due_date = data.get('dueDate')
+        date_submitted = datetime.datetime.now()
 
-        client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
-        company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
-        project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(datetime.datetime.now()))
+        project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(date_submitted))
 
-        vals_project = [project_id, org_name, company_id, client_id, None, project_type, due_date, datetime.datetime.now(), sen_data , 'In Review']
-        DatabaseConnection().send_insert(vals_project, 'PROJECT')
+        update_query = """UPDATE COMPANY
+                        SET C_URL = '{}',
+                            C_Revenue = {},
+                            C_IT = {},
+                            C_SRA = '{}',
+                            Comment = '{}'
+                        WHERE Client_ID = "{}" """.format( url, revenue, num_of_IT, sra, comment, client_id)
+        try:
+            vals_new_project = [project_id, org_name, company_id, client_id, None, project_type, datetime.date(1990,1,1), date_submitted, sen_data, "In Review"]
+            DatabaseConnection().send_insert(vals_new_project, 'PROJECT')
+            DatabaseConnection().update_query(update_query)
+            payload = {"message": "Project proposed!"}
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            payload = {"message": "Error proposing project"}
+        return payload
+
+
+
     
