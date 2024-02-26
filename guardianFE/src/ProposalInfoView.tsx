@@ -211,8 +211,8 @@ function ProposalInfoView(ProposalID: string) {
               onClick={reject}
               style={{
                 backgroundColor: "red",
-                opacity: isSubmitDisabled ? 0.5 : 1,
-                cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+                opacity: 1,
+                cursor: "pointer",
               }}
             >
               Reject
