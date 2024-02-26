@@ -42,3 +42,25 @@ class Project:
         print(payload)
         return payload
     
+    def get_student_projects(self, Student_ID, db_Connection):
+        query = """
+            SELECT *
+            FROM PROJECT_PARTICIPANT
+            WHERE Student_ID = '{}';
+            """.format(Student_ID)
+        
+        query = """
+            SELECT *
+            FROM PROJECT_PARTICIPANT;
+            """
+        
+        print(query)
+        projectData = db_Connection.select_query(query)
+        if projectData.empty:
+            payload = {'message': 'Projects not found', 'projects': []}
+        else:
+            payload = {'message': 'Projects Successfully Retrieved!',
+                       'projects': projectData.to_dict(orient='records')}
+        print(payload)
+        return payload
+    

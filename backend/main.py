@@ -150,9 +150,14 @@ def client_apply():
 @Protector
 def get_projects():
     data = request.get_json()
+    role = data['role']
+    print ("role " + role)
     projectInstance = Project()
     db_Connection = DatabaseConnection()
-    payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    if role == 'Student':
+        payload = projectInstance.get_student_projects(data['userID'], db_Connection)
+    else:
+        payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
 @app.route('/getApplications', methods=['POST'])

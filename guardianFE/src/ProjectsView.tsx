@@ -33,6 +33,7 @@ function ProjectsView(props: projectViewProp) {
         token: user.token ? user.token : "",
       },
       body: JSON.stringify({
+        role: user.role,
         userID: user.role !== "Faculty" ? user.id : null,
       }),
     });
