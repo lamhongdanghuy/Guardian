@@ -67,8 +67,9 @@ def approveProposal():
     data = request.get_json()
     proposal_ID = data['ProposalID']
     leader_email = data.get('leaderEmail')
+    students = data.get('assigned_students')
     approve = proposal()
-    respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email)
+    respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email, students)
     return respone, 200
 
 @app.route('/rejectProposal', methods=['POST'])

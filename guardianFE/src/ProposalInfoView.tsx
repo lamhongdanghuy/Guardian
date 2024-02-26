@@ -33,7 +33,7 @@ function ProposalInfoView(ProposalID: string) {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ ProposalID, leaderEmail }),
+      body: JSON.stringify({ ProposalID, leaderEmail, assigned_students }),
     });
     const result = await response.json();
     return result;

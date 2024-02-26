@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import pandas as pd
 
 
 class Project:
@@ -49,13 +50,19 @@ class Project:
             WHERE Student_ID = '{}';
             """.format(Student_ID)
         
-        query = """
-            SELECT *
-            FROM PROJECT_PARTICIPANT;
-            """
-        
         print(query)
-        projectData = db_Connection.select_query(query)
+        projectIDData = db_Connection.select_query(query)
+        
+        projectData = pd.DataFrame()
+
+        for indx,row in projectIDData.iterrows():
+            query = """
+                SELECT *
+                FROM PROJECT
+                WHERE Proj_ID = '{}';
+                """.format(row['Proj_ID'])
+            projectData = pd.concat([projectData,db_Connection.select_query(query)])
+
         if projectData.empty:
             payload = {'message': 'Projects not found', 'projects': []}
         else:

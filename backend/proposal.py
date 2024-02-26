@@ -39,7 +39,7 @@ class proposal:
         print(combined_data)
         return jsonify(combined_data)
     
-    def approve_proposal(self, proposal_ID, leader_email):
+    def approve_proposal(self, proposal_ID, leader_email, students):
         update_query = "UPDATE PROJECT SET Status = 'Approved' WHERE Proj_ID = '{}'".format(proposal_ID)
         
         get_leader_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(leader_email)
@@ -47,6 +47,11 @@ class proposal:
         
         assign_leader_query = "UPDATE PROJECT SET Stu_Lead_ID = '{}' WHERE Proj_ID = '{}'".format(leader_ID, proposal_ID)
         
+        for student in students:
+            get_student_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(student['Email'])
+            student_ID = DatabaseConnection().select_query(get_student_ID_query).at[0, 'Student_ID']
+            assign_student_query = "INSERT INTO PROJECT_PARTICIPANT VALUES ('{}', '{}')".format(proposal_ID, student_ID)
+        DatabaseConnection().update_query(assign_student_query)
         DatabaseConnection().update_query(assign_leader_query)
         DatabaseConnection().update_query(update_query)
         return jsonify({"message": "Proposal approved"})
