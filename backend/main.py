@@ -155,6 +155,23 @@ def get_projects():
     payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
+@app.route('/rejectStudent', methods=['POST'])
+def rejectApplication():
+    data = request.get_json()
+    applicationInstance = Application()
+    db_Connection = DatabaseConnection()
+    payload = applicationInstance.rejectApplication(db_Connection, data['studentID']['studentID'])
+    return payload, 200
+
+@app.route('/approveStudent', methods=['POST'])
+def approveApplication():
+    data = request.get_json()
+    print(data)
+    applicationInstance = Application()
+    db_Connection = DatabaseConnection()
+    payload = applicationInstance.approveApplication(db_Connection, data['studentID']['studentID'])
+    return payload, 200
+
 @app.route('/getApplications', methods=['POST'])
 @Protector
 def get_applications():
