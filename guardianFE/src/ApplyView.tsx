@@ -154,9 +154,11 @@ function ApplyView() {
             required
           >
             <option>Please select one</option>
-            <option value="Gra">General Risk Assessment</option>
-            <option value="audit">Audit</option>
-            <option value="Policy_Review">Policy Review</option>
+            <option value="General Risk Assessment">
+              General Risk Assessment
+            </option>
+            <option value="Audit">Audit</option>
+            <option value="Policy Review">Policy Review</option>
             <option value="other">Other</option>
           </select>{" "}
           <br />
