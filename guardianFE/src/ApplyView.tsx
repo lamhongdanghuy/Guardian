@@ -2,7 +2,6 @@ import { LoginContext } from "./LoginContextProvider";
 import { useState } from "react";
 
 function ApplyView() {
-  const { user, setUser } = useContext(LoginContext);
   const [url, setURL] = useState("");
   const [compName, setCompName] = useState("");
   const [revenue, setRevenue] = useState("");
