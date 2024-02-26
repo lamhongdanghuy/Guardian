@@ -93,6 +93,7 @@ def student_apply():
     applyInstance.student_apply(data)
     email = data.get('email')
     verify_email(email)
+    notify_faculty('student')
 
     return jsonify({'message': 'Please confirm you email!'}), 200
 
@@ -103,6 +104,8 @@ def client_apply():
     applyInstance.client_apply(data)
     email = data.get('email')
     verify_email(email)
+    notify_faculty('client')
+
     return jsonify({'message': 'Please confirm you email!'}), 200
 
 @app.route('/getProjects', methods=['POST'])
@@ -151,6 +154,50 @@ def verify_email(email):
     finally:
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
+
+# Notifies all faculty whenever there is a new application 
+def notify_faculty(application_type):
+    try:
+        # Fetch faculty emails from the database
+        query = "SELECT Email FROM FACULTY"
+        db_Connection = DatabaseConnection()
+        faculty_emails = [row[0] for row in db_Connection.select_query(query)]
+
+        # Determine email subject and body based on application type
+        if application_type == 'student':
+            subject = 'New Student Application'
+            body = 'A new student has applied. Please review the applications.'
+        elif application_type == 'client':
+            subject = 'New Client Application'
+            body = 'A new client has applied. Please review the applications.'
+        else:
+            print('Invalid application type')
+            return
+        
+        # Send email to each faculty member
+        for email in faculty_emails:
+            send_email(subject, body, email)
+
+        print('Notification emails sent successfully!')
+    except Exception as e:
+        print(f'An error occurred while sending notification emails: {e}')
+
+def send_email(subject, body, email):    
+    try:
+        # Email configuration
+        msg = MIMEText(body)
+        msg['Subject'] = subject
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        # Connect to SMTP server and send email
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, email, msg.as_string())
+
+        print(f'Email sent to {email}')
+    except Exception as e:
+        print(f'Failed to send email to {recipient}: {e}')
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
