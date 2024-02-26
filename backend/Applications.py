@@ -1,3 +1,4 @@
+from flask import jsonify
 class Application:
     def get_student_applications(self, db_Connection):
         query = """
@@ -15,3 +16,23 @@ class Application:
                        'applications': projectData.to_dict(orient='records')}
         print(payload)
         return payload
+    
+    def approveApplication(self, db_Connection, student_ID):
+        query = """
+            UPDATE STUDENT
+            SET Status = "Active"
+            WHERE Student_ID = "{}";
+            """.format(student_ID)
+        db_Connection.update_query(query)
+        return jsonify({"message": "Application approved"})
+
+
+    
+    def rejectApplication(self, db_Connection, student_ID):
+        query = """
+            UPDATE STUDENT
+            SET Status = "Inactive"
+            WHERE Student_ID = "{}";
+            """.format(student_ID)
+        db_Connection.update_query(query)
+        return jsonify({"message": "Application rejected"})
