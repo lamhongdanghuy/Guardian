@@ -15,6 +15,8 @@ function ProposalInfoView(ProposalID: string) {
   const [status, setStatus] = useState<string | null>(null);
   const [targetDate, setTargetDate] = useState<string | null>(null);
   const [av_leaders, setAvLeaders] = useState<Member[]>([]);
+  const [act_student, setStudent] = useState<Member>();
+  const [assigned_students, setAssignedStudents] = useState<Member[]>([]);
   const [students, setStudents] = useState<Member[]>([]);
   const [leaderEmail, setLeaderEmail] = useState<string>("");
   const [shouldApprove, setShouldApprove] = useState(false);
@@ -51,6 +53,10 @@ function ProposalInfoView(ProposalID: string) {
   };
 
   const { user, setUser } = useContext(LoginContext);
+
+  const addStudent = (stu: Member) => {
+    setAssignedStudents([...assigned_students, stu]);
+  };
 
   const getProposalInfo = async () => {
     const response = await fetch("http://localhost:5000/proposalInfo", {
@@ -212,8 +218,10 @@ function ProposalInfoView(ProposalID: string) {
                 id="leader"
                 name="leader"
                 onChange={(event) => {
-                  setLeaderEmail(event.target.value);
-                  setIsSubmitDisabled(false);
+                  setStudent({
+                    Full_Name: event.target.value.split(",")[0],
+                    Email: event.target.value.split(",")[1],
+                  });
                 }}
                 required
                 style={{
@@ -225,10 +233,18 @@ function ProposalInfoView(ProposalID: string) {
                 <option value="">Add A Student</option>
 
                 {students.map((student) => (
-                  <option value={student.Email}>{student.Full_Name}</option>
+                  <option
+                    value={[student.Full_Name, student.Full_Name]}
+                    key={student.Full_Name}
+                  >
+                    {student.Full_Name}
+                  </option>
                 ))}
               </select>
             </div>
+            <button onClick={() => act_student && addStudent(act_student)}>
+              Add Student
+            </button>
           </div>
           <div
             style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
@@ -253,6 +269,14 @@ function ProposalInfoView(ProposalID: string) {
               role="Leader"
               email="johnDoe@depaul.edu"
             />
+            {assigned_students.map((student) => (
+              <MemberCard
+                name={student.Full_Name}
+                role="Student"
+                email={student.Email}
+              />
+            ))}
+            ;
           </div>
           <div
             style={{
