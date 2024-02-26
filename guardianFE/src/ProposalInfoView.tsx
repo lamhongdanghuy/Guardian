@@ -249,26 +249,6 @@ function ProposalInfoView(ProposalID: string) {
           <div
             style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
           >
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
             {assigned_students.map((student) => (
               <MemberCard
                 name={student.Full_Name}
