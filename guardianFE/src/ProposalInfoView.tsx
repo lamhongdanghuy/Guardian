@@ -234,7 +234,7 @@ function ProposalInfoView(ProposalID: string) {
 
                 {students.map((student) => (
                   <option
-                    value={[student.Full_Name, student.Full_Name]}
+                    value={[student.Full_Name, student.Email]}
                     key={student.Full_Name}
                   >
                     {student.Full_Name}
