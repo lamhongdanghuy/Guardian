@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-
+import MemberCard from "./memberCard";
 function ProposalInfoView(ProposalID: string) {
   console.log(ProposalID);
   console.log("reading proposalID");
@@ -15,6 +15,7 @@ function ProposalInfoView(ProposalID: string) {
   const [status, setStatus] = useState<string | null>(null);
   const [targetDate, setTargetDate] = useState<string | null>(null);
   const [av_leaders, setAvLeaders] = useState<Member[]>([]);
+  const [students, setStudents] = useState<Member[]>([]);
   const [leaderEmail, setLeaderEmail] = useState<string>("");
   const [shouldApprove, setShouldApprove] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
@@ -73,6 +74,7 @@ function ProposalInfoView(ProposalID: string) {
     }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
+    setStudents(result.students);
     setLoading(false);
   };
 
@@ -165,7 +167,7 @@ function ProposalInfoView(ProposalID: string) {
             >
               Project Leader:
             </h1>
-            <div>
+            <div style={{ margin: "1em" }}>
               <select
                 id="leader"
                 name="leader"
@@ -187,7 +189,71 @@ function ProposalInfoView(ProposalID: string) {
               </select>
             </div>
           </div>
+          <div
+            style={{
+              marginRight: "auto",
+              display: "flex",
+              justifyContent: "center",
+              gap: "1em",
+              alignItems: "center",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+              }}
+            >
+              Team:
+            </h1>
+            <div style={{ margin: "1em" }}>
+              <select
+                id="leader"
+                name="leader"
+                onChange={(event) => {
+                  setLeaderEmail(event.target.value);
+                  setIsSubmitDisabled(false);
+                }}
+                required
+                style={{
+                  height: "32px",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                }}
+              >
+                <option value="">Add A Student</option>
 
+                {students.map((student) => (
+                  <option value={student.Email}>{student.Full_Name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div
+            style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
+          >
+            <MemberCard
+              name="John Doe"
+              role="Leader"
+              email="johnDoe@depaul.edu"
+            />
+            <MemberCard
+              name="John Doe"
+              role="Leader"
+              email="johnDoe@depaul.edu"
+            />
+            <MemberCard
+              name="John Doe"
+              role="Leader"
+              email="johnDoe@depaul.edu"
+            />
+            <MemberCard
+              name="John Doe"
+              role="Leader"
+              email="johnDoe@depaul.edu"
+            />
+          </div>
           <div
             style={{
               display: "flex",
