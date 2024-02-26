@@ -43,7 +43,6 @@ class proposal:
         
         DatabaseConnection().update_query(assign_leader_query)
         DatabaseConnection().update_query(update_query)
-        return jsonify({"message": "Proposal approved"})
     
     def reject_proposal(self, proposal_ID):
         update_query = "UPDATE PROJECT SET Status = 'Denied' WHERE Proj_ID = '{}'".format(proposal_ID)

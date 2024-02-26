@@ -217,6 +217,7 @@ def propose_project():
     data = request.get_json()
     applyInstance = apply()
     applyInstance.add_project(data)
+    return jsonify({'message': 'Project proposed!'}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

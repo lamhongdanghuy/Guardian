@@ -189,12 +189,14 @@ class apply:
      #adds new project to PROJECT table to in review. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
     def add_project(self, data):
         client_id = data.get('clientID')
-        query_id = """SELECT Company_ID  FROM COMPANY
-                    WHERE Client_ID = {} """.format(client_id)
+        query_id = """SELECT Company_ID FROM COMPANY
+                    WHERE Client_ID = "{}" """.format(client_id)
         
         company_id_data = DatabaseConnection().select_query(query_id)
-        company_id = company_id_data.at[0, 'C_name']
+        print(company_id_data)
+        company_id = company_id_data.at[0, 'Company_ID']
 
+        
         org_name = data.get('compName')
         org_type = data.get('compType')
         url = data.get('url')
@@ -204,25 +206,26 @@ class apply:
         sra = data.get('sra')
         project_type = data.get('projectType')
         comment = data.get('comment')
-        date_submitted = datetime.today().strftime('%Y-%m-%d')
+        date_submitted = datetime.datetime.now()
 
         project_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name + project_type + str(date_submitted))
 
         update_query = """UPDATE COMPANY
-                        SET C_Type = '{}',
-                            C_URL = '{}',
-                            C_Revnue = {},
+                        SET C_URL = '{}',
+                            C_Revenue = {},
                             C_IT = {},
                             C_SRA = '{}',
                             Comment = '{}'
-                        WHERE Client_ID = {} """.format(org_type, url, revenue, num_of_IT, sra, comment, client_id)
+                        WHERE Client_ID = "{}" """.format( url, revenue, num_of_IT, sra, comment, client_id)
         try:
-            vals_new_project = [project_id, org_name, company_id, client_id, '', project_type, '', date_submitted, sen_data, "In Review"]
-            DatabaseConnection.send_insert(vals_new_project, 'PROJECT')
-            DatabaseConnection.update_query(update_query)
+            vals_new_project = [project_id, org_name, company_id, client_id, None, project_type, datetime.date(1990,1,1), date_submitted, sen_data, "In Review"]
+            DatabaseConnection().send_insert(vals_new_project, 'PROJECT')
+            DatabaseConnection().update_query(update_query)
+            payload = {"message": "Project proposed!"}
         except Exception as e:
-            DatabaseConnection().rollback()
             print(f"An error occurred: {e}")
+            payload = {"message": "Error proposing project"}
+        return payload
 
 
 
