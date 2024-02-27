@@ -20,7 +20,7 @@ function Dashboard() {
   }
 
   const returnToLandingPage = () => {
-    setUser({ id: null, email: null, role: null, token: null });
+    setUser({ id: "", email: "", role: "", token: "" });
     navigator("/");
   };
 
@@ -55,7 +55,7 @@ function Dashboard() {
   const [openProposal, setOpenProposal] = useState("");
   const [devMode, setDevMode] = useState(false);
   useEffect(() => {
-    if (user.id === null) {
+    if (user.id === "") {
       navigator("/login");
     }
   }, [user]);
@@ -70,7 +70,7 @@ function Dashboard() {
         <div
           className="logoutButton"
           onClick={() => {
-            setUser({ id: null, email: null, role: null, token: null });
+            setUser({ id: "", email: "", role: "", token: "" });
           }}
         >
           Log Out
