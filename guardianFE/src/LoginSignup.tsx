@@ -1,19 +1,12 @@
 import { useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function LoginSignup() {
-  interface User {
-    userId: string;
-    email: string;
-    role: string;
-  }
-
-  const { user, setUser } = useContext(LoginContext);
+  const { setUser } = useContext(LoginContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,14 +29,23 @@ function LoginSignup() {
     //////////////////
     console.log(temp);
     //////////////////
-    if (temp.message === "Login successful!") {
+    if ("message" in temp && temp.message === "Login successful!") {
       setSuccess("Login Successful");
-      setUser({
-        token: result,
-        email: temp.email,
-        id: temp.id,
-        role: temp.role,
-      });
+      if (
+        "email" in temp &&
+        typeof temp.email === "string" &&
+        "id" in temp &&
+        typeof temp.id === "string" &&
+        "role" in temp &&
+        typeof temp.role === "string"
+      ) {
+        setUser({
+          token: result,
+          email: temp.email,
+          id: temp.id,
+          role: temp.role,
+        });
+      }
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");

@@ -19,20 +19,20 @@ function ProjectInfoView(projectID: string) {
   const [targetDate, setTargetDate] = useState<string | null>("");
   const [projectLeader, setProjectLeader] = useState<string | null>("");
   const [act_student, setStudent] = useState<Member | undefined>();
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
 
   const addStudent = async (stu: Member) => {
-    const response = await fetch("http://localhost:5000/addStudent", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            token: user.token ? user.token : "",
-        },
-        body: JSON.stringify({ projectID, student: stu }),
+    await fetch("http://localhost:5000/addStudent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ projectID, student: stu }),
     });
     setAssignedStudents([...assigned_students, stu]);
     await getProjectInfo();
-};
+  };
 
   const getProjectInfo = async () => {
     const response = await fetch("http://localhost:5000/projectInfo", {

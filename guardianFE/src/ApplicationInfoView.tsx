@@ -4,38 +4,6 @@ import { LoginContext } from "./LoginContextProvider";
 function ApplicationInfoView(studentID: string) {
   const [loading, setLoading] = useState<boolean>(true);
 
-  // interface Student {
-  //   F_Name: string;
-  //   L_Name: string;
-  //   Major: string;
-  //   Email: string;
-  //   P_Number: string;
-  //   Proj_Interest: string;
-  //   coursesTaken: string;
-  //   Grad_Date: string;
-  //   Year_Standing: string;
-  //   School: string;
-  // }
-
-  // interface CourseList {
-  //   ACC_374: number;
-  //   ACC_376: number;
-  //   ACC_378: number;
-  //   ACC_636: number;
-  //   ACC_638: number;
-  //   ACC_639: number;
-  //   CSEC_390: number;
-  //   CSEC_488: number;
-  //   CSEC_490: number;
-  //   FIN_362: number;
-  //   IS_486: number;
-  //   IS_487: number;
-  //   SEC_Dae: number;
-  //   SEV_621: number;
-  //   Student_ID: string;
-  //   WiCyS: number;
-  // }
-
   const [studentName, setStudentName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");

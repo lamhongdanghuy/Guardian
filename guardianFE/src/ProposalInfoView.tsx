@@ -61,7 +61,7 @@ function ProposalInfoView(ProposalID: string) {
     setLoading(false);
   };
 
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
 
   const addStudent = (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);

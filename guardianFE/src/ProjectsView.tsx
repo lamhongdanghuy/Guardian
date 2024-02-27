@@ -17,7 +17,7 @@ interface Project {
 
 function ProjectsView(props: projectViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
   const [projectsList, setProjectsList] = useState<Project[]>([]);
 
   useEffect(() => {
