@@ -3,22 +3,27 @@ import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./memberCard";
 
 interface Member {
-  name: string;
-  role: string;
-  email: string;
+  Email: string;
+  Full_Name: string;
 }
 
 function ProjectInfoView(projectID: string) {
   console.log(projectID);
   const [loading, setLoading] = useState<boolean>(true);
   const [clientName, setClientName] = useState<string | null>("");
+  const [students, setStudents] = useState<Member[]>([]);
+  const [assigned_students, setAssignedStudents] = useState<Member[]>([]);
   const [type, setType] = useState<string | null>("");
   const [description, setDescription] = useState<string | null>("");
   const [status, setStatus] = useState<string | null>("");
   const [targetDate, setTargetDate] = useState<string | null>("");
   const [projectLeader, setProjectLeader] = useState<string | null>("");
-
+  const [act_student, setStudent] = useState<Member | undefined>();
   const { user, setUser } = useContext(LoginContext);
+
+  const addStudent = (stu: Member) => {
+    setAssignedStudents([...assigned_students, stu]);
+  };
 
   const getProjectInfo = async () => {
     const response = await fetch("http://localhost:5000/projectInfo", {
@@ -32,13 +37,17 @@ function ProjectInfoView(projectID: string) {
     const result = await response.json();
     console.log(result);
 
-    setClientName(result[0].C_Name);
-    setType(result[0].Pro_Type);
-    setDescription(result[0].Description);
-    setStatus(result[0].Status);
-    setTargetDate(result[0].Target_Date);
-    setProjectLeader(result[0].Stu_Lead_ID);
+    setClientName(result.project_info[0].C_Name);
+    setType(result.project_info[0].Pro_Type);
+    setDescription(result.project_info[0].Description);
+    setStatus(result.project_info[0].Status);
+    setTargetDate(result.project_info[0].Target_Date);
+    setProjectLeader(result.project_info[0].Stu_Lead_ID);
+    setAssignedStudents(result.project_students);
+    setStudents(result.roster);
     setLoading(false);
+
+    console.log(assigned_students);
   };
 
   useEffect(() => {
@@ -119,41 +128,73 @@ function ProjectInfoView(projectID: string) {
           >
             Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
           </h1>
-          <h1
+          <div
             style={{
-              fontSize: "32px",
-              marginLeft: "0vw",
               marginRight: "auto",
-              paddingBottom: ".5em",
+              display: "flex",
               justifyContent: "center",
+              gap: "1em",
               alignItems: "center",
             }}
           >
-            Team:
-          </h1>
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+              }}
+            >
+              Team:
+            </h1>
+            <div style={{ margin: "1em" }}>
+              <select
+                id="leader"
+                name="leader"
+                onChange={(event) => {
+                  if (event.target.value !== "undefined") {
+                    setStudent({
+                      Full_Name: event.target.value.split(",")[0],
+                      Email: event.target.value.split(",")[1],
+                    });
+                  } else {
+                    setStudent(undefined);
+                  }
+                }}
+                required
+                style={{
+                  height: "32px",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                }}
+              >
+                <option value="undefined">Add A Student</option>
+
+                {students.map((student) => (
+                  <option
+                    value={[student.Full_Name, student.Email]}
+                    key={student.Full_Name}
+                  >
+                    {student.Full_Name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {act_student && (
+              <button onClick={() => act_student && addStudent(act_student)}>
+                Add Student
+              </button>
+            )}
+          </div>
           <div
             style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
           >
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
-            <MemberCard
-              name="John Doe"
-              role="Leader"
-              email="johnDoe@depaul.edu"
-            />
+            {assigned_students.map((student) => (
+              <MemberCard
+                name={student.Full_Name}
+                role="Student"
+                email={student.Email}
+              />
+            ))}
           </div>
         </div>
       )}
