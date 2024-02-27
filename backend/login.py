@@ -34,7 +34,6 @@ class Login:
                 WHERE Email = '{}';
                 """.format(LoginData.at[0, 'Account_Type'].upper(),identifier)
             userInfo = db_Connection.select_query(idQuery)
-            print(userInfo)
 
             print("Creating Payload")
             #The payload is created with the user's information to be sent back to the user for verification of a valid login and the information in the payload to create a unique token. The 'exp' is to make the login token so the user is signed out automatically 16 hours after the time of login.
