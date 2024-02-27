@@ -37,8 +37,23 @@ function ProjectCard(props: ProjectCardProps) {
         </h2>
       </div>
       <div className="cardBottom">
-        <h2 style={{ fontSize: "20px" }}>{props.status}</h2>
-        <h2 style={{ fontSize: "20px" }}>Leader: {props.projectLeader}</h2>
+        <h2
+          style={{
+            fontSize: "20px",
+            margin: "1em",
+            color:
+              props.status === "In Review"
+                ? "yellow"
+                : props.status === "Approved"
+                ? "green"
+                : props.status === "Denied"
+                ? "red"
+                : "white",
+          }}
+        >
+          {props.status}
+        </h2>
+        {/* <h2 style={{ fontSize: "20px" }}>Leader: {props.projectLeader}</h2> */}
       </div>
     </div>
   );

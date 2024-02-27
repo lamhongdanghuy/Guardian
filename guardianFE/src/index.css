@@ -411,6 +411,8 @@ nav {
   height: 40%;
   flex-direction: row;
   background-color: #860e0e;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardTopApplication {
@@ -418,6 +420,8 @@ nav {
   height: 40%;
   flex-direction: row;
   background-color: #17c214;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardBottom {

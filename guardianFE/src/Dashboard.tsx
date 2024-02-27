@@ -107,7 +107,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {(user.role === "Client" || devMode) && (
+          {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -115,13 +115,23 @@ function Dashboard() {
               Propose a Project
             </div>
           )}
-          {(user.role === "Admin Assistant" || user.role === "Clinic Director" || devMode) && (
-            <div className="sidebarItem" onClick={() => setActiveContainer("Student Applications")}>
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Student Applications")}
+            >
               Student Applications
             </div>
           )}
-          {(user.role === "Admin Assistant" || user.role === "Clinic Director" || devMode) && (
-            <div className="sidebarItem" onClick={() => setActiveContainer("Project Proposals")}>
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Project Proposals")}
+            >
               Project Proposals
             </div>
           )}
@@ -134,7 +144,10 @@ function Dashboard() {
             </div>
           )}
           {(user.role === "Clinic Director" || devMode) && (
-            <div className="sidebarItem" onClick={() => setActiveContainer("Manage Tables")}>
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Manage Tables")}
+            >
               Manage Tables
             </div>
           )}
@@ -156,20 +169,20 @@ function Dashboard() {
         {(activeContainer === "Project Info View" ||
           activeContainer === "Proposal Info View" ||
           activeContainer === "Application View") && (
-            <button
-              style={{
-                position: "absolute",
-                top: "0",
-                left: "2em",
-                textAlign: "center",
-              }}
-              onClick={() => {
-                setActiveContainer(prevContainer);
-              }}
-            >
-              Back
-            </button>
-          )}
+          <button
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "2em",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setActiveContainer(prevContainer);
+            }}
+          >
+            Back
+          </button>
+        )}
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
