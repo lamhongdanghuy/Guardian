@@ -67,8 +67,9 @@ def approveProposal():
     data = request.get_json()
     proposal_ID = data['ProposalID']
     leader_email = data.get('leaderEmail')
+    students = data.get('assigned_students')
     approve = proposal()
-    respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email)
+    respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email, students)
     return respone, 200
 
 @app.route('/rejectProposal', methods=['POST'])
@@ -150,9 +151,14 @@ def client_apply():
 @Protector
 def get_projects():
     data = request.get_json()
+    role = data['role']
+    print ("role " + role)
     projectInstance = Project()
     db_Connection = DatabaseConnection()
-    payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    if role == 'Student':
+        payload = projectInstance.get_student_projects(data['userID'], db_Connection)
+    else:
+        payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
 @app.route('/rejectStudent', methods=['POST'])
@@ -188,6 +194,19 @@ def get_proposals():
     proposalInstance = Project()
     db_Connection = DatabaseConnection()
     payload = proposalInstance.get_proposals(db_Connection)
+    return jsonify(payload), 200
+
+@app.route('/addStudent', methods=['POST'])
+@Protector
+def add_student():
+    data = request.get_json()
+    payload = 0
+    studentID = data['student'].get('Student_ID')
+    projectID = data['projectID'].get('projectID')
+    db_Connection = DatabaseConnection()
+    infoInstance = infoGetter()
+    payload = infoInstance.add_student(studentID, projectID, db_Connection)
+    payload = 1
     return jsonify(payload), 200
 
 def verify_email(email):

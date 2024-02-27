@@ -107,7 +107,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {(user.role === "Client" || devMode) && (
+          {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -115,7 +115,9 @@ function Dashboard() {
               Propose a Project
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -123,7 +125,9 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -131,7 +135,7 @@ function Dashboard() {
               Project Proposals
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Clinic Director" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -139,7 +143,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Clinic Director" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}

@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import MemberCard from "./MemberCard";
 
 function ProposalInfoView(ProposalID: string) {
   console.log(ProposalID);
@@ -8,35 +9,44 @@ function ProposalInfoView(ProposalID: string) {
     Full_Name: string;
     Email: string;
   }
-  const [loading, setLoading] = useState<boolean>(true);
   const [companyName, setCompanyName] = useState<string | null>(null);
   const [type, setType] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [targetDate, setTargetDate] = useState<string | null>(null);
   const [av_leaders, setAvLeaders] = useState<Member[]>([]);
+  const [act_student, setStudent] = useState<Member>();
+  const [assigned_students, setAssignedStudents] = useState<Member[]>([]);
+  const [students, setStudents] = useState<Member[]>([]);
   const [leaderEmail, setLeaderEmail] = useState<string>("");
   const [shouldApprove, setShouldApprove] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
       alert("Please select a project leader before approving the proposal.");
     }
-
+    setLoading(true);
     const response = await fetch("http://localhost:5000/approveProposal", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ ProposalID, leaderEmail }),
+      body: JSON.stringify({ ProposalID, leaderEmail, assigned_students }),
     });
     const result = await response.json();
+    setSubmitted(true);
+    setMessage(result.message);
+    setLoading(false);
     return result;
   };
 
   const reject = async () => {
+    setLoading(true);
     const response = await fetch("http://localhost:5000/rejectProposal", {
       method: "POST",
       headers: {
@@ -46,10 +56,16 @@ function ProposalInfoView(ProposalID: string) {
       body: JSON.stringify({ ProposalID }),
     });
     const result = await response.json();
-    return result;
+    setSubmitted(true);
+    setMessage(result.message);
+    setLoading(false);
   };
 
   const { user, setUser } = useContext(LoginContext);
+
+  const addStudent = (stu: Member) => {
+    setAssignedStudents([...assigned_students, stu]);
+  };
 
   const getProposalInfo = async () => {
     const response = await fetch("http://localhost:5000/proposalInfo", {
@@ -73,6 +89,7 @@ function ProposalInfoView(ProposalID: string) {
     }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
+    setStudents(result.students);
     setLoading(false);
   };
 
@@ -91,6 +108,8 @@ function ProposalInfoView(ProposalID: string) {
     <div>
       {loading ? (
         <h1>Loading...</h1>
+      ) : submitted ? (
+        <h1> {message}</h1>
       ) : (
         <div className="projectInfoView">
           <div className="topInfo">
@@ -165,7 +184,7 @@ function ProposalInfoView(ProposalID: string) {
             >
               Project Leader:
             </h1>
-            <div>
+            <div style={{ margin: "1em" }}>
               <select
                 id="leader"
                 name="leader"
@@ -187,7 +206,68 @@ function ProposalInfoView(ProposalID: string) {
               </select>
             </div>
           </div>
+          <div
+            style={{
+              marginRight: "auto",
+              display: "flex",
+              justifyContent: "center",
+              gap: "1em",
+              alignItems: "center",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+              }}
+            >
+              Team:
+            </h1>
+            <div style={{ margin: "1em" }}>
+              <select
+                id="leader"
+                name="leader"
+                onChange={(event) => {
+                  setStudent({
+                    Full_Name: event.target.value.split(",")[0],
+                    Email: event.target.value.split(",")[1],
+                  });
+                }}
+                required
+                style={{
+                  height: "32px",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                }}
+              >
+                <option value="">Add A Student</option>
 
+                {students.map((student) => (
+                  <option
+                    value={[student.Full_Name, student.Email]}
+                    key={student.Full_Name + student.Email}
+                  >
+                    {student.Full_Name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button onClick={() => act_student && addStudent(act_student)}>
+              Add Student
+            </button>
+          </div>
+          <div
+            style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
+          >
+            {assigned_students.map((student) => (
+              <MemberCard
+                name={student.Full_Name}
+                role="Student"
+                email={student.Email}
+              />
+            ))}
+          </div>
           <div
             style={{
               display: "flex",

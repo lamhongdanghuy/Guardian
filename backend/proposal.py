@@ -14,6 +14,12 @@ class proposal:
             {"Full_Name": row['Full_Name'], "Email": row['Email']} for index, row in leaders_data.iterrows()
         ]
         print(leaders)
+
+        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader'"
+        students_data = DatabaseConnection().select_query(students_query)
+        students = [
+            {"Full_Name": row['Full_Name'], "Email": row['Email']} for index, row in students_data.iterrows()
+        ]
         
         proposal_query = "SELECT c.C_Name AS Company_Name, p.Pro_Type AS Project_Type, p.Description AS Project_Description, p.Status AS Project_Status, p.Due_Date AS Target_Date "\
                  "FROM PROJECT p "\
@@ -29,11 +35,11 @@ class proposal:
             "Target_Date": proposal_data.at[0, 'Target_Date']
         }
         
-        combined_data = {"project_info": project_info, "av_leaders": leaders}
+        combined_data = {"project_info": project_info, "av_leaders": leaders ,"students": students}
         print(combined_data)
         return jsonify(combined_data)
     
-    def approve_proposal(self, proposal_ID, leader_email):
+    def approve_proposal(self, proposal_ID, leader_email, students):
         update_query = "UPDATE PROJECT SET Status = 'Approved' WHERE Proj_ID = '{}'".format(proposal_ID)
         
         get_leader_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(leader_email)
@@ -41,6 +47,11 @@ class proposal:
         
         assign_leader_query = "UPDATE PROJECT SET Stu_Lead_ID = '{}' WHERE Proj_ID = '{}'".format(leader_ID, proposal_ID)
         
+        for student in students:
+            get_student_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(student['Email'])
+            student_ID = DatabaseConnection().select_query(get_student_ID_query).at[0, 'Student_ID']
+            assign_student_query = "INSERT INTO PROJECT_PARTICIPANT VALUES ('{}', '{}')".format(proposal_ID, student_ID)
+        DatabaseConnection().update_query(assign_student_query)
         DatabaseConnection().update_query(assign_leader_query)
         DatabaseConnection().update_query(update_query)
         return jsonify({"message": "Proposal approved"})

@@ -34,9 +34,7 @@ function ApplicationCard(props: ApplicationCardProps) {
         </h2>
         <h2
           style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
-        >
-          Grad Date: {props.gradDate}
-        </h2>
+        ></h2>
       </div>
     </div>
   );
