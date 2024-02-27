@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 function AddFaculty() {
-  const [facultyID, setFacultyID] = useState("");
   const [F_Name, setF_Name] = useState("");
   const [L_Name, setL_Name] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +10,7 @@ function AddFaculty() {
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
 
-  const sendData = async (event) => {
+  const sendData = async () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
@@ -35,7 +34,7 @@ function AddFaculty() {
       return;
     }
     console.log("sending data");
-    console.log(password, F_Name, L_Name, Email, P_Number, Role);
+    console.log(password, F_Name, L_Name, Email, P_Number);
     const response = await fetch("http://localhost:5000/apply/faculty", {
       method: "POST",
       headers: {
@@ -111,7 +110,6 @@ function AddFaculty() {
       ) : (
         <div>
           <h1>Faculty Member Added!</h1>
-          <h2>{rtnData.message}</h2>
         </div>
       )}
     </div>

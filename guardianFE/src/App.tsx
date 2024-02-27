@@ -1,8 +1,5 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./LandingPage";
-import Header from "./Header";
-import Footer from "./Footer";
 import LoginSignup from "./LoginSignup";
 import Apply from "./Apply";
 import StudentApply from "./StudentApply";
