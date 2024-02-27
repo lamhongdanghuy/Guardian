@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import MemberCard from "./memberCard";
+import MemberCard from "./MemberCard";
+
 function ProposalInfoView(ProposalID: string) {
   console.log(ProposalID);
   console.log("reading proposalID");
@@ -8,7 +9,6 @@ function ProposalInfoView(ProposalID: string) {
     Full_Name: string;
     Email: string;
   }
-  const [loading, setLoading] = useState<boolean>(true);
   const [companyName, setCompanyName] = useState<string | null>(null);
   const [type, setType] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
@@ -21,12 +21,15 @@ function ProposalInfoView(ProposalID: string) {
   const [leaderEmail, setLeaderEmail] = useState<string>("");
   const [shouldApprove, setShouldApprove] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
       alert("Please select a project leader before approving the proposal.");
     }
-
+    setLoading(true);
     const response = await fetch("http://localhost:5000/approveProposal", {
       method: "POST",
       headers: {
@@ -36,10 +39,14 @@ function ProposalInfoView(ProposalID: string) {
       body: JSON.stringify({ ProposalID, leaderEmail, assigned_students }),
     });
     const result = await response.json();
+    setSubmitted(true);
+    setMessage(result.message);
+    setLoading(false);
     return result;
   };
 
   const reject = async () => {
+    setLoading(true);
     const response = await fetch("http://localhost:5000/rejectProposal", {
       method: "POST",
       headers: {
@@ -49,7 +56,9 @@ function ProposalInfoView(ProposalID: string) {
       body: JSON.stringify({ ProposalID }),
     });
     const result = await response.json();
-    return result;
+    setSubmitted(true);
+    setMessage(result.message);
+    setLoading(false);
   };
 
   const { user, setUser } = useContext(LoginContext);
@@ -99,6 +108,8 @@ function ProposalInfoView(ProposalID: string) {
     <div>
       {loading ? (
         <h1>Loading...</h1>
+      ) : submitted ? (
+        <h1> {message}</h1>
       ) : (
         <div className="projectInfoView">
           <div className="topInfo">
@@ -235,7 +246,7 @@ function ProposalInfoView(ProposalID: string) {
                 {students.map((student) => (
                   <option
                     value={[student.Full_Name, student.Email]}
-                    key={student.Full_Name}
+                    key={student.Full_Name + student.Email}
                   >
                     {student.Full_Name}
                   </option>
@@ -256,7 +267,6 @@ function ProposalInfoView(ProposalID: string) {
                 email={student.Email}
               />
             ))}
-            ;
           </div>
           <div
             style={{

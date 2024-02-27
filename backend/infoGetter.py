@@ -29,7 +29,7 @@ class infoGetter:
             project_studentInfo = pd.concat([project_studentInfo,student_info])
 
         queryRoster = """
-                SELECT Email, Concat(F_Name, ' ', L_Name) AS Full_Name, Role
+                SELECT Email, Concat(F_Name, ' ', L_Name) AS Full_Name, Student_ID
                 FROM STUDENT
                 WHERE STUDENT_ID NOT IN (SELECT Student_ID FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}');""".format(id)
         roster = db_connection.select_query(queryRoster)
@@ -58,3 +58,10 @@ class infoGetter:
             "class_info": CLass_Student_Info
         }
         return payload
+    
+    def add_student(self, studentID, projectID, db_Connection):
+        print (studentID)
+        print (projectID)
+        vals = [projectID, studentID]
+        db_Connection.send_insert(vals, "PROJECT_PARTICIPANT")
+        return {'message': 'Student added to project'}

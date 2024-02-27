@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import MemberCard from "./memberCard";
+import MemberCard from "./MemberCard";
 
 interface Member {
   Email: string;
   Full_Name: string;
+  Student_ID: string;
 }
 
 function ProjectInfoView(projectID: string) {
-  console.log(projectID);
   const [loading, setLoading] = useState<boolean>(true);
   const [clientName, setClientName] = useState<string | null>("");
   const [students, setStudents] = useState<Member[]>([]);
@@ -21,7 +21,15 @@ function ProjectInfoView(projectID: string) {
   const [act_student, setStudent] = useState<Member | undefined>();
   const { user, setUser } = useContext(LoginContext);
 
-  const addStudent = (stu: Member) => {
+  const addStudent = async (stu: Member) => {
+    const response = await fetch("http://localhost:5000/addStudent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ projectID, student: stu }),
+    });
     setAssignedStudents([...assigned_students, stu]);
   };
 
@@ -146,39 +154,46 @@ function ProjectInfoView(projectID: string) {
             >
               Team:
             </h1>
-            <div style={{ margin: "1em" }}>
-              <select
-                id="leader"
-                name="leader"
-                onChange={(event) => {
-                  if (event.target.value !== "undefined") {
-                    setStudent({
-                      Full_Name: event.target.value.split(",")[0],
-                      Email: event.target.value.split(",")[1],
-                    });
-                  } else {
-                    setStudent(undefined);
-                  }
-                }}
-                required
-                style={{
-                  height: "32px",
-                  borderRadius: "5px",
-                  fontSize: "20px",
-                }}
-              >
-                <option value="undefined">Add A Student</option>
+            {user.role === "Faculty" && (
+              <div style={{ margin: "1em" }}>
+                <select
+                  id="leader"
+                  name="leader"
+                  onChange={(event) => {
+                    if (event.target.value !== "undefined") {
+                      setStudent({
+                        Full_Name: event.target.value.split(",")[0],
+                        Email: event.target.value.split(",")[1],
+                        Student_ID: event.target.value.split(",")[2],
+                      });
+                    } else {
+                      setStudent(undefined);
+                    }
+                  }}
+                  required
+                  style={{
+                    height: "32px",
+                    borderRadius: "5px",
+                    fontSize: "20px",
+                  }}
+                >
+                  <option value="undefined">Add A Student</option>
 
-                {students.map((student) => (
-                  <option
-                    value={[student.Full_Name, student.Email]}
-                    key={student.Full_Name}
-                  >
-                    {student.Full_Name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                  {students.map((student) => (
+                    <option
+                      value={[
+                        student.Full_Name,
+                        student.Email,
+                        student.Student_ID,
+                      ]}
+                      key={student.Full_Name + student.Student_ID}
+                    >
+                      {student.Full_Name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             {act_student && (
               <button onClick={() => act_student && addStudent(act_student)}>
                 Add Student

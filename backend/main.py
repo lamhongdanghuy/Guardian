@@ -196,6 +196,19 @@ def get_proposals():
     payload = proposalInstance.get_proposals(db_Connection)
     return jsonify(payload), 200
 
+@app.route('/addStudent', methods=['POST'])
+@Protector
+def add_student():
+    data = request.get_json()
+    payload = 0
+    studentID = data['student'].get('Student_ID')
+    projectID = data['projectID'].get('projectID')
+    db_Connection = DatabaseConnection()
+    infoInstance = infoGetter()
+    payload = infoInstance.add_student(studentID, projectID, db_Connection)
+    payload = 1
+    return jsonify(payload), 200
+
 def verify_email(email):
     server = None
     try:

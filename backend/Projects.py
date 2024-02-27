@@ -71,3 +71,10 @@ class Project:
         print(payload)
         return payload
     
+    def add_student(self, studentID, projectID, db_Connection):
+        query = """
+            INSERT INTO PROJECT_PARTICIPANT
+            VALUES ('{}', '{}');
+            """.format(projectID, studentID)
+        db_Connection.send_query(query)
+        return {'message': 'Student added to project'}
