@@ -115,23 +115,17 @@ function Dashboard() {
               Propose a Project
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
-            <div
-              className="sidebarItem"
-              onClick={() => setActiveContainer("Student Applications")}
-            >
+          {(user.role === "Admin Assistant" || user.role === "Clinic Director" || devMode) && (
+            <div className="sidebarItem" onClick={() => setActiveContainer("Student Applications")}>
               Student Applications
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
-            <div
-              className="sidebarItem"
-              onClick={() => setActiveContainer("Project Proposals")}
-            >
+          {(user.role === "Admin Assistant" || user.role === "Clinic Director" || devMode) && (
+            <div className="sidebarItem" onClick={() => setActiveContainer("Project Proposals")}>
               Project Proposals
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Clinic Director" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -139,11 +133,8 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
-            <div
-              className="sidebarItem"
-              onClick={() => setActiveContainer("Manage Tables")}
-            >
+          {(user.role === "Clinic Director" || devMode) && (
+            <div className="sidebarItem" onClick={() => setActiveContainer("Manage Tables")}>
               Manage Tables
             </div>
           )}
@@ -165,20 +156,20 @@ function Dashboard() {
         {(activeContainer === "Project Info View" ||
           activeContainer === "Proposal Info View" ||
           activeContainer === "Application View") && (
-          <button
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "2em",
-              textAlign: "center",
-            }}
-            onClick={() => {
-              setActiveContainer(prevContainer);
-            }}
-          >
-            Back
-          </button>
-        )}
+            <button
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "2em",
+                textAlign: "center",
+              }}
+              onClick={() => {
+                setActiveContainer(prevContainer);
+              }}
+            >
+              Back
+            </button>
+          )}
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (

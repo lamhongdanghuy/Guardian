@@ -34,7 +34,7 @@ function ProjectsView(props: projectViewProp) {
       },
       body: JSON.stringify({
         role: user.role,
-        userID: user.role !== "Faculty" ? user.id : null,
+        userID: ["Admin Assistant", "Clinic Director", "Board Of Director"].includes(user.role) ? null : user.id,
       }),
     });
     const result = await response.json();
