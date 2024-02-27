@@ -2,7 +2,11 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
 
-function ProposalInfoView(ProposalID: string) {
+interface props {
+  proposalID: string;
+}
+
+function ProposalInfoView(ProposalID: props) {
   console.log(ProposalID);
   console.log("reading proposalID");
   interface Member {

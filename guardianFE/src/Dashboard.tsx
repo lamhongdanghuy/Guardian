@@ -13,12 +13,6 @@ import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  interface User {
-    userId: string;
-    email: string;
-    role: string;
-  }
-
   const returnToLandingPage = () => {
     setUser({ id: "", email: "", role: "", token: "" });
     navigator("/");

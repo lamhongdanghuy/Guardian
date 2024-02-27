@@ -1,7 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
-function ApplicationInfoView(studentID: string) {
+interface props {
+  studentID: string;
+}
+
+function ApplicationInfoView(studentID: props) {
   const [loading, setLoading] = useState<boolean>(true);
 
   const [studentName, setStudentName] = useState<string | null>("");
