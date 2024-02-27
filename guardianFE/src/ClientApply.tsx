@@ -47,6 +47,9 @@ function ClientApply() {
     if (sra === "") {
       invalidFields.push("Number of Security Risk Assessments");
     }
+    if (dueDate === "") {
+      invalidFields.push("Please enter a due date");
+    }
     if (projectType === "") {
       invalidFields.push("Project of Interest");
     }

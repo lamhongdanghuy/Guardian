@@ -60,19 +60,7 @@ class apply:
         vals_project = [project_id, org_name, company_id, client_id, None, project_type, due_date, datetime.datetime.now(), sen_data , 'In Review']
         DatabaseConnection().send_insert(vals_project, 'PROJECT')
         print("Project info inserted")
-        
-        query = "SELECT * FROM LOGIN_INFORMATION"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM CLIENT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM COMPANY"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM PROJECT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
+
 
         
     def student_apply(self, data):
@@ -152,16 +140,6 @@ class apply:
         vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
         DatabaseConnection().send_insert(vals_courses, 'STUDENT_CLASS')
         print("Student Class inserted")
-            
-        query = "SELECT * FROM LOGIN_INFORMATION"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM STUDENT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM STUDENT_CLASS"
-        data = DatabaseConnection().select_query(query)
-        print(data)
     
     def faculty_apply(self, data):
         print(data)
@@ -170,21 +148,15 @@ class apply:
         email = data.get('Email')
         password = data.get('password')
         phone_number = data.get('P_Number')
-        role = data.get('Role')
-        print("Role: {}".format(role))
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
-        try:
-            vals_login = [email, hashedPass, 'Faculty']
-            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
-            print("Login info inserted")
-            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
-            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
-            print("Faculty info inserted")
-        except Exception as e:
-            DatabaseConnection().rollback()
-            print(f"An error occurred: {e}")
+        vals_login = [email, hashedPass, 'Faculty']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        print("Login info inserted")
+        vals_faculty = [id, f_name, l_name, email, phone_number, 'Admin Assistant', 'In Review']
+        DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+        print("Faculty info inserted")
     
      #adds new project to PROJECT table to in review. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
     def add_project(self, data):

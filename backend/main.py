@@ -49,9 +49,6 @@ print(apply().hash('Abc123123!'))
 # data = DatabaseConnection().select_query(query)
 # print(data)
 
-query = "SELECT * FROM PROJECT"
-data = DatabaseConnection().select_query(query)
-print(data)
 
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
@@ -125,7 +122,7 @@ def faculty_apply():
     data = request.get_json()
     applyInstance = apply()
     applyInstance.faculty_apply(data)
-    email = data.get('email')
+    email = data.get('Email')
     verify_email(email)
     return jsonify({'message': 'Please confirm you email!'}), 200
 
@@ -246,9 +243,11 @@ def verify_email(email):
 def notify_faculty(application_type):
     try:
         # Fetch faculty emails from the database
-        query = "SELECT Email FROM FACULTY"
+        query = "SELECT Email FROM FACULTY WHERE Role = 'Admin Assistant' OR Role = 'Clinic Director'"
         db_Connection = DatabaseConnection()
-        faculty_emails = [row[0] for row in db_Connection.select_query(query)]
+        result = db_Connection.select_query(query)
+        faculty_emails = result['Email'].tolist()
+        print(faculty_emails)
 
         # Determine email subject and body based on application type
         if application_type == 'student':
