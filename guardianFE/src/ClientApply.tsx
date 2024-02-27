@@ -14,7 +14,7 @@ function ClientApply() {
   const [revenue, setRevenue] = useState("");
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
-  const [sra, setSRA] = useState();
+  const [sra, setSRA] = useState("");
   const [projectType, setProjectType] = useState("");
   const [curious, setCurious] = useState("");
   const [comment, setComment] = useState("");
@@ -26,6 +26,10 @@ function ClientApply() {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
+  };
+
+  const handleSraChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSRA(event.target.value);
   };
 
   const handleTextAreaChange = (
@@ -242,7 +246,7 @@ function ClientApply() {
           <select
             id="NORA"
             name="NORA"
-            onChange={(event) => setSRA(event.target.value)}
+            onChange={(event) => handleSraChange(event)}
             required
           >
             <option>Please select one</option>
