@@ -7,7 +7,6 @@ function AddFaculty() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
-  const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
 
   const sendData = async () => {
@@ -35,7 +34,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number);
-    const response = await fetch("http://localhost:5000/apply/faculty", {
+    await fetch("http://localhost:5000/apply/faculty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +47,6 @@ function AddFaculty() {
         P_Number,
       }),
     });
-    setRtnData(await response.json());
     setShowResults(true);
   };
 
@@ -109,7 +107,7 @@ function AddFaculty() {
         </div>
       ) : (
         <div>
-          <h1>Faculty Member Added!</h1>
+          <h1>Added Faculty!</h1>
         </div>
       )}
     </div>
