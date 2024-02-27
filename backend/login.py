@@ -44,7 +44,8 @@ class Login:
                     'role': userInfo.at[0, 'Role'] if 'Role' in userInfo.columns else 'client',
                    'id': userInfo.iat[0, 0],
                    'exp': datetime.utcnow() + timedelta(hours=16)}
-            print(payload)
+            
+            print("Returning Payload")
             return payload
         
         except Exception as e:
