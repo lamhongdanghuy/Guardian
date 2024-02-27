@@ -78,6 +78,8 @@ class DatabaseConnection:
                 targetTable = Table('PROJECT', self.metadata, autoload_with=self.engine)
             elif table == 'FACULTY':
                 targetTable = Table('FACULTY', self.metadata, autoload_with=self.engine)
+            elif table == 'PROJECT_PARTICIPANT':
+                targetTable = Table('PROJECT_PARTICIPANT', self.metadata, autoload_with=self.engine)
             query = targetTable.insert().values(values)
             self.session.execute(query)
             self.session.commit()

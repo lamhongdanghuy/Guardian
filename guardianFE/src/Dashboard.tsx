@@ -39,6 +39,8 @@ function Dashboard() {
   };
 
   const proposalCardClicked = (proposalID: string) => {
+    console.log("proposal card clicked");
+    console.log(proposalID);
     setPrevContainer(activeContainer);
     setActiveContainer("Proposal Info View");
     setOpenProposal(proposalID);
@@ -105,7 +107,7 @@ function Dashboard() {
           >
             Projects
           </div>
-          {(user.role === "Client" || devMode) && (
+          {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -113,7 +115,9 @@ function Dashboard() {
               Propose a Project
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -121,7 +125,9 @@ function Dashboard() {
               Student Applications
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -129,7 +135,7 @@ function Dashboard() {
               Project Proposals
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Clinic Director" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -137,7 +143,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {(user.role === "Faculty" || devMode) && (
+          {(user.role === "Clinic Director" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
@@ -194,7 +200,7 @@ function Dashboard() {
         ) : activeContainer === "Application View" ? (
           <ApplicationInfoView studentID={openApplication} />
         ) : activeContainer === "Proposal Info View" ? (
-          <ProposalInfoView studentID={openProposal} />
+          <ProposalInfoView proposalID={openProposal} />
         ) : activeContainer === "Add Faculty" ? (
           <AddFaculty />
         ) : null}

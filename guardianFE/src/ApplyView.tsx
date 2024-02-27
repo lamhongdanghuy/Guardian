@@ -1,5 +1,5 @@
-import Header from "./Header";
-import { useState } from "react";
+import { LoginContext } from "./LoginContextProvider";
+import { useState, useContext } from "react";
 
 function ApplyView() {
   const [url, setURL] = useState("");
@@ -8,12 +8,14 @@ function ApplyView() {
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
   const [sra, setSRA] = useState(-1);
+  const [compType, setCompType] = useState("");
   const [projectType, setProjectType] = useState("");
   const [comment, setComment] = useState("");
-  const [rtnData, setRtnData] = useState("");
+  const [message, setMessage] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
+  const { user, setUser } = useContext(LoginContext);
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
@@ -46,6 +48,9 @@ function ApplyView() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        clientID: user.id,
+        email: user.email,
+        compType,
         compName,
         url,
         revenue,
@@ -56,7 +61,8 @@ function ApplyView() {
         comment,
       }),
     });
-    setRtnData(await response.json());
+    const result = await response.json();
+    setMessage(result.message);
     setShowResults(true);
   };
 
@@ -90,24 +96,6 @@ function ApplyView() {
             required
           />{" "}
           <br />
-          <p>Company Type: </p>
-          <input
-            type="radio"
-            id="non-prof"
-            name="compType"
-            value="non-prof"
-            required="required"
-            onChange={handleCompTypeChange}
-          ></input>
-          <label htmlFor="non-prof">Non-Profit </label>
-          <input
-            type="radio"
-            id="prof"
-            name="compType"
-            value="prof"
-            onChange={handleCompTypeChange}
-          ></input>
-          <label htmlFor="prof">For Profit</label> <br />
           <label htmlFor="revenue">Company's Annual Revenue: </label>
           <input
             type="number"
@@ -166,9 +154,11 @@ function ApplyView() {
             required
           >
             <option>Please select one</option>
-            <option value="Gra">General Risk Assessment</option>
-            <option value="audit">Audit</option>
-            <option value="Policy_Review">Policy Review</option>
+            <option value="General Risk Assessment">
+              General Risk Assessment
+            </option>
+            <option value="Audit">Audit</option>
+            <option value="Policy Review">Policy Review</option>
             <option value="other">Other</option>
           </select>{" "}
           <br />
@@ -198,8 +188,7 @@ function ApplyView() {
         </div>
       ) : (
         <div>
-          <h1> Project Proposal Submitted!</h1>
-          <h1>{rtnData}</h1>
+          <h1>{message}</h1>
         </div>
       )}
     </div>

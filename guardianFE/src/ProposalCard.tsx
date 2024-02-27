@@ -9,6 +9,9 @@ interface ProposalCardProps {
 
 function ProposalCard(props: ProposalCardProps) {
   const handleClick = () => {
+    console.log("clicked");
+    console.log(props);
+    console.log(props.ProposalID);
     props.onClick(props.ProposalID);
   };
 

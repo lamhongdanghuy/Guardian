@@ -8,7 +8,6 @@ function AddFaculty() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
-  const [Role, setRole] = useState("");
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
 
@@ -37,7 +36,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number, Role);
-    const response = await fetch("http://localhost:5000/addFaculty", {
+    const response = await fetch("http://localhost:5000/apply/faculty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +47,6 @@ function AddFaculty() {
         L_Name,
         Email,
         P_Number,
-        Role,
       }),
     });
     setRtnData(await response.json());
@@ -108,19 +106,6 @@ function AddFaculty() {
             name="P_Number"
             onChange={(e) => setP_Number(e.target.value)}
           />
-          <label htmlFor="role">Role: </label>
-          <select
-            id="school"
-            name="school"
-            onChange={(event) => setRole(event.target.value)}
-            required
-          >
-            <option>Please select one</option>
-            <option value="Admin_Assistant">Admin Assistant</option>
-            <option value="Clinic_Director">Clinic Director</option>
-            <option value="Board_Of_Director">Board of Director</option>
-          </select>{" "}
-          <br />
           <button onClick={sendData}>Submit</button>
         </div>
       ) : (
