@@ -4,7 +4,6 @@ import { LoginContext } from "./LoginContextProvider";
 
 interface projectViewProp {
   onClick: Function;
-  setView: Function;
 }
 
 interface Project {
@@ -34,7 +33,13 @@ function ProjectsView(props: projectViewProp) {
       },
       body: JSON.stringify({
         role: user.role,
-        userID: ["Admin Assistant", "Clinic Director", "Board Of Director"].includes(user.role) ? null : user.id,
+        userID: [
+          "Admin Assistant",
+          "Clinic Director",
+          "Board Of Director",
+        ].includes(user.role)
+          ? null
+          : user.id,
       }),
     });
     const result = await response.json();

@@ -55,7 +55,7 @@ function Dashboard() {
   const [openProposal, setOpenProposal] = useState("");
   const [devMode, setDevMode] = useState(false);
   useEffect(() => {
-    if (user.userId === null) {
+    if (user.id === null) {
       navigator("/login");
     }
   }, [user]);
@@ -70,7 +70,7 @@ function Dashboard() {
         <div
           className="logoutButton"
           onClick={() => {
-            setUser({ userId: null, email: null, role: null });
+            setUser({ id: null, email: null, role: null, token: null });
           }}
         >
           Log Out
