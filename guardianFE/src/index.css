@@ -521,6 +521,9 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
+  button {
+    background-color: #2806e6;
+  }
 }
 
 .footer {
