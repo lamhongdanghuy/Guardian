@@ -53,7 +53,7 @@ function About() {
 
           <p className="bannerMiddleText">
             Raise organizational awareness of information security and privacy
-            risks discovered from a student- led risk assessment so that
+            risks discovered from a student-led risk assessment so that
             incremental improvements are made in the client’s security policies
             and practices while students in turn gain real-world experience that
             contributes to a cyber security workforce.
