@@ -64,7 +64,7 @@ function About() {
             width: "80%",
             border: "1px solid white",
             borderRadius: "12px",
-            backgroundColor: "navy",
+            backgroundColor: "#33689c",
             overflow: "hidden",
           }}
         >
