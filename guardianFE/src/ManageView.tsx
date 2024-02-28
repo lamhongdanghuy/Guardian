@@ -58,20 +58,20 @@ function ManageView() {
     <div>
       {!inputForm ? (
         <div>
-          <button onClick={() => setActiveTable("Project")}>Projects</button>
-          <button onClick={() => setActiveTable("Client")}>Client</button>
-          <button onClick={() => setActiveTable("Faculty")}>Faculty</button>
-          <button onClick={() => setActiveTable("Student")}>Student</button>
-          <button onClick={() => setActiveTable("Company")}>Company</button>
-          <button onClick={() => setActiveTable("Login")}>
-            Login Information
-          </button>
-          <button onClick={() => setActiveTable("ProjectParticipant")}>
-            Project Participant
-          </button>
-          <button onClick={() => setActiveTable("StudentClass")}>
-            Student Class
-          </button>
+          <select
+            onChange={(e) => {
+              setActiveTable(e.target.value);
+            }}
+          >
+            <option value="Project">Projects</option>
+            <option value="Client">Client</option>
+            <option value="Faculty">Faculty</option>
+            <option value="Student">Student</option>
+            <option value="Company">Company</option>
+            <option value="Login">Login Information</option>
+            <option value="ProjectParticipant">Project Participant</option>
+            <option value="StudentClass">Student Class</option>
+          </select>
           <button onClick={() => setInputForm(!inputForm)}>
             Add New Entry
           </button>
