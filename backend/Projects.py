@@ -7,7 +7,8 @@ class Project:
         if not Client_ID:
             query = """
                 SELECT *
-                FROM PROJECT;
+                FROM PROJECT
+                WHERE Status = "Approved";
                 """
         else:
             query = """
