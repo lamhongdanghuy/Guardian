@@ -20,9 +20,9 @@ function StudentApply() {
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [courseTaken, setCourseTaken] = useState([]);
+  const [courseTaken, setCourseTaken] = useState<String[]>([]);
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setCourseTaken((prevCourses) => [...prevCourses, event.target.value]);
     } else {
@@ -32,16 +32,20 @@ function StudentApply() {
     }
   };
 
-  const handleInterestChange = (event) => {
+  const handleInterestChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
   };
 
-  const handleTextAreaChange = (event) => {
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setProjectType(event.target.value);
   };
 
-  const sendData = async (event) => {
+  const sendData = async () => {
     const emailPattern = /.+@depaul\.edu/;
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
@@ -116,7 +120,8 @@ function StudentApply() {
         eth,
       }),
     });
-    setRtnData(await response.json());
+    const responseData = await response.json();
+    setRtnData(responseData.message);
     setShowResults(true);
   };
 
@@ -505,8 +510,8 @@ function StudentApply() {
           {selectedOption === "other" && (
             <textarea
               placeholder="Describe here..."
-              rows="5"
-              cols="50"
+              rows={5}
+              cols={50}
               id="interest"
               name="interest"
               onChange={handleTextAreaChange}
@@ -574,7 +579,7 @@ function StudentApply() {
       ) : (
         <div style={{ marginTop: "20vh" }}>
           <h1>Form Submitted!</h1>
-          <h2>{rtnData.message}</h2>
+          <h2>{rtnData}</h2>
         </div>
       )}
     </div>

@@ -8,28 +8,25 @@ function ApplyView() {
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
   const [sra, setSRA] = useState(-1);
-  const [compType, setCompType] = useState("");
   const [projectType, setProjectType] = useState("");
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const { user, setUser } = useContext(LoginContext);
-  const handleChange = (event) => {
+  const { user } = useContext(LoginContext);
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
   };
 
-  const handleTextAreaChange = (event) => {
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setProjectType(event.target.value);
   };
 
-  const handleCompTypeChange = (event) => {
-    setCompType(event.target.value);
-  };
-
-  const sendData = async (event) => {
+  const sendData = async () => {
     let invalidFields = [];
     if (projectType === "") {
       invalidFields.push("Project of Interest");
@@ -50,7 +47,6 @@ function ApplyView() {
       body: JSON.stringify({
         clientID: user.id,
         email: user.email,
-        compType,
         compName,
         url,
         revenue,

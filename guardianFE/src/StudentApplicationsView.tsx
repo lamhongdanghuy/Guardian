@@ -18,7 +18,7 @@ interface Student {
 
 function StudentApplicationsView(props: studentAppViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
   console.log(applicationsList);
 

@@ -16,7 +16,7 @@ interface Proposal {
 }
 
 function ProposalsView(props: proposalProposalViewProp) {
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
   const [proposalsList, setProposalsList] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 

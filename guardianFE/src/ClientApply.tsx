@@ -14,7 +14,7 @@ function ClientApply() {
   const [revenue, setRevenue] = useState("");
   const [numOfIT, setNumOfIT] = useState("");
   const [senData, setSenData] = useState("na");
-  const [sra, setSRA] = useState();
+  const [sra, setSRA] = useState("");
   const [projectType, setProjectType] = useState("");
   const [curious, setCurious] = useState("");
   const [comment, setComment] = useState("");
@@ -23,20 +23,26 @@ function ClientApply() {
   const [selectedOption, setSelectedOption] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
     setProjectType(event.target.value);
   };
 
-  const handleTextAreaChange = (event) => {
+  const handleSraChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSRA(event.target.value);
+  };
+
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setProjectType(event.target.value);
   };
 
-  const handleCompTypeChange = (event) => {
+  const handleCompTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCompType(event.target.value);
   };
 
-  const sendData = async (event) => {
+  const sendData = async () => {
     const enteredDate = new Date(dueDate);
     const currentDate = new Date();
     const passwordPattern =
@@ -108,7 +114,8 @@ function ClientApply() {
         comment,
       }),
     });
-    setRtnData(await response.json());
+    const responseData = await response.json();
+    setRtnData(responseData.message);
     setShowResults(true);
   };
 
@@ -195,7 +202,6 @@ function ClientApply() {
             id="Non-Profit"
             name="compType"
             value="Non-Profit"
-            required="required"
             onChange={handleCompTypeChange}
           ></input>
           <label htmlFor="Non-Profit">Non-Profit</label>
@@ -231,8 +237,8 @@ function ClientApply() {
             placeholder="N/A for nothing"
             id="senData"
             name="senData"
-            rows="5"
-            cols="50"
+            rows={5}
+            cols={50}
             onChange={(event) => setSenData(event.target.value)}
             required
           ></textarea>{" "}
@@ -243,7 +249,7 @@ function ClientApply() {
           <select
             id="NORA"
             name="NORA"
-            onChange={(event) => setSRA(event.target.value)}
+            onChange={(event) => handleSraChange(event)}
             required
           >
             <option>Please select one</option>
@@ -275,8 +281,8 @@ function ClientApply() {
           {selectedOption === "other" && (
             <textarea
               placeholder="Describe here..."
-              rows="5"
-              cols="50"
+              rows={5}
+              cols={5}
               id="otherNORA"
               name="otherNORA"
               onChange={handleTextAreaChange}
@@ -292,9 +298,7 @@ function ClientApply() {
             required
           />
           <br />
-          <label htmlFor="curious">
-            How did you hear about Clinic?{" "}
-          </label>
+          <label htmlFor="curious">How did you hear about Clinic? </label>
           <input
             type="text"
             id="curious"
@@ -316,7 +320,7 @@ function ClientApply() {
       ) : (
         <div style={{ marginTop: "20vh" }}>
           <h1>Form Submitted!</h1>
-          <h2>{rtnData.message}</h2>
+          <h2>{rtnData}</h2>
         </div>
       )}
     </div>
