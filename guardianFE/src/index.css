@@ -31,6 +31,7 @@
   width: 25vw;
   min-height: 100%;
   border-right: 1px solid #ffffff;
+  overflow: hidden;
 }
 
 .sidebarTitle {

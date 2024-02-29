@@ -17,6 +17,7 @@ function ApplicationInfoView(studentID: props) {
   const [gradDate, setGradDate] = useState<string | null>("");
   const [year, setYear] = useState<string | null>("");
   const [college, setCollege] = useState<string | null>("");
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const { user } = useContext(LoginContext);
 
@@ -65,6 +66,7 @@ function ApplicationInfoView(studentID: props) {
       body: JSON.stringify({ studentID }),
     });
     const result = await response.json();
+    setSubmitted(true);
     return result;
   };
 
@@ -78,6 +80,7 @@ function ApplicationInfoView(studentID: props) {
       body: JSON.stringify({ studentID }),
     });
     const result = await response.json();
+    setSubmitted(true);
     return result;
   };
 
@@ -91,6 +94,10 @@ function ApplicationInfoView(studentID: props) {
     <div>
       {loading ? (
         <h1>Loading...</h1>
+      ) : submitted ? (
+        <>
+          <h1>Submitted</h1>
+        </>
       ) : (
         <div className="projectInfoView">
           <div className="topInfo">
