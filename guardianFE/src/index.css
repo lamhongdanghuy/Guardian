@@ -203,8 +203,8 @@
 
   flex-direction: column;
   align-items: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin-right: 3vw;
+  margin-left: 3vw;
   border: solid 1px #ffffff;
   border-radius: 20px;
   padding: 1em;
@@ -230,8 +230,8 @@
   height: 35vh;
   flex-direction: column;
   align-items: center;
-  margin-right: auto;
-  margin-left: auto;
+  margin-right: 3vw;
+  margin-left: 3vw;
   border: solid 1px #ffffff;
   border-radius: 20px;
   padding: 1em;
