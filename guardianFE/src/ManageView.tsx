@@ -47,25 +47,38 @@ function ManageView() {
     <div>
       {!inputForm ? (
         <div>
-          <select
-            onChange={(e) => {
-              setActiveTable(e.target.value);
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              height: "3em",
+              alignItems: "center",
+              gap: "1em",
+              margin: "0 1em 0 1em",
             }}
           >
-            <option value="Project">Projects</option>
-            <option value="Client">Client</option>
-            <option value="Faculty">Faculty</option>
-            <option value="Student">Student</option>
-            <option value="Company">Company</option>
-            <option value="Login">Login Information</option>
-            <option value="ProjectParticipant">Project Participant</option>
-            <option value="StudentClass">Student Class</option>
-          </select>
-          {editableTables.includes(activeTable) && (
-            <button onClick={() => setInputForm(!inputForm)}>
-              Add New Entry
-            </button>
-          )}
+            <h2>Active Table:</h2>
+            <select
+              onChange={(e) => {
+                setActiveTable(e.target.value);
+              }}
+              style={{ fontSize: "1.5em" }}
+            >
+              <option value="Project">Projects</option>
+              <option value="Client">Client</option>
+              <option value="Faculty">Faculty</option>
+              <option value="Student">Student</option>
+              <option value="Company">Company</option>
+              <option value="Login">Login Information</option>
+              <option value="ProjectParticipant">Project Participant</option>
+              <option value="StudentClass">Student Class</option>
+            </select>
+            {editableTables.includes(activeTable) && (
+              <button onClick={() => setInputForm(!inputForm)}>
+                Add New Entry
+              </button>
+            )}
+          </div>
 
           <div style={{ maxHeight: "500px", overflow: "scroll" }}>
             <table {...getTableProps()}>

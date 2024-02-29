@@ -142,7 +142,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
-              Manage Tables
+              Admin Panel
             </div>
           )}
         </div>
