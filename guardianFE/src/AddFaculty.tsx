@@ -56,7 +56,6 @@ function AddFaculty() {
         <div
           className="form"
           style={{
-            overflowY: "scroll",
             maxHeight: "70vh",
             marginBottom: "5vh",
           }}

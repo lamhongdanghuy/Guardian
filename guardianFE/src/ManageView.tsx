@@ -1,14 +1,15 @@
 import { useTable } from "react-table";
 import { useState, useEffect } from "react";
-import ClientApply from "./ClientApply";
-import StudentApply from "./StudentApply";
+import StudentApplyForm from "./StudentApplyForm";
 import AddFaculty from "./AddFaculty";
+import ClientApplyForm from "./ClientApplyForm";
 
 function ManageView() {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
   const [activeTable, setActiveTable] = useState("Project");
   const [inputForm, setInputForm] = useState(false);
+  const editableTables = ["Project", "Client", "Faculty", "Student"];
 
   useEffect(() => {
     getTable(activeTable);
@@ -60,9 +61,11 @@ function ManageView() {
             <option value="ProjectParticipant">Project Participant</option>
             <option value="StudentClass">Student Class</option>
           </select>
-          <button onClick={() => setInputForm(!inputForm)}>
-            Add New Entry
-          </button>
+          {editableTables.includes(activeTable) && (
+            <button onClick={() => setInputForm(!inputForm)}>
+              Add New Entry
+            </button>
+          )}
 
           <div style={{ maxHeight: "500px", overflow: "scroll" }}>
             <table {...getTableProps()}>
@@ -96,11 +99,28 @@ function ManageView() {
           </div>
         </div>
       ) : (
-        <div>
+        <div style={{ maxHeight: "500px", overflowY: "scroll" }}>
+          <button
+            onClick={() => setInputForm(!inputForm)}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              margin: "2em",
+            }}
+          >
+            Back
+          </button>
           {activeTable === "Client" || activeTable === "Project" ? (
-            <ClientApply />
+            <>
+              <h2>Add a Client</h2>
+              <ClientApplyForm />
+            </>
           ) : activeTable === "Student" ? (
-            <StudentApply />
+            <>
+              <h2>Add a Student</h2>
+              <StudentApplyForm />
+            </>
           ) : activeTable === "Faculty" ? (
             <AddFaculty />
           ) : null}
