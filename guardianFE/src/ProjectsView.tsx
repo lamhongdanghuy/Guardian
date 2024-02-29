@@ -4,7 +4,6 @@ import { LoginContext } from "./LoginContextProvider";
 
 interface projectViewProp {
   onClick: Function;
-  setView: Function;
 }
 
 interface Project {
@@ -18,7 +17,7 @@ interface Project {
 
 function ProjectsView(props: projectViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
   const [projectsList, setProjectsList] = useState<Project[]>([]);
 
   useEffect(() => {
@@ -34,7 +33,13 @@ function ProjectsView(props: projectViewProp) {
       },
       body: JSON.stringify({
         role: user.role,
-        userID: ["Admin Assistant", "Clinic Director", "Board Of Director"].includes(user.role) ? null : user.id,
+        userID: [
+          "Admin Assistant",
+          "Clinic Director",
+          "Board Of Director",
+        ].includes(user.role)
+          ? null
+          : user.id,
       }),
     });
     const result = await response.json();

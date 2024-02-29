@@ -8,7 +8,11 @@ interface Member {
   Student_ID: string;
 }
 
-function ProjectInfoView(projectID: string) {
+interface props {
+  projectID: string;
+}
+
+function ProjectInfoView(projectID: props) {
   const [loading, setLoading] = useState<boolean>(true);
   const [clientName, setClientName] = useState<string | null>("");
   const [students, setStudents] = useState<Member[]>([]);
@@ -188,7 +192,8 @@ function ProjectInfoView(projectID: string) {
                 >
                   Team:
                 </h1>
-                {user.role === "Faculty" && (
+                {(user.role === "Clinic Director" ||
+                  user.role === "Admin Assistant") && (
                   <div style={{ margin: "1em" }}>
                     <select
                       id="leader"

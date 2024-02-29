@@ -530,6 +530,28 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+td {
+  padding: 1em;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: #24323b;
+  color: #ffffff;
+}
+
+th {
+  padding: 1em;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: #24323b;
+  color: #ffffff;
+}
+
+.table {
+  margin: 2em;
+  gap: 1em;
+  overflow: scroll;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

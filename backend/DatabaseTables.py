@@ -8,7 +8,7 @@
 class DataBase:
     class CLIENT:
         def tableName():
-            return "Client"
+            return "CLIENT"
         def Client_ID():
             return "Client_ID"
         def F_Name():

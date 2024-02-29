@@ -19,6 +19,7 @@ import mariadb
 import pymysql
 from sqlalchemy import create_engine
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from ManageTable import ManageTable
 import smtplib
 from email.mime.text import MIMEText
 
@@ -301,6 +302,47 @@ def propose_project():
     applyInstance = apply()
     applyInstance.add_project(data)
     return jsonify({'message': 'Project proposed!'}), 200
+
+@app.route('/getFacultyTable', methods=['GET'])
+def getFacultyTable():
+    payload = ManageTable.getTable('FACULTY')
+    return jsonify(payload), 200
+
+@app.route('/getStudentTable', methods=['GET'])
+def getStudentTable():
+    payload = ManageTable.getTable('STUDENT')
+    return jsonify(payload), 200
+
+@app.route('/getProjectTable', methods=['GET'])
+def getProjectTable():
+    payload = ManageTable.getTable('PROJECT')
+    return jsonify(payload), 200
+
+@app.route('/getClientTable', methods=['GET'])
+def getClientTable():
+    payload = ManageTable.getTable('CLIENT')
+    return jsonify(payload), 200
+
+@app.route('/getCompanyTable', methods=['GET'])
+def getCompanyTable():
+    payload = ManageTable.getTable('COMPANY')
+    return jsonify(payload), 200
+
+@app.route('/getLoginTable', methods=['GET'])
+def getLoginTable():
+    payload = ManageTable.getTable('LOGIN_INFORMATION')
+    return jsonify(payload), 200
+
+@app.route('/getStudentClassTable', methods=['GET'])
+def getStudentClassTable():
+    payload = ManageTable.getTable('STUDENT_CLASS')
+    return jsonify(payload), 200
+
+@app.route('/getProjectParticipantTable', methods=['GET'])
+def getProjectParticipantTable():
+    payload = ManageTable.getTable('PROJECT_PARTICIPANT')
+    return jsonify(payload), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True)
