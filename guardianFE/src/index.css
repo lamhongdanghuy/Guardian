@@ -199,6 +199,8 @@
 .studentApply {
   display: flex;
   width: 40vw;
+  height: 35vh;
+
   flex-direction: column;
   align-items: center;
   margin-right: auto;
@@ -225,10 +227,11 @@
 .clientApply {
   display: flex;
   width: 40vw;
+  height: 35vh;
   flex-direction: column;
   align-items: center;
-  margin-right: 3em;
-  margin-left: 3em;
+  margin-right: auto;
+  margin-left: auto;
   border: solid 1px #ffffff;
   border-radius: 20px;
   padding: 1em;
