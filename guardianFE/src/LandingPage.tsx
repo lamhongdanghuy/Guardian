@@ -1,21 +1,8 @@
-import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
-  const [message, setMessage] = useState("");
   const navigator = useNavigate();
-
-  const fetchHello = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/"); // Update the URL with your Flask API endpoint
-      const result = await response.json();
-      console.log("got data");
-      setMessage(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   return (
     <>
@@ -30,7 +17,6 @@ function LandingPage() {
           marginBottom: "4em",
         }}
       >
-        {message}
         <div className="banner">
           <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
 

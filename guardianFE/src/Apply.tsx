@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";

@@ -13,14 +13,8 @@ import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  interface User {
-    userId: string;
-    email: string;
-    role: string;
-  }
-
   const returnToLandingPage = () => {
-    setUser({ id: null, email: null, role: null, token: null });
+    setUser({ id: "", email: "", role: "", token: "" });
     navigator("/");
   };
 
@@ -55,7 +49,7 @@ function Dashboard() {
   const [openProposal, setOpenProposal] = useState("");
   const [devMode, setDevMode] = useState(false);
   useEffect(() => {
-    if (user.userId === null) {
+    if (user.id === "") {
       navigator("/login");
     }
   }, [user]);
@@ -70,7 +64,7 @@ function Dashboard() {
         <div
           className="logoutButton"
           onClick={() => {
-            setUser({ userId: null, email: null, role: null });
+            setUser({ id: "", email: "", role: "", token: "" });
           }}
         >
           Log Out
@@ -148,7 +142,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
-              Manage Tables
+              Admin Panel
             </div>
           )}
         </div>
