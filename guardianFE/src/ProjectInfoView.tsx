@@ -159,7 +159,8 @@ function ProjectInfoView(projectID: props) {
             >
               Team:
             </h1>
-            {user.role === "Faculty" && (
+            {(user.role === "Admin Assistant" ||
+              user.role === "Clinic Director") && (
               <div style={{ margin: "1em" }}>
                 <select
                   id="leader"
