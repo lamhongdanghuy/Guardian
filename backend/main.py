@@ -19,6 +19,7 @@ import mariadb
 import pymysql
 from sqlalchemy import create_engine
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from Students import Students
 from ManageTable import ManageTable
 import smtplib
 from email.mime.text import MIMEText
@@ -343,6 +344,12 @@ def getProjectParticipantTable():
     payload = ManageTable.getTable('PROJECT_PARTICIPANT')
     return jsonify(payload), 200
 
+@app.route('/getStudents', methods=['POST'])
+def getStudents():
+    studentsInstace = Students()
+    db_Connection = DatabaseConnection()
+    payload = studentsInstace.get_students(db_Connection)
+    return jsonify(payload), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
