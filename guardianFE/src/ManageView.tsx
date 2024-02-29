@@ -1,9 +1,10 @@
 import { useTable } from "react-table";
 import { useState, useEffect } from "react";
+import ClientApply from "./ClientApply";
+import StudentApply from "./StudentApply";
+import AddFaculty from "./AddFaculty";
 
 function ManageView() {
-  const [formLabels, setFormLabels] = useState([]);
-  const [formValues, setFormValues] = useState({});
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
   const [activeTable, setActiveTable] = useState("Project");
@@ -12,18 +13,6 @@ function ManageView() {
   useEffect(() => {
     getTable(activeTable);
   }, [activeTable]);
-
-  const newEntry = async () => {
-    const response = await fetch(`http://localhost:5000/add${activeTable}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
-    });
-    const data = await response.json();
-    console.log(data);
-  };
 
   const getTable = async (tableName: string) => {
     const response = await fetch(`http://localhost:5000/get${tableName}Table`, {
@@ -34,7 +23,6 @@ function ManageView() {
     });
     const data = await response.json();
     console.log(data);
-    setFormLabels(data.columns);
     const transformedColumns = data.columns.map((column: any) => ({
       Header: column,
       accessor: column,
@@ -109,26 +97,13 @@ function ManageView() {
         </div>
       ) : (
         <div>
-          <button onClick={() => setInputForm(!inputForm)}>Back</button>
-
-          <h2>Add New Entry</h2>
-          <form>
-            {formLabels.map((label) => (
-              <div>
-                <label htmlFor={label}>{label}</label>
-                <input
-                  type="text"
-                  id={label}
-                  name={label}
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, [label]: e.target.value })
-                  }
-                  value={formValues[label]}
-                />
-              </div>
-            ))}
-          </form>
-          <button onClick={() => newEntry}>Submit</button>
+          {activeTable === "Client" || activeTable === "Project" ? (
+            <ClientApply />
+          ) : activeTable === "Student" ? (
+            <StudentApply />
+          ) : activeTable === "Faculty" ? (
+            <AddFaculty />
+          ) : null}
         </div>
       )}
     </div>
