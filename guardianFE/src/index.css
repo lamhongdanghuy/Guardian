@@ -8,8 +8,8 @@
   min-height: 100vh;
   text-align: center;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #202124;
+  background-color: #f6f7f8;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +30,7 @@
   flex-direction: column;
   width: 25vw;
   min-height: 100%;
-  border-right: 1px solid #ffffff;
+  border-right: 1px solid #6e7c85;
 }
 
 .sidebarTitle {
@@ -64,8 +64,6 @@
 }
 
 .serviceInfo:hover .serviceImageLayer {
-  opacity: 0.7;
-  transition: opacity 0.3s;
 }
 
 .banner {
@@ -75,11 +73,13 @@
 
 .serviceImage {
   position: relative;
+  height: 24vh;
+  border-radius: 10px;
 }
 
-.serviceImage:hover .servicePic {
-  opacity: 0.9;
-  transition: opacity 0.3s;
+.serviceImage:hover {
+  scale: 1.1;
+  transition: scale 0.25s;
 }
 
 .serviceImageLayer {
@@ -87,12 +87,9 @@
   height: 300px;
   object-fit: cover;
   object-position: center;
-  opacity: 0.4;
 }
 
 .serviceImageLayer:hover {
-  opacity: 0.7;
-  transition: opacity 0.3s;
 }
 
 .servicesText {
@@ -100,6 +97,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-shadow: #000000 0 0 0.5em;
   color: white;
   text-align: center;
 }
@@ -150,7 +148,7 @@
 .card {
   flex: 40%;
   height: 15em;
-  border: 1px solid #ffffff;
+  border: 1px solid #6e7c85;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -203,9 +201,9 @@
 
   flex-direction: column;
   align-items: center;
-  margin-right: 3vw;
-  margin-left: 3vw;
-  border: solid 1px #ffffff;
+  margin-right: auto;
+  margin-left: auto;
+  border: solid 1px #6e7c85;
   border-radius: 20px;
   padding: 1em;
   padding: 1em 1em 4em 1em;
@@ -219,7 +217,7 @@
   align-items: center;
   margin-right: auto;
   margin-left: auto;
-  border: solid 1px #ffffff;
+  border: solid 1px #6e7c85;
   border-radius: 20px;
   padding: 1em 1em 4em 1em;
 }
@@ -230,9 +228,9 @@
   height: 35vh;
   flex-direction: column;
   align-items: center;
-  margin-right: 3vw;
-  margin-left: 3vw;
-  border: solid 1px #ffffff;
+  margin-right: 3em;
+  margin-left: 3em;
+  border: solid 1px #6e7c85;
   border-radius: 20px;
   padding: 1em;
   padding: 1em 1em 4em 1em;
@@ -285,8 +283,6 @@
 }
 
 .splitImage:hover .splitImagePic {
-  opacity: 0.9;
-  transition: opacity 0.3s;
 }
 
 .splitImagePic {
@@ -294,13 +290,10 @@
   width: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.65;
   cursor: pointer;
 }
 
 .splitImagePic:hover {
-  opacity: 0.9;
-  transition: opacity 0.3s;
 }
 
 .services {
@@ -341,6 +334,7 @@ a:hover {
 }
 
 header {
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -348,6 +342,7 @@ header {
   align-items: center;
   text-align: center;
   margin: auto;
+  padding-bottom: 1em;
 }
 
 .servicesImage {
@@ -377,6 +372,10 @@ body {
   width: 50%;
 }
 
+.navlink {
+  color: #65676e;
+}
+
 nav {
   display: flex;
   flex-direction: row;
@@ -390,7 +389,6 @@ nav {
   height: 300px;
   object-fit: cover;
   object-position: center;
-  opacity: 0.65;
 }
 
 .servicePicLabel {
@@ -408,13 +406,8 @@ nav {
 .servicePic {
   height: 24vh;
   width: auto;
-  opacity: 0.65;
   cursor: pointer;
-}
-
-.servicePic:hover {
-  opacity: 0.9;
-  transition: opacity 0.3s;
+  border-radius: 10px;
 }
 
 .cardTopProject {
@@ -507,7 +500,7 @@ h1 {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #273239;
+  background-color: #33689c;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -553,112 +546,4 @@ th {
   margin: 2em;
   gap: 1em;
   overflow: scroll;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #33689c;
-  }
-}
-
-.footer {
-  display: grid;
-  grid-template-rows: 1fr 10rem auto;
-  grid-template-areas: "main" "." "footer";
-  overflow-x: hidden;
-  background: #f5f7fa;
-  min-height: 100vh;
-  font-family: "Open Sans", sans-serif;
-  .footer {
-    z-index: 1;
-    --footer-background: #ed5565;
-    display: grid;
-    position: relative;
-    grid-area: footer;
-    min-height: 12rem;
-    .bubbles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1rem;
-      background: var(--footer-background);
-      filter: url("#blob");
-      .bubble {
-        position: absolute;
-        left: var(--position, 50%);
-        background: var(--footer-background);
-        border-radius: 100%;
-        animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s),
-          bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
-        transform: translate(-50%, 100%);
-      }
-    }
-    .content {
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-gap: 4rem;
-      padding: 2rem;
-      background: var(--footer-background);
-      a,
-      p {
-        color: #f5f7fa;
-        text-decoration: none;
-      }
-      b {
-        color: white;
-      }
-      p {
-        margin: 0;
-        font-size: 0.75rem;
-      }
-      > div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        > div {
-          margin: 0.25rem 0;
-          > * {
-            margin-right: 0.5rem;
-          }
-        }
-        .image {
-          align-self: center;
-          width: 4rem;
-          height: 4rem;
-          margin: 0.25rem 0;
-          background-size: cover;
-          background-position: center;
-        }
-      }
-    }
-  }
-}
-
-@keyframes bubble-size {
-  0%,
-  75% {
-    width: var(--size, 4rem);
-    height: var(--size, 4rem);
-  }
-  100% {
-    width: 0rem;
-    height: 0rem;
-  }
-}
-@keyframes bubble-move {
-  0% {
-    bottom: -4rem;
-  }
-  100% {
-    bottom: var(--distance, 10rem);
-  }
 }

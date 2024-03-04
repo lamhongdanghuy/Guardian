@@ -22,7 +22,7 @@ function About() {
             src="Jarvis-Student-Center-for-Innovation-and-Collaboration-05.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
           <h2 className="bannerUpperText">What is Guardian?</h2>
           <p className="bannerMiddleText">
@@ -47,7 +47,7 @@ function About() {
             src="/cropped-DePaul-CDM-IPD-01.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
           <h2 className="bannerUpperText">Our Mission Statement</h2>
 

@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Header() {
@@ -13,6 +13,7 @@ function Header() {
         top: "0",
         bottom: "0",
         height: "8em",
+        zIndex: 2,
       }}
     >
       <button
@@ -26,26 +27,43 @@ function Header() {
           DePaul Guardian
         </h1>
         <nav style={{ alignItems: "flex-start" }}>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/apply">Apply</NavLink>
-          <NavLink to="/aboutus">About</NavLink>
+          <NavLink className={"navlink"} to="/">
+            Home
+          </NavLink>
+          <NavLink className={"navlink"} to="/apply">
+            Apply
+          </NavLink>
+          <NavLink className={"navlink"} to="/aboutus">
+            About
+          </NavLink>
           <div
             onMouseEnter={() => setServiceOpen(true)}
             onMouseLeave={() => setServiceOpen(false)}
           >
-            <NavLink to="/services">Services</NavLink>
+            <NavLink className={"navlink"} to="/services">
+              Services
+            </NavLink>
             {serviceOpen && (
               <div
                 style={{
+                  position: "absolute",
                   display: "flex",
                   flexDirection: "column",
-                  background: "#242424",
-                  border: "2px solid black",
+                  background: "#ffffff",
+                  left: "50%",
+                  border: "1px solid black",
+                  padding: ".25em",
                 }}
               >
-                <Link to="/services/GRA">General Risk Assessment</Link>
-                <Link to="/services/PR">Policy Review</Link>
-                <Link to="/services/audit">Audit</Link>
+                <NavLink className={"navlink"} to="/services/GRA">
+                  General Risk Assessment
+                </NavLink>
+                <NavLink className={"navlink"} to="/services/PR">
+                  Policy Review
+                </NavLink>
+                <NavLink className={"navlink"} to="/services/audit">
+                  Audit
+                </NavLink>
               </div>
             )}
           </div>

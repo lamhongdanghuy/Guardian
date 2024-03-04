@@ -127,7 +127,7 @@ function StudentApplyForm() {
   return (
     <div>
       {!showResults ? (
-        <div className="studentApply">
+        <div className="form">
           <label htmlFor="fname">First Name:</label>
           <input
             type="text"
