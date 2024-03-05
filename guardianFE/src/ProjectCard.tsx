@@ -43,7 +43,7 @@ function ProjectCard(props: ProjectCardProps) {
             margin: "1em",
             color:
               props.status === "In Review"
-                ? "yellow"
+                ? "orange"
                 : props.status === "Approved"
                 ? "green"
                 : props.status === "Denied"
@@ -51,7 +51,7 @@ function ProjectCard(props: ProjectCardProps) {
                 : "white",
           }}
         >
-          {props.status}
+          ⬤ {props.status}
         </h2>
         {/* <h2 style={{ fontSize: "20px" }}>Leader: {props.projectLeader}</h2> */}
       </div>
