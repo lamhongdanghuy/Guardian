@@ -76,8 +76,8 @@ class apply:
         year_standing = data.get('yearStanding')
         grad_date = pd.to_datetime(data.get('gradDate'))
         course_taken = data.get('courseTaken')
-        when = data.get('firstHear')
-        hear = data.get('hear')
+        curious = data.get('curious')
+        whenHear = data.get('hear')
         eth = data.get('eth')
         gen = data.get('gen')
 
@@ -134,7 +134,7 @@ class apply:
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, hear, when, gen, eth, 'Student', 'In Review', 0]
+        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, curious, whenHear, gen, eth, 'Student', 'In Review', 0]
         DatabaseConnection().send_insert(vals_student, 'STUDENT')
         print("Student info inserted")
         vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
