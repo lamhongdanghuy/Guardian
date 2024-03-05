@@ -18,13 +18,22 @@ class apply:
         salt = bcrypt.gensalt(rounds=12)
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
-
+    
+    def email_exists(self, email):
+        query = "SELECT COUNT(*) as count FROM LOGIN_INFORMATION WHERE Email = '{}'".format(email)
+        print("Executing query:", query)  # Debugging statement
+        result = DatabaseConnection().select_query(query)
+        print("Query result:", result)   # Debugging statement
+        return result['count'].iloc[0] > 0
+        
     def client_apply(self,data):
         print(data)
         
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('pNumber')
         org_name = data.get('compName')
@@ -68,6 +77,8 @@ class apply:
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('pNumber')
         project_type = data.get('projectType')
@@ -130,6 +141,8 @@ class apply:
             SEC_DAEMONS = 1
         if 'WICYS' in course_taken:
             WICYS = 1
+
+        print("got here")
     
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
@@ -146,6 +159,8 @@ class apply:
         f_name = data.get('F_Name')
         l_name = data.get('L_Name')
         email = data.get('Email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('P_Number')
         hashedPass = self.hash(password)

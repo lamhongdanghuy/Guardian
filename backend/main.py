@@ -139,33 +139,46 @@ def login():
 @app.route('/apply/faculty', methods=['POST'])
 def faculty_apply():
     data = request.get_json()
-    applyInstance = apply()
-    applyInstance.faculty_apply(data)
     email = data.get('Email')
+
+    applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    applyInstance.faculty_apply(data)
     verify_email(email)
-    return jsonify({'message': 'Please confirm you email!'}), 200
+
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
     data = request.get_json()
-    applyInstance = apply()
-    applyInstance.student_apply(data)
     email = data.get('email')
+
+    applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    applyInstance.student_apply(data)
     verify_email(email)
     notify_faculty('student')
 
-    return jsonify({'message': 'Please confirm you email!'}), 200
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    applyInstance = apply()
-    applyInstance.client_apply(data)
     email = data.get('email')
+
+    applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    applyInstance.client_apply(data)
     verify_email(email)
     notify_faculty('client')
 
-    return jsonify({'message': 'Please confirm you email!'}), 200
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/getProjects', methods=['POST'])
 @Protector
@@ -302,7 +315,7 @@ def send_email(subject, body, email):
 
         print(f'Email sent to {email}')
     except Exception as e:
-        print(f'Failed to send email to {recipient}: {e}')
+        print(f'Failed to send email to {email}: {e}')
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
