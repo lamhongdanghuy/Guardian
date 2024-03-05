@@ -25,6 +25,12 @@ function ProjectInfoView(projectID: props) {
   const [act_student, setStudent] = useState<Member | undefined>();
   const { user, setUser } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const date = targetDate ? new Date(targetDate) : null;
+  const formattedDate = date?.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  });
 
   // Add a function to handle the submit
   const handleEdit = async () => {
@@ -85,7 +91,7 @@ function ProjectInfoView(projectID: props) {
     setType(result.project_info[0].Pro_Type);
     setDescription(result.project_info[0].Description);
     setStatus(result.project_info[0].Status);
-    setTargetDate(result.project_info[0].Target_Date);
+    setTargetDate(result.project_info[0].Due_Date);
     setProjectLeader(result.project_info[0].Stu_Lead_ID);
     setAssignedStudents(result.project_students);
     setStudents(result.roster);
@@ -128,7 +134,7 @@ function ProjectInfoView(projectID: props) {
                   Type: {type ? type : "Default"}
                 </h1>
               </div>
-              <h1
+              <label
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
@@ -136,8 +142,20 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Status: {status ? status : "Not Approved"}
-              </h1>
+                Status:
+                <select
+                  value={status || ""}
+                  onChange={(e) => setStatus(e.target.value)}
+                  style={{
+                    fontSize: "32px",
+                    marginLeft: "1vw",
+                  }}
+                >
+                  <option value="">Approved</option>
+                  <option value="In review">In review</option>
+                  <option value="Reject">Reject</option>
+                </select>
+              </label>
               <div className="middleInfo">
                 <h1
                   style={{
@@ -149,12 +167,13 @@ function ProjectInfoView(projectID: props) {
                   Description:
                 </h1>
               </div>
-              <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
-                {description
-                  ? description
-                  : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
-              </p>
-              <h1
+              <input
+                type="text"
+                value={description ?? ""}
+                onChange={(e) => setDescription(e.target.value)}
+                style={{ textAlign: "left", paddingBottom: "5vh" }}
+              />
+              <label
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
@@ -162,18 +181,18 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Target Date: {targetDate ? targetDate : "Not Approved"}
-              </h1>
-              <h1
-                style={{
-                  fontSize: "32px",
-                  marginLeft: "0vw",
-                  marginRight: "auto",
-                  paddingBottom: "5vh",
-                }}
-              >
-                Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
-              </h1>
+                Target Date:
+                <input
+                  type="date"
+                  value={formattedDate ?? ""}
+                  onChange={(e) => setTargetDate(e.target.value)}
+                  style={{
+                    fontSize: "32px",
+                    marginLeft: "1vw",
+                  }}
+                />
+              </label>
+              Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
               <div
                 style={{
                   marginRight: "auto",
@@ -316,7 +335,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Target Date: {targetDate ? targetDate : "Not Approved"}
+                Target Date: {formattedDate ? formattedDate : "Not Approved"}
               </h1>
               <h1
                 style={{
