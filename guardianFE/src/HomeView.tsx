@@ -11,7 +11,6 @@ function HomeView() {
           DePaul University's Cybersecurity Clinic
         </h2>
       </div>
-      <h1>Quick Actions</h1>
     </div>
   );
 }

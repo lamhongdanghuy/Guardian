@@ -23,6 +23,7 @@
   margin: auto;
   height: 100vh;
   width: 100vw;
+  background-color: #ffffff;
 }
 
 .sidebar {
@@ -30,7 +31,8 @@
   flex-direction: column;
   width: 25vw;
   min-height: 100%;
-  border-right: 1px solid #6e7c85;
+  border-bottom: 2px solid #eaebee;
+  background-color: #f6f7f8;
 }
 
 .sidebarTitle {
@@ -59,11 +61,15 @@
 
 .serviceInfo {
   position: relative;
-  width: 100%;
+  width: 90%;
   cursor: pointer;
+  border-radius: 10px;
 }
 
-.serviceInfo:hover .serviceImageLayer {
+.serviceInfo:hover {
+  scale: 1.03;
+  transition: scale 0.25s;
+  border-radius: 10px;
 }
 
 .banner {
@@ -75,6 +81,7 @@
   position: relative;
   height: 24vh;
   border-radius: 10px;
+  border: 1px solid #6e7c85;
 }
 
 .serviceImage:hover {
@@ -87,9 +94,7 @@
   height: 300px;
   object-fit: cover;
   object-position: center;
-}
-
-.serviceImageLayer:hover {
+  border-radius: 10px;
 }
 
 .servicesText {
@@ -147,6 +152,7 @@
 
 .card {
   flex: 40%;
+  max-width: 43%;
   height: 15em;
   border: 1px solid #6e7c85;
   justify-content: center;
@@ -155,6 +161,7 @@
   margin: 1em;
   border-radius: 10px;
   overflow: hidden;
+  background-color: #f0f4f9;
 }
 
 .sidebarMenu {
@@ -164,7 +171,7 @@
 }
 
 .sidebarItem:hover {
-  background-color: #273239;
+  background-color: #c2e7ff;
   width: auto;
   border-radius: 8px;
   font-size: 26px;
@@ -260,6 +267,7 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 
 .splitImageLabel {
@@ -280,9 +288,12 @@
   width: 50%;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .splitImage:hover .splitImagePic {
+  scale: 1.025;
+  transition: scale 0.25s;
 }
 
 .splitImagePic {
@@ -291,9 +302,6 @@
   object-fit: cover;
   object-position: center;
   cursor: pointer;
-}
-
-.splitImagePic:hover {
 }
 
 .services {
@@ -342,6 +350,7 @@ header {
   align-items: center;
   text-align: center;
   margin: auto;
+  border-bottom: 2px solid #eaebee;
   padding-bottom: 1em;
 }
 
@@ -389,6 +398,7 @@ nav {
   height: 300px;
   object-fit: cover;
   object-position: center;
+  border-radius: 10px;
 }
 
 .servicePicLabel {
@@ -414,7 +424,8 @@ nav {
   display: flex;
   height: 40%;
   flex-direction: row;
-  background-color: #80199a;
+  background-color: #ffffff;
+  border-bottom: 1px solid #6e7c85;
   justify-content: center;
   align-items: center;
 }
@@ -439,6 +450,7 @@ nav {
 
 .cardBottom {
   display: flex;
+  flex-grow: 1;
   padding-top: 2em;
   flex-direction: row;
 }
@@ -530,16 +542,16 @@ td {
   padding: 1em;
   border: 1px solid #ffffff;
   border-radius: 10px;
-  background-color: #24323b;
-  color: #ffffff;
+  background-color: #f6f7f8;
+  color: #000000;
 }
 
 th {
   padding: 1em;
   border: 1px solid #ffffff;
   border-radius: 10px;
-  background-color: #24323b;
-  color: #ffffff;
+  background-color: #f0f4f9;
+  color: #000000;
 }
 
 .table {

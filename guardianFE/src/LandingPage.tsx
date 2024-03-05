@@ -96,7 +96,7 @@ function LandingPage() {
             marginTop: "2em",
           }}
         >
-          <p style={{ fontSize: "18px" }}>
+          <p style={{ fontSize: "18px", fontWeight: "550" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

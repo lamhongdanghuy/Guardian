@@ -64,7 +64,7 @@ function LoginSignup() {
           alignItems: "center",
           width: "35%",
           margin: "auto",
-          border: "1px solid white",
+          border: "1px solid #6e7c85",
           gap: ".5em",
           padding: "2em",
           borderRadius: "1em",
@@ -88,18 +88,11 @@ function LoginSignup() {
             onChange={(event) => setPassword(event.target.value)}
           />{" "}
           <br />
-          <button onClick={sendLogin}>Log In</button>
-          <br />
-          <button
-            style={{
-              color: "gold",
-              backgroundColor: "white",
-              marginBottom: "2em",
-            }}
-            onClick={() => navigator("/apply")}
-          >
-            Apply
-          </button>
+          <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+            <button onClick={sendLogin}>Log In</button>
+            <br />
+            <button onClick={() => navigator("/apply")}>Apply</button>
+          </div>
         </>
         {showResults && (
           <div>

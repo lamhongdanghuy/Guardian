@@ -62,13 +62,13 @@ function About() {
         <div
           style={{
             width: "80%",
-            border: "1px solid white",
+            border: "1px solid #6e7c85",
             borderRadius: "12px",
             backgroundColor: "#33689c",
             overflow: "hidden",
           }}
         >
-          <p style={{ fontSize: "18px" }}>
+          <p style={{ fontSize: "18px", fontWeight: "550" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

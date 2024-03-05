@@ -58,26 +58,23 @@ function Dashboard() {
     <div className="dashboard">
       <div className="userBar">
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <div>logged in as: {user.email} | </div>
-          <div>role: {user.role}</div>
+          <div>{user.email}</div>
         </div>
-        <div
-          className="logoutButton"
+        <button
           onClick={() => {
             setUser({ id: "", email: "", role: "", token: "" });
           }}
         >
           Log Out
-        </div>
+        </button>
 
-        <div
-          className="logoutButton"
+        <button
           onClick={() => {
             setDevMode(!devMode);
           }}
         >
           Dev Mode
-        </div>
+        </button>
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
