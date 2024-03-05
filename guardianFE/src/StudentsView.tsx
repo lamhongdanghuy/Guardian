@@ -16,7 +16,7 @@ interface Student {
   onClick: Function;
 }
 
-function StudentApplicationsView(props: studentAppViewProp) {
+function StudentsView(props: studentAppViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(LoginContext);
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
@@ -27,7 +27,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
   }, []);
 
   const getApplications = async () => {
-    const response = await fetch("http://localhost:5000/getApplications", {
+    const response = await fetch("http://localhost:5000/getStudents", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <h1 style={{ fontSize: "10vh" }}>Student Applications</h1>
+          <h1 style={{ fontSize: "10vh" }}>Students</h1>
           <div
             style={{
               margin: "0 5vw",
@@ -67,7 +67,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
                 major={student.Major}
                 gradDate={student.gradDate}
                 onClick={props.onClick}
-                InReview={true}
+                InReview={false}
               />
             ))}
           </div>
@@ -77,4 +77,4 @@ function StudentApplicationsView(props: studentAppViewProp) {
   );
 }
 
-export default StudentApplicationsView;
+export default StudentsView;

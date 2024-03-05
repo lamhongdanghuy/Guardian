@@ -5,6 +5,7 @@ interface ApplicationCardProps {
   major: string;
   gradDate: string;
   onClick: Function;
+  InReview: boolean;
 }
 
 function ApplicationCard(props: ApplicationCardProps) {
@@ -14,7 +15,10 @@ function ApplicationCard(props: ApplicationCardProps) {
 
   return (
     <div className="card" onClick={handleClick}>
-      <div className="cardTopApplication">
+      <div
+        className="cardTopApplication"
+        style={{ backgroundColor: props.InReview ? "green" : "navy" }}
+      >
         <h2
           style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
         >

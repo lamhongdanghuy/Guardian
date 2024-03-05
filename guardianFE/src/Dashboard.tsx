@@ -9,6 +9,8 @@ import ProjectInfoView from "./ProjectInfoView";
 import ApplicationInfoView from "./ApplicationInfoView";
 import ProposalInfoView from "./ProposalInfoView";
 import AddFaculty from "./AddFaculty";
+import StudentsView from "./StudentsView";
+import StudentInfoView from "./StudentInfoView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +18,12 @@ function Dashboard() {
   const returnToLandingPage = () => {
     setUser({ id: "", email: "", role: "", token: "" });
     navigator("/");
+  };
+
+  const studentCardClicked = (studentID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Student Info View");
+    setOpenStudentInfo(studentID);
   };
 
   const projectCardClicked = (projectID: string) => {
@@ -47,6 +55,7 @@ function Dashboard() {
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
+  const [openStudentInfo, setOpenStudentInfo] = useState("");
   const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.id === "") {
@@ -104,6 +113,17 @@ function Dashboard() {
               onClick={() => setActiveContainer("Apply")}
             >
               Propose a Project
+            </div>
+          )}
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            user.role === "Board Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Students View")}
+            >
+              Students
             </div>
           )}
           {(user.role === "Admin Assistant" ||
@@ -194,6 +214,10 @@ function Dashboard() {
           <ProposalInfoView proposalID={openProposal} />
         ) : activeContainer === "Add Faculty" ? (
           <AddFaculty />
+        ) : activeContainer === "Students View" ? (
+          <StudentsView onClick={studentCardClicked} />
+        ) : activeContainer === "Student Info View" ? (
+          <StudentInfoView studentID={openStudentInfo} />
         ) : null}
       </div>
     </div>
