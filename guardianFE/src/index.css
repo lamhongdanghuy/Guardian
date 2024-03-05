@@ -31,6 +31,12 @@
     margin: auto;
     margin-bottom: 4em;
   }
+  .loginButton {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
+
   .sidebar {
     background-color: #f6f7f8;
     border-bottom: 2px solid #eaebee;
@@ -514,6 +520,7 @@
     text-align: center;
     text-rendering: optimizeLegibility;
     width: 100vw;
+    padding-bottom: 30vh;
   }
   .dashboard {
     align-items: center;
@@ -580,7 +587,7 @@
   .serviceImage {
     border: 1px solid #6e7c85;
     border-radius: 10px;
-    height: 24vh;
+    height: 26vh;
     position: relative;
   }
   .serviceImage:hover {
@@ -687,7 +694,7 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    margin: auto;
+    margin-bottom: 2em;
   }
   .studentApply {
     align-items: center;
@@ -695,11 +702,8 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 35vh;
-    margin-left: auto;
-    margin-right: auto;
+    width: 95%;
     padding: 1em 1em 4em 1em;
-    width: 40vw;
   }
   .form {
     align-items: center;
@@ -718,23 +722,22 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 35vh;
     margin-left: 3em;
     margin-right: 3em;
     padding: 1em 1em 4em 1em;
-    width: 40vw;
+    width: 95%;
   }
   .applyContainer {
     align-items: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
   }
   .services-container {
     display: flex;
     flex-direction: column;
-    gap: 10%;
+    gap: 2em;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -872,7 +875,7 @@
   .servicePic {
     border-radius: 10px;
     cursor: pointer;
-    height: 24vh;
+    height: 26vh;
     width: auto;
   }
   .cardTopProject {
@@ -969,7 +972,7 @@
     color: #ffffff;
     cursor: pointer;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.7em;
     font-weight: 500;
     padding: 0.6em 1.2em;
     transition: border-color 0.25s;

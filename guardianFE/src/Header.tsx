@@ -18,7 +18,7 @@ function Header() {
     >
       <button
         onClick={() => navigator("/login")}
-        style={{ position: "absolute", top: "1em", right: "1em" }}
+        style={{ position: "absolute", top: ".75em", right: ".75em" }}
       >
         Log In
       </button>
