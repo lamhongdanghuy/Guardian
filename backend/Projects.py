@@ -79,3 +79,26 @@ class Project:
             """.format(projectID, studentID)
         db_Connection.send_query(query)
         return {'message': 'Student added to project'}
+    
+    def reject_Project(self, projectID, db_Connection):
+        reject_query = "UPDATE PROJECT SET Status = 'Denied' WHERE Proj_ID = '{}'".format(projectID['projectID'])
+        db_Connection.update_query(reject_query)
+        return {"message": "Project rejected"}
+    
+    def update_Project(self, data, db_Connection):
+        project_id = data['projectID']['projectID']
+        get_student_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(data['projectLeaderEmail'])
+        leader_ID = db_Connection.select_query(get_student_ID_query).at[0, 'Student_ID']
+        
+        update_query = "UPDATE PROJECT SET Status = '{}', Description = '{}', Due_Date = '{}', Stu_Lead_ID = '{}' WHERE Proj_ID = '{}'".format(data['status'], data['description'], data['enteredDate'], leader_ID, project_id)
+        db_Connection.update_query(update_query)
+        
+        delete_exiting_assign_students = "DELETE FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}'".format(project_id)
+        db_Connection.update_query(delete_exiting_assign_students)
+        
+        for student in data['assigned_students']:
+            get_student_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(student['Email'])
+            student_ID = db_Connection.select_query(get_student_ID_query).at[0, 'Student_ID']
+            assign_student_query = "INSERT INTO PROJECT_PARTICIPANT VALUES ('{}', '{}')".format(project_id, student_ID)
+            db_Connection.update_query(assign_student_query)
+        return {"message": "Project updated"}

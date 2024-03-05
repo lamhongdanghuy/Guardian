@@ -31,18 +31,6 @@ class DatabaseConnection:
         
     def create_tunnel(self):
         filename = self.get_pem()
-        mypkey = paramiko.RSAKey.from_private_key_file(filename, password=None)
-        self.tunnel = SSHTunnelForwarder((self.ssh_host, self.ssh_port), ssh_username=self.ssh_username, ssh_pkey=mypkey, remote_bind_address=(self.localhost, self.db_port))
-        self.tunnel.start()
-
-    def get_pem(self):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(current_dir)
-        self.filename = os.path.join(parent_dir, 'DePaul-Guardian-Clinic.pem')
-        return self.filename
-        
-    def create_tunnel(self):
-        filename = self.get_pem()
         mypkey = paramiko.RSAKey.from_private_key_file(filename, password= None)
         self.tunnel = SSHTunnelForwarder((self.ssh_host, self.ssh_port), ssh_username=self.ssh_username, ssh_pkey=mypkey, remote_bind_address=(self.localhost, self.db_port))
         self.tunnel.start()
@@ -108,4 +96,3 @@ class DatabaseConnection:
             print(f"An error occurred: {e}")
         finally:
             self.close_tunnel()
-    

@@ -2,16 +2,31 @@ import pandas as pd;
 
 class infoGetter:
     def getprojectinfo(self,id,db_connection):
-        id = id['projectID']
-        queryP= """
-                SELECT *
-                FROM PROJECT
-                WHERE Proj_ID = '{}';
+        queryP = """
+                SELECT 
+                    P.Proj_ID,
+                    P.C_Name,
+                    P.Company_ID,
+                    P.Client_ID,
+                    Concat(S.F_Name, ' ', S.L_Name) AS Leader_Name,
+                    S.Email AS Leader_Email,
+                    P.Pro_Type,
+                    P.Due_Date,
+                    P.Date_submit,
+                    P.Description,
+                    P.Status
+                FROM 
+                    PROJECT AS P
+                INNER JOIN 
+                    STUDENT AS S ON P.Stu_Lead_ID = S.Student_ID
+                WHERE 
+                    P.Proj_ID = '{}';
                 """.format(id)
-        
+        print(queryP)
         # # WHERE Email = '{}';
         #         # """.format(identifier)
         project_info = db_connection.select_query(queryP)
+        print(project_info)
         queryS = """
                 SELECT Student_ID
                 FROM PROJECT_PARTICIPANT
@@ -33,9 +48,18 @@ class infoGetter:
                 FROM STUDENT
                 WHERE STUDENT_ID NOT IN (SELECT Student_ID FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}');""".format(id)
         roster = db_connection.select_query(queryRoster)
+        
+        proj_type_query = "SELECT Pro_Type FROM PROJECT WHERE Proj_ID = '{}'".format(id)
+        proj_type = db_connection.select_query(proj_type_query).at[0, 'Pro_Type']
+        print(proj_type)
+        
+        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email, Student_ID FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader'".format(proj_type)
+
+        leaders_data = db_connection.select_query(leaders_query)
+        
 
         # payload = project_info.to_dict(orient='records')
-        payload = { "project_info": project_info.to_dict(orient='records'), "project_students": project_studentInfo.to_dict(orient='records') , "roster": roster.to_dict(orient='records')}
+        payload = { "project_info": project_info.to_dict(orient='records'), "project_students": project_studentInfo.to_dict(orient='records') , "roster": roster.to_dict(orient='records'), "av_leaders": leaders_data.to_dict(orient='records')}
         return payload
     
     def getstudentinfo(self,id,db_connection):

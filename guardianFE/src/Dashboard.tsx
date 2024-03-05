@@ -194,6 +194,7 @@ function Dashboard() {
             Back
           </button>
         )}
+
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
