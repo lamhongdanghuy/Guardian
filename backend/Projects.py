@@ -85,6 +85,11 @@ class Project:
         db_Connection.update_query(reject_query)
         return {"message": "Project rejected"}
     
+    def done_Project(self, projectID, db_Connection):
+        done_query = "UPDATE PROJECT SET Status = 'Completed' WHERE Proj_ID = '{}'".format(projectID['projectID'])
+        db_Connection.update_query(done_query)
+        return {"message": "Project completed"}
+    
     def update_Project(self, data, db_Connection):
         project_id = data['projectID']['projectID']
         get_student_ID_query = "SELECT Student_ID FROM STUDENT WHERE Email = '{}'".format(data['projectLeaderEmail'])
