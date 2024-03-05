@@ -13,6 +13,7 @@ interface props {
 }
 
 function ProjectInfoView(projectID: props) {
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [clientName, setClientName] = useState<string | null>("");
   const [students, setStudents] = useState<Member[]>([]);
@@ -26,9 +27,10 @@ function ProjectInfoView(projectID: props) {
   const [projectLeaderEmail, setProjectLeaderEmail] = useState<string | null>(
     ""
   );
+  const [submitted, setSubmitted] = useState(false);
   const [act_student, setStudent] = useState<Member | undefined>();
-  const [act_leader, setLeader] = useState<Member | undefined>();
-  const { user, setUser } = useContext(LoginContext);
+  const [, setLeader] = useState<Member | undefined>();
+  const { user } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
   const [originalStudents, setOriginalStudents] = useState<Member[]>([]);
@@ -52,26 +54,25 @@ function ProjectInfoView(projectID: props) {
       ? enteredDate.toISOString().slice(0, 19).replace("T", " ")
       : null;
     // Send the updated info to the backend
-    const response = await fetch(
-      "http://localhost:5000/project/updateProject",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          token: user.token ? user.token : "",
-        },
-        body: JSON.stringify({
-          projectID,
-          status,
-          description,
-          enteredDate: formattedDateString,
-          projectLeaderEmail,
-          assigned_students,
-        }),
-      }
-    );
-
+    setSubmitting(true);
+    await fetch("http://localhost:5000/project/updateProject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({
+        projectID,
+        status,
+        description,
+        enteredDate: formattedDateString,
+        projectLeaderEmail,
+        assigned_students,
+      }),
+    });
+    setSubmitted(true);
     // Exit edit mode
+    setSubmitting(false);
     setIsEditing(false);
   };
 
@@ -91,11 +92,10 @@ function ProjectInfoView(projectID: props) {
     setIsEditing(false);
   };
 
-  const handleReject = async () => {
-    const confirmReject = window.confirm(
-      "Are you sure you want to reject this project?"
-    );
-    const response = await fetch("http://localhost:5000/rejectProject", {
+  const handleDone = async () => {
+    window.confirm("Are you sure you want to mark this project as done?");
+    setSubmitting(true);
+    await fetch("http://localhost:5000/doneProject", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +103,23 @@ function ProjectInfoView(projectID: props) {
       },
       body: JSON.stringify({ projectID }),
     });
-    const result = await response.json();
+    setSubmitted(true);
+    setSubmitting(false);
+  };
+
+  const handleReject = async () => {
+    window.confirm("Are you sure you want to reject this project?");
+    setSubmitting(true);
+    await fetch("http://localhost:5000/rejectProject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ projectID }),
+    });
+    setSubmitted(true);
+    setSubmitting(false);
   };
 
   const addStudent = async (stu: Member) => {
@@ -138,8 +154,6 @@ function ProjectInfoView(projectID: props) {
     setLoading(false);
     setOriginalStudents([...result.roster]);
     setOriginalAssignedStudents([...result.project_students]);
-
-    console.log(assigned_students);
   };
 
   useEffect(() => {
@@ -152,6 +166,10 @@ function ProjectInfoView(projectID: props) {
     <div>
       {loading ? (
         <h1>Loading...</h1>
+      ) : submitting ? (
+        <h1>Submitting...</h1>
+      ) : submitted ? (
+        <h1>Submitted</h1>
       ) : (
         <div className="projectInfoView">
           {isEditing ? (
@@ -184,18 +202,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Status:
-                <select
-                  value={status || ""}
-                  onChange={(e) => setStatus(e.target.value)}
-                  style={{
-                    fontSize: "32px",
-                    marginLeft: "1vw",
-                  }}
-                >
-                  <option value="Approved">Approved</option>
-                  <option value="In review">In review</option>
-                </select>
+                Status: {status ? status : "Not Approved"}
               </label>
               <div className="middleInfo">
                 <h1
@@ -368,7 +375,6 @@ function ProjectInfoView(projectID: props) {
                   </>
                 ))}
               </div>
-              {/* Add more input fields for other project information */}
               <button onClick={handleEdit}>Submit</button>
               <button onClick={handleCancel}>Cancel</button>
             </>
@@ -530,7 +536,10 @@ function ProjectInfoView(projectID: props) {
               )}
               {(user.role === "Clinic Director" ||
                 user.role === "Admin Assistant") && (
-                <button onClick={handleReject}>Reject</button>
+                <>
+                  <button onClick={handleReject}>Reject</button>
+                  <button onClick={handleDone}>Done</button>
+                </>
               )}
             </>
           )}

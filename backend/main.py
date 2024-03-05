@@ -87,6 +87,14 @@ def rejectProject():
     respone = reject.reject_Project(project_ID, DatabaseConnection())
     return respone, 200
 
+@app.route('/doneProject', methods=['POST'])
+def doneProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.done_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
 @app.route('/proposalInfo', methods=['POST'])
 def proposalInfo():
     data = request.get_json()

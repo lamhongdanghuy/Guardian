@@ -30,7 +30,7 @@ function ProposalInfoView(ProposalID: props) {
   const [message, setMessage] = useState("");
 
   const handleRemove = (studentToRemove: Member) => {
-    setAssignedStudents(assigned_students.filter(student => student.Student_ID !== studentToRemove.Student_ID));
+    setAssignedStudents(assigned_students.filter(student => student.Email !== studentToRemove.Email));
   };
 
   const approve = async () => {
