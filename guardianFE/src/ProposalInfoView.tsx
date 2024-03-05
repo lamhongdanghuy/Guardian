@@ -29,6 +29,10 @@ function ProposalInfoView(ProposalID: props) {
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 
+  const handleRemove = (studentToRemove: Member) => {
+    setAssignedStudents(assigned_students.filter(student => student.Student_ID !== studentToRemove.Student_ID));
+  };
+
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
       alert("Please select a project leader before approving the proposal.");
@@ -88,9 +92,8 @@ function ProposalInfoView(ProposalID: props) {
     setDescription(result.project_info.Project_Description);
     setStatus(result.project_info.Project_Status);
     const targetDateObj = new Date(result.project_info.Target_Date);
-    const formattedTargetDate = `${
-      targetDateObj.getMonth() + 1
-    }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    const formattedTargetDate = `${targetDateObj.getMonth() + 1
+      }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
     setStudents(result.students);
@@ -265,11 +268,15 @@ function ProposalInfoView(ProposalID: props) {
             style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
           >
             {assigned_students.map((student) => (
-              <MemberCard
-                name={student.Full_Name}
-                role="Student"
-                email={student.Email}
-              />
+              <>
+                <MemberCard
+                  name={student.Full_Name}
+                  role="Student"
+                  email={student.Email}
+
+                />
+                <button onClick={() => handleRemove(student)}>Remove</button>
+              </>
             ))}
           </div>
           <div

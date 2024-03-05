@@ -96,4 +96,3 @@ class DatabaseConnection:
             print(f"An error occurred: {e}")
         finally:
             self.close_tunnel()
-    

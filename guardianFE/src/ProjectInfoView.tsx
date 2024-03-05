@@ -16,16 +16,21 @@ function ProjectInfoView(projectID: props) {
   const [loading, setLoading] = useState<boolean>(true);
   const [clientName, setClientName] = useState<string | null>("");
   const [students, setStudents] = useState<Member[]>([]);
+  const [leaders, setLeaders] = useState<Member[]>([]);
   const [assigned_students, setAssignedStudents] = useState<Member[]>([]);
   const [type, setType] = useState<string | null>("");
   const [description, setDescription] = useState<string | null>("");
   const [status, setStatus] = useState<string | null>("");
   const [targetDate, setTargetDate] = useState<string | null>("");
-  const [projectLeader, setProjectLeader] = useState<string | null>("");
+  const [projectLeaderName, setProjectLeaderName] = useState<string | null>("");
+  const [projectLeaderEmail, setProjectLeaderEmail] = useState<string | null>("");
   const [act_student, setStudent] = useState<Member | undefined>();
+  const [act_leader, setLeader] = useState<Member | undefined>();
   const { user, setUser } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
+  const [originalStudents, setOriginalStudents] = useState<Member[]>([]);
+  const [originalAssignedStudents, setOriginalAssignedStudents] = useState<Member[]>([]);
   const formattedDate = date?.toLocaleDateString("en-US", {
     month: "2-digit",
     day: "2-digit",
@@ -34,8 +39,10 @@ function ProjectInfoView(projectID: props) {
 
   // Add a function to handle the submit
   const handleEdit = async () => {
+    const enteredDate = formattedDate ? new Date(formattedDate) : null;
+    const formattedDateString = enteredDate ? enteredDate.toISOString().slice(0, 19).replace('T', ' ') : null;
     // Send the updated info to the backend
-    const response = await fetch("http://localhost:5000/updateProject", {
+    const response = await fetch("http://localhost:5000/project/updateProject", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,12 +50,11 @@ function ProjectInfoView(projectID: props) {
       },
       body: JSON.stringify({
         projectID,
-        clientName,
-        type,
-        description,
         status,
-        targetDate,
-        projectLeader,
+        description,
+        enteredDate: formattedDateString,
+        projectLeaderEmail,
+        assigned_students,
       }),
     });
 
@@ -56,23 +62,34 @@ function ProjectInfoView(projectID: props) {
     setIsEditing(false);
   };
 
+  const handleRemove = (studentToRemove: Member) => {
+    setAssignedStudents(assigned_students.filter(student => student.Student_ID !== studentToRemove.Student_ID));
+  };
+
   // Add a function to handle the cancel
   const handleCancel = () => {
+    setStudents(originalStudents);
+    setAssignedStudents(originalAssignedStudents);
     // Exit edit mode
     setIsEditing(false);
   };
 
-  const addStudent = async (stu: Member) => {
-    const response = await fetch("http://localhost:5000/addStudent", {
+  const handleReject = async () => {
+    const confirmReject = window.confirm("Are you sure you want to reject this project?");
+    const response = await fetch("http://localhost:5000/rejectProject", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ projectID, student: stu }),
+      body: JSON.stringify({ projectID }),
     });
+    const result = await response.json();
+  };
+
+  const addStudent = async (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);
-    await getProjectInfo();
+    setStudents(students.filter(student => student.Student_ID !== stu.Student_ID));
   };
 
   const getProjectInfo = async () => {
@@ -92,10 +109,14 @@ function ProjectInfoView(projectID: props) {
     setDescription(result.project_info[0].Description);
     setStatus(result.project_info[0].Status);
     setTargetDate(result.project_info[0].Due_Date);
-    setProjectLeader(result.project_info[0].Stu_Lead_ID);
+    setProjectLeaderName(result.project_info[0].Leader_Name);
+    setProjectLeaderEmail(result.project_info[0].Leader_Email);
     setAssignedStudents(result.project_students);
     setStudents(result.roster);
+    setLeaders(result.av_leaders);
     setLoading(false);
+    setOriginalStudents([...result.roster]);
+    setOriginalAssignedStudents([...result.project_students]);
 
     console.log(assigned_students);
   };
@@ -151,9 +172,8 @@ function ProjectInfoView(projectID: props) {
                     marginLeft: "1vw",
                   }}
                 >
-                  <option value="">Approved</option>
+                  <option value="Approved">Approved</option>
                   <option value="In review">In review</option>
-                  <option value="Reject">Reject</option>
                 </select>
               </label>
               <div className="middleInfo">
@@ -184,7 +204,7 @@ function ProjectInfoView(projectID: props) {
                 Target Date:
                 <input
                   type="date"
-                  value={formattedDate ?? ""}
+
                   onChange={(e) => setTargetDate(e.target.value)}
                   style={{
                     fontSize: "32px",
@@ -192,7 +212,52 @@ function ProjectInfoView(projectID: props) {
                   }}
                 />
               </label>
-              Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Project Leader:
+                <select
+                  id="leaders"
+                  name="leaders"
+                  onChange={(event) => {
+                    if (event.target.value !== "undefined") {
+                      setLeader({
+                        Full_Name: event.target.value.split(",")[0],
+                        Email: event.target.value.split(",")[1],
+                        Student_ID: event.target.value.split(",")[2],
+                      });
+                    } else {
+                      setLeader(undefined);
+                    }
+                  }}
+                  required
+                  style={{
+                    height: "32px",
+                    borderRadius: "5px",
+                    fontSize: "20px",
+                  }}
+                >
+                  <option value="undefined">{projectLeaderName ? projectLeaderName : "Not Assigned"} ({projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})</option>
+
+                  {leaders.map((leader) => (
+                    <option
+                      value={[
+                        leader.Full_Name,
+                        leader.Email,
+                        leader.Student_ID,
+                      ]}
+                      key={leader.Full_Name + leader.Student_ID}
+                    >
+                      {leader.Full_Name} ({leader.Email})
+                    </option>
+                  ))}
+                </select>
+              </h1>
               <div
                 style={{
                   marginRight: "auto",
@@ -213,45 +278,45 @@ function ProjectInfoView(projectID: props) {
                 </h1>
                 {(user.role === "Clinic Director" ||
                   user.role === "Admin Assistant") && (
-                  <div style={{ margin: "1em" }}>
-                    <select
-                      id="leader"
-                      name="leader"
-                      onChange={(event) => {
-                        if (event.target.value !== "undefined") {
-                          setStudent({
-                            Full_Name: event.target.value.split(",")[0],
-                            Email: event.target.value.split(",")[1],
-                            Student_ID: event.target.value.split(",")[2],
-                          });
-                        } else {
-                          setStudent(undefined);
-                        }
-                      }}
-                      required
-                      style={{
-                        height: "32px",
-                        borderRadius: "5px",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <option value="undefined">Add A Student</option>
+                    <div style={{ margin: "1em" }}>
+                      <select
+                        id="leader"
+                        name="leader"
+                        onChange={(event) => {
+                          if (event.target.value !== "undefined") {
+                            setStudent({
+                              Full_Name: event.target.value.split(",")[0],
+                              Email: event.target.value.split(",")[1],
+                              Student_ID: event.target.value.split(",")[2],
+                            });
+                          } else {
+                            setStudent(undefined);
+                          }
+                        }}
+                        required
+                        style={{
+                          height: "32px",
+                          borderRadius: "5px",
+                          fontSize: "20px",
+                        }}
+                      >
+                        <option value="undefined">Add A Student</option>
 
-                      {students.map((student) => (
-                        <option
-                          value={[
-                            student.Full_Name,
-                            student.Email,
-                            student.Student_ID,
-                          ]}
-                          key={student.Full_Name + student.Student_ID}
-                        >
-                          {student.Full_Name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                        {students.map((student) => (
+                          <option
+                            value={[
+                              student.Full_Name,
+                              student.Email,
+                              student.Student_ID,
+                            ]}
+                            key={student.Full_Name + student.Student_ID}
+                          >
+                            {student.Full_Name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 {act_student && (
                   <button
                     onClick={() => act_student && addStudent(act_student)}
@@ -268,11 +333,15 @@ function ProjectInfoView(projectID: props) {
                 }}
               >
                 {assigned_students.map((student) => (
-                  <MemberCard
-                    name={student.Full_Name}
-                    role="Student"
-                    email={student.Email}
-                  />
+                  <>
+                    <MemberCard
+                      name={student.Full_Name}
+                      role="Student"
+                      email={student.Email}
+
+                    />
+                    <button onClick={() => handleRemove(student)}>Remove</button>
+                  </>
                 ))}
               </div>
               {/* Add more input fields for other project information */}
@@ -345,7 +414,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Project Leader: {projectLeader ? projectLeader : "Not Assigned"}
+                Project Leader: {projectLeaderName ? projectLeaderName : "Not Assigned"} ({projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
               </h1>
               <div
                 style={{
@@ -428,8 +497,12 @@ function ProjectInfoView(projectID: props) {
                   />
                 ))}
               </div>
-              {!isEditing && (
+              
+              {(!isEditing && user.role === "Clinic Director" || user.role === "Admin Assistant") &&(
                 <button onClick={() => setIsEditing(true)}>Edit</button>
+              )}
+              {(user.role === "Clinic Director" || user.role === "Admin Assistant") &&(
+                <button onClick={handleReject}>Reject</button>
               )}
             </>
           )}

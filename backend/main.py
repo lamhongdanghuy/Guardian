@@ -63,6 +63,7 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():
     data = request.get_json()
+    print(data)
     proposal_ID = data['ProposalID']
     leader_email = data.get('leaderEmail')
     students = data.get('assigned_students')
@@ -78,6 +79,14 @@ def rejectProposal():
     respone = reject.reject_proposal(proposal_ID['proposalID'])
     return respone, 200
 
+@app.route('/rejectProject', methods=['POST'])
+def rejectProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.reject_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
 @app.route('/proposalInfo', methods=['POST'])
 def proposalInfo():
     data = request.get_json()
@@ -91,11 +100,19 @@ def project_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
     infoInstance = infoGetter()
-    print(data['projectID'])
-    id = data['projectID']
+    id = data['projectID']['projectID']
+    print(id)
     payload = infoInstance.getprojectinfo(id,dbconnect)
-    print(payload)
+    # print(payload)
     return jsonify(payload), 200
+
+@app.route('/project/updateProject', methods=['POST'])
+def updateProject():
+    data = request.get_json()
+    print(data)
+    update = Project()
+    respone = update.update_Project(data, DatabaseConnection())
+    return respone, 200
 
 @app.route('/studentInfo', methods =['POST'])
 def student_info_get():
