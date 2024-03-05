@@ -17,15 +17,25 @@ function ApplicationCard(props: ApplicationCardProps) {
     <div className="card" onClick={handleClick}>
       <div
         className="cardTopApplication"
-        style={{ backgroundColor: props.InReview ? "green" : "navy" }}
+        style={{ backgroundColor: props.InReview ? "#feffba" : "#ffb3ba" }}
       >
         <h2
-          style={{ fontSize: "24px", marginLeft: "1vw", marginRight: "auto" }}
+          style={{
+            fontSize: "26px",
+            marginLeft: "2vw",
+            marginRight: "auto",
+            textAlign: "left",
+          }}
         >
           {props.name}
         </h2>
         <h2
-          style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
+          style={{
+            fontSize: "20px",
+            marginRight: "1vw",
+            marginLeft: "auto",
+            color: "#6e6e6e",
+          }}
         >
           {props.major}
         </h2>
