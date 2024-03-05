@@ -23,14 +23,18 @@ function ProjectInfoView(projectID: props) {
   const [status, setStatus] = useState<string | null>("");
   const [targetDate, setTargetDate] = useState<string | null>("");
   const [projectLeaderName, setProjectLeaderName] = useState<string | null>("");
-  const [projectLeaderEmail, setProjectLeaderEmail] = useState<string | null>("");
+  const [projectLeaderEmail, setProjectLeaderEmail] = useState<string | null>(
+    ""
+  );
   const [act_student, setStudent] = useState<Member | undefined>();
   const [act_leader, setLeader] = useState<Member | undefined>();
   const { user, setUser } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
   const [originalStudents, setOriginalStudents] = useState<Member[]>([]);
-  const [originalAssignedStudents, setOriginalAssignedStudents] = useState<Member[]>([]);
+  const [originalAssignedStudents, setOriginalAssignedStudents] = useState<
+    Member[]
+  >([]);
   const formattedDate = date?.toLocaleDateString("en-US", {
     month: "2-digit",
     day: "2-digit",
@@ -39,31 +43,44 @@ function ProjectInfoView(projectID: props) {
 
   // Add a function to handle the submit
   const handleEdit = async () => {
+    let invalidFields = [];
+    if (targetDate === "") {
+      invalidFields.push("Please enter a due date");
+    }
     const enteredDate = formattedDate ? new Date(formattedDate) : null;
-    const formattedDateString = enteredDate ? enteredDate.toISOString().slice(0, 19).replace('T', ' ') : null;
+    const formattedDateString = enteredDate
+      ? enteredDate.toISOString().slice(0, 19).replace("T", " ")
+      : null;
     // Send the updated info to the backend
-    const response = await fetch("http://localhost:5000/project/updateProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({
-        projectID,
-        status,
-        description,
-        enteredDate: formattedDateString,
-        projectLeaderEmail,
-        assigned_students,
-      }),
-    });
+    const response = await fetch(
+      "http://localhost:5000/project/updateProject",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token ? user.token : "",
+        },
+        body: JSON.stringify({
+          projectID,
+          status,
+          description,
+          enteredDate: formattedDateString,
+          projectLeaderEmail,
+          assigned_students,
+        }),
+      }
+    );
 
     // Exit edit mode
     setIsEditing(false);
   };
 
   const handleRemove = (studentToRemove: Member) => {
-    setAssignedStudents(assigned_students.filter(student => student.Student_ID !== studentToRemove.Student_ID));
+    setAssignedStudents(
+      assigned_students.filter(
+        (student) => student.Student_ID !== studentToRemove.Student_ID
+      )
+    );
   };
 
   // Add a function to handle the cancel
@@ -75,7 +92,9 @@ function ProjectInfoView(projectID: props) {
   };
 
   const handleReject = async () => {
-    const confirmReject = window.confirm("Are you sure you want to reject this project?");
+    const confirmReject = window.confirm(
+      "Are you sure you want to reject this project?"
+    );
     const response = await fetch("http://localhost:5000/rejectProject", {
       method: "POST",
       headers: {
@@ -89,7 +108,9 @@ function ProjectInfoView(projectID: props) {
 
   const addStudent = async (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);
-    setStudents(students.filter(student => student.Student_ID !== stu.Student_ID));
+    setStudents(
+      students.filter((student) => student.Student_ID !== stu.Student_ID)
+    );
   };
 
   const getProjectInfo = async () => {
@@ -204,7 +225,6 @@ function ProjectInfoView(projectID: props) {
                 Target Date:
                 <input
                   type="date"
-
                   onChange={(e) => setTargetDate(e.target.value)}
                   style={{
                     fontSize: "32px",
@@ -242,7 +262,10 @@ function ProjectInfoView(projectID: props) {
                     fontSize: "20px",
                   }}
                 >
-                  <option value="undefined">{projectLeaderName ? projectLeaderName : "Not Assigned"} ({projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})</option>
+                  <option value="undefined">
+                    {projectLeaderName ? projectLeaderName : "Not Assigned"} (
+                    {projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
+                  </option>
 
                   {leaders.map((leader) => (
                     <option
@@ -278,45 +301,45 @@ function ProjectInfoView(projectID: props) {
                 </h1>
                 {(user.role === "Clinic Director" ||
                   user.role === "Admin Assistant") && (
-                    <div style={{ margin: "1em" }}>
-                      <select
-                        id="leader"
-                        name="leader"
-                        onChange={(event) => {
-                          if (event.target.value !== "undefined") {
-                            setStudent({
-                              Full_Name: event.target.value.split(",")[0],
-                              Email: event.target.value.split(",")[1],
-                              Student_ID: event.target.value.split(",")[2],
-                            });
-                          } else {
-                            setStudent(undefined);
-                          }
-                        }}
-                        required
-                        style={{
-                          height: "32px",
-                          borderRadius: "5px",
-                          fontSize: "20px",
-                        }}
-                      >
-                        <option value="undefined">Add A Student</option>
+                  <div style={{ margin: "1em" }}>
+                    <select
+                      id="leader"
+                      name="leader"
+                      onChange={(event) => {
+                        if (event.target.value !== "undefined") {
+                          setStudent({
+                            Full_Name: event.target.value.split(",")[0],
+                            Email: event.target.value.split(",")[1],
+                            Student_ID: event.target.value.split(",")[2],
+                          });
+                        } else {
+                          setStudent(undefined);
+                        }
+                      }}
+                      required
+                      style={{
+                        height: "32px",
+                        borderRadius: "5px",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <option value="undefined">Add A Student</option>
 
-                        {students.map((student) => (
-                          <option
-                            value={[
-                              student.Full_Name,
-                              student.Email,
-                              student.Student_ID,
-                            ]}
-                            key={student.Full_Name + student.Student_ID}
-                          >
-                            {student.Full_Name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                      {students.map((student) => (
+                        <option
+                          value={[
+                            student.Full_Name,
+                            student.Email,
+                            student.Student_ID,
+                          ]}
+                          key={student.Full_Name + student.Student_ID}
+                        >
+                          {student.Full_Name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 {act_student && (
                   <button
                     onClick={() => act_student && addStudent(act_student)}
@@ -338,9 +361,10 @@ function ProjectInfoView(projectID: props) {
                       name={student.Full_Name}
                       role="Student"
                       email={student.Email}
-
                     />
-                    <button onClick={() => handleRemove(student)}>Remove</button>
+                    <button onClick={() => handleRemove(student)}>
+                      Remove
+                    </button>
                   </>
                 ))}
               </div>
@@ -414,7 +438,9 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Project Leader: {projectLeaderName ? projectLeaderName : "Not Assigned"} ({projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
+                Project Leader:{" "}
+                {projectLeaderName ? projectLeaderName : "Not Assigned"} (
+                {projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
               </h1>
               <div
                 style={{
@@ -497,11 +523,13 @@ function ProjectInfoView(projectID: props) {
                   />
                 ))}
               </div>
-              
-              {(!isEditing && user.role === "Clinic Director" || user.role === "Admin Assistant") &&(
+
+              {((!isEditing && user.role === "Clinic Director") ||
+                user.role === "Admin Assistant") && (
                 <button onClick={() => setIsEditing(true)}>Edit</button>
               )}
-              {(user.role === "Clinic Director" || user.role === "Admin Assistant") &&(
+              {(user.role === "Clinic Director" ||
+                user.role === "Admin Assistant") && (
                 <button onClick={handleReject}>Reject</button>
               )}
             </>
