@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import { jwtDecode } from "jwt-decode";
+import { useMediaQuery } from "react-responsive";
 
 function LoginSignup() {
+  const isMobile = useMediaQuery({ query: "(min-aspect-ratio:5/4)" });
   const { setUser } = useContext(LoginContext);
 
   const [email, setEmail] = useState("");
@@ -70,30 +72,36 @@ function LoginSignup() {
           borderRadius: "1em",
         }}
       >
-        <>
-          <h1>LOG IN</h1>
-          <label htmlFor="email">Email Address:</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            onChange={(event) => setEmail(event.target.value)}
-          />{" "}
-          <br />
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={(event) => setPassword(event.target.value)}
-          />{" "}
-          <br />
-          <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
-            <button onClick={sendLogin}>Log In</button>
+        {!isMobile ? (
+          <h1 style={{ fontSize: "30px" }}>
+            Please access the web application on a desktop.
+          </h1>
+        ) : (
+          <>
+            <h1>LOG IN</h1>
+            <label htmlFor="email">Email Address:</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
+            />{" "}
             <br />
-            <button onClick={() => navigator("/apply")}>Apply</button>
-          </div>
-        </>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={(event) => setPassword(event.target.value)}
+            />{" "}
+            <br />
+            <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+              <button onClick={sendLogin}>Log In</button>
+              <br />
+              <button onClick={() => navigator("/apply")}>Apply</button>
+            </div>
+          </>
+        )}
         {showResults && (
           <div>
             <h1>{success}</h1>

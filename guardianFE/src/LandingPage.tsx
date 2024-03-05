@@ -31,7 +31,7 @@ function LandingPage() {
             The Clinic partners with DePaul's Steans Center to serve community-
             based non-profit organizations that have limited resources yet have
             a need for cybersecurity assessment services. The Clinic also
-            provides services to Chicago-area small businesses."
+            provides services to Chicago-area small businesses.
           </h3>
         </div>
         <h2>Services</h2>
@@ -77,17 +77,8 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid white",
-            borderRadius: "12px",
-            backgroundColor: "#33689c",
-            overflow: "hidden",
-            marginTop: "2em",
-          }}
-        >
-          <p style={{ fontSize: "18px", fontWeight: "550" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we
