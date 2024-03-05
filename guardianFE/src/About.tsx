@@ -22,7 +22,7 @@ function About() {
             src="Jarvis-Student-Center-for-Innovation-and-Collaboration-05.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
           <h2 className="bannerUpperText">What is Guardian?</h2>
           <p className="bannerMiddleText">
@@ -47,7 +47,7 @@ function About() {
             src="/cropped-DePaul-CDM-IPD-01.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
           <h2 className="bannerUpperText">Our Mission Statement</h2>
 
@@ -59,16 +59,8 @@ function About() {
             contributes to a cyber security workforce.
           </p>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid white",
-            borderRadius: "12px",
-            backgroundColor: "#33689c",
-            overflow: "hidden",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

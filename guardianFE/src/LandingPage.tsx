@@ -7,16 +7,7 @@ function LandingPage() {
   return (
     <>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "80%",
-          margin: "auto",
-          marginBottom: "4em",
-        }}
-      >
+      <div className="landingPage">
         <div className="banner">
           <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
 
@@ -25,16 +16,22 @@ function LandingPage() {
             DePaul University's Cybersecurity Clinic
           </h2>
         </div>
-        <div>
+        <div style={{ width: "80%" }}>
           <h3>
-            Students: Get real world experience by working on cybersecurity
-            projects with real clients.
+            DePaul's Cybersecurity Clinic "Guardian" is an interdisciplinary
+            collaboration between the School of Computing, the Driehaus College
+            of Business, and the College of Law. The Clinic provides students
+            with hands-on, real-world experience working on cybersecurity
+            projects for organizational clients that helps prepare them for
+            careers in the cybersecurity workforce. Participating DePaul
+            students come from a variety of undergraduate and graduate degree
+            majors across the three colleges.
           </h3>
-        </div>
-        <div>
           <h3>
-            Clients: Get help with your cybersecurity needs from DePaul students
-            at affordable rates.
+            The Clinic partners with DePaul's Steans Center to serve community-
+            based non-profit organizations that have limited resources yet have
+            a need for cybersecurity assessment services. The Clinic also
+            provides services to Chicago-area small businesses.
           </h3>
         </div>
         <h2>Services</h2>
@@ -80,17 +77,8 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid white",
-            borderRadius: "12px",
-            backgroundColor: "#33689c",
-            overflow: "hidden",
-            marginTop: "2em",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we
