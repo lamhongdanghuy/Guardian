@@ -108,6 +108,15 @@
     top: 50%;
     transform: translate(-50%, -50%);
   }
+  .exploreCard {
+    width: 80%;
+    border: 1px solid #6e7c85;
+    border-radius: 10px;
+    background-color: #316597;
+    overflow: "hidden";
+    margin-top: 2em;
+  }
+
   .servicesTitle {
     color: white;
     left: 50%;
@@ -572,7 +581,7 @@
     border-radius: 10px;
     cursor: pointer;
     position: relative;
-    width: 90%;
+    width: 100%;
   }
   .serviceInfo:hover {
     border-radius: 10px;
@@ -601,21 +610,26 @@
     object-position: center;
     width: 100%;
   }
+
   .servicesText {
+    font-size: 14px;
     color: white;
+    width: 90%;
     left: 50%;
     position: absolute;
     text-align: center;
     text-shadow: #000000 0 0 0.5em;
-    top: 50%;
+    top: 52.5%;
     transform: translate(-50%, -50%);
   }
   .servicesTitle {
     color: white;
+    width: 100%;
     left: 50%;
     position: absolute;
     text-align: center;
-    top: 10%;
+    text-shadow: #000000 0 0 0.5em;
+    top: 7.5%;
     transform: translate(-50%, -50%);
   }
   .bannerUpperText {
@@ -631,12 +645,14 @@
   }
   .bannerMiddleText {
     color: white;
-    font-size: 20px;
+    font-weight: 500;
+    width: 100%;
+    font-size: 14px;
     left: 50%;
     position: absolute;
     text-align: center;
     text-shadow: #000000 0 0 0.5em;
-    top: 40%;
+    top: 45%;
     transform: translate(-50%, -50%);
     width: 75%;
   }
@@ -714,7 +730,7 @@
     margin-left: auto;
     margin-right: auto;
     padding: 1em 1em 4em 1em;
-    width: 40vw;
+    width: 87.5%;
   }
   .clientApply {
     align-items: center;
@@ -745,7 +761,7 @@
   .splitImageContainer {
     background-color: black;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -768,7 +784,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    width: 50%;
+    width: 100%;
   }
   .splitImage:hover .splitImagePic {
     scale: 1.025;
@@ -789,12 +805,21 @@
     margin: auto;
     width: 80%;
   }
+  .exploreCard {
+    width: 100%;
+    border: 1px solid #6e7c85;
+    border-radius: 10px;
+    background-color: #316597;
+    overflow: "hidden";
+    margin-top: 2em;
+  }
+
   .servicesPage {
     align-items: center;
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: 80%;
+    width: 95%;
   }
   h4 {
     margin-left: auto;

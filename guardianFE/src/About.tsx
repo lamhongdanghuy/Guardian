@@ -59,16 +59,8 @@ function About() {
             contributes to a cyber security workforce.
           </p>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid #6e7c85",
-            borderRadius: "12px",
-            backgroundColor: "#33689c",
-            overflow: "hidden",
-          }}
-        >
-          <p style={{ fontSize: "18px", fontWeight: "550" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

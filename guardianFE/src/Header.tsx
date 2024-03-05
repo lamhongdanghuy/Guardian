@@ -1,7 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 function Header() {
+  const isMobile = useMediaQuery({ query: "(min-aspect-ratio:5/4)" });
   const navigator = useNavigate();
   const [serviceOpen, setServiceOpen] = useState(false);
   return (
@@ -16,12 +18,14 @@ function Header() {
         zIndex: 2,
       }}
     >
-      <button
-        onClick={() => navigator("/login")}
-        style={{ position: "absolute", top: ".75em", right: ".75em" }}
-      >
-        Log In
-      </button>
+      {isMobile && (
+        <button
+          onClick={() => navigator("/login")}
+          style={{ position: "absolute", top: ".75em", right: ".75em" }}
+        >
+          Log In
+        </button>
+      )}
       <header>
         <h1 className="title" style={{ marginTop: ".5em" }}>
           DePaul Guardian
