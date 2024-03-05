@@ -7,16 +7,7 @@ function LandingPage() {
   return (
     <>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "80%",
-          margin: "auto",
-          marginBottom: "4em",
-        }}
-      >
+      <div className="landingPage">
         <div className="banner">
           <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
 

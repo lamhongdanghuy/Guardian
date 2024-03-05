@@ -23,6 +23,14 @@
     margin: auto;
     width: 100vw;
   }
+  .landingPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 4em;
+  }
   .sidebar {
     background-color: #f6f7f8;
     border-bottom: 2px solid #eaebee;
@@ -185,8 +193,8 @@
     display: flex;
     flex-direction: column;
     height: 35vh;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 3em;
+    margin-right: 3em;
     padding: 1em 1em 4em 1em;
     width: 40vw;
   }
@@ -516,6 +524,14 @@
     margin: auto;
     width: 100vw;
   }
+  .landingPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 4em;
+  }
   .sidebar {
     background-color: #f6f7f8;
     border-bottom: 2px solid #eaebee;
@@ -597,7 +613,8 @@
   }
   .bannerUpperText {
     color: white;
-    font-size: 36px;
+    width: 100%;
+    font-size: 26px;
     left: 50%;
     position: absolute;
     text-align: center;
@@ -617,8 +634,9 @@
     width: 75%;
   }
   .bannerLowerText {
+    width: 100%;
     color: white;
-    font-size: 30px;
+    font-size: 26px;
     left: 50%;
     position: absolute;
     text-align: center;
@@ -711,11 +729,11 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 80%;
+    width: 100%;
   }
   .services-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10%;
     justify-content: center;
     margin-left: auto;
@@ -838,7 +856,7 @@
     height: 300px;
     object-fit: cover;
     object-position: center;
-    width: 80%;
+    width: 100%;
   }
   .servicePicLabel {
     color: white;
