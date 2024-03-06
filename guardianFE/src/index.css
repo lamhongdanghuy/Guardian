@@ -170,6 +170,11 @@
     max-width: 43%;
     overflow: hidden;
   }
+
+  .card:hover {
+    scale: 1.03;
+    transition: scale 0.25s;
+  }
   .sidebarMenu {
     display: flex;
     flex-direction: column;

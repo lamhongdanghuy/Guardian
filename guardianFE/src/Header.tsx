@@ -27,7 +27,10 @@ function Header() {
         </button>
       )}
       <header>
-        <h1 className="title" style={{ marginTop: ".5em" }}>
+        <h1
+          className="title"
+          style={{ marginTop: ".5em", color: "#33689c", fontWeight: 700 }}
+        >
           DePaul Guardian
         </h1>
         <nav style={{ alignItems: "flex-start" }}>
