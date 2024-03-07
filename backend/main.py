@@ -237,6 +237,13 @@ def get_proposals():
     payload = proposalInstance.get_proposals(db_Connection)
     return jsonify(payload), 200
 
+@app.route('/dashboard/resend-verification-link', methods=['POST'])
+@Protector
+def resend_verification_link():
+    data = request.get_json()
+    email = data.get('email')
+
+
 @app.route('/addStudent', methods=['POST'])
 @Protector
 def add_student():
