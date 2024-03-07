@@ -15,6 +15,7 @@
     height: auto;
     width: 100vw;
   }
+
   .dashboard {
     align-items: center;
     background-color: #ffffff;
@@ -40,11 +41,11 @@
 
   .sidebar {
     background-color: #f6f7f8;
-    border-bottom: 2px solid #eaebee;
     display: flex;
     flex-direction: column;
-    height: 99.5vh;
+    height: 100vh;
     width: 25vw;
+    border-radius: 0 10px 10px 0;
   }
   .sidebarTitle {
     font-size: 48px;
