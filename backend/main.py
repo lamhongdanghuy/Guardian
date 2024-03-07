@@ -63,6 +63,8 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():
+    # Gets the project Id and associated information from the front end to send to the
+    # approval method and returns a response that the action has been completed
     data = request.get_json()
     print(data)
     proposal_ID = data['ProposalID']
