@@ -9,7 +9,12 @@ function LandingPage() {
       <Header />
       <div className="landingPage">
         <div className="banner">
-          <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
+          <img
+            src="cyber_img.svg"
+            alt="Policy Image"
+            className="midBanner"
+            style={{ filter: "brightness(80%)" }}
+          />
 
           <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
           <h2 className="bannerLowerText">

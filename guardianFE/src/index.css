@@ -224,6 +224,7 @@
     margin: auto;
   }
   .studentApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -247,6 +248,7 @@
     width: 40vw;
   }
   .clientApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -392,8 +394,10 @@
     object-fit: cover;
     object-position: center;
     width: 80%;
+    filter: brightness(50%);
     border: 1px solid white;
   }
+
   .servicePicLabel {
     color: white;
     cursor: pointer;
@@ -469,6 +473,9 @@
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid #657987;
   }
   .topInfo {
     align-items: center;
@@ -761,6 +768,7 @@
     margin-bottom: 2em;
   }
   .studentApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -781,6 +789,7 @@
     width: 87.5%;
   }
   .clientApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -998,6 +1007,9 @@
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid #657987;
   }
   .topInfo {
     align-items: center;

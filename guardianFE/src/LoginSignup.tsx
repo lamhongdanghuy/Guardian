@@ -70,6 +70,7 @@ function LoginSignup() {
           gap: ".5em",
           padding: "2em",
           borderRadius: "1em",
+          backdropFilter: "blur(15px)",
         }}
       >
         {!isMobile ? (
