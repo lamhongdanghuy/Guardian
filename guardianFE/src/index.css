@@ -14,6 +14,21 @@
     text-rendering: optimizeLegibility;
     height: auto;
     width: 100vw;
+    background-image: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.5) 50%,
+        transparent 50%
+      ),
+      linear-gradient(-135deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%);
+    background-size: 50px px;
+  }
+
+  .clinicDescription {
+    width: 80%;
+    backdrop-filter: blur(20px);
+    border: 1px groove #ffffff;
+    border-radius: 10px;
+    box-shadow: #000000 0 0 0.5em;
   }
 
   .dashboard {
@@ -113,8 +128,8 @@
   .exploreCard {
     width: 80%;
     border: 1px solid #6e7c85;
-    border-radius: 10px;
-    background-color: #316597;
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(20px);
     overflow: "hidden";
     margin-top: 2em;
   }
@@ -334,6 +349,7 @@
     place-items: center;
     text-align: center;
     width: 100%;
+    background-size: 50px px;
   }
   .servicesImage {
     flex: 1;
@@ -376,6 +392,7 @@
     object-fit: cover;
     object-position: center;
     width: 80%;
+    border: 1px solid white;
   }
   .servicePicLabel {
     color: white;
@@ -547,7 +564,22 @@
     text-align: center;
     text-rendering: optimizeLegibility;
     width: 100vw;
+    background-image: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.5) 50%,
+        transparent 50%
+      ),
+      linear-gradient(-135deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%);
+    background-size: 50px px;
     padding-bottom: 30vh;
+  }
+
+  .clinicDescription {
+    width: 90%;
+    backdrop-filter: blur(20px);
+    border: 1px groove #ffffff;
+    border-radius: 10px;
+    box-shadow: #000000 0 0 0.5em;
   }
   .dashboard {
     align-items: center;
@@ -607,7 +639,7 @@
   .banner {
     overflow: hidden;
     position: relative;
-    width: 100%;
+    width: 90%;
   }
   .serviceImage {
     border: 1px solid #6e7c85;
@@ -822,10 +854,10 @@
     width: 80%;
   }
   .exploreCard {
-    width: 100%;
+    width: 90%;
     border: 1px solid #6e7c85;
-    border-radius: 10px;
-    background-color: #316597;
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(20px);
     overflow: "hidden";
     margin-top: 2em;
   }
