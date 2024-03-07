@@ -127,6 +127,8 @@ def updateProject():
 def student_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
     infoInstance = infoGetter()
     payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
     return jsonify(payload), 200
