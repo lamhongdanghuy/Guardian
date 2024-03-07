@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import { jwtDecode } from "jwt-decode";
 
 function HomeView() {
   const { user } = useContext(LoginContext);
@@ -16,6 +17,11 @@ function HomeView() {
         email: user.email,
       }),
     });
+    const result = await response.json();
+    const temp = jwtDecode(result)
+    if ("message" in temp && temp.message === "Hit"){
+      console.log("Hit")
+    }
   }
   return (
     <div>

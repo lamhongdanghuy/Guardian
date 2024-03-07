@@ -240,8 +240,9 @@ def get_proposals():
 @app.route('/dashboard/resend-verification-link', methods=['POST'])
 @Protector
 def resend_verification_link():
-    data = request.get_json()
-    email = data.get('email')
+    hit = {'message': 'Hit'}
+    token = jwt.encode(hit, app.config["SECRET KEY"])
+    return jsonify(token)
 
 
 @app.route('/addStudent', methods=['POST'])
