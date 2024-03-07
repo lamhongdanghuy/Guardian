@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { LoginContext } from "./LoginContextProvider";
+
 function HomeView() {
+  const { user, setUser } = useContext(LoginContext);
   return (
     <div>
       <div className="banner">

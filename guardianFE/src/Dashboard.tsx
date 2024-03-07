@@ -16,7 +16,14 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const returnToLandingPage = () => {
-    setUser({ id: "", email: "", role: "", token: "" });
+    setUser({
+      id: "",
+      email: "",
+      role: "",
+      token: "",
+      emailVerification: false,
+      status: "",
+    });
     navigator("/");
   };
 
@@ -71,7 +78,14 @@ function Dashboard() {
         </div>
         <button
           onClick={() => {
-            setUser({ id: "", email: "", role: "", token: "" });
+            setUser({
+              id: "",
+              email: "",
+              role: "",
+              token: "",
+              emailVerification: false,
+              status: "",
+            });
           }}
         >
           Log Out
@@ -101,12 +115,14 @@ function Dashboard() {
           >
             Home
           </div>
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("Projects")}
-          >
-            Projects
-          </div>
+          {(user.status === "Active" || devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Projects")}
+            >
+              Projects
+            </div>
+          )}
           {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"
