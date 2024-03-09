@@ -61,6 +61,11 @@ password = 'snmz oioc xwoa nvhp'
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
+#test route to check if backend up.
+@app.route('/', methods=['GET'])
+def hello():
+    return "Hello World"
+
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():
     data = request.get_json()
@@ -400,4 +405,4 @@ def getStudents():
     return jsonify(payload), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000, debug=True)
