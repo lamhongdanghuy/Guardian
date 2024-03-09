@@ -21,9 +21,9 @@ function HomeView() {
       }
     );
     const result = await response.json();
-    const temp = jwtDecode(result);
-    if ("message" in temp) {
-      console.log(temp.message);
+
+    if (result === "Success") {
+      setSentVerify(true);
     }
   };
   return (
@@ -47,11 +47,7 @@ function HomeView() {
           <button className="resendVerificationButton" onClick={sendVerify}>
             Resend
           </button>
-        </div>
-      )}
-      {sentVerify == true && (
-        <div>
-          <h3>Sent Verification Link!</h3>
+          {sentVerify == true && <h3>Sent Verification Email</h3>}
         </div>
       )}
     </div>

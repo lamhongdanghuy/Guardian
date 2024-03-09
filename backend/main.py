@@ -242,9 +242,9 @@ def get_proposals():
 def resend_verification_link():
     data = request.get_json()
     email = data.get('email')
-    hit = {'message': 'hit {}'.format(email)}
-    token = jwt.encode(hit, app.config["SECRET KEY"])
-    return jsonify(token)
+    verify_email(email)
+    return jsonify("Success")
+    
 
 
 @app.route('/addStudent', methods=['POST'])
