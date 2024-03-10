@@ -71,7 +71,13 @@ function Dashboard() {
   }, [user]);
 
   return (
-    <div className="dashboard">
+    <div
+      className="dashboard"
+      style={{
+        backgroundImage:
+          "linear-gradient(-145deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%), linear-gradient(-75deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%)",
+      }}
+    >
       <div className="userBar">
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div>{user.email}</div>

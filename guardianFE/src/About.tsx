@@ -24,14 +24,16 @@ function About() {
             className="midBanner"
             style={{ marginBottom: "5vh" }}
           />
-          <h2 className="bannerUpperText">What is Guardian?</h2>
-          <p className="bannerMiddleText">
-            The DePaul Guardian is a cybersecurity clinic where students and
-            industry organizations can connect, collaborate, and learn within
-            the cybersecurity domain. We want to provide a dynamic space where
-            students and industry professionals can seamlessly come together to
-            exchange ideas, insights, and practical knowledge.
-          </p>
+          <div>
+            <h2 className="bannerUpperText">What is Guardian?</h2>
+            <p className="bannerMiddleText">
+              The DePaul Guardian is a cybersecurity clinic where students and
+              industry organizations can connect, collaborate, and learn within
+              the cybersecurity domain. We want to provide a dynamic space where
+              students and industry professionals can seamlessly come together
+              to exchange ideas, insights, and practical knowledge.
+            </p>
+          </div>
         </div>
         {/* <p>
           To help achieve this mission, the DePaul Cybersecurity Clinic will
@@ -60,7 +62,7 @@ function About() {
           </p>
         </div>
         <div className="exploreCard">
-          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "black" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we
