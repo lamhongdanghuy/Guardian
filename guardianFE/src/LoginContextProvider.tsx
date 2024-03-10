@@ -9,6 +9,8 @@ interface User {
   email: string;
   id: string;
   role: string;
+  emailVerification: boolean;
+  status: string;
 }
 
 interface LoginContextProps {
@@ -21,6 +23,8 @@ const defaultUser: User = {
   id: "",
   role: "",
   token: "",
+  emailVerification: false,
+  status: "",
 };
 
 const defaultContext: LoginContextProps = {

@@ -58,6 +58,7 @@ function AddFaculty() {
           style={{
             maxHeight: "70vh",
             marginBottom: "5vh",
+            backdropFilter: "blur(10px)",
           }}
         >
           <h2>Add Faculty Member</h2>

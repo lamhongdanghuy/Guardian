@@ -42,7 +42,10 @@ class Login:
                    'email': LoginData.at[0, 'Email'], 
                     'role': userInfo.at[0, 'Role'] if 'Role' in userInfo.columns else 'client',
                    'id': userInfo.iat[0, 0],
-                   'exp': datetime.utcnow() + timedelta(hours=16)}
+                   'emailVerification': bool(LoginData.at[0,'Email_Verified']),
+                   'status': userInfo.at[0,'Status'],
+                   'exp': datetime.utcnow() + timedelta(hours=16)
+                   }
             
             print("Returning Payload")
             return payload

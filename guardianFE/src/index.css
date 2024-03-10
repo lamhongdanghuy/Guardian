@@ -14,7 +14,23 @@
     text-rendering: optimizeLegibility;
     height: auto;
     width: 100vw;
+    background-image: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.5) 50%,
+        transparent 50%
+      ),
+      linear-gradient(-135deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%);
+    background-size: 50px px;
   }
+
+  .clinicDescription {
+    width: 80%;
+    backdrop-filter: blur(20px);
+    border: 1px groove #ffffff;
+    border-radius: 10px;
+    box-shadow: #000000 0 0 0.5em;
+  }
+
   .dashboard {
     align-items: center;
     background-color: #ffffff;
@@ -40,11 +56,11 @@
 
   .sidebar {
     background-color: #f6f7f8;
-    border-bottom: 2px solid #eaebee;
     display: flex;
     flex-direction: column;
-    height: 99.5vh;
+    height: 100vh;
     width: 25vw;
+    border-radius: 0 10px 10px 0;
   }
   .sidebarTitle {
     font-size: 48px;
@@ -112,8 +128,8 @@
   .exploreCard {
     width: 80%;
     border: 1px solid #6e7c85;
-    border-radius: 10px;
-    background-color: #316597;
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(20px);
     overflow: "hidden";
     margin-top: 2em;
   }
@@ -170,6 +186,11 @@
     max-width: 43%;
     overflow: hidden;
   }
+
+  .card:hover {
+    scale: 1.03;
+    transition: scale 0.25s;
+  }
   .sidebarMenu {
     display: flex;
     flex-direction: column;
@@ -203,6 +224,7 @@
     margin: auto;
   }
   .studentApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -226,6 +248,7 @@
     width: 40vw;
   }
   .clientApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -328,6 +351,7 @@
     place-items: center;
     text-align: center;
     width: 100%;
+    background-size: 50px px;
   }
   .servicesImage {
     flex: 1;
@@ -370,7 +394,10 @@
     object-fit: cover;
     object-position: center;
     width: 80%;
+    filter: brightness(50%);
+    border: 1px solid white;
   }
+
   .servicePicLabel {
     color: white;
     cursor: pointer;
@@ -446,6 +473,9 @@
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid #657987;
   }
   .topInfo {
     align-items: center;
@@ -541,7 +571,22 @@
     text-align: center;
     text-rendering: optimizeLegibility;
     width: 100vw;
+    background-image: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.5) 50%,
+        transparent 50%
+      ),
+      linear-gradient(-135deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%);
+    background-size: 50px px;
     padding-bottom: 30vh;
+  }
+
+  .clinicDescription {
+    width: 90%;
+    backdrop-filter: blur(20px);
+    border: 1px groove #ffffff;
+    border-radius: 10px;
+    box-shadow: #000000 0 0 0.5em;
   }
   .dashboard {
     align-items: center;
@@ -601,7 +646,7 @@
   .banner {
     overflow: hidden;
     position: relative;
-    width: 100%;
+    width: 90%;
   }
   .serviceImage {
     border: 1px solid #6e7c85;
@@ -723,6 +768,7 @@
     margin-bottom: 2em;
   }
   .studentApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -743,6 +789,7 @@
     width: 87.5%;
   }
   .clientApply {
+    backdrop-filter: blur(20px);
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -816,10 +863,10 @@
     width: 80%;
   }
   .exploreCard {
-    width: 100%;
+    width: 90%;
     border: 1px solid #6e7c85;
-    border-radius: 10px;
-    background-color: #316597;
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(20px);
     overflow: "hidden";
     margin-top: 2em;
   }
@@ -960,6 +1007,9 @@
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid #657987;
   }
   .topInfo {
     align-items: center;
