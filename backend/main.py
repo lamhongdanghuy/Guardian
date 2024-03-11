@@ -260,8 +260,8 @@ def add_student():
     studentID = data['student'].get('Student_ID')
     projectID = data['projectID'].get('projectID')
     db_Connection = DatabaseConnection()
-    infoInstance = infoGetter()
-    payload = infoInstance.add_student(studentID, projectID, db_Connection)
+    projectInstance = Project()
+    payload = projectInstance.add_student(studentID, projectID, db_Connection)
     payload = 1
     return jsonify(payload), 200
 
