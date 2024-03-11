@@ -81,40 +81,41 @@ class DataBase:
     class PROJECT:
         def tableName():
             return "PROJECT"
-        def Client_ID():
-            return "Client_ID"
-        def F_Name():
+        def Proj_ID():
+            return "Proj_ID"
+        def C_Name():
             return "F_Name"
-        def L_Name():
-            return "L_Name"
-        def Email():
+        def Company_ID():
+            return "Company_ID"
+        def Client_ID():
             return "Email"
-        def P_Number():
-            return ""
+        def Stu_Lead_ID():
+            return "Stu_Lead_ID"
+        def Pro_Type():
+            return "Pro_Type"
+        def Due_Date():
+            return "Due_Date"
+        def Date_submit():
+            return "Date_submit"
+        def Description():
+            return "Description"
         def Status():
-            return ""
+            return "Status"
         
     class PROJECT_PARTICIPANT:
         def tableName():
             return "PROJECT_PARTICIPANT"
-        def Client_ID():
-            return "Client_ID"
-        def F_Name():
-            return "F_Name"
-        def L_Name():
-            return "L_Name"
-        def Email():
-            return "Email"
-        def P_Number():
-            return ""
-        def Status():
-            return ""
+        def Proj_ID():
+            return "Proj_ID"
+        def Student_ID():
+            return "Student_ID"
+        
         
     class STUDENT:
         def tableName():
             return "STUDENT"
-        def Client_ID():
-            return "Client_ID"
+        def Student_ID():
+            return "Student_ID"
         def F_Name():
             return "F_Name"
         def L_Name():
@@ -122,25 +123,68 @@ class DataBase:
         def Email():
             return "Email"
         def P_Number():
-            return ""
+            return "P_Number"
+        def School():
+            return "School"
+        def Major():
+            return "Major"
+        def Year_Standing():
+            return "Year_Standing"
+        def Grad_Date():
+            return "Grad_Date"
+        def Proj_Interest():
+            return "Proj_Interest"
+        def Heard():
+            return "Heard"
+        def First_hear():
+            return "First_hear"
+        def Gender():
+            return "Gender"
+        def Ethnicity():
+            return "Ethnicity"
+        def Role():
+            return "Role"
         def Status():
-            return ""
+            return "Status"
+        
         
     class STUDENT_CLASS:
         def tableName():
             return "STUDENT_CLASS"
-        def Client_ID():
-            return "Client_ID"
-        def F_Name():
-            return "F_Name"
-        def L_Name():
-            return "L_Name"
-        def Email():
-            return "Email"
-        def P_Number():
-            return ""
-        def Status():
-            return ""
+        def Student_ID():
+            return "Student_ID"
+        def CSEC_390():
+            return "CSEC_390"
+        def CSEC_490():
+            return "CSEC_490"
+        def CSEC_488():
+            return "CSEC_488"
+        def IS_486():
+            return "IS_486"
+        def IS_487():
+            return "IS_487"
+        def ACC_374():
+            return "ACC_374"
+        def ACC_376():
+            return "ACC_376"
+        def ACC_378():
+            return "ACC_378"
+        def ACC_636():
+            return "ACC_636"
+        def ACC_638():
+            return "ACC_638"
+        def ACC_639():
+            return "ACC_639"
+        def FIN_362():
+            return "FIN_362"
+        def SEV_621():
+            return "SEV_621"
+        def SEC_Dae():
+            return "SEC_Dae"
+        def WiCyS():
+            return "WiCyS"
+        
+      
         
     
     
