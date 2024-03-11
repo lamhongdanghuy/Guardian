@@ -9,14 +9,19 @@ function LandingPage() {
       <Header />
       <div className="landingPage">
         <div className="banner">
-          <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
+          <img
+            src="cyber_img.svg"
+            alt="Policy Image"
+            className="midBanner"
+            style={{ filter: "brightness(80%)" }}
+          />
 
           <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
           <h2 className="bannerLowerText">
             DePaul University's Cybersecurity Clinic
           </h2>
         </div>
-        <div style={{ width: "80%" }}>
+        <div className="clinicDescription">
           <h3>
             DePaul's Cybersecurity Clinic "Guardian" is an interdisciplinary
             collaboration between the School of Computing, the Driehaus College
@@ -78,7 +83,7 @@ function LandingPage() {
           </div>
         </div>
         <div className="exploreCard">
-          <p style={{ fontSize: "18px", fontWeight: "550", color: "white" }}>
+          <p style={{ fontSize: "18px", fontWeight: "550" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

@@ -17,7 +17,14 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const returnToLandingPage = () => {
-    setUser({ id: "", email: "", role: "", token: "" });
+    setUser({
+      id: "",
+      email: "",
+      role: "",
+      token: "",
+      emailVerification: false,
+      status: "",
+    });
     navigator("/");
   };
 
@@ -65,14 +72,27 @@ function Dashboard() {
   }, [user]);
 
   return (
-    <div className="dashboard">
+    <div
+      className="dashboard"
+      style={{
+        backgroundImage:
+          "linear-gradient(-145deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%), linear-gradient(-75deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%)",
+      }}
+    >
       <div className="userBar">
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div>{user.email}</div>
         </div>
         <button
           onClick={() => {
-            setUser({ id: "", email: "", role: "", token: "" });
+            setUser({
+              id: "",
+              email: "",
+              role: "",
+              token: "",
+              emailVerification: false,
+              status: "",
+            });
           }}
         >
           Log Out
@@ -102,12 +122,14 @@ function Dashboard() {
           >
             Home
           </div>
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("Projects")}
-          >
-            Projects
-          </div>
+          {(user.status === "Active" || devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Projects")}
+            >
+              Projects
+            </div>
+          )}
           {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"

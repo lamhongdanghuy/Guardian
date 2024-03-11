@@ -39,13 +39,19 @@ function LoginSignup() {
         "id" in temp &&
         typeof temp.id === "string" &&
         "role" in temp &&
-        typeof temp.role === "string"
+        typeof temp.role === "string" &&
+        "emailVerification" in temp &&
+        typeof temp.emailVerification === "boolean" &&
+        "status" in temp &&
+        typeof temp.status === "string"
       ) {
         setUser({
           token: result,
           email: temp.email,
           id: temp.id,
           role: temp.role,
+          emailVerification: temp.emailVerification,
+          status: temp.status,
         });
       }
       navigator("/dashboard");
@@ -70,6 +76,7 @@ function LoginSignup() {
           gap: ".5em",
           padding: "2em",
           borderRadius: "1em",
+          backdropFilter: "blur(15px)",
         }}
       >
         {!isMobile ? (
