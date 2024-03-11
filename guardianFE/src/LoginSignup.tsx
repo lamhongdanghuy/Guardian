@@ -103,9 +103,14 @@ function LoginSignup() {
             />{" "}
             <br />
             <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+              <button
+                onClick={() => navigator("/apply")}
+                style={{ backgroundColor: "#6e7c85", color: "white" }}
+              >
+                Apply
+              </button>
               <button onClick={sendLogin}>Log In</button>
               <br />
-              <button onClick={() => navigator("/apply")}>Apply</button>
             </div>
           </>
         )}
