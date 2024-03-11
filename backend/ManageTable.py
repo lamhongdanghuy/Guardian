@@ -8,7 +8,7 @@ class ManageTable:
         try:
             ManageTable.checkTableName(tableName)
         except Exception as e:
-            print(e)
+            print(f'Table name does not exist: {e}')
             return
         
         table = getattr(DataBase, tableName)
