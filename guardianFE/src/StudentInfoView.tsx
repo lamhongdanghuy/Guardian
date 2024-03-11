@@ -14,10 +14,18 @@ function StudentInfoView(studentID: props) {
   const [phone, setPhone] = useState<number | null>();
   const [projectIntrest, setProjectIntrest] = useState<string | null>("");
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
-  const [gradDate, setGradDate] = useState<string | null>("");
+  const [gradDateUnformatted, setGradDateUnformatted] = useState<string | null>(
+    ""
+  );
   const [year, setYear] = useState<string | null>("");
   const [college, setCollege] = useState<string | null>("");
-
+  const date = gradDateUnformatted ? new Date(gradDateUnformatted) : null;
+  const gradDate = date
+    ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
+        .getUTCDate()
+        .toString()
+        .padStart(2, "0")}/${date.getUTCFullYear()}`
+    : "Not Approved";
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
@@ -39,7 +47,7 @@ function StudentInfoView(studentID: props) {
     setEmail(result.student_info[0].Email);
     setPhone(result.student_info[0].P_Number);
     setProjectIntrest(result.student_info[0].Proj_Interest);
-    setGradDate(result.student_info[0].Grad_Date);
+    setGradDateUnformatted(result.student_info[0].Grad_Date);
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
