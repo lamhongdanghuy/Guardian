@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import { jwtDecode } from "jwt-decode";
 
 function HomeView() {
   const { user } = useContext(LoginContext);
