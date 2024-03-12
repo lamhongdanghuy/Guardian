@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import StudentApplyForm from "./StudentApplyForm";
 import AddFaculty from "./AddFaculty";
 import ClientApplyForm from "./ClientApplyForm";
+import API_BASE_URL from './fetchApiURL';
 
 function ManageView() {
   const [columns, setColumns] = useState([]);

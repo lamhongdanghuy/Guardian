@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from './fetchApiURL';
 
 function HomeView() {
   const { user } = useContext(LoginContext);

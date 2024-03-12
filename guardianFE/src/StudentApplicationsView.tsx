@@ -1,7 +1,7 @@
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-
+import API_BASE_URL from './fetchApiURL';
 interface studentAppViewProp {
   onClick: Function;
 }

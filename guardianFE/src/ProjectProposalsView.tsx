@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import ProposalCard from "./ProposalCard";
-
+import API_BASE_URL from './fetchApiURL';
 interface proposalProposalViewProp {
   onClick: Function;
 }

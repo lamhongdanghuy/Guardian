@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE_URL from './fetchApiURL';
 
 function AddFaculty() {
   const [F_Name, setF_Name] = useState("");

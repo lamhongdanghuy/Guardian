@@ -1,5 +1,6 @@
 import { LoginContext } from "./LoginContextProvider";
 import { useState, useContext } from "react";
+import API_BASE_URL from './fetchApiURL';
 
 function ApplyView() {
   const [url, setURL] = useState("");
