@@ -40,7 +40,7 @@ function ApplyView() {
       );
       return;
     }
-    const response = await fetch("${API_BASE_URL}/propose", {
+    const response = await fetch(`${API_BASE_URL}/propose`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

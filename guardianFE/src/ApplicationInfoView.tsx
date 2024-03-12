@@ -23,7 +23,7 @@ function ApplicationInfoView(studentID: props) {
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch("${API_BASE_URL}/studentInfo", {
+    const response = await fetch(`${API_BASE_URL}/studentInfo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ function ApplicationInfoView(studentID: props) {
     setCoursesTaken(takenList.join(", "));
   };
   const approve = async () => {
-    const response = await fetch("${API_BASE_URL}/approveStudent", {
+    const response = await fetch(`${API_BASE_URL}/approveStudent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function ApplicationInfoView(studentID: props) {
   };
 
   const reject = async () => {
-    const response = await fetch("${API_BASE_URL}/rejectStudent", {
+    const response = await fetch(`${API_BASE_URL}/rejectStudent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

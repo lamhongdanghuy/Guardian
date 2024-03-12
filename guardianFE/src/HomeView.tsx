@@ -8,7 +8,7 @@ function HomeView() {
 
   const sendVerify = async () => {
     const response = await fetch(
-      "${API_BASE_URL}/dashboard/resend-verification-link",
+      `${API_BASE_URL}/dashboard/resend-verification-link`,
       {
         method: "POST",
         headers: {

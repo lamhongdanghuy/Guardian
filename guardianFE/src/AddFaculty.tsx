@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 function AddFaculty() {
   const [F_Name, setF_Name] = useState("");
@@ -9,7 +9,7 @@ function AddFaculty() {
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
   const [showResults, setShowResults] = useState(false);
-
+  
   const sendData = async () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     const passwordPattern =
@@ -35,7 +35,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number);
-    await fetch("${API_BASE_URL}/apply/faculty", {
+    await fetch(`${API_BASE_URL}/apply/faculty`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

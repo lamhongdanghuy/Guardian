@@ -26,7 +26,7 @@ function ProjectsView(props: projectViewProp) {
   }, []);
 
   const getProjects = async () => {
-    const response = await fetch("${API_BASE_URL}/getProjects", {
+    const response = await fetch(`${API_BASE_URL}/getProjects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

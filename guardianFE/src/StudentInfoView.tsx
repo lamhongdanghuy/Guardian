@@ -22,7 +22,7 @@ function StudentInfoView(studentID: props) {
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch("${API_BASE_URL}/studentInfo", {
+    const response = await fetch(`${API_BASE_URL}/studentInfo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

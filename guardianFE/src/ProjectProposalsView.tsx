@@ -26,7 +26,7 @@ function ProposalsView(props: proposalProposalViewProp) {
   }, []);
 
   const getProposals = async () => {
-    const response = await fetch("${API_BASE_URL}/getProposals", {
+    const response = await fetch(`${API_BASE_URL}/getProposals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -39,7 +39,7 @@ function ProposalInfoView(ProposalID: props) {
       alert("Please select a project leader before approving the proposal.");
     }
     setLoading(true);
-    const response = await fetch("${API_BASE_URL}/approveProposal", {
+    const response = await fetch(`${API_BASE_URL}/approveProposal`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function ProposalInfoView(ProposalID: props) {
 
   const reject = async () => {
     setLoading(true);
-    const response = await fetch("${API_BASE_URL}/rejectProposal", {
+    const response = await fetch(`${API_BASE_URL}/rejectProposal`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ function ProposalInfoView(ProposalID: props) {
   };
 
   const getProposalInfo = async () => {
-    const response = await fetch("${API_BASE_URL}/proposalInfo", {
+    const response = await fetch(`${API_BASE_URL}/proposalInfo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

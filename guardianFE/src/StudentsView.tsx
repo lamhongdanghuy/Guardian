@@ -28,7 +28,7 @@ function StudentsView(props: studentAppViewProp) {
   }, []);
 
   const getApplications = async () => {
-    const response = await fetch("${API_BASE_URL}/getStudents", {
+    const response = await fetch(`${API_BASE_URL}/getStudents`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

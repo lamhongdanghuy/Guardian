@@ -56,7 +56,7 @@ function ProjectInfoView(projectID: props) {
       : null;
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("${API_BASE_URL}/project/updateProject", {
+    await fetch(`${API_BASE_URL}/project/updateProject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ function ProjectInfoView(projectID: props) {
   const handleDone = async () => {
     window.confirm("Are you sure you want to mark this project as done?");
     setSubmitting(true);
-    await fetch("${API_BASE_URL}/doneProject", {
+    await fetch(`${API_BASE_URL}/doneProject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +111,7 @@ function ProjectInfoView(projectID: props) {
   const handleReject = async () => {
     window.confirm("Are you sure you want to reject this project?");
     setSubmitting(true);
-    await fetch("${API_BASE_URL}/rejectProject", {
+    await fetch(`${API_BASE_URL}/rejectProject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -131,7 +131,7 @@ function ProjectInfoView(projectID: props) {
   };
 
   const getProjectInfo = async () => {
-    const response = await fetch("${API_BASE_URL}/projectInfo", {
+    const response = await fetch(`${API_BASE_URL}/projectInfo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
