@@ -14,6 +14,7 @@ function LoginSignup() {
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [borderColor, setBorderColor] = useState("#6e7c85");
 
   const navigator = useNavigate();
 
@@ -57,6 +58,7 @@ function LoginSignup() {
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
+      setBorderColor("red");
     }
     setShowResults(true);
   };
@@ -91,6 +93,9 @@ function LoginSignup() {
               type="text"
               id="email"
               name="email"
+              style={{
+                  borderColor: borderColor,
+              }}
               onChange={(event) => setEmail(event.target.value)}
             />{" "}
             <br />
@@ -99,9 +104,21 @@ function LoginSignup() {
               type="password"
               id="password"
               name="password"
+              style={{
+                borderColor: borderColor,
+              }}
               onChange={(event) => setPassword(event.target.value)}
             />{" "}
             <br />
+            {(success === "Login Failed") && (
+              <div> 
+                <h3 
+                style={{
+                  color: "red",                
+                }}>
+                  Email or Password is incorrect</h3>
+              </div>
+            )}
             <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
               <button
                 onClick={() => navigator("/apply")}
@@ -113,11 +130,6 @@ function LoginSignup() {
               <br />
             </div>
           </>
-        )}
-        {showResults && (
-          <div>
-            <h1>{success}</h1>
-          </div>
         )}
       </div>
     </>
