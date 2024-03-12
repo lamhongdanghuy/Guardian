@@ -42,7 +42,6 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-print(apply().hash('Abc123123!'))
 
 # query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
 # data = DatabaseConnection().select_query(query).at[0, 'F_Name']
@@ -65,6 +64,11 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 @app.route('/', methods=['GET'])
 def hello():
     return "Hello World"
+
+@app.route('/changePassword', methods=['POST'])
+def changePassword():
+
+    return {"message":"good"}, 200
 
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():

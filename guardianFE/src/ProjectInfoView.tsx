@@ -93,33 +93,37 @@ function ProjectInfoView(projectID: props) {
   };
 
   const handleDone = async () => {
-    window.confirm("Are you sure you want to mark this project as done?");
-    setSubmitting(true);
-    await fetch("http://localhost:5000/doneProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ projectID }),
-    });
-    setSubmitted(true);
-    setSubmitting(false);
+    const confirmDone = window.confirm("Are you sure you want to mark this project as done?");
+    if (confirmDone) {
+      setSubmitting(true);
+      await fetch("http://localhost:5000/doneProject", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token ? user.token : "",
+        },
+        body: JSON.stringify({ projectID }),
+      });
+      setSubmitted(true);
+      setSubmitting(false);
+    }
   };
 
   const handleReject = async () => {
-    window.confirm("Are you sure you want to reject this project?");
-    setSubmitting(true);
-    await fetch("http://localhost:5000/rejectProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ projectID }),
-    });
-    setSubmitted(true);
-    setSubmitting(false);
+    const confirmReject = window.confirm("Are you sure you want to reject this project?");
+    if (confirmReject) {
+      setSubmitting(true);
+      await fetch("http://localhost:5000/rejectProject", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token ? user.token : "",
+        },
+        body: JSON.stringify({ projectID }),
+      });
+      setSubmitted(true);
+      setSubmitting(false);
+    }
   };
 
   const addStudent = async (stu: Member) => {
@@ -308,45 +312,45 @@ function ProjectInfoView(projectID: props) {
                 </h1>
                 {(user.role === "Clinic Director" ||
                   user.role === "Admin Assistant") && (
-                  <div style={{ margin: "1em" }}>
-                    <select
-                      id="leader"
-                      name="leader"
-                      onChange={(event) => {
-                        if (event.target.value !== "undefined") {
-                          setStudent({
-                            Full_Name: event.target.value.split(",")[0],
-                            Email: event.target.value.split(",")[1],
-                            Student_ID: event.target.value.split(",")[2],
-                          });
-                        } else {
-                          setStudent(undefined);
-                        }
-                      }}
-                      required
-                      style={{
-                        height: "32px",
-                        borderRadius: "5px",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <option value="undefined">Add A Student</option>
+                    <div style={{ margin: "1em" }}>
+                      <select
+                        id="leader"
+                        name="leader"
+                        onChange={(event) => {
+                          if (event.target.value !== "undefined") {
+                            setStudent({
+                              Full_Name: event.target.value.split(",")[0],
+                              Email: event.target.value.split(",")[1],
+                              Student_ID: event.target.value.split(",")[2],
+                            });
+                          } else {
+                            setStudent(undefined);
+                          }
+                        }}
+                        required
+                        style={{
+                          height: "32px",
+                          borderRadius: "5px",
+                          fontSize: "20px",
+                        }}
+                      >
+                        <option value="undefined">Add A Student</option>
 
-                      {students.map((student) => (
-                        <option
-                          value={[
-                            student.Full_Name,
-                            student.Email,
-                            student.Student_ID,
-                          ]}
-                          key={student.Full_Name + student.Student_ID}
-                        >
-                          {student.Full_Name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                        {students.map((student) => (
+                          <option
+                            value={[
+                              student.Full_Name,
+                              student.Email,
+                              student.Student_ID,
+                            ]}
+                            key={student.Full_Name + student.Student_ID}
+                          >
+                            {student.Full_Name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 {act_student && (
                   <button
                     onClick={() => act_student && addStudent(act_student)}
@@ -529,22 +533,19 @@ function ProjectInfoView(projectID: props) {
                   />
                 ))}
               </div>
-
-              {((!isEditing && user.role === "Clinic Director") ||
-                user.role === "Admin Assistant") && (
-                <button onClick={() => setIsEditing(true)}>Edit</button>
-              )}
-              {(user.role === "Clinic Director" ||
-                user.role === "Admin Assistant") && (
-                <>
-                  <button onClick={handleReject}>Reject</button>
-                  <button onClick={handleDone}>Done</button>
-                </>
-              )}
             </>
           )}
+
         </div>
       )}
+      {!loading && ((!isEditing && user.role === "Clinic Director") ||
+        user.role === "Admin Assistant") && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 100px"}}>
+            <button onClick={handleReject} style={{ backgroundColor: "#D30000" }}>Reject</button>
+            <button onClick={() => setIsEditing(true)} style={{ backgroundColor: "#FCE205" }}>Edit</button>
+            <button onClick={handleDone} style={{ backgroundColor: "#03C04A" }}>Done</button>
+          </div>
+        )}
     </div>
   );
 }

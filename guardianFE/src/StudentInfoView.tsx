@@ -7,6 +7,7 @@ interface props {
 
 function StudentInfoView(studentID: props) {
   const [loading, setLoading] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [studentName, setStudentName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
@@ -27,6 +28,40 @@ function StudentInfoView(studentID: props) {
         .padStart(2, "0")}/${date.getUTCFullYear()}`
     : "Not Approved";
   const { user } = useContext(LoginContext);
+
+  const handleDone = async () => {
+    // const confirmDone = window.confirm("Are you sure you want to mark this project as done?");
+    // if (confirmDone) {
+    //   setSubmitting(true);
+    //   await fetch("http://localhost:5000/doneProject", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       token: user.token ? user.token : "",
+    //     },
+    //     body: JSON.stringify({ projectID }),
+    //   });
+    //   setSubmitted(true);
+    //   setSubmitting(false);
+    // }
+  };
+
+  const handleReject = async () => {
+    // const confirmReject = window.confirm("Are you sure you want to reject this project?");
+    // if (confirmReject) {
+    //   setSubmitting(true);
+    //   await fetch("http://localhost:5000/rejectProject", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       token: user.token ? user.token : "",
+    //     },
+    //     body: JSON.stringify({ projectID }),
+    //   });
+    //   setSubmitted(true);
+    //   setSubmitting(false);
+    // }
+  };
 
   const getStudentInfo = async () => {
     const response = await fetch("http://localhost:5000/studentInfo", {
@@ -170,6 +205,14 @@ function StudentInfoView(studentID: props) {
           </h1>
         </div>
       )}
+      {!loading && ((!isEditing && user.role === "Clinic Director") ||
+        user.role === "Admin Assistant") && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 100px"}}>
+            <button onClick={handleReject} style={{ backgroundColor: "#D30000" }}>Reject</button>
+            <button onClick={() => setIsEditing(true)} style={{ backgroundColor: "#FCE205" }}>Edit</button>
+            <button onClick={handleDone} style={{ backgroundColor: "#03C04A" }}>Done</button>
+          </div>
+        )}
     </div>
   );
 }
