@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API_BASE_URL from './fetchApiURL';
+
 function StudentApplyForm() {
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
