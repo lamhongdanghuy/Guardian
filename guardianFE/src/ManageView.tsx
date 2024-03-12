@@ -17,7 +17,7 @@ function ManageView() {
   }, [activeTable]);
 
   const getTable = async (tableName: string) => {
-    const response = await fetch(`http://localhost:5000/get${tableName}Table`, {
+    const response = await fetch(`${API_BASE_URL}/get${tableName}Table`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
