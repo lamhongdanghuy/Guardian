@@ -35,7 +35,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number);
-    await fetch("http://localhost:5000/apply/faculty", {
+    await fetch("${API_BASE_URL}/apply/faculty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

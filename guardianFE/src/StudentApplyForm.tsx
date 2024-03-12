@@ -97,7 +97,7 @@ function StudentApplyForm() {
       alert("Passwords do not match!");
       return;
     }
-    const response = await fetch("http://localhost:5000/apply/student", {
+    const response = await fetch("${API_BASE_URL}/apply/student", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
