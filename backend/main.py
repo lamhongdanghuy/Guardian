@@ -1,4 +1,6 @@
 # Standard library imports
+import random
+import math
 import datetime
 import json
 import os
@@ -295,15 +297,17 @@ def verify_email(email):
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
 
-@app.route('/forgot_password')
-def forgot_password(email):
+@app.route('/forgotpassword', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('email')
+    VCode = random.randint(100000, 999999)
     server = None
     try:
         token = s.dumps(email, salt="forgot-password")
-
         link = url_for('reset_password', token=token, _external=True)
 
-        msg_body = 'Click the following link to reset your password: {}'.format(link)
+        msg_body = 'Click the following link to reset your password: {} | Verification Code: {}'.format(link, VCode)
 
         msg = MIMEText(msg_body)
         msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'
@@ -320,24 +324,21 @@ def forgot_password(email):
     finally:
         if server:
             server.quit()
-        return jsonify({'message': 'An email has been sent to reset your password'}), 200
+        return jsonify({'message': 'An email has been sent to reset your password', 'VCode': VCode}), 200
 
-@app.route('/change_password/<token>', methods=['POST'])
-def reset_password(data, token):
+@app.route('/change_password/', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    email = data.get('email')
+    new_password = data.get('password')
+    salt = bcrypt.gensalt(rounds=12)
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
     
     try:
-        email = s.loads(token, salt='reset-password', max_age=600)
-        new_password = data.get("password")
-        salt = bcrypt.gensalt(rounds=12)
-        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
-
         query = """UPDATE LOGIN_INFORMATION
                     SET Password = '{}'
                     WHERE Email =  '{}'""".format(hashed_password, email)
         DatabaseConnection().update_query(query)
-
-    except SignatureExpired:
-        return jsonify({'message': 'The token is expired'}), 400
     except Exception as e:
         print("An error has occurred: {e}")
         return jsonify({'message' : 'An error has occurred'})
