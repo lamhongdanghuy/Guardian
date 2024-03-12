@@ -22,6 +22,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from Students import Students
 from ManageTable import ManageTable
 import smtplib
+import bcrypt
 from email.mime.text import MIMEText
 
 # Local application imports
@@ -293,6 +294,54 @@ def verify_email(email):
     finally:
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
+
+@app.route('/forgot_password')
+def forgot_password(email):
+    server = None
+    try:
+        token = s.dumps(email, salt="forgot-password")
+
+        link = url_for('reset_password', token=token, _external=True)
+
+        msg_body = 'Click the following link to reset your password: {}'.format(link)
+
+        msg = MIMEText(msg_body)
+        msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(sender_email, password) 
+        server.sendmail(sender_email, email, msg.as_string()) 
+        print('Email sent successfully!') 
+
+    except Exception as e:
+        print(f'An error has occurred: {e}')
+    finally:
+        if server:
+            server.quit()
+        return jsonify({'message': 'An email has been sent to reset your password'}), 200
+
+@app.route('/change_password/<token>', methods=['POST'])
+def reset_password(data, token):
+    
+    try:
+        email = s.loads(token, salt='reset-password', max_age=600)
+        new_password = data.get("password")
+        salt = bcrypt.gensalt(rounds=12)
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
+
+        query = """UPDATE LOGIN_INFORMATION
+                    SET Password = '{}'
+                    WHERE Email =  '{}'""".format(hashed_password, email)
+        DatabaseConnection().update_query(query)
+
+    except SignatureExpired:
+        return jsonify({'message': 'The token is expired'}), 400
+    except Exception as e:
+        print("An error has occurred: {e}")
+        return jsonify({'message' : 'An error has occurred'})
+    return jsonify({'message' : 'Password changed!'})
 
 # Notifies all faculty whenever there is a new application 
 def notify_faculty(application_type):
