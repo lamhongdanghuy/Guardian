@@ -1,54 +1,42 @@
-import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
-  const [message, setMessage] = useState("");
   const navigator = useNavigate();
-
-  const fetchHello = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/"); // Update the URL with your Flask API endpoint
-      const result = await response.json();
-      console.log("got data");
-      setMessage(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   return (
     <>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "80%",
-          margin: "auto",
-          marginBottom: "4em",
-        }}
-      >
-        {message}
+      <div className="landingPage">
         <div className="banner">
-          <img src="cyber_img.svg" alt="Policy Image" className="midBanner" />
+          <img
+            src="cyber_img.svg"
+            alt="Policy Image"
+            className="midBanner"
+            style={{ filter: "brightness(80%)" }}
+          />
 
           <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
           <h2 className="bannerLowerText">
             DePaul University's Cybersecurity Clinic
           </h2>
         </div>
-        <div>
+        <div className="clinicDescription">
           <h3>
-            Students: Get real world experience by working on cybersecurity
-            projects with real clients.
+            DePaul's Cybersecurity Clinic "Guardian" is an interdisciplinary
+            collaboration between the School of Computing, the Driehaus College
+            of Business, and the College of Law. The Clinic provides students
+            with hands-on, real-world experience working on cybersecurity
+            projects for organizational clients that helps prepare them for
+            careers in the cybersecurity workforce. Participating DePaul
+            students come from a variety of undergraduate and graduate degree
+            majors across the three colleges.
           </h3>
-        </div>
-        <div>
           <h3>
-            Clients: Get help with your cybersecurity needs from DePaul students
-            at affordable rates.
+            The Clinic partners with DePaul's Steans Center to serve community-
+            based non-profit organizations that have limited resources yet have
+            a need for cybersecurity assessment services. The Clinic also
+            provides services to Chicago-area small businesses.
           </h3>
         </div>
         <h2>Services</h2>
@@ -94,17 +82,8 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid white",
-            borderRadius: "12px",
-            backgroundColor: "navy",
-            overflow: "hidden",
-            marginTop: "2em",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

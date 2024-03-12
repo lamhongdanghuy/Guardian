@@ -22,16 +22,18 @@ function About() {
             src="Jarvis-Student-Center-for-Innovation-and-Collaboration-05.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
-          <h2 className="bannerUpperText">What is Guardian?</h2>
-          <p className="bannerMiddleText">
-            The DePaul Guardian is a cybersecurity clinic where students and
-            industry organizations can connect, collaborate, and learn within
-            the cybersecurity domain. We want to provide a dynamic space where
-            students and industry professionals can seamlessly come together to
-            exchange ideas, insights, and practical knowledge.
-          </p>
+          <div>
+            <h2 className="bannerUpperText">What is Guardian?</h2>
+            <p className="bannerMiddleText">
+              The DePaul Guardian is a cybersecurity clinic where students and
+              industry organizations can connect, collaborate, and learn within
+              the cybersecurity domain. We want to provide a dynamic space where
+              students and industry professionals can seamlessly come together
+              to exchange ideas, insights, and practical knowledge.
+            </p>
+          </div>
         </div>
         {/* <p>
           To help achieve this mission, the DePaul Cybersecurity Clinic will
@@ -47,28 +49,20 @@ function About() {
             src="/cropped-DePaul-CDM-IPD-01.jpg"
             alt="Policy Image"
             className="midBanner"
-            style={{ marginBottom: "5vh", opacity: "0.25" }}
+            style={{ marginBottom: "5vh" }}
           />
           <h2 className="bannerUpperText">Our Mission Statement</h2>
 
           <p className="bannerMiddleText">
             Raise organizational awareness of information security and privacy
-            risks discovered from a student- led risk assessment so that
+            risks discovered from a student-led risk assessment so that
             incremental improvements are made in the client’s security policies
             and practices while students in turn gain real-world experience that
             contributes to a cyber security workforce.
           </p>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid white",
-            borderRadius: "12px",
-            backgroundColor: "navy",
-            overflow: "hidden",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>
+        <div className="exploreCard">
+          <p style={{ fontSize: "18px", fontWeight: "550", color: "black" }}>
             As the ever-changing threat landscape continues to evolve, it
             necessitates continuous engagement and innovation with careful
             consideration of emerging cybersecurity challenges. At DePaul, we

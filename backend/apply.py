@@ -18,13 +18,22 @@ class apply:
         salt = bcrypt.gensalt(rounds=12)
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
-
+    
+    def email_exists(self, email):
+        query = "SELECT COUNT(*) as count FROM LOGIN_INFORMATION WHERE Email = '{}'".format(email)
+        print("Executing query:", query)  # Debugging statement
+        result = DatabaseConnection().select_query(query)
+        print("Query result:", result)   # Debugging statement
+        return result['count'].iloc[0] > 0
+        
     def client_apply(self,data):
         print(data)
         
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('pNumber')
         org_name = data.get('compName')
@@ -60,19 +69,7 @@ class apply:
         vals_project = [project_id, org_name, company_id, client_id, None, project_type, due_date, datetime.datetime.now(), sen_data , 'In Review']
         DatabaseConnection().send_insert(vals_project, 'PROJECT')
         print("Project info inserted")
-        
-        query = "SELECT * FROM LOGIN_INFORMATION"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM CLIENT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM COMPANY"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM PROJECT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
+
 
         
     def student_apply(self, data):
@@ -80,6 +77,8 @@ class apply:
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('pNumber')
         project_type = data.get('projectType')
@@ -88,8 +87,8 @@ class apply:
         year_standing = data.get('yearStanding')
         grad_date = pd.to_datetime(data.get('gradDate'))
         course_taken = data.get('courseTaken')
-        when = data.get('firstHear')
-        hear = data.get('hear')
+        curious = data.get('curious')
+        whenHear = data.get('hear')
         eth = data.get('eth')
         gen = data.get('gen')
 
@@ -142,49 +141,37 @@ class apply:
             SEC_DAEMONS = 1
         if 'WICYS' in course_taken:
             WICYS = 1
+
+        print("got here")
     
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, hear, when, gen, eth, 'Student', 'In Review', 0]
+        vals_student = [id, f_name, l_name, email, phone_number, school, major, year_standing, grad_date, project_type, curious, whenHear, gen, eth, 'Student', 'In Review', 0]
         DatabaseConnection().send_insert(vals_student, 'STUDENT')
         print("Student info inserted")
         vals_courses = [id , CSEC390, CSEC490, CSEC488, IS486, IS487, ACC374, ACC376, ACC378, ACC636, ACC638, ACC639, FIN362, SEV621, SEC_DAEMONS, WICYS]
         DatabaseConnection().send_insert(vals_courses, 'STUDENT_CLASS')
         print("Student Class inserted")
-            
-        query = "SELECT * FROM LOGIN_INFORMATION"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM STUDENT"
-        data = DatabaseConnection().select_query(query)
-        print(data)
-        query = "SELECT * FROM STUDENT_CLASS"
-        data = DatabaseConnection().select_query(query)
-        print(data)
     
     def faculty_apply(self, data):
         print(data)
         f_name = data.get('F_Name')
         l_name = data.get('L_Name')
         email = data.get('Email')
+        if self.email_exists(email):
+            return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('P_Number')
-        role = data.get('Role')
-        print("Role: {}".format(role))
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
-        try:
-            vals_login = [email, hashedPass, 'Faculty']
-            DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
-            print("Login info inserted")
-            vals_faculty = [id, f_name, l_name, email, phone_number, role, 'In Review']
-            DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
-            print("Faculty info inserted")
-        except Exception as e:
-            DatabaseConnection().rollback()
-            print(f"An error occurred: {e}")
+        vals_login = [email, hashedPass, 'Faculty']
+        DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
+        print("Login info inserted")
+        vals_faculty = [id, f_name, l_name, email, phone_number, 'Admin Assistant', 'In Review']
+        DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
+        print("Faculty info inserted")
     
      #adds new project to PROJECT table to in review. Similar to client_apply except client proposes a new project with them already assigned. Updates company table with new info
     def add_project(self, data):

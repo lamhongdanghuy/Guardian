@@ -17,10 +17,12 @@ function ProjectCard(props: ProjectCardProps) {
       <div className="cardTopProject">
         <h2
           style={{
-            fontSize: "20px",
-            marginLeft: "1vw",
+            fontSize: "26px",
+            marginLeft: "2vw",
             marginRight: "auto",
             width: "60%",
+            textAlign: "left",
+            fontWeight: "700",
           }}
         >
           {props.name}
@@ -31,6 +33,8 @@ function ProjectCard(props: ProjectCardProps) {
             marginRight: "1vw",
             marginLeft: "auto",
             width: "40%",
+            textAlign: "right",
+            color: "#6e6e6e",
           }}
         >
           {props.type}
@@ -43,7 +47,7 @@ function ProjectCard(props: ProjectCardProps) {
             margin: "1em",
             color:
               props.status === "In Review"
-                ? "yellow"
+                ? "orange"
                 : props.status === "Approved"
                 ? "green"
                 : props.status === "Denied"
@@ -51,7 +55,7 @@ function ProjectCard(props: ProjectCardProps) {
                 : "white",
           }}
         >
-          {props.status}
+          ⬤ {props.status}
         </h2>
         {/* <h2 style={{ fontSize: "20px" }}>Leader: {props.projectLeader}</h2> */}
       </div>

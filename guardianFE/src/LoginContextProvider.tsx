@@ -5,10 +5,12 @@ interface LoginProviderProps {
 }
 
 interface User {
-  token: string | null;
-  email: string | null;
-  id: string | null;
-  role: string | null;
+  token: string;
+  email: string;
+  id: string;
+  role: string;
+  emailVerification: boolean;
+  status: string;
 }
 
 interface LoginContextProps {
@@ -17,10 +19,12 @@ interface LoginContextProps {
 }
 
 const defaultUser: User = {
-  email: null,
-  id: null,
-  role: null,
-  token: null,
+  email: "",
+  id: "",
+  role: "",
+  token: "",
+  emailVerification: false,
+  status: "",
 };
 
 const defaultContext: LoginContextProps = {

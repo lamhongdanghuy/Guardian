@@ -19,6 +19,8 @@ import mariadb
 import pymysql
 from sqlalchemy import create_engine
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from Students import Students
+from ManageTable import ManageTable
 import smtplib
 from email.mime.text import MIMEText
 
@@ -49,9 +51,6 @@ print(apply().hash('Abc123123!'))
 # data = DatabaseConnection().select_query(query)
 # print(data)
 
-query = "SELECT * FROM PROJECT"
-data = DatabaseConnection().select_query(query)
-print(data)
 
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
@@ -62,9 +61,15 @@ password = 'snmz oioc xwoa nvhp'
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
+#test route to check if backend up.
+@app.route('/', methods=['GET'])
+def hello():
+    return "Hello World"
+
 @app.route('/approveProposal', methods=['POST'])
 def approveProposal():
     data = request.get_json()
+    print(data)
     proposal_ID = data['ProposalID']
     leader_email = data.get('leaderEmail')
     students = data.get('assigned_students')
@@ -80,6 +85,22 @@ def rejectProposal():
     respone = reject.reject_proposal(proposal_ID['proposalID'])
     return respone, 200
 
+@app.route('/rejectProject', methods=['POST'])
+def rejectProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.reject_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
+@app.route('/doneProject', methods=['POST'])
+def doneProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.done_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
 @app.route('/proposalInfo', methods=['POST'])
 def proposalInfo():
     data = request.get_json()
@@ -93,11 +114,19 @@ def project_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
     infoInstance = infoGetter()
-    print(data['projectID'])
-    id = data['projectID']
+    id = data['projectID']['projectID']
+    print(id)
     payload = infoInstance.getprojectinfo(id,dbconnect)
-    print(payload)
+    # print(payload)
     return jsonify(payload), 200
+
+@app.route('/project/updateProject', methods=['POST'])
+def updateProject():
+    data = request.get_json()
+    print(data)
+    update = Project()
+    respone = update.update_Project(data, DatabaseConnection())
+    return respone, 200
 
 @app.route('/studentInfo', methods =['POST'])
 def student_info_get():
@@ -123,29 +152,46 @@ def login():
 @app.route('/apply/faculty', methods=['POST'])
 def faculty_apply():
     data = request.get_json()
+    email = data.get('Email')
+
     applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
     applyInstance.faculty_apply(data)
-    email = data.get('email')
     verify_email(email)
-    return jsonify({'message': 'Please confirm you email!'}), 200
+
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
     data = request.get_json()
-    applyInstance = apply()
-    applyInstance.student_apply(data)
     email = data.get('email')
+
+    applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    applyInstance.student_apply(data)
     verify_email(email)
-    return jsonify({'message': 'Please confirm you email!'}), 200
+    notify_faculty('student')
+
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
     data = request.get_json()
-    applyInstance = apply()
-    applyInstance.client_apply(data)
     email = data.get('email')
+
+    applyInstance = apply()
+    if applyInstance.email_exists(email):
+        return jsonify({'message': 'Email already taken'}), 400
+
+    applyInstance.client_apply(data)
     verify_email(email)
-    return jsonify({'message': 'Please confirm you email!'}), 200
+    notify_faculty('client')
+
+    return jsonify({'message': 'Please confirm your email!'}), 200
 
 @app.route('/getProjects', methods=['POST'])
 @Protector
@@ -196,6 +242,16 @@ def get_proposals():
     payload = proposalInstance.get_proposals(db_Connection)
     return jsonify(payload), 200
 
+@app.route('/dashboard/resend-verification-link', methods=['POST'])
+@Protector
+def resend_verification_link():
+    data = request.get_json()
+    email = data.get('email')
+    verify_email(email)
+    return jsonify("Success")
+    
+
+
 @app.route('/addStudent', methods=['POST'])
 @Protector
 def add_student():
@@ -204,8 +260,8 @@ def add_student():
     studentID = data['student'].get('Student_ID')
     projectID = data['projectID'].get('projectID')
     db_Connection = DatabaseConnection()
-    infoInstance = infoGetter()
-    payload = infoInstance.add_student(studentID, projectID, db_Connection)
+    projectInstance = Project()
+    payload = projectInstance.add_student(studentID, projectID, db_Connection)
     payload = 1
     return jsonify(payload), 200
 
@@ -238,6 +294,52 @@ def verify_email(email):
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
 
+# Notifies all faculty whenever there is a new application 
+def notify_faculty(application_type):
+    try:
+        # Fetch faculty emails from the database
+        query = "SELECT Email FROM FACULTY WHERE Role = 'Admin Assistant' OR Role = 'Clinic Director'"
+        db_Connection = DatabaseConnection()
+        result = db_Connection.select_query(query)
+        faculty_emails = result['Email'].tolist()
+        print(faculty_emails)
+
+        # Determine email subject and body based on application type
+        if application_type == 'student':
+            subject = 'New Student Application'
+            body = 'A new student has applied. Please review the applications.'
+        elif application_type == 'client':
+            subject = 'New Client Application'
+            body = 'A new client has applied. Please review the applications.'
+        else:
+            print('Invalid application type')
+            return
+        
+        # Send email to each faculty member
+        for email in faculty_emails:
+            send_email(subject, body, email)
+
+        print('Notification emails sent successfully!')
+    except Exception as e:
+        print(f'An error occurred while sending notification emails: {e}')
+
+def send_email(subject, body, email):    
+    try:
+        # Email configuration
+        msg = MIMEText(body)
+        msg['Subject'] = subject
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        # Connect to SMTP server and send email
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, email, msg.as_string())
+
+        print(f'Email sent to {email}')
+    except Exception as e:
+        print(f'Failed to send email to {email}: {e}')
+
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
@@ -255,5 +357,52 @@ def propose_project():
     applyInstance.add_project(data)
     return jsonify({'message': 'Project proposed!'}), 200
 
+@app.route('/getFacultyTable', methods=['GET'])
+def getFacultyTable():
+    payload = ManageTable.getTable('FACULTY')
+    return jsonify(payload), 200
+
+@app.route('/getStudentTable', methods=['GET'])
+def getStudentTable():
+    payload = ManageTable.getTable('STUDENT')
+    return jsonify(payload), 200
+
+@app.route('/getProjectTable', methods=['GET'])
+def getProjectTable():
+    payload = ManageTable.getTable('PROJECT')
+    return jsonify(payload), 200
+
+@app.route('/getClientTable', methods=['GET'])
+def getClientTable():
+    payload = ManageTable.getTable('CLIENT')
+    return jsonify(payload), 200
+
+@app.route('/getCompanyTable', methods=['GET'])
+def getCompanyTable():
+    payload = ManageTable.getTable('COMPANY')
+    return jsonify(payload), 200
+
+@app.route('/getLoginTable', methods=['GET'])
+def getLoginTable():
+    payload = ManageTable.getTable('LOGIN_INFORMATION')
+    return jsonify(payload), 200
+
+@app.route('/getStudentClassTable', methods=['GET'])
+def getStudentClassTable():
+    payload = ManageTable.getTable('STUDENT_CLASS')
+    return jsonify(payload), 200
+
+@app.route('/getProjectParticipantTable', methods=['GET'])
+def getProjectParticipantTable():
+    payload = ManageTable.getTable('PROJECT_PARTICIPANT')
+    return jsonify(payload), 200
+
+@app.route('/getStudents', methods=['POST'])
+def getStudents():
+    studentsInstace = Students()
+    db_Connection = DatabaseConnection()
+    payload = studentsInstace.get_students(db_Connection)
+    return jsonify(payload), 200
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5000, debug=True)

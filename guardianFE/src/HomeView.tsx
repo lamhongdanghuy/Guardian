@@ -1,4 +1,31 @@
+import { useContext, useState } from "react";
+import { LoginContext } from "./LoginContextProvider";
+import { jwtDecode } from "jwt-decode";
+
 function HomeView() {
+  const { user } = useContext(LoginContext);
+  const [sentVerify, setSentVerify] = useState(false);
+
+  const sendVerify = async () => {
+    const response = await fetch(
+      "http://localhost:5000/dashboard/resend-verification-link",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token,
+        },
+        body: JSON.stringify({
+          email: user.email,
+        }),
+      }
+    );
+    const result = await response.json();
+
+    if (result === "Success") {
+      setSentVerify(true);
+    }
+  };
   return (
     <div>
       <div className="banner">
@@ -11,7 +38,18 @@ function HomeView() {
           DePaul University's Cybersecurity Clinic
         </h2>
       </div>
-      <h1>Quick Actions</h1>
+      {user.emailVerification == false && (
+        <div className="resendVerification">
+          <h3 className="resendVerificationText">
+            Please click this button to resend a new verification link to -{" "}
+            {user.email}
+          </h3>
+          <button className="resendVerificationButton" onClick={sendVerify}>
+            Resend
+          </button>
+          {sentVerify == true && <h3>Sent Verification Email</h3>}
+        </div>
+      )}
     </div>
   );
 }

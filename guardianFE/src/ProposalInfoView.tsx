@@ -2,7 +2,11 @@ import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
 
-function ProposalInfoView(ProposalID: string) {
+interface props {
+  proposalID: string;
+}
+
+function ProposalInfoView(ProposalID: props) {
   console.log(ProposalID);
   console.log("reading proposalID");
   interface Member {
@@ -24,6 +28,10 @@ function ProposalInfoView(ProposalID: string) {
   const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState("");
+
+  const handleRemove = (studentToRemove: Member) => {
+    setAssignedStudents(assigned_students.filter(student => student.Email !== studentToRemove.Email));
+  };
 
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
@@ -61,7 +69,7 @@ function ProposalInfoView(ProposalID: string) {
     setLoading(false);
   };
 
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
 
   const addStudent = (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);
@@ -84,9 +92,8 @@ function ProposalInfoView(ProposalID: string) {
     setDescription(result.project_info.Project_Description);
     setStatus(result.project_info.Project_Status);
     const targetDateObj = new Date(result.project_info.Target_Date);
-    const formattedTargetDate = `${
-      targetDateObj.getMonth() + 1
-    }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    const formattedTargetDate = `${targetDateObj.getMonth() + 1
+      }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
     setStudents(result.students);
@@ -261,11 +268,15 @@ function ProposalInfoView(ProposalID: string) {
             style={{ flexDirection: "row", display: "flex", flexWrap: "wrap" }}
           >
             {assigned_students.map((student) => (
-              <MemberCard
-                name={student.Full_Name}
-                role="Student"
-                email={student.Email}
-              />
+              <>
+                <MemberCard
+                  name={student.Full_Name}
+                  role="Student"
+                  email={student.Email}
+
+                />
+                <button onClick={() => handleRemove(student)}>Remove</button>
+              </>
             ))}
           </div>
           <div

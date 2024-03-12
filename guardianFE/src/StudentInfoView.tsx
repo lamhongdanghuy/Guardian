@@ -5,7 +5,7 @@ interface props {
   studentID: string;
 }
 
-function ApplicationInfoView(studentID: props) {
+function StudentInfoView(studentID: props) {
   const [loading, setLoading] = useState<boolean>(true);
 
   const [studentName, setStudentName] = useState<string | null>("");
@@ -17,7 +17,6 @@ function ApplicationInfoView(studentID: props) {
   const [gradDate, setGradDate] = useState<string | null>("");
   const [year, setYear] = useState<string | null>("");
   const [college, setCollege] = useState<string | null>("");
-  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const { user } = useContext(LoginContext);
 
@@ -56,33 +55,6 @@ function ApplicationInfoView(studentID: props) {
     }
     setCoursesTaken(takenList.join(", "));
   };
-  const approve = async () => {
-    const response = await fetch("http://localhost:5000/approveStudent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ studentID }),
-    });
-    const result = await response.json();
-    setSubmitted(true);
-    return result;
-  };
-
-  const reject = async () => {
-    const response = await fetch("http://localhost:5000/rejectStudent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ studentID }),
-    });
-    const result = await response.json();
-    setSubmitted(true);
-    return result;
-  };
 
   useEffect(() => {
     console.log("feting info");
@@ -94,10 +66,6 @@ function ApplicationInfoView(studentID: props) {
     <div>
       {loading ? (
         <h1>Loading...</h1>
-      ) : submitted ? (
-        <>
-          <h1>Submitted</h1>
-        </>
       ) : (
         <div className="projectInfoView">
           <div className="topInfo">
@@ -192,26 +160,10 @@ function ApplicationInfoView(studentID: props) {
           >
             College: {college ? college : "Not Assigned"}
           </h1>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: "2em",
-              justifyContent: "center",
-              gap: "2em",
-            }}
-          >
-            <button onClick={approve} style={{ backgroundColor: "green" }}>
-              Approve
-            </button>
-            <button onClick={reject} style={{ backgroundColor: "red" }}>
-              Reject
-            </button>
-          </div>
         </div>
       )}
     </div>
   );
 }
 
-export default ApplicationInfoView;
+export default StudentInfoView;

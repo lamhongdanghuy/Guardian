@@ -9,19 +9,28 @@ import ProjectInfoView from "./ProjectInfoView";
 import ApplicationInfoView from "./ApplicationInfoView";
 import ProposalInfoView from "./ProposalInfoView";
 import AddFaculty from "./AddFaculty";
+import StudentsView from "./StudentsView";
+import StudentInfoView from "./StudentInfoView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  interface User {
-    userId: string;
-    email: string;
-    role: string;
-  }
-
   const returnToLandingPage = () => {
-    setUser({ id: null, email: null, role: null, token: null });
+    setUser({
+      id: "",
+      email: "",
+      role: "",
+      token: "",
+      emailVerification: false,
+      status: "",
+    });
     navigator("/");
+  };
+
+  const studentCardClicked = (studentID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Student Info View");
+    setOpenStudentInfo(studentID);
   };
 
   const projectCardClicked = (projectID: string) => {
@@ -53,37 +62,48 @@ function Dashboard() {
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
+  const [openStudentInfo, setOpenStudentInfo] = useState("");
   const [devMode, setDevMode] = useState(false);
   useEffect(() => {
-    if (user.userId === null) {
+    if (user.id === "") {
       navigator("/login");
     }
   }, [user]);
 
   return (
-    <div className="dashboard">
+    <div
+      className="dashboard"
+      style={{
+        backgroundImage:
+          "linear-gradient(-145deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%), linear-gradient(-75deg, rgba(0, 136, 204, 0.5) 50%, transparent 50%)",
+      }}
+    >
       <div className="userBar">
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <div>logged in as: {user.email} | </div>
-          <div>role: {user.role}</div>
+          <div>{user.email}</div>
         </div>
-        <div
-          className="logoutButton"
+        <button
           onClick={() => {
-            setUser({ userId: null, email: null, role: null });
+            setUser({
+              id: "",
+              email: "",
+              role: "",
+              token: "",
+              emailVerification: false,
+              status: "",
+            });
           }}
         >
           Log Out
-        </div>
+        </button>
 
-        <div
-          className="logoutButton"
+        <button
           onClick={() => {
             setDevMode(!devMode);
           }}
         >
           Dev Mode
-        </div>
+        </button>
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
@@ -101,18 +121,31 @@ function Dashboard() {
           >
             Home
           </div>
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("Projects")}
-          >
-            Projects
-          </div>
+          {(user.status === "Active" || devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Projects")}
+            >
+              Projects
+            </div>
+          )}
           {(user.role === "client" || devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
             >
               Propose a Project
+            </div>
+          )}
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            user.role === "Board Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Students View")}
+            >
+              Students
             </div>
           )}
           {(user.role === "Admin Assistant" ||
@@ -148,7 +181,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
-              Manage Tables
+              Admin Panel
             </div>
           )}
         </div>
@@ -183,6 +216,7 @@ function Dashboard() {
             Back
           </button>
         )}
+
         {activeContainer === "Home" ? (
           <HomeView />
         ) : activeContainer === "Projects" ? (
@@ -203,6 +237,10 @@ function Dashboard() {
           <ProposalInfoView proposalID={openProposal} />
         ) : activeContainer === "Add Faculty" ? (
           <AddFaculty />
+        ) : activeContainer === "Students View" ? (
+          <StudentsView onClick={studentCardClicked} />
+        ) : activeContainer === "Student Info View" ? (
+          <StudentInfoView studentID={openStudentInfo} />
         ) : null}
       </div>
     </div>

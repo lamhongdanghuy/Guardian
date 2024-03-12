@@ -34,7 +34,6 @@ class Login:
                 WHERE Email = '{}';
                 """.format(LoginData.at[0, 'Account_Type'].upper(),identifier)
             userInfo = db_Connection.select_query(idQuery)
-            print(userInfo)
 
             print("Creating Payload")
             #The payload is created with the user's information to be sent back to the user for verification of a valid login and the information in the payload to create a unique token. The 'exp' is to make the login token so the user is signed out automatically 16 hours after the time of login.
@@ -43,8 +42,12 @@ class Login:
                    'email': LoginData.at[0, 'Email'], 
                     'role': userInfo.at[0, 'Role'] if 'Role' in userInfo.columns else 'client',
                    'id': userInfo.iat[0, 0],
-                   'exp': datetime.utcnow() + timedelta(hours=16)}
-            print(payload)
+                   'emailVerification': bool(LoginData.at[0,'Email_Verified']),
+                   'status': userInfo.at[0,'Status'],
+                   'exp': datetime.utcnow() + timedelta(hours=16)
+                   }
+            
+            print("Returning Payload")
             return payload
         
         except Exception as e:
