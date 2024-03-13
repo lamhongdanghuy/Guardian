@@ -115,6 +115,7 @@
     object-fit: cover;
     object-position: center;
     width: 100%;
+    filter: brightness(50%);
   }
   .servicesText {
     color: white;

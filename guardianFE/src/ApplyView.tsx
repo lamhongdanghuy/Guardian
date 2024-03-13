@@ -1,5 +1,6 @@
 import { LoginContext } from "./LoginContextProvider";
 import { useState, useContext } from "react";
+import API_BASE_URL from './fetchApiURL';
 
 function ApplyView() {
   const [url, setURL] = useState("");
@@ -39,7 +40,7 @@ function ApplyView() {
       );
       return;
     }
-    const response = await fetch("http://localhost:5000/propose", {
+    const response = await fetch(`${API_BASE_URL}/propose`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

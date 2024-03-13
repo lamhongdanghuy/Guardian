@@ -83,9 +83,3 @@ class infoGetter:
         }
         return payload
     
-    def add_student(self, studentID, projectID, db_Connection):
-        print (studentID)
-        print (projectID)
-        vals = [projectID, studentID]
-        db_Connection.send_insert(vals, "PROJECT_PARTICIPANT")
-        return {'message': 'Student added to project'}

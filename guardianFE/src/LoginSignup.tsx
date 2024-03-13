@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import { jwtDecode } from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
+import API_BASE_URL from "./fetchApiURL";
 
 function LoginSignup() {
   const isMobile = useMediaQuery({ query: "(min-aspect-ratio:5/4)" });
@@ -13,12 +14,12 @@ function LoginSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState("");
-  const [showResults, setShowResults] = useState(false);
+  const [borderColor, setBorderColor] = useState("#6e7c85");
 
   const navigator = useNavigate();
 
   const sendLogin = async () => {
-    const response = await fetch("http://localhost:5000/login", {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,8 +58,8 @@ function LoginSignup() {
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
+      setBorderColor("red");
     }
-    setShowResults(true);
   };
 
   return (
@@ -91,6 +92,9 @@ function LoginSignup() {
               type="text"
               id="email"
               name="email"
+              style={{
+                borderColor: borderColor,
+              }}
               onChange={(event) => setEmail(event.target.value)}
             />{" "}
             <br />
@@ -99,20 +103,34 @@ function LoginSignup() {
               type="password"
               id="password"
               name="password"
+              style={{
+                borderColor: borderColor,
+              }}
               onChange={(event) => setPassword(event.target.value)}
             />{" "}
             <br />
+            {success === "Login Failed" && (
+              <div>
+                <h3
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  Email or Password is incorrect
+                </h3>
+              </div>
+            )}
             <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+              <button
+                onClick={() => navigator("/apply")}
+                style={{ backgroundColor: "#6e7c85", color: "white" }}
+              >
+                Apply
+              </button>
               <button onClick={sendLogin}>Log In</button>
               <br />
-              <button onClick={() => navigator("/apply")}>Apply</button>
             </div>
           </>
-        )}
-        {showResults && (
-          <div>
-            <h1>{success}</h1>
-          </div>
         )}
       </div>
     </>
