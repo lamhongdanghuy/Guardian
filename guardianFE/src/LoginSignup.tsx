@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import { jwtDecode } from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
-import API_BASE_URL from './fetchApiURL';
-
+import API_BASE_URL from "./fetchApiURL";
 
 function LoginSignup() {
   const isMobile = useMediaQuery({ query: "(min-aspect-ratio:5/4)" });
@@ -15,7 +14,6 @@ function LoginSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState("");
-  const [showResults, setShowResults] = useState(false);
   const [borderColor, setBorderColor] = useState("#6e7c85");
 
   const navigator = useNavigate();
@@ -62,7 +60,6 @@ function LoginSignup() {
       setSuccess("Login Failed");
       setBorderColor("red");
     }
-    setShowResults(true);
   };
 
   return (
@@ -96,7 +93,7 @@ function LoginSignup() {
               id="email"
               name="email"
               style={{
-                  borderColor: borderColor,
+                borderColor: borderColor,
               }}
               onChange={(event) => setEmail(event.target.value)}
             />{" "}
@@ -112,13 +109,15 @@ function LoginSignup() {
               onChange={(event) => setPassword(event.target.value)}
             />{" "}
             <br />
-            {(success === "Login Failed") && (
-              <div> 
-                <h3 
-                style={{
-                  color: "red",                
-                }}>
-                  Email or Password is incorrect</h3>
+            {success === "Login Failed" && (
+              <div>
+                <h3
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  Email or Password is incorrect
+                </h3>
               </div>
             )}
             <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
