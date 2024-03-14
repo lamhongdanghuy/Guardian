@@ -58,8 +58,8 @@ print(apply().hash('Abc123123!'))
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
 smtp_port = 465
-sender_email = 'phuonghaodinh2002@gmail.com'
-password = 'snmz oioc xwoa nvhp'
+sender_email = 'depaulguardians@gmail.com'
+password = 'dcag dqwd azaf zzqx'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
@@ -334,8 +334,8 @@ def changepassword():
     
     try:
         query = """UPDATE LOGIN_INFORMATION
-                    SET Password = {}
-                    WHERE Email =  '{}'""".format(hashed_password, email)
+                    SET Password = "{}"
+                    WHERE Email =  "{}" """.format(str(hashed_password)[2:-1], email)
         print (query)
         DatabaseConnection().update_query(query)
     except Exception as e:
