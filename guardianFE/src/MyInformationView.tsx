@@ -1,10 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 
-interface props {
-  studentID: string;
-}
-
 function MyInformationView() {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -30,8 +26,6 @@ function MyInformationView() {
     : "Not Approved";
   const { user } = useContext(LoginContext);
 
-  const studentID: props = { studentID: user.id };
-
   const changePassword = async () => {
     const response = await fetch("http://localhost:5000/changePassword", {
       method: "POST",
@@ -39,7 +33,7 @@ function MyInformationView() {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ studentID }),
+      body: JSON.stringify({ studentID: user.id }),
     });
     const responseData = await response.json();
     console.log(responseData);
@@ -54,21 +48,13 @@ function MyInformationView() {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ studentID }),
+      body: JSON.stringify({ clientID: { clientID: user.id } }),
     });
     const result = await response.json();
     console.log(result);
-    setname(
-      result.student_info[0].F_Name + " " + result.student_info[0].L_Name
-    );
-    setMajor(result.student_info[0].Major);
-    setEmail(result.student_info[0].Email);
-    setPhone(result.student_info[0].P_Number);
-    setProjectIntrest(result.student_info[0].Proj_Interest);
-    setGradDateUnformatted(result.student_info[0].Grad_Date);
-    setYear(result.student_info[0].Year_Standing);
-    setCollege(result.student_info[0].School);
-    setCoursesTaken(result.class_info[0]);
+    setname(result.client_info[0].F_Name + " " + result.client_info[0].L_Name);
+    setEmail(result.client_info[0].Email);
+    setPhone(result.client_info[0].P_Number);
     setLoading(false);
   };
 
@@ -80,7 +66,7 @@ function MyInformationView() {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ studentID }),
+      body: JSON.stringify({ studentID: { studentID: user.id } }),
     });
     const result = await response.json();
     setname(
@@ -108,9 +94,14 @@ function MyInformationView() {
   };
 
   useEffect(() => {
-    if (user.role === "Client") {
+    console.log(user.role);
+    if (user.role.toUpperCase() === "CLIENT") {
       getClientInfo();
-    } else if (user.role === "student") {
+    } else if (
+      user.role.toUpperCase() === "STUDENT" ||
+      user.role.toUpperCase() === "STUDENT_LEADER"
+    ) {
+      console.log("getting student info");
       getStudentInfo();
     }
   }, []);
@@ -129,17 +120,19 @@ function MyInformationView() {
                 marginLeft: "0vw",
               }}
             >
-              Student: {name}
+              Name: {name}
             </h1>
-            <h1
-              style={{
-                fontSize: "32px",
-                marginLeft: "auto",
-                marginRight: "1vw",
-              }}
-            >
-              Major: {major}
-            </h1>
+            {user.role.toUpperCase() === "STUDENT" && (
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "auto",
+                  marginRight: "1vw",
+                }}
+              >
+                Major: {major}
+              </h1>
+            )}
           </div>
           <div className="topInfo">
             <h1
@@ -162,24 +155,28 @@ function MyInformationView() {
             </h1>
           </div>
           <div className="topInfo">
-            <h1
-              style={{
-                fontSize: "32px",
-                marginRight: "auto",
-                marginLeft: "0vw",
-              }}
-            >
-              Year: {year}
-            </h1>
-            <h1
-              style={{
-                fontSize: "32px",
-                marginLeft: "auto",
-                marginRight: "1vw",
-              }}
-            >
-              Project Intrest: {projectIntrest}
-            </h1>
+            {user.role.toUpperCase() === "STUDENT" && (
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginRight: "auto",
+                  marginLeft: "0vw",
+                }}
+              >
+                Year: {year}
+              </h1>
+            )}
+            {user.role.toUpperCase() === "STUDENT" && (
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "auto",
+                  marginRight: "1vw",
+                }}
+              >
+                Project Intrest: {projectIntrest}
+              </h1>
+            )}
           </div>
           {/* <div className="middleInfo">
         <h1
@@ -188,31 +185,41 @@ function MyInformationView() {
           Description:
         </h1>
       </div> */}
-          <h1
-            style={{
-              fontSize: "32px",
-              marginLeft: "0vw",
-              marginRight: "auto",
-              paddingBottom: "5vh",
-            }}
-          >
-            Grad Date: {gradDate ? gradDate : "Not Approved"}
-          </h1>
-          <h1
-            style={{
-              fontSize: "32px",
-              marginLeft: "0vw",
-              marginRight: "auto",
-              paddingBottom: "5vh",
-            }}
-          >
-            Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
-          </h1>
-          <h1
-            style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}
-          >
-            College: {college ? college : "Not Assigned"}
-          </h1>
+          {user.role.toUpperCase() === "STUDENT" && (
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+                paddingBottom: "5vh",
+              }}
+            >
+              Grad Date: {gradDate ? gradDate : "Not Approved"}
+            </h1>
+          )}
+          {user.role.toUpperCase() === "STUDENT" && (
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+                paddingBottom: "5vh",
+              }}
+            >
+              Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+            </h1>
+          )}
+          {user.role.toUpperCase() === "STUDENT" && (
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+              }}
+            >
+              College: {college ? college : "Not Assigned"}
+            </h1>
+          )}
           <button onClick={changePassword}>Change Password</button>
           <h1
             style={{
