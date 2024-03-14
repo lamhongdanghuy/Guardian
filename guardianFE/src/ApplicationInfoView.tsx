@@ -22,7 +22,7 @@ function ApplicationInfoView(studentID: props) {
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch("http://localhost:5000/studentInfo", {
+    const response = await fetch("http://localhost:5000/student/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ function ApplicationInfoView(studentID: props) {
     setCoursesTaken(takenList.join(", "));
   };
   const approve = async () => {
-    const response = await fetch("http://localhost:5000/approveStudent", {
+    const response = await fetch("http://localhost:5000/student/approve", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ function ApplicationInfoView(studentID: props) {
   };
 
   const reject = async () => {
-    const response = await fetch("http://localhost:5000/rejectStudent", {
+    const response = await fetch("http://localhost:5000/student/reject", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

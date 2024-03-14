@@ -83,7 +83,7 @@ function StudentInfoView(studentID: props) {
     );
     if (confirmInActivate) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/student/inactive", {
+      await fetch("http://localhost:5000/student/inactivate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +99,7 @@ function StudentInfoView(studentID: props) {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/project/updateProject", {
+    await fetch("http://localhost:5000/student/updateInfo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -354,8 +354,6 @@ function StudentInfoView(studentID: props) {
                   <option value="Law">College of Law</option>
                 </select>
               </h1>
-              <button onClick={handleEdit}>Submit</button>
-              <button onClick={handleCancel}>Cancel</button>
             </>
           ) : (
             <>
@@ -486,6 +484,12 @@ function StudentInfoView(studentID: props) {
             </button>
           </div>
         )}
+        {isEditing && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 200px" }}>
+          <button onClick={handleCancel} style={{ backgroundColor: "#FCE205" }}>Cancel</button>
+          <button onClick={handleEdit} style={{ backgroundColor: "#03C04A" }}>Submit</button>          
+        </div>
+      )}
     </div>
   );
 }

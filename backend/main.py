@@ -70,7 +70,7 @@ def changePassword():
 
     return {"message":"good"}, 200
 
-@app.route('/approveProposal', methods=['POST'])
+@app.route('/proposal/approve', methods=['POST'])
 def approveProposal():
     data = request.get_json()
     print(data)
@@ -81,7 +81,7 @@ def approveProposal():
     respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email, students)
     return respone, 200
 
-@app.route('/rejectProposal', methods=['POST'])
+@app.route('/proposal/reject', methods=['POST'])
 def rejectProposal():
     data = request.get_json()
     proposal_ID = data['ProposalID']
@@ -89,23 +89,7 @@ def rejectProposal():
     respone = reject.reject_proposal(proposal_ID['proposalID'])
     return respone, 200
 
-@app.route('/rejectProject', methods=['POST'])
-def rejectProject():
-    data = request.get_json()
-    project_ID = data['projectID']
-    reject = Project()
-    respone = reject.reject_Project(project_ID, DatabaseConnection())
-    return respone, 200
-
-@app.route('/doneProject', methods=['POST'])
-def doneProject():
-    data = request.get_json()
-    project_ID = data['projectID']
-    reject = Project()
-    respone = reject.done_Project(project_ID, DatabaseConnection())
-    return respone, 200
-
-@app.route('/proposalInfo', methods=['POST'])
+@app.route('/proposal/info', methods=['POST'])
 def proposalInfo():
     data = request.get_json()
     proposal_ID = data['ProposalID']
@@ -113,7 +97,23 @@ def proposalInfo():
     respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
     return respone, 200
 
-@app.route('/projectInfo', methods =['POST'])
+@app.route('/project/reject', methods=['POST'])
+def rejectProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.reject_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
+@app.route('/project/done', methods=['POST'])
+def doneProject():
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.done_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
+@app.route('/project/info', methods =['POST'])
 def project_info_get():
     data = request.get_json()
     dbconnect = DatabaseConnection()
@@ -124,7 +124,7 @@ def project_info_get():
     # print(payload)
     return jsonify(payload), 200
 
-@app.route('/project/updateProject', methods=['POST'])
+@app.route('/project/update', methods=['POST'])
 def updateProject():
     data = request.get_json()
     print(data)
@@ -132,8 +132,18 @@ def updateProject():
     respone = update.update_Project(data, DatabaseConnection())
     return respone, 200
 
-@app.route('/studentInfo', methods =['POST'])
+@app.route('/student/info', methods =['POST'])
 def student_info_get():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = Students.inactivate_student(dbconnect, data['studentID'])
+    return jsonify(payload), 200
+
+@app.route('/student/inactivate', methods =['POST'])
+def student_inactivate():
     data = request.get_json()
     dbconnect = DatabaseConnection()
     print(data)
@@ -199,7 +209,7 @@ def client_apply():
 
     return jsonify({'message': 'Please confirm your email!'}), 200
 
-@app.route('/getProjects', methods=['POST'])
+@app.route('/get/projects', methods=['POST'])
 @Protector
 def get_projects():
     data = request.get_json()
@@ -213,7 +223,7 @@ def get_projects():
         payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
-@app.route('/rejectStudent', methods=['POST'])
+@app.route('/student/reject', methods=['POST'])
 def rejectApplication():
     data = request.get_json()
     applicationInstance = Application()
@@ -221,7 +231,7 @@ def rejectApplication():
     payload = applicationInstance.rejectApplication(db_Connection, data['studentID']['studentID'])
     return payload, 200
 
-@app.route('/approveStudent', methods=['POST'])
+@app.route('/student/approve', methods=['POST'])
 def approveApplication():
     data = request.get_json()
     print(data)
@@ -230,7 +240,7 @@ def approveApplication():
     payload = applicationInstance.approveApplication(db_Connection, data['studentID']['studentID'])
     return payload, 200
 
-@app.route('/getApplications', methods=['POST'])
+@app.route('/get/student/applications', methods=['POST'])
 @Protector
 def get_applications():
     data = request.get_json()
@@ -239,7 +249,7 @@ def get_applications():
     payload = applicationInstance.get_student_applications(db_Connection)
     return jsonify(payload), 200
 
-@app.route('/getProposals', methods=['POST'])
+@app.route('/get/project/proposals', methods=['POST'])
 @Protector
 def get_proposals():
     data = request.get_json()
@@ -255,21 +265,6 @@ def resend_verification_link():
     email = data.get('email')
     verify_email(email)
     return jsonify("Success")
-    
-
-
-@app.route('/addStudent', methods=['POST'])
-@Protector
-def add_student():
-    data = request.get_json()
-    payload = 0
-    studentID = data['student'].get('Student_ID')
-    projectID = data['projectID'].get('projectID')
-    db_Connection = DatabaseConnection()
-    infoInstance = infoGetter()
-    payload = infoInstance.add_student(studentID, projectID, db_Connection)
-    payload = 1
-    return jsonify(payload), 200
 
 def verify_email(email):
     server = None
@@ -356,7 +351,7 @@ def confirm_email(token):
         return '<h1>The token is expired!</h1>'
     return '<h1>The email is confirmed!</h1>'
 
-@app.route('/propose', methods=['POST'])
+@app.route('/project/propose', methods=['POST'])
 def propose_project():
     data = request.get_json()
     applyInstance = apply()

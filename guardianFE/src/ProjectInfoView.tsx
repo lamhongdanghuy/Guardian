@@ -55,7 +55,7 @@ function ProjectInfoView(projectID: props) {
       : null;
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/project/updateProject", {
+    await fetch("http://localhost:5000/project/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ function ProjectInfoView(projectID: props) {
     const confirmDone = window.confirm("Are you sure you want to mark this project as done?");
     if (confirmDone) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/doneProject", {
+      await fetch("http://localhost:5000/project/done", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +113,7 @@ function ProjectInfoView(projectID: props) {
     const confirmReject = window.confirm("Are you sure you want to reject this project?");
     if (confirmReject) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/rejectProject", {
+      await fetch("http://localhost:5000/project/reject", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +134,7 @@ function ProjectInfoView(projectID: props) {
   };
 
   const getProjectInfo = async () => {
-    const response = await fetch("http://localhost:5000/projectInfo", {
+    const response = await fetch("http://localhost:5000/project/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -379,8 +379,7 @@ function ProjectInfoView(projectID: props) {
                   </>
                 ))}
               </div>
-              <button onClick={handleEdit}>Submit</button>
-              <button onClick={handleCancel}>Cancel</button>
+
             </>
           ) : (
             <>
@@ -540,12 +539,18 @@ function ProjectInfoView(projectID: props) {
       )}
       {!loading && ((!isEditing && user.role === "Clinic Director") ||
         user.role === "Admin Assistant") && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 100px"}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 100px" }}>
             <button onClick={handleReject} style={{ backgroundColor: "#D30000" }}>Reject</button>
             <button onClick={() => setIsEditing(true)} style={{ backgroundColor: "#FCE205" }}>Edit</button>
             <button onClick={handleDone} style={{ backgroundColor: "#03C04A" }}>Done</button>
           </div>
         )}
+      {isEditing && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 200px" }}>
+          <button onClick={handleCancel} style={{ backgroundColor: "#FCE205" }}>Cancel</button>
+          <button onClick={handleEdit} style={{ backgroundColor: "#03C04A" }}>Submit</button>          
+        </div>
+      )}
     </div>
   );
 }
