@@ -8,7 +8,7 @@ interface props {
 function MyInformationView() {
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [studentName, setStudentName] = useState<string | null>("");
+  const [name, setname] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
@@ -47,6 +47,31 @@ function MyInformationView() {
     setShowResults(true);
   };
 
+  const getClientInfo = async () => {
+    const response = await fetch("http://localhost:5000/client/info", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: user.token ? user.token : "",
+      },
+      body: JSON.stringify({ studentID }),
+    });
+    const result = await response.json();
+    console.log(result);
+    setname(
+      result.student_info[0].F_Name + " " + result.student_info[0].L_Name
+    );
+    setMajor(result.student_info[0].Major);
+    setEmail(result.student_info[0].Email);
+    setPhone(result.student_info[0].P_Number);
+    setProjectIntrest(result.student_info[0].Proj_Interest);
+    setGradDateUnformatted(result.student_info[0].Grad_Date);
+    setYear(result.student_info[0].Year_Standing);
+    setCollege(result.student_info[0].School);
+    setCoursesTaken(result.class_info[0]);
+    setLoading(false);
+  };
+
   const getStudentInfo = async () => {
     console.log(user.id);
     const response = await fetch("http://localhost:5000/student/info", {
@@ -58,7 +83,7 @@ function MyInformationView() {
       body: JSON.stringify({ studentID }),
     });
     const result = await response.json();
-    setStudentName(
+    setname(
       result.student_info[0].F_Name + " " + result.student_info[0].L_Name
     );
     setMajor(result.student_info[0].Major);
@@ -83,7 +108,11 @@ function MyInformationView() {
   };
 
   useEffect(() => {
-    getStudentInfo();
+    if (user.role === "Client") {
+      getClientInfo();
+    } else if (user.role === "student") {
+      getStudentInfo();
+    }
   }, []);
 
   return (
@@ -100,7 +129,7 @@ function MyInformationView() {
                 marginLeft: "0vw",
               }}
             >
-              Student: {studentName}
+              Student: {name}
             </h1>
             <h1
               style={{

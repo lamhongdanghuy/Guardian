@@ -121,6 +121,12 @@ function Dashboard() {
             onClick={() => setActiveContainer("Home")}
           >
             Home
+          </div>{" "}
+          <div
+            className="sidebarItem"
+            onClick={() => setActiveContainer("My Information")}
+          >
+            My Information
           </div>
           {(user.status === "Active" || devMode) && (
             <div
@@ -185,12 +191,6 @@ function Dashboard() {
               Admin Panel
             </div>
           )}
-          <div
-            className="sidebarItem"
-            onClick={() => setActiveContainer("My Information")}
-          >
-            My Information
-          </div>
         </div>
 
         {/* <Link to="/dashboard">Dashboard</Link>
@@ -208,6 +208,7 @@ function Dashboard() {
         }}
       >
         {(activeContainer === "Project Info View" ||
+          activeContainer === "Student Info View" ||
           activeContainer === "Proposal Info View" ||
           activeContainer === "Application View") && (
           <button

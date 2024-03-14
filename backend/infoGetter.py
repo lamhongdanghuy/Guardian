@@ -83,6 +83,19 @@ class infoGetter:
         }
         return payload
     
+    def getclientinfo(self,id,db_connection):
+        id = id['clientID']
+        queryC = """
+                SELECT *
+                FROM CLIENT
+                WHERE Client_ID = '{}';
+                """.format(id)
+        Client_info = db_connection.select_query(queryC).to_dict(orient='records')
+        payload = {
+            "client_info": Client_info
+        }
+        return payload
+    
     def add_student(self, studentID, projectID, db_Connection):
         print (studentID)
         print (projectID)

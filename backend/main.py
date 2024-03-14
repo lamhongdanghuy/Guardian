@@ -213,6 +213,16 @@ def student_info_get():
     payload = infoInstance.getstudentinfo(data['studentID'], dbconnect)
     return jsonify(payload), 200
 
+@app.route('/client/info', methods =['POST'])
+def client_info_get():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getclientinfo(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
 @app.route('/student/inactivate', methods =['POST'])
 def student_inactivate():
     data = request.get_json()
