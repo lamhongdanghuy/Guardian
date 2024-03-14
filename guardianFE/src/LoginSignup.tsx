@@ -12,9 +12,11 @@ function LoginSignup() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [success, setSuccess] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [VCode, setVCode] = useState("");
+  const [VCodeInput, setVCodeInput] = useState("");
   const [PassForm, setPassForm] = useState(false);
 
   const navigator = useNavigate();
@@ -34,20 +36,28 @@ function LoginSignup() {
     });
     const result = await response.json();
     setVCode(result.VCode);
+    console.log(result);
   };
 
   const changePassword = async () => {
-    const response = await fetch("http://localhost:5000/changepassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const result = await response.json();
-    setSuccess(result.message);
-    setShowResults(true);
+    console.log(VCode);
+    console.log(VCodeInput);
+    if (VCode == VCodeInput) {
+      const response = await fetch("http://localhost:5000/changepassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const result = await response.json();
+      setSuccess(result.message);
+      setShowResults(true);
+    } else {
+      alert("Verification Code is incorrect");
+    }
   };
+
   const sendLogin = async () => {
     const response = await fetch("http://localhost:5000/login", {
       method: "POST",
@@ -145,7 +155,12 @@ function LoginSignup() {
                 <button onClick={sendLogin}>Log In</button>
                 <button
                   onClick={() => handleForgotPassword()}
-                  style={{ backgroundColor: "#6e7c85", color: "white" }}
+                  style={{
+                    backgroundColor: "#6e7c85",
+                    color: "white",
+                    opacity: email === "" ? ".5" : "1",
+                  }}
+                  disabled={email === "" ? true : false}
                 >
                   Forgot Password
                 </button>
@@ -181,7 +196,7 @@ function LoginSignup() {
               type="text"
               id="VCode"
               name="VCode"
-              onChange={(event) => setVCode(event.target.value)}
+              onChange={(event) => setVCodeInput(event.target.value)}
             />{" "}
             <br />
             <label htmlFor="password">New Password:</label>
@@ -190,6 +205,14 @@ function LoginSignup() {
               id="password"
               name="password"
               onChange={(event) => setPassword(event.target.value)}
+            />{" "}
+            <br />
+            <label htmlFor="repeatPassword">Repeat Password:</label>
+            <input
+              type="password"
+              id="repeatPassword"
+              name="repeatPassword"
+              onChange={(event) => setRepeatPassword(event.target.value)}
             />{" "}
             <br />
             <button onClick={changePassword}>Change Password</button>

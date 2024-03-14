@@ -304,10 +304,7 @@ def forgot_password():
     VCode = random.randint(100000, 999999)
     server = None
     try:
-        token = s.dumps(email, salt="forgot-password")
-        link = url_for('reset_password', token=token, _external=True)
-
-        msg_body = 'Click the following link to reset your password: {} | Verification Code: {}'.format(link, VCode)
+        msg_body = ': Input verification code when updating your password. | Verification Code: {}'.format( VCode)
 
         msg = MIMEText(msg_body)
         msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'
@@ -326,9 +323,10 @@ def forgot_password():
             server.quit()
         return jsonify({'message': 'An email has been sent to reset your password', 'VCode': VCode}), 200
 
-@app.route('/change_password/', methods=['POST'])
-def reset_password():
+@app.route('/changepassword', methods=['POST'])
+def changepassword():
     data = request.get_json()
+    print(data)
     email = data.get('email')
     new_password = data.get('password')
     salt = bcrypt.gensalt(rounds=12)
@@ -336,8 +334,9 @@ def reset_password():
     
     try:
         query = """UPDATE LOGIN_INFORMATION
-                    SET Password = '{}'
+                    SET Password = {}
                     WHERE Email =  '{}'""".format(hashed_password, email)
+        print (query)
         DatabaseConnection().update_query(query)
     except Exception as e:
         print("An error has occurred: {e}")
@@ -346,6 +345,7 @@ def reset_password():
 
 # Notifies all faculty whenever there is a new application 
 def notify_faculty(application_type):
+
     try:
         # Fetch faculty emails from the database
         query = "SELECT Email FROM FACULTY WHERE Role = 'Admin Assistant' OR Role = 'Clinic Director'"
