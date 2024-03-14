@@ -65,6 +65,8 @@ function StudentInfoView(studentID: props) {
   };
 
   const date = gradDateUnformatted ? new Date(gradDateUnformatted) : null;
+  const gradDateFormatted = date ? date.toISOString().split("T")[0] : "";
+
   const gradDate = date
     ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
         .getUTCDate()
@@ -79,7 +81,7 @@ function StudentInfoView(studentID: props) {
 
   const handleInActivate = async () => {
     const confirmInActivate = window.confirm(
-      "Are you sure you want to mark this project as done?"
+      "Are you sure you want deactivate this student?"
     );
     if (confirmInActivate) {
       setSubmitting(true);
@@ -98,7 +100,7 @@ function StudentInfoView(studentID: props) {
 
   const handleEdit = async () => {
     // Send the updated info to the backend
-    setSubmitting(true);
+    // setSubmitting(true);
     await fetch("http://localhost:5000/student/updateInfo", {
       method: "POST",
       headers: {
@@ -106,22 +108,27 @@ function StudentInfoView(studentID: props) {
         token: user.token ? user.token : "",
       },
       body: JSON.stringify({
-        // projectID,
-        // status,
-        // description,
-        // enteredDate: formattedDateString,
-        // projectLeaderEmail,
-        // assigned_students,
+        studentID,
+        studentFName,
+        studentLName,
+        major,
+        email,
+        phone,
+        projectIntrest,
+        gradDate: gradDateFormatted,
+        year,
+        college,
+        coursesTaken: selectedCourses,
       }),
     });
-    setSubmitted(true);
-    // Exit edit mode
-    setSubmitting(false);
-    setIsEditing(false);
+    // setSubmitted(true);
+    // // Exit edit mode
+    // setSubmitting(false);
+    // setIsEditing(false);
   };
 
   const getStudentInfo = async () => {
-    const response = await fetch("http://localhost:5000/studentInfo", {
+    const response = await fetch("http://localhost:5000/student/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -305,7 +312,7 @@ function StudentInfoView(studentID: props) {
                 Grad Date:
                 <input
                   type="date"
-                  value={gradDate ?? ""}
+                  value={gradDateFormatted ?? ""}
                   onChange={(e) => setGradDateUnformatted(e.target.value)}
                 />
               </h1>
@@ -484,10 +491,20 @@ function StudentInfoView(studentID: props) {
             </button>
           </div>
         )}
-        {isEditing && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', margin: "0 200px" }}>
-          <button onClick={handleCancel} style={{ backgroundColor: "#FCE205" }}>Cancel</button>
-          <button onClick={handleEdit} style={{ backgroundColor: "#03C04A" }}>Submit</button>          
+      {isEditing && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0 200px",
+          }}
+        >
+          <button onClick={handleCancel} style={{ backgroundColor: "#FCE205" }}>
+            Cancel
+          </button>
+          <button onClick={handleEdit} style={{ backgroundColor: "#03C04A" }}>
+            Submit
+          </button>
         </div>
       )}
     </div>

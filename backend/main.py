@@ -132,26 +132,6 @@ def updateProject():
     respone = update.update_Project(data, DatabaseConnection())
     return respone, 200
 
-@app.route('/student/info', methods =['POST'])
-def student_info_get():
-    data = request.get_json()
-    dbconnect = DatabaseConnection()
-    print(data)
-    payload = 0
-    infoInstance = infoGetter()
-    payload = Students.inactivate_student(dbconnect, data['studentID'])
-    return jsonify(payload), 200
-
-@app.route('/student/inactivate', methods =['POST'])
-def student_inactivate():
-    data = request.get_json()
-    dbconnect = DatabaseConnection()
-    print(data)
-    payload = 0
-    infoInstance = infoGetter()
-    payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
-    return jsonify(payload), 200
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -221,6 +201,34 @@ def get_projects():
         payload = projectInstance.get_student_projects(data['userID'], db_Connection)
     else:
         payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    return jsonify(payload), 200
+
+@app.route('/student/info', methods =['POST'])
+def student_info_get():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getstudentinfo(data['studentID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/student/inactivate', methods =['POST'])
+def student_inactivate():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    payload = Students().inactivate_student(dbconnect, data['studentID']['studentID'])
+    return jsonify(payload), 200
+
+@app.route('/student/update', methods =['POST'])
+def student_update():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    payload = Students().inactivate_student(dbconnect, data)
     return jsonify(payload), 200
 
 @app.route('/student/reject', methods=['POST'])

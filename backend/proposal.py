@@ -7,7 +7,7 @@ class proposal:
         proj_type = DatabaseConnection().select_query(proj_type_query).at[0, 'Pro_Type']
         print(proj_type)
         
-        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader'".format(proj_type)
+        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader' AND Status = 'Active'".format(proj_type)
 
         leaders_data = DatabaseConnection().select_query(leaders_query)
         leaders = [
@@ -15,7 +15,7 @@ class proposal:
         ]
         print(leaders)
 
-        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader'"
+        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader' AND Status = 'Active'"
         students_data = DatabaseConnection().select_query(students_query)
         students = [
             {"Full_Name": row['Full_Name'], "Email": row['Email']} for index, row in students_data.iterrows()

@@ -3,7 +3,8 @@ class Students:
     def get_students(self, db_Connection):
         query = """
             SELECT *
-            FROM STUDENT;
+            FROM STUDENT
+            WHERE Status = "Active";
             """
         
         print(query)
@@ -19,13 +20,13 @@ class Students:
     def inactivate_student(self, db_Connection, student_id):
         query = """
             UPDATE STUDENT
-            SET Status = "inactive"
-            WHERE STUDENT_ID = {};
+            SET Status = "Inactive"
+            WHERE STUDENT_ID = "{}";
             """.format(student_id)
         
-        projectData = db_Connection.update_query(query)
-        if projectData.empty:
-            payload = {'message': 'Student not found', 'students': []}
-        else:
-            payload = {'message': 'Inactivated Student Successfully!'}
+        db_Connection.update_query(query)
+        payload = {'message': 'Inactivated Student Successfully!'}
         return payload
+    
+    def student_update(self, db_Connection, data):
+        return
