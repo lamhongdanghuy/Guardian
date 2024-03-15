@@ -13,10 +13,54 @@ function LoginSignup() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [success, setSuccess] = useState("");
   const [borderColor, setBorderColor] = useState("#6e7c85");
+  const [VCode, setVCode] = useState("");
+  const [VCodeInput, setVCodeInput] = useState("");
+  const [PassForm, setPassForm] = useState(false);
 
   const navigator = useNavigate();
+
+  const handleForgotPassword = () => {
+    setPassForm(true);
+    forgotpassword();
+  };
+
+  const forgotpassword = async () => {
+    const response = await fetch("http://localhost:5000/forgotpassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    const result = await response.json();
+    setVCode(result.VCode);
+    console.log(result);
+  };
+
+  const changePassword = async () => {
+    if (VCode == VCodeInput) {
+      if (password !== repeatPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      const response = await fetch("http://localhost:5000/changepassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const result = await response.json();
+      setSuccess(result.message);
+      setPassForm(false);
+      alert("Your password has been changed.");
+    } else {
+      alert("Verification Code is incorrect");
+    }
+  };
 
   const sendLogin = async () => {
     const response = await fetch(`${API_BASE_URL}/login`, {
@@ -65,74 +109,136 @@ function LoginSignup() {
   return (
     <>
       <Header />
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "35%",
-          margin: "auto",
-          border: "1px solid #6e7c85",
-          gap: ".5em",
-          padding: "2em",
-          borderRadius: "1em",
-          backdropFilter: "blur(15px)",
-        }}
-      >
-        {!isMobile ? (
-          <h1 style={{ fontSize: "30px" }}>
-            Please access the web application on a desktop.
-          </h1>
-        ) : (
-          <>
-            <h1>LOG IN</h1>
-            <label htmlFor="email">Email Address:</label>
+      {!PassForm ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "35%",
+            margin: "auto",
+            border: "1px solid #6e7c85",
+            gap: ".5em",
+            padding: "2em",
+            borderRadius: "1em",
+            backdropFilter: "blur(15px)",
+          }}
+        >
+          {!isMobile ? (
+            <h1 style={{ fontSize: "30px" }}>
+              Please access the web application on a desktop.
+            </h1>
+          ) : (
+            <>
+              <h1>LOG IN</h1>
+              <label htmlFor="email">Email Address:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                style={{
+                  borderColor: borderColor,
+                }}
+                onChange={(event) => setEmail(event.target.value)}
+              />{" "}
+              <br />
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                style={{
+                  borderColor: borderColor,
+                }}
+                onChange={(event) => setPassword(event.target.value)}
+              />{" "}
+              <br />
+              {success === "Login Failed" && (
+                <div>
+                  <h3
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Email or Password is incorrect
+                  </h3>
+                </div>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "1em",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  onClick={() => navigator("/apply")}
+                  style={{ backgroundColor: "#6e7c85", color: "white" }}
+                >
+                  Apply
+                </button>
+                <button onClick={sendLogin}>Log In</button>
+              </div>
+              <button
+                onClick={() => handleForgotPassword()}
+                style={{
+                  backgroundColor: "#6e7c85",
+                  color: "white",
+                  opacity: email === "" ? ".5" : "1",
+                }}
+                disabled={email === "" ? true : false}
+              >
+                Forgot Password
+              </button>
+            </>
+          )}
+        </div>
+      ) : (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "35%",
+              margin: "auto",
+              border: "1px solid #6e7c85",
+              gap: ".5em",
+              padding: "2em",
+              borderRadius: "1em",
+              backdropFilter: "blur(15px)",
+            }}
+          >
+            <h1>Change Password</h1>
+            <label htmlFor="VCode">Verification Code:</label>
             <input
               type="text"
-              id="email"
-              name="email"
-              style={{
-                borderColor: borderColor,
-              }}
-              onChange={(event) => setEmail(event.target.value)}
+              id="VCode"
+              name="VCode"
+              onChange={(event) => setVCodeInput(event.target.value)}
             />{" "}
             <br />
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">New Password:</label>
             <input
               type="password"
               id="password"
               name="password"
-              style={{
-                borderColor: borderColor,
-              }}
               onChange={(event) => setPassword(event.target.value)}
             />{" "}
             <br />
-            {success === "Login Failed" && (
-              <div>
-                <h3
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  Email or Password is incorrect
-                </h3>
-              </div>
-            )}
-            <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
-              <button
-                onClick={() => navigator("/apply")}
-                style={{ backgroundColor: "#6e7c85", color: "white" }}
-              >
-                Apply
-              </button>
-              <button onClick={sendLogin}>Log In</button>
-              <br />
-            </div>
-          </>
-        )}
-      </div>
+            <label htmlFor="repeatPassword">Repeat Password:</label>
+            <input
+              type="password"
+              id="repeatPassword"
+              name="repeatPassword"
+              onChange={(event) => setRepeatPassword(event.target.value)}
+            />{" "}
+            <br />
+            <button onClick={changePassword}>Change Password</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

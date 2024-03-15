@@ -1,4 +1,6 @@
 # Standard library imports
+import random
+import math
 import datetime
 import json
 import os
@@ -22,6 +24,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from Students import Students
 from ManageTable import ManageTable
 import smtplib
+import bcrypt
 from email.mime.text import MIMEText
 
 # Local application imports
@@ -55,8 +58,8 @@ print(apply().hash('Abc123123!'))
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
 smtp_port = 465
-sender_email = 'phuonghaodinh2002@gmail.com'
-password = 'snmz oioc xwoa nvhp'
+sender_email = 'depaulguardians@gmail.com'
+password = 'dcag dqwd azaf zzqx'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
@@ -333,8 +336,55 @@ def verify_email(email):
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
 
+@app.route('/forgotpassword', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('email')
+    VCode = random.randint(100000, 999999)
+    server = None
+    try:
+        msg_body = 'Input verification code when updating your password. | Verification Code: {}'.format( VCode)
+
+        msg = MIMEText(msg_body)
+        msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(sender_email, password) 
+        server.sendmail(sender_email, email, msg.as_string()) 
+        print('Email sent successfully!') 
+
+    except Exception as e:
+        print(f'An error has occurred: {e}')
+    finally:
+        if server:
+            server.quit()
+        return jsonify({'message': 'An email has been sent to reset your password', 'VCode': VCode}), 200
+
+@app.route('/changepassword', methods=['POST'])
+def changepassword():
+    data = request.get_json()
+    print(data)
+    email = data.get('email')
+    new_password = data.get('password')
+    salt = bcrypt.gensalt(rounds=12)
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
+    
+    try:
+        query = """UPDATE LOGIN_INFORMATION
+                    SET Password = "{}"
+                    WHERE Email =  "{}" """.format(str(hashed_password)[2:-1], email)
+        print (query)
+        DatabaseConnection().update_query(query)
+    except Exception as e:
+        print("An error has occurred: {e}")
+        return jsonify({'message' : 'An error has occurred'})
+    return jsonify({'message' : 'Password changed!'})
+
 # Notifies all faculty whenever there is a new application 
 def notify_faculty(application_type):
+
     try:
         # Fetch faculty emails from the database
         query = "SELECT Email FROM FACULTY WHERE Role = 'Admin Assistant' OR Role = 'Clinic Director'"
