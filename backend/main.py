@@ -343,7 +343,7 @@ def forgot_password():
     VCode = random.randint(100000, 999999)
     server = None
     try:
-        msg_body = ': Input verification code when updating your password. | Verification Code: {}'.format( VCode)
+        msg_body = 'Input verification code when updating your password. | Verification Code: {}'.format( VCode)
 
         msg = MIMEText(msg_body)
         msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'

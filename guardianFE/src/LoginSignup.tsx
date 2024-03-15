@@ -41,9 +41,11 @@ function LoginSignup() {
   };
 
   const changePassword = async () => {
-    console.log(VCode);
-    console.log(VCodeInput);
     if (VCode == VCodeInput) {
+      if (password !== repeatPassword) {
+        alert("Passwords do not match");
+        return;
+      }
       const response = await fetch("http://localhost:5000/changepassword", {
         method: "POST",
         headers: {
@@ -53,7 +55,8 @@ function LoginSignup() {
       });
       const result = await response.json();
       setSuccess(result.message);
-      setShowResults(true);
+      setPassForm(false);
+      alert("Your password has been changed.");
     } else {
       alert("Verification Code is incorrect");
     }
@@ -133,6 +136,9 @@ function LoginSignup() {
                 type="text"
                 id="email"
                 name="email"
+                style={{
+                  borderColor: borderColor,
+                }}
                 onChange={(event) => setEmail(event.target.value)}
               />{" "}
               <br />
@@ -141,11 +147,30 @@ function LoginSignup() {
                 type="password"
                 id="password"
                 name="password"
+                style={{
+                  borderColor: borderColor,
+                }}
                 onChange={(event) => setPassword(event.target.value)}
               />{" "}
               <br />
+              {success === "Login Failed" && (
+                <div>
+                  <h3
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Email or Password is incorrect
+                  </h3>
+                </div>
+              )}
               <div
-                style={{ display: "flex", flexDirection: "row", gap: "1em" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "1em",
+                  justifyContent: "center",
+                }}
               >
                 <button
                   onClick={() => navigator("/apply")}
@@ -154,25 +179,19 @@ function LoginSignup() {
                   Apply
                 </button>
                 <button onClick={sendLogin}>Log In</button>
-                <button
-                  onClick={() => handleForgotPassword()}
-                  style={{
-                    backgroundColor: "#6e7c85",
-                    color: "white",
-                    opacity: email === "" ? ".5" : "1",
-                  }}
-                  disabled={email === "" ? true : false}
-                >
-                  Forgot Password
-                </button>
-                <br />
               </div>
+              <button
+                onClick={() => handleForgotPassword()}
+                style={{
+                  backgroundColor: "#6e7c85",
+                  color: "white",
+                  opacity: email === "" ? ".5" : "1",
+                }}
+                disabled={email === "" ? true : false}
+              >
+                Forgot Password
+              </button>
             </>
-          )}
-          {showResults && (
-            <div>
-              <h1>{success}</h1>
-            </div>
           )}
         </div>
       ) : (
@@ -217,82 +236,9 @@ function LoginSignup() {
             />{" "}
             <br />
             <button onClick={changePassword}>Change Password</button>
-            {showResults && (
-              <div>
-                <h1>{success}</h1>
-              </div>
-            )}
           </div>
         </div>
       )}
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "35%",
-          margin: "auto",
-          border: "1px solid #6e7c85",
-          gap: ".5em",
-          padding: "2em",
-          borderRadius: "1em",
-          backdropFilter: "blur(15px)",
-        }}
-      >
-        {!isMobile ? (
-          <h1 style={{ fontSize: "30px" }}>
-            Please access the web application on a desktop.
-          </h1>
-        ) : (
-          <>
-            <h1>LOG IN</h1>
-            <label htmlFor="email">Email Address:</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              style={{
-                borderColor: borderColor,
-              }}
-              onChange={(event) => setEmail(event.target.value)}
-            />{" "}
-            <br />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              style={{
-                borderColor: borderColor,
-              }}
-              onChange={(event) => setPassword(event.target.value)}
-            />{" "}
-            <br />
-            {success === "Login Failed" && (
-              <div>
-                <h3
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  Email or Password is incorrect
-                </h3>
-              </div>
-            )}
-            <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
-              <button
-                onClick={() => navigator("/apply")}
-                style={{ backgroundColor: "#6e7c85", color: "white" }}
-              >
-                Apply
-              </button>
-              <button onClick={sendLogin}>Log In</button>
-              <br />
-            </div>
-          </>
-        )}
-      </div>
     </>
   );
 }
