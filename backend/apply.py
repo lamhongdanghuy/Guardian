@@ -15,6 +15,7 @@ class apply:
     engine = None
 
     def hash(self,password):
+        # Hashes passwords with a salt
         salt = bcrypt.gensalt(rounds=12)
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
@@ -28,7 +29,7 @@ class apply:
         
     def client_apply(self,data):
         print(data)
-        
+        # puts each piece od fata from received dictionary into a coressponding variable
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
@@ -49,10 +50,10 @@ class apply:
         comment = data.get('comment')
 
         hashedPass = self.hash(password)
-
+        # Creates Id for company and client
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
-        
+        # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Client']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
@@ -74,6 +75,7 @@ class apply:
         
     def student_apply(self, data):
         print(data)
+        # puts each piece od fata from received dictionary into a corresponding variable
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
@@ -93,6 +95,7 @@ class apply:
         gen = data.get('gen')
 
         hashedPass = self.hash(password)
+        # Creates Id for student
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         
         CSEC390 = 0
@@ -143,7 +146,7 @@ class apply:
             WICYS = 1
 
         print("got here")
-    
+        # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")

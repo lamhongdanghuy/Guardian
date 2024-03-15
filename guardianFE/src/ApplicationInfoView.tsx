@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from "./fetchApiURL";
 
 interface props {
   studentID: string;
@@ -22,7 +23,7 @@ function ApplicationInfoView(studentID: props) {
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch("http://localhost:5000/student/info", {
+    const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ function ApplicationInfoView(studentID: props) {
     setCoursesTaken(takenList.join(", "));
   };
   const approve = async () => {
-    const response = await fetch("http://localhost:5000/student/approve", {
+    const response = await fetch(`${API_BASE_URL}/student/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +72,7 @@ function ApplicationInfoView(studentID: props) {
   };
 
   const reject = async () => {
-    const response = await fetch("http://localhost:5000/student/reject", {
+    const response = await fetch(`${API_BASE_URL}/student/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

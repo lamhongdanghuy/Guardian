@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import ProposalCard from "./ProposalCard";
+import API_BASE_URL from "./fetchApiURL";
 
 interface proposalProposalViewProp {
   onClick: Function;
@@ -25,7 +26,7 @@ function ProposalsView(props: proposalProposalViewProp) {
   }, []);
 
   const getProposals = async () => {
-    const response = await fetch("http://localhost:5000/get/project/proposals", {
+    const response = await fetch(`${API_BASE_URL}/get/project/proposals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

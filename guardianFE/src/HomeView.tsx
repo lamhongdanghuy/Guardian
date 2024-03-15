@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import { jwtDecode } from "jwt-decode";
+import API_BASE_URL from './fetchApiURL';
 
 function HomeView() {
   const { user } = useContext(LoginContext);
@@ -8,7 +8,7 @@ function HomeView() {
 
   const sendVerify = async () => {
     const response = await fetch(
-      "http://localhost:5000/dashboard/resend-verification-link",
+      `${API_BASE_URL}/dashboard/resend-verification-link`,
       {
         method: "POST",
         headers: {

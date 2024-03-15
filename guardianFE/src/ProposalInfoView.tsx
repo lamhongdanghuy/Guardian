@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
+import API_BASE_URL from "./fetchApiURL";
 
 interface props {
   proposalID: string;
@@ -30,7 +31,11 @@ function ProposalInfoView(ProposalID: props) {
   const [message, setMessage] = useState("");
 
   const handleRemove = (studentToRemove: Member) => {
-    setAssignedStudents(assigned_students.filter(student => student.Email !== studentToRemove.Email));
+    setAssignedStudents(
+      assigned_students.filter(
+        (student) => student.Email !== studentToRemove.Email
+      )
+    );
   };
 
   const approve = async () => {
@@ -38,7 +43,7 @@ function ProposalInfoView(ProposalID: props) {
       alert("Please select a project leader before approving the proposal.");
     }
     setLoading(true);
-    const response = await fetch("http://localhost:5000/proposal/approve", {
+    const response = await fetch(`${API_BASE_URL}/proposal/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +60,7 @@ function ProposalInfoView(ProposalID: props) {
 
   const reject = async () => {
     setLoading(true);
-    const response = await fetch("http://localhost:5000/proposal/reject", {
+    const response = await fetch(`${API_BASE_URL}/proposal/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +81,7 @@ function ProposalInfoView(ProposalID: props) {
   };
 
   const getProposalInfo = async () => {
-    const response = await fetch("http://localhost:5000/proposal/info", {
+    const response = await fetch(`${API_BASE_URL}/proposal/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,8 +97,9 @@ function ProposalInfoView(ProposalID: props) {
     setDescription(result.project_info.Project_Description);
     setStatus(result.project_info.Project_Status);
     const targetDateObj = new Date(result.project_info.Target_Date);
-    const formattedTargetDate = `${targetDateObj.getMonth() + 1
-      }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    const formattedTargetDate = `${
+      targetDateObj.getMonth() + 1
+    }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
     setStudents(result.students);
@@ -273,7 +279,6 @@ function ProposalInfoView(ProposalID: props) {
                   name={student.Full_Name}
                   role="Student"
                   email={student.Email}
-
                 />
                 <button onClick={() => handleRemove(student)}>Remove</button>
               </>

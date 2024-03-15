@@ -1,6 +1,7 @@
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from './fetchApiURL';
 
 interface studentAppViewProp {
   onClick: Function;
@@ -27,7 +28,7 @@ function StudentsView(props: studentAppViewProp) {
   }, []);
 
   const getApplications = async () => {
-    const response = await fetch("http://localhost:5000/getStudents", {
+    const response = await fetch(`${API_BASE_URL}/getStudents`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from "./fetchApiURL";
 
 interface props {
   studentID: string;
@@ -128,7 +129,7 @@ function StudentInfoView(studentID: props) {
   };
 
   const getStudentInfo = async () => {
-    const response = await fetch("http://localhost:5000/student/info", {
+    const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
