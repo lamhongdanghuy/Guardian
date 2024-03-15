@@ -188,7 +188,7 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
-              Admin Panel
+              View Tables
             </div>
           )}
         </div>

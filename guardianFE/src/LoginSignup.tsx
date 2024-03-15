@@ -37,7 +37,6 @@ function LoginSignup() {
     });
     const result = await response.json();
     setVCode(result.VCode);
-    console.log(result);
   };
 
   const changePassword = async () => {

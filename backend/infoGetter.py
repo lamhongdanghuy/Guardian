@@ -96,6 +96,19 @@ class infoGetter:
         }
         return payload
     
+    def getFacultyInfo(self,id,db_connection):
+        id = id['facultyID']
+        queryF = """
+                SELECT *
+                FROM FACULTY
+                WHERE Faculty_ID = '{}';
+                """.format(id)
+        Faculty_info = db_connection.select_query(queryF).to_dict(orient='records')
+        payload = {
+            "faculty_info": Faculty_info
+        }
+        return payload
+    
     def add_student(self, studentID, projectID, db_Connection):
         print (studentID)
         print (projectID)

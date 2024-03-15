@@ -124,15 +124,15 @@ def doneProject():
     respone = reject.done_Project(project_ID, DatabaseConnection())
     return respone, 200
 
-@app.route('/proposalInfo', methods=['POST'])
-def proposalInfo():
-    # Gets the proposal id from the frontend and sends
-    # it to the get proposalinfo method before returning the project information to the frontend
-    data = request.get_json()
-    proposal_ID = data['ProposalID']
-    get_Info = proposal()
-    respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
-    return respone, 200
+# @app.route('/proposalInfo', methods=['POST'])
+# def proposalInfo():
+#     # Gets the proposal id from the frontend and sends
+#     # it to the get proposalinfo method before returning the project information to the frontend
+#     data = request.get_json()
+#     proposal_ID = data['ProposalID']
+#     get_Info = proposal()
+#     respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
+#     return respone, 200
 
 @app.route('/project/info', methods =['POST'])
 def project_info_get():
@@ -157,15 +157,15 @@ def updateProject():
     respone = update.update_Project(data, DatabaseConnection())
     return respone, 200
 
-@app.route('/studentInfo', methods =['POST'])
-def student_info_get():
-    # Gets the student id from the frontend and sends
-    # it to the get studentinfo method before returning the student's information to the frontend
-    data = request.get_json()
-    dbconnect = DatabaseConnection()
-    infoInstance = infoGetter()
-    payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
-    return jsonify(payload), 200
+# @app.route('/studentInfo', methods =['POST'])
+# def student_info_get():
+#     # Gets the student id from the frontend and sends
+#     # it to the get studentinfo method before returning the student's information to the frontend
+#     data = request.get_json()
+#     dbconnect = DatabaseConnection()
+#     infoInstance = infoGetter()
+#     payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
+#     return jsonify(payload), 200
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -249,6 +249,17 @@ def get_projects():
         payload = projectInstance.get_student_projects(data['userID'], db_Connection)
     else:
         payload = projectInstance.get_Projects(data['userID'], db_Connection)
+    return jsonify(payload), 200
+
+@app.route('/faculty/info', methods=['POST'])
+@Protector
+def get_faculty_info():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getFacultyInfo(data['facultyID'], dbconnect)
     return jsonify(payload), 200
 
 @app.route('/student/info', methods =['POST'])
@@ -430,7 +441,7 @@ def changepassword():
     except Exception as e:
         print("An error has occurred: {e}")
         return jsonify({'message' : 'An error has occurred'})
-    return jsonify({'message' : 'Password changed!'})
+    return jsonify({'message' : 'Your password has been changed!'})
 
 # Notifies all faculty whenever there is a new application 
 def notify_faculty(application_type):

@@ -14,8 +14,6 @@ function MyInformationView() {
     ""
   );
   const [year, setYear] = useState<string | null>("");
-  const [rtnData, setRtnData] = useState("");
-  const [showResults, setShowResults] = useState(false);
   const [college, setCollege] = useState<string | null>("");
   const date = gradDateUnformatted ? new Date(gradDateUnformatted) : null;
   const gradDate = date
@@ -24,21 +22,65 @@ function MyInformationView() {
         .toString()
         .padStart(2, "0")}/${date.getUTCFullYear()}`
     : "Not Approved";
+
   const { user } = useContext(LoginContext);
 
+  const [VCode, setVCode] = useState("");
+  const [VCodeInput, setVCodeInput] = useState("");
+  const [PassForm, setPassForm] = useState(false);
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+
+  const resetpassword = async () => {
+    const response = await fetch("http://localhost:5000/forgotpassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    const result = await response.json();
+    setVCode(result.VCode);
+    setPassForm(true);
+  };
+
   const changePassword = async () => {
-    const response = await fetch("http://localhost:5000/changePassword", {
+    if (VCode == VCodeInput) {
+      if (password !== repeatPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      const response = await fetch("http://localhost:5000/changepassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const result = await response.json();
+      setPassForm(false);
+      alert(result.message);
+    } else {
+      alert("Verification Code is incorrect");
+    }
+  };
+
+  const getFacultyInfo = async () => {
+    const response = await fetch("http://localhost:5000/faculty/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ studentID: user.id }),
+      body: JSON.stringify({ facultyID: { facultyID: user.id } }),
     });
-    const responseData = await response.json();
-    console.log(responseData);
-    setRtnData(responseData.message);
-    setShowResults(true);
+    const result = await response.json();
+    setname(
+      result.faculty_info[0].F_Name + " " + result.faculty_info[0].L_Name
+    );
+    setEmail(result.faculty_info[0].Email);
+    setPhone(result.faculty_info[0].P_Number);
+    setLoading(false);
   };
 
   const getClientInfo = async () => {
@@ -101,8 +143,13 @@ function MyInformationView() {
       user.role.toUpperCase() === "STUDENT" ||
       user.role.toUpperCase() === "STUDENT_LEADER"
     ) {
-      console.log("getting student info");
       getStudentInfo();
+    } else if (
+      user.role.toUpperCase() === "ADMIN ASSISTANT" ||
+      user.role.toUpperCase() === "CLINIC DIRECTOR" ||
+      user.role.toUpperCase() === "BOARD DIRECTOR"
+    ) {
+      getFacultyInfo();
     }
   }, []);
 
@@ -110,7 +157,7 @@ function MyInformationView() {
     <div>
       {loading ? (
         <h1>Loading...</h1>
-      ) : !showResults ? (
+      ) : !PassForm ? (
         <div className="projectInfoView">
           <div className="topInfo">
             <h1
@@ -134,6 +181,16 @@ function MyInformationView() {
               </h1>
             )}
           </div>
+          <h1
+            style={{
+              fontSize: "32px",
+              marginRight: "auto",
+              marginLeft: "0vw",
+              color: "#6e7c85",
+            }}
+          >
+            {user.role}
+          </h1>
           <div className="topInfo">
             <h1
               style={{
@@ -178,13 +235,6 @@ function MyInformationView() {
               </h1>
             )}
           </div>
-          {/* <div className="middleInfo">
-        <h1
-          style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Description:
-        </h1>
-      </div> */}
           {user.role.toUpperCase() === "STUDENT" && (
             <h1
               style={{
@@ -220,23 +270,74 @@ function MyInformationView() {
               College: {college ? college : "Not Assigned"}
             </h1>
           )}
-          <button onClick={changePassword}>Change Password</button>
-          <h1
+          <button
             style={{
-              fontSize: "32px",
-              marginLeft: "0vw",
+              fontSize: "24px",
+              marginLeft: "auto",
               marginRight: "auto",
-              paddingBottom: "5vh",
-              color: "red",
+              marginBottom: "5vh",
             }}
+            onClick={resetpassword}
           >
-            Contact Admin Assitant or Clinic Director to change your
-            information.
-          </h1>
+            Change Password
+          </button>
+          {user.role != "Admin Assistant" && user.role != "Clinic Director" && (
+            <h1
+              style={{
+                fontSize: "32px",
+                marginLeft: "0vw",
+                marginRight: "auto",
+                paddingBottom: "5vh",
+                color: "red",
+              }}
+            >
+              Contact Admin Assitant or Clinic Director to change your
+              information.
+            </h1>
+          )}
         </div>
       ) : (
-        <div style={{ marginTop: "20vh" }}>
-          <h2>{rtnData}</h2>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "35%",
+            margin: "auto",
+            border: "1px solid #6e7c85",
+            gap: ".5em",
+            padding: "2em",
+            borderRadius: "1em",
+            backdropFilter: "blur(15px)",
+            marginTop: "20vh",
+          }}
+        >
+          <h1>Change Password</h1>
+          <label htmlFor="VCode">Verification Code:</label>
+          <input
+            type="text"
+            id="VCode"
+            name="VCode"
+            onChange={(event) => setVCodeInput(event.target.value)}
+          />{" "}
+          <br />
+          <label htmlFor="password">New Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />{" "}
+          <br />
+          <label htmlFor="repeatPassword">Repeat Password:</label>
+          <input
+            type="password"
+            id="repeatPassword"
+            name="repeatPassword"
+            onChange={(event) => setRepeatPassword(event.target.value)}
+          />{" "}
+          <br />
+          <button onClick={changePassword}>Change Password</button>
         </div>
       )}
     </div>
