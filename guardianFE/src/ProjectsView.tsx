@@ -1,6 +1,7 @@
 import ProjectCard from "./ProjectCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from './fetchApiURL';
 
 interface projectViewProp {
   onClick: Function;
@@ -25,7 +26,7 @@ function ProjectsView(props: projectViewProp) {
   }, []);
 
   const getProjects = async () => {
-    const response = await fetch("http://localhost:5000/getProjects", {
+    const response = await fetch(`${API_BASE_URL}/getProjects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

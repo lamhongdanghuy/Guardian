@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE_URL from './fetchApiURL';
 
 function ClientApplyForm() {
   const [fName, setfName] = useState("");
@@ -89,7 +90,7 @@ function ClientApplyForm() {
       return;
     }
     let revenueDecimal = parseFloat(revenue);
-    const response = await fetch("http://localhost:5000/apply/client", {
+    const response = await fetch(`${API_BASE_URL}/apply/client`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

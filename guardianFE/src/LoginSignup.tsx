@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import { jwtDecode } from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
+import API_BASE_URL from "./fetchApiURL";
 
 function LoginSignup() {
   const isMobile = useMediaQuery({ query: "(min-aspect-ratio:5/4)" });
@@ -14,7 +15,7 @@ function LoginSignup() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [success, setSuccess] = useState("");
-  const [showResults, setShowResults] = useState(false);
+  const [borderColor, setBorderColor] = useState("#6e7c85");
   const [VCode, setVCode] = useState("");
   const [VCodeInput, setVCodeInput] = useState("");
   const [PassForm, setPassForm] = useState(false);
@@ -59,7 +60,7 @@ function LoginSignup() {
   };
 
   const sendLogin = async () => {
-    const response = await fetch("http://localhost:5000/login", {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,8 +99,8 @@ function LoginSignup() {
       navigator("/dashboard");
     } else {
       setSuccess("Login Failed");
+      setBorderColor("red");
     }
-    setShowResults(true);
   };
 
   return (
@@ -224,6 +225,74 @@ function LoginSignup() {
           </div>
         </div>
       )}
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "35%",
+          margin: "auto",
+          border: "1px solid #6e7c85",
+          gap: ".5em",
+          padding: "2em",
+          borderRadius: "1em",
+          backdropFilter: "blur(15px)",
+        }}
+      >
+        {!isMobile ? (
+          <h1 style={{ fontSize: "30px" }}>
+            Please access the web application on a desktop.
+          </h1>
+        ) : (
+          <>
+            <h1>LOG IN</h1>
+            <label htmlFor="email">Email Address:</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              style={{
+                borderColor: borderColor,
+              }}
+              onChange={(event) => setEmail(event.target.value)}
+            />{" "}
+            <br />
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              style={{
+                borderColor: borderColor,
+              }}
+              onChange={(event) => setPassword(event.target.value)}
+            />{" "}
+            <br />
+            {success === "Login Failed" && (
+              <div>
+                <h3
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  Email or Password is incorrect
+                </h3>
+              </div>
+            )}
+            <div style={{ display: "flex", flexDirection: "row", gap: "1em" }}>
+              <button
+                onClick={() => navigator("/apply")}
+                style={{ backgroundColor: "#6e7c85", color: "white" }}
+              >
+                Apply
+              </button>
+              <button onClick={sendLogin}>Log In</button>
+              <br />
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }

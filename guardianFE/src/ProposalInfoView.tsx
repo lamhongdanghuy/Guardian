@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
+import API_BASE_URL from './fetchApiURL';
 
 interface props {
   proposalID: string;
@@ -38,7 +39,7 @@ function ProposalInfoView(ProposalID: props) {
       alert("Please select a project leader before approving the proposal.");
     }
     setLoading(true);
-    const response = await fetch("http://localhost:5000/approveProposal", {
+    const response = await fetch(`${API_BASE_URL}/approveProposal`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ function ProposalInfoView(ProposalID: props) {
 
   const reject = async () => {
     setLoading(true);
-    const response = await fetch("http://localhost:5000/rejectProposal", {
+    const response = await fetch(`${API_BASE_URL}/rejectProposal`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +77,7 @@ function ProposalInfoView(ProposalID: props) {
   };
 
   const getProposalInfo = async () => {
-    const response = await fetch("http://localhost:5000/proposalInfo", {
+    const response = await fetch(`${API_BASE_URL}/proposalInfo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
