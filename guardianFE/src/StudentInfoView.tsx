@@ -192,16 +192,26 @@ function StudentInfoView(studentID: props) {
               <div className="topInfo">
                 <h1
                   style={{
-                    fontSize: "48px",
+                    fontSize: "40px",
                     marginRight: "auto",
                     marginLeft: "0vw",
+                    display: "flex",
                   }}
                 >
-                  First Name:
+                  First Name:{" "}
                   <input
                     type="text"
                     value={studentFName ?? ""}
                     onChange={(e) => setStudentFName(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                      width: "40%",
+                    }}
                   />
                 </h1>
                 <h1
@@ -209,36 +219,55 @@ function StudentInfoView(studentID: props) {
                     fontSize: "48px",
                     marginRight: "auto",
                     marginLeft: "0vw",
+                    display: "flex",
                   }}
                 >
-                  Last Name:
+                  Last Name: {""}
                   <input
                     type="text"
                     value={studentLName ?? ""}
                     onChange={(e) => setStudentLName(e.target.value)}
-                  />
-                </h1>
-                <h1
-                  style={{
-                    fontSize: "32px",
-                    marginLeft: "auto",
-                    marginRight: "1vw",
-                  }}
-                >
-                  Major:
-                  <input
-                    type="text"
-                    value={major ?? ""}
-                    onChange={(e) => setMajor(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                      width: "40%",
+                    }}
                   />
                 </h1>
               </div>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0",
+                  display: "flex",
+                }}
+              >
+                Major:
+                <input
+                  type="text"
+                  value={major ?? ""}
+                  onChange={(e) => setMajor(e.target.value)}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
+                />
+              </h1>
               <div className="topInfo">
                 <h1
                   style={{
                     fontSize: "32px",
                     marginRight: "auto",
                     marginLeft: "0vw",
+                    display: "flex",
                   }}
                 >
                   Email:
@@ -246,6 +275,14 @@ function StudentInfoView(studentID: props) {
                     type="email"
                     value={email ?? ""}
                     onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
                   />
                 </h1>
                 <h1
@@ -253,6 +290,7 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginLeft: "auto",
                     marginRight: "1vw",
+                    display: "flex",
                   }}
                 >
                   Phone:
@@ -261,6 +299,14 @@ function StudentInfoView(studentID: props) {
                     value={phone ?? ""}
                     onChange={(e) => setPhone(parseInt(e.target.value))}
                     pattern="[0-9]{10}"
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
                   />
                 </h1>
               </div>
@@ -270,12 +316,21 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginRight: "auto",
                     marginLeft: "0vw",
+                    display: "flex",
                   }}
                 >
                   Year:
                   <select
                     value={year ?? ""}
                     onChange={(e) => setYear(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
                   >
                     <option value="Freshmen">Freshmen</option>
                     <option value="Junior">Junior</option>
@@ -289,12 +344,21 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginLeft: "auto",
                     marginRight: "1vw",
+                    display: "flex",
                   }}
                 >
                   Project Intrest:{" "}
                   <select
                     value={projectIntrest ?? ""}
                     onChange={(e) => setProjectIntrest(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
                   >
                     <option value="General Risk Assessment">
                       General Risk Assessment
@@ -311,6 +375,7 @@ function StudentInfoView(studentID: props) {
                   marginLeft: "0vw",
                   marginRight: "auto",
                   paddingBottom: "5vh",
+                  display: "flex",
                 }}
               >
                 Grad Date:
@@ -318,6 +383,14 @@ function StudentInfoView(studentID: props) {
                   type="date"
                   value={gradDateFormatted ?? ""}
                   onChange={(e) => setGradDateUnformatted(e.target.value)}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
                 />
               </h1>
               <h1
@@ -325,11 +398,19 @@ function StudentInfoView(studentID: props) {
                   fontSize: "32px",
                   marginLeft: "0vw",
                   marginRight: "auto",
-                  paddingBottom: "5vh",
+                  display: "flex",
                 }}
               >
                 Courses Taken:{" "}
-                <select onChange={handleSelectChange}>
+                <select
+                  onChange={handleSelectChange}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    fontSize: "24px",
+                  }}
+                >
                   <option>Select a course</option>
                   {availableCourses.map((course) => (
                     <option key={course} value={course}>
@@ -337,28 +418,41 @@ function StudentInfoView(studentID: props) {
                     </option>
                   ))}
                 </select>
-                <ul>
-                  {selectedCourses.map((course) => (
-                    <li key={course}>
-                      {course}
-                      <button onClick={() => handleRemoveClick(course)}>
-                        Remove
-                      </button>
-                    </li>
-                  ))}
-                </ul>
               </h1>
+              <ul style={{ marginRight: "auto", fontSize: "28px" }}>
+                {selectedCourses.map((course) => (
+                  <li key={course}>
+                    {course}{" "}
+                    <button
+                      onClick={() => handleRemoveClick(course)}
+                      style={{ fontSize: "18px" }}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                ))}
+              </ul>
               <h1
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
                   marginRight: "auto",
+                  display: "flex",
+                  marginBottom: "2vh",
                 }}
               >
                 College:
                 <select
                   value={college ?? ""}
                   onChange={(e) => setCollege(e.target.value)}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
                 >
                   <option value="SoC">School of Computing</option>
                   <option value="DCOB">Driehaus College of Business</option>
@@ -374,27 +468,21 @@ function StudentInfoView(studentID: props) {
                     fontSize: "48px",
                     marginRight: "auto",
                     marginLeft: "0vw",
+                    textAlign: "left",
                   }}
                 >
-                  First Name: {studentFName}
-                </h1>
-                <h1
-                  style={{
-                    fontSize: "48px",
-                    marginRight: "auto",
-                    marginLeft: "0vw",
-                  }}
-                >
-                  Last Name: {studentLName}
+                  Name:{" "}
+                  <span style={{ color: "#33689c" }}>
+                    {studentFName} {studentLName}
+                  </span>
                 </h1>
                 <h1
                   style={{
                     fontSize: "32px",
-                    marginLeft: "auto",
-                    marginRight: "1vw",
+                    marginRight: "0vw",
                   }}
                 >
-                  Major: {major}
+                  Major: <span style={{ color: "#33689c" }}>{major}</span>
                 </h1>
               </div>
               <div className="topInfo">
@@ -405,7 +493,8 @@ function StudentInfoView(studentID: props) {
                     marginLeft: "0vw",
                   }}
                 >
-                  Email: {email}
+                  Email: {""}
+                  <span style={{ color: "#33689c" }}>{email}</span>
                 </h1>
                 <h1
                   style={{
@@ -414,7 +503,8 @@ function StudentInfoView(studentID: props) {
                     marginRight: "1vw",
                   }}
                 >
-                  Phone: {phone}
+                  Phone: {""}
+                  <span style={{ color: "#33689c" }}>{phone}</span>
                 </h1>
               </div>
               <div className="topInfo">
@@ -425,16 +515,20 @@ function StudentInfoView(studentID: props) {
                     marginLeft: "0vw",
                   }}
                 >
-                  Year: {year}
+                  Year: {""}
+                  <span style={{ color: "#33689c" }}>{year}</span>
                 </h1>
                 <h1
                   style={{
                     fontSize: "32px",
                     marginLeft: "auto",
                     marginRight: "1vw",
+                    textAlign: "right",
+                    maxWidth: "50%",
                   }}
                 >
-                  Project Intrest: {projectIntrest}
+                  Project Interest: {""}
+                  <span style={{ color: "#33689c" }}>{projectIntrest}</span>
                 </h1>
               </div>
               <h1
@@ -445,7 +539,10 @@ function StudentInfoView(studentID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Grad Date: {gradDate ? gradDate : "Not Approved"}
+                Grad Date: {""}
+                <span style={{ color: "#33689c" }}>
+                  {gradDate ? gradDate : "Not Approved"}
+                </span>
               </h1>
               <h1
                 style={{
@@ -456,7 +553,9 @@ function StudentInfoView(studentID: props) {
                 }}
               >
                 Courses Taken:{" "}
-                {coursesTaken ? coursesTaken : "No Courses Taken"}
+                <span style={{ color: "#33689c" }}>
+                  {coursesTaken ? coursesTaken : "No Courses Taken"}
+                </span>
               </h1>
               <h1
                 style={{
@@ -465,8 +564,12 @@ function StudentInfoView(studentID: props) {
                   marginRight: "auto",
                 }}
               >
-                College: {college ? college : "Not Assigned"}
+                College: {""}
+                <span style={{ color: "#33689c" }}>
+                  {college ? college : "Not Assigned"}
+                </span>
               </h1>
+              <br />
             </>
           )}
         </div>
