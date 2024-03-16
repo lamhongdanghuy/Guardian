@@ -136,7 +136,8 @@ function ProposalInfoView(ProposalID: props) {
                 marginLeft: "0vw",
               }}
             >
-              Company Name: {companyName}
+              Company Name:{" "}
+              <span style={{ color: "#33689c" }}>{companyName}</span>
             </h1>
             <h1
               style={{
@@ -145,7 +146,7 @@ function ProposalInfoView(ProposalID: props) {
                 marginRight: "1vw",
               }}
             >
-              Type: {type}
+              Type: <span style={{ color: "#33689c" }}>{type}</span>
             </h1>
           </div>
           <h1
@@ -156,7 +157,8 @@ function ProposalInfoView(ProposalID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Status: {status}
+            Status: {""}
+            <span style={{ color: "#33689c" }}>{status}</span>
           </h1>
           <div className="middleInfo">
             <h1
@@ -169,7 +171,14 @@ function ProposalInfoView(ProposalID: props) {
               Description:
             </h1>
           </div>
-          <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
+          <p
+            style={{
+              color: "#33689c",
+              fontSize: "18px",
+              textAlign: "left",
+              paddingBottom: "5vh",
+            }}
+          >
             {description}
           </p>
           <h1
@@ -180,7 +189,8 @@ function ProposalInfoView(ProposalID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Target Date: {targetDate}
+            Target Date: {""}
+            <span style={{ color: "#33689c" }}>{targetDate}</span>
           </h1>
           <div
             style={{
@@ -213,6 +223,7 @@ function ProposalInfoView(ProposalID: props) {
                   height: "32px",
                   borderRadius: "5px",
                   fontSize: "20px",
+                  border: "2px solid #33689c",
                 }}
               >
                 <option value="">Please Select A Leader</option>
@@ -255,6 +266,7 @@ function ProposalInfoView(ProposalID: props) {
                   height: "32px",
                   borderRadius: "5px",
                   fontSize: "20px",
+                  border: "2px solid #33689c",
                 }}
               >
                 <option value="">Add A Student</option>

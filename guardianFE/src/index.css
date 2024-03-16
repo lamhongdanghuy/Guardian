@@ -530,12 +530,20 @@
     gap: "7.5vh";
     margin: 2em;
     margin-bottom: "5vh";
+    padding-left: 1em;
+    padding-right: 1em;
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
+    backdrop-filter: opacity(50%);
     border-radius: 10px;
     border: 1px solid #657987;
+  }
+
+  .projectInfoView h1 {
+    font-size: 48px;
+    font-weight: 550;
   }
   .topInfo {
     align-items: center;
@@ -1129,7 +1137,7 @@
     margin-top: 3em;
     max-height: 70vh;
     overflow-y: scroll;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px), brightness(50%);
     border-radius: 10px;
     border: 1px solid #657987;
   }
