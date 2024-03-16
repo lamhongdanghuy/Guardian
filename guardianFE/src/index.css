@@ -54,6 +54,65 @@
     right: 1em;
   }
 
+  .facultyCardContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 85%;
+  }
+
+  .facultyCard {
+    align-items: center;
+    background-color: #f0f4f9;
+    border: 1px solid #6e7c85;
+    gap: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    width: 46%;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1em;
+    overflow: hidden;
+  }
+
+  .facultyCard img {
+    border-radius: 10px;
+    scale: 0.9;
+    width: 35%;
+  }
+
+  .facultyCardInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    flex: 1;
+    gap: 1em;
+    width: 60%;
+  }
+
+  .facultyCardInfo h1 {
+    font-size: 1.75em;
+    font-weight: 750;
+    margin: 0;
+    text-align: left;
+  }
+
+  .facultyCardInfo h2 {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: left;
+    color: #6e7c85;
+  }
+
+  .facultyCardInfo h3 {
+    font-size: 1em;
+    text-align: left;
+    margin: 0;
+    color: #33689c;
+  }
+
   .sidebar {
     background-color: #f6f7f8;
     display: flex;

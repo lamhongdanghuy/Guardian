@@ -1,3 +1,6 @@
+//Project Info Tab in Dashboard
+//Contributor: Albert Luna, Hong Lam
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";

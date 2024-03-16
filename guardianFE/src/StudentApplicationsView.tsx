@@ -1,3 +1,6 @@
+// Student Applications Tab in Dashboard
+// Contributor: Albert Luna
+
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";

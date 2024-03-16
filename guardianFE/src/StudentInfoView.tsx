@@ -1,3 +1,6 @@
+// Student Information View when clicking on a student in Dashboard
+// Contributors: Albert Luna, Hong Lam
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";

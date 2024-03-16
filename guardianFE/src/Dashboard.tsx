@@ -1,3 +1,6 @@
+//Dashboard Page
+//Contributors: Albert Luna, Joel Chamakala
+
 import { useState, useContext, useEffect } from "react";
 import HomeView from "./HomeView";
 import ProjectsView from "./ProjectsView";

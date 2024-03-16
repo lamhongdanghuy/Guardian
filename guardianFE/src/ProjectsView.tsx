@@ -1,3 +1,6 @@
+//Projects Cards View in Dashboard
+// Contributors: Albert Luna
+
 import ProjectCard from "./ProjectCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";

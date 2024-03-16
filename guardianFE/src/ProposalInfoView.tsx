@@ -1,3 +1,6 @@
+// Project Proposal Info View in Dashboard
+// Contributors: Albert Luna
+
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";

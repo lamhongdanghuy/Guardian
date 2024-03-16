@@ -1,3 +1,6 @@
+// Login Context Between Pages
+// Contributor: Albert Luna
+
 import { createContext, useState, ReactNode } from "react";
 
 interface LoginProviderProps {

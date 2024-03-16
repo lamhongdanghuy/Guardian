@@ -1,3 +1,6 @@
+//STudent Application Information Display Component
+//Contributor: Albert Luna
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";

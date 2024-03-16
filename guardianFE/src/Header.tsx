@@ -1,3 +1,6 @@
+//Header for the Home Pages
+//Contributor: Albert Luna
+
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";

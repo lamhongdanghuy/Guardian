@@ -1,3 +1,6 @@
+//My Information Tab
+//Contributor: Albert Luna, Hong Lam
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 

@@ -1,5 +1,8 @@
+// Client Apply Page
+// Contributors: Hong Lam
+
 import { useState } from "react";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 function ClientApplyForm() {
   const [fName, setfName] = useState("");

@@ -1,7 +1,10 @@
+//Students Tab in Dashboard
+//Contributor: Albert Luna
+
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 interface studentAppViewProp {
   onClick: Function;

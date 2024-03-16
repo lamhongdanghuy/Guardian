@@ -1,3 +1,6 @@
+// Landing Page
+// Contributors: Albert Luna, Joel Chamakala
+
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 

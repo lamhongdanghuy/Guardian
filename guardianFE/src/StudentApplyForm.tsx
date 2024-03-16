@@ -1,5 +1,8 @@
+//Student Apply Form
+// Contributors: Hong Lam
+
 import { useState } from "react";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 const allCourses = [
   "CSEC_390",

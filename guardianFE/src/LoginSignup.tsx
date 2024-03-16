@@ -1,3 +1,6 @@
+//Login Page
+//Contributors: Albert Luna, Joel Chamakala
+
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";

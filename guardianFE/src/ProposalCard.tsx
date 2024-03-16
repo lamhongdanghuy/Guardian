@@ -1,3 +1,6 @@
+//Card component for proposals on the proposals tab.
+//Contributor: Albert Luna
+
 interface ProposalCardProps {
   name: string;
   status: string;

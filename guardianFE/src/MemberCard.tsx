@@ -1,3 +1,6 @@
+// Member Card component for team members under a project
+// Contributor: Albert Luna
+
 interface MemberCardProps {
   name: string;
   role: string;
