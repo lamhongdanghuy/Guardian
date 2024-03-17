@@ -16,7 +16,7 @@ class proposal:
         ]
         print(leaders)
         # Gets the Name and email of the student leader for the given project id
-        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader' AND Status = 'Active'"
+        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader' AND Status = 'Active' AND Proj_Interest = '{}'".format(proj_type)
         students_data = DatabaseConnection().select_query(students_query)
         students = [
             {"Full_Name": row['Full_Name'], "Email": row['Email']} for index, row in students_data.iterrows()

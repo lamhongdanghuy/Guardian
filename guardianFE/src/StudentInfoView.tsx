@@ -577,7 +577,8 @@ function StudentInfoView(studentID: props) {
       {!loading &&
         !submitted &&
         !submitting &&
-        ((!isEditing && user.role === "Clinic Director") ||
+        !isEditing &&
+        (user.role === "Clinic Director" ||
           user.role === "Admin Assistant") && (
           <div
             style={{
