@@ -145,7 +145,6 @@ class apply:
         if 'WICYS' in course_taken:
             WICYS = 1
 
-        print("got here")
         # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')

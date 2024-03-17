@@ -104,8 +104,8 @@ function StudentInfoView(studentID: props) {
 
   const handleEdit = async () => {
     // Send the updated info to the backend
-    // setSubmitting(true);
-    await fetch("http://localhost:5000/student/updateInfo", {
+    setSubmitting(true);
+    await fetch("http://localhost:5000/student/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,10 +125,10 @@ function StudentInfoView(studentID: props) {
         coursesTaken: selectedCourses,
       }),
     });
-    // setSubmitted(true);
-    // // Exit edit mode
-    // setSubmitting(false);
-    // setIsEditing(false);
+    setSubmitted(true);
+    // Exit edit mode
+    setSubmitting(false);
+    setIsEditing(false);
   };
 
   const getStudentInfo = async () => {
@@ -575,6 +575,8 @@ function StudentInfoView(studentID: props) {
         </div>
       )}
       {!loading &&
+        !submitted &&
+        !submitting &&
         ((!isEditing && user.role === "Clinic Director") ||
           user.role === "Admin Assistant") && (
           <div
@@ -598,7 +600,7 @@ function StudentInfoView(studentID: props) {
             </button>
           </div>
         )}
-      {isEditing && (
+      {isEditing && !submitted && !submitting && (
         <div
           style={{
             display: "flex",

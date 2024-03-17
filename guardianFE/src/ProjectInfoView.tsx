@@ -1,10 +1,6 @@
-//Project Info Tab in Dashboard
-//Contributor: Albert Luna, Hong Lam
-
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
-import API_BASE_URL from "./fetchApiURL";
 
 interface Member {
   Email: string;
@@ -62,7 +58,7 @@ function ProjectInfoView(projectID: props) {
       : null;
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch(`${API_BASE_URL}/project/update`, {
+    await fetch("http://localhost:5000/project/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +101,7 @@ function ProjectInfoView(projectID: props) {
     );
     if (confirmDone) {
       setSubmitting(true);
-      await fetch(`${API_BASE_URL}/project/done`, {
+      await fetch("http://localhost:5000/project/done", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +120,7 @@ function ProjectInfoView(projectID: props) {
     );
     if (confirmReject) {
       setSubmitting(true);
-      await fetch(`${API_BASE_URL}/project/reject`, {
+      await fetch("http://localhost:5000/project/reject", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -145,7 +141,7 @@ function ProjectInfoView(projectID: props) {
   };
 
   const getProjectInfo = async () => {
-    const response = await fetch(`${API_BASE_URL}/project/info`, {
+    const response = await fetch("http://localhost:5000/project/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -197,10 +193,7 @@ function ProjectInfoView(projectID: props) {
                     marginLeft: "0vw",
                   }}
                 >
-                  Client:{" "}
-                  <span style={{ color: "#33689c" }}>
-                    {clientName ? clientName : "Default"}
-                  </span>
+                  Client: {clientName ? clientName : "Default"}
                 </h1>
                 <h1
                   style={{
@@ -209,13 +202,10 @@ function ProjectInfoView(projectID: props) {
                     marginRight: "1vw",
                   }}
                 >
-                  Type:{" "}
-                  <span style={{ color: "#33689c" }}>
-                    {type ? type : "Default"}
-                  </span>
+                  Type: {type ? type : "Default"}
                 </h1>
               </div>
-              <h1
+              <label
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
@@ -223,11 +213,8 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Status: {""}
-                <span style={{ color: "#33689c" }}>
-                  {status ? status : "Not Approved"}
-                </span>
-              </h1>
+                Status: {status ? status : "Not Approved"}
+              </label>
               <div className="middleInfo">
                 <h1
                   style={{
@@ -243,15 +230,9 @@ function ProjectInfoView(projectID: props) {
                 type="text"
                 value={description ?? ""}
                 onChange={(e) => setDescription(e.target.value)}
-                style={{
-                  textAlign: "left",
-                  paddingBottom: "5vh",
-                  borderRadius: "5px",
-                  border: "2px solid #33689c",
-                  margin: "2.5vh 0 2.5vh 0",
-                }}
+                style={{ textAlign: "left", paddingBottom: "5vh" }}
               />
-              <h1
+              <label
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
@@ -267,11 +248,9 @@ function ProjectInfoView(projectID: props) {
                   style={{
                     fontSize: "32px",
                     marginLeft: "1vw",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
                   }}
                 />
-              </h1>
+              </label>
               <h1
                 style={{
                   fontSize: "32px",
@@ -280,7 +259,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Project Leader:{" "}
+                Project Leader:
                 <select
                   id="leaders"
                   name="leaders"
@@ -297,10 +276,9 @@ function ProjectInfoView(projectID: props) {
                   }}
                   required
                   style={{
-                    height: "34px",
+                    height: "32px",
                     borderRadius: "5px",
                     fontSize: "20px",
-                    border: "2px solid #33689c",
                   }}
                 >
                   <option value="undefined">
@@ -362,7 +340,6 @@ function ProjectInfoView(projectID: props) {
                         height: "32px",
                         borderRadius: "5px",
                         fontSize: "20px",
-                        border: "2px solid #33689c",
                       }}
                     >
                       <option value="undefined">Add A Student</option>
@@ -416,20 +393,12 @@ function ProjectInfoView(projectID: props) {
               <div className="topInfo">
                 <h1
                   style={{
+                    fontSize: "48px",
                     marginRight: "auto",
                     marginLeft: "0vw",
-                    textAlign: "left",
                   }}
                 >
-                  Client:{" "}
-                  <span
-                    style={{
-                      color: "#33689c",
-                      textDecoration: "italic",
-                    }}
-                  >
-                    {clientName ? clientName : "Default"}
-                  </span>
+                  Client: {clientName ? clientName : "Default"}
                 </h1>
                 <h1
                   style={{
@@ -438,15 +407,7 @@ function ProjectInfoView(projectID: props) {
                     marginRight: "1vw",
                   }}
                 >
-                  Type:{" "}
-                  <span
-                    style={{
-                      color: "#33689c",
-                      textDecoration: "italic",
-                    }}
-                  >
-                    {type ? type : "Default"}
-                  </span>
+                  Type: {type ? type : "Default"}
                 </h1>
               </div>
               <h1
@@ -457,14 +418,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Status:{" "}
-                <span
-                  style={{
-                    color: "#33689c",
-                  }}
-                >
-                  {status ? status : "Not Approved"}
-                </span>
+                Status: {status ? status : "Not Approved"}
               </h1>
               <div className="middleInfo">
                 <h1
@@ -477,15 +431,7 @@ function ProjectInfoView(projectID: props) {
                   Description:
                 </h1>
               </div>
-              <p
-                style={{
-                  textAlign: "left",
-                  paddingBottom: "5vh",
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                  color: "#33689c",
-                }}
-              >
+              <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
                 {description
                   ? description
                   : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
@@ -498,14 +444,7 @@ function ProjectInfoView(projectID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Target Date:{" "}
-                <span
-                  style={{
-                    color: "#33689c",
-                  }}
-                >
-                  {formattedDate ? formattedDate : "Not Approved"}
-                </span>
+                Target Date: {formattedDate ? formattedDate : "Not Approved"}
               </h1>
               <h1
                 style={{
@@ -516,14 +455,8 @@ function ProjectInfoView(projectID: props) {
                 }}
               >
                 Project Leader:{" "}
-                <span
-                  style={{
-                    color: "#33689c",
-                  }}
-                >
-                  {projectLeaderName ? projectLeaderName : "Not Assigned"} (
-                  {projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
-                </span>
+                {projectLeaderName ? projectLeaderName : "Not Assigned"} (
+                {projectLeaderEmail ? projectLeaderEmail : "Not Assigned"})
               </h1>
               <div
                 style={{
@@ -611,6 +544,8 @@ function ProjectInfoView(projectID: props) {
         </div>
       )}
       {!loading &&
+        !submitted &&
+        !submitting &&
         ((!isEditing && user.role === "Clinic Director") ||
           user.role === "Admin Assistant") && (
           <div
@@ -637,7 +572,7 @@ function ProjectInfoView(projectID: props) {
             </button>
           </div>
         )}
-      {isEditing && (
+      {isEditing && !submitted && !submitting && (
         <div
           style={{
             display: "flex",
