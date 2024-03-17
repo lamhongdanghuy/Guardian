@@ -1,3 +1,6 @@
+//Login Page
+//Contributors: Albert Luna, Joel Chamakala
+
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +40,6 @@ function LoginSignup() {
     });
     const result = await response.json();
     setVCode(result.VCode);
-    console.log(result);
   };
 
   const changePassword = async () => {

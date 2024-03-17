@@ -1,6 +1,9 @@
+//STudent Application Information Display Component
+//Contributor: Albert Luna
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 interface props {
   studentID: string;
@@ -8,7 +11,6 @@ interface props {
 
 function ApplicationInfoView(studentID: props) {
   const [loading, setLoading] = useState<boolean>(true);
-
   const [studentName, setStudentName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
@@ -23,7 +25,7 @@ function ApplicationInfoView(studentID: props) {
   const { user } = useContext(LoginContext);
 
   const getStudentInfo = async () => {
-    const response = await fetch(`${API_BASE_URL}/studentInfo`, {
+    const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +43,15 @@ function ApplicationInfoView(studentID: props) {
     setEmail(result.student_info[0].Email);
     setPhone(result.student_info[0].P_Number);
     setProjectIntrest(result.student_info[0].Proj_Interest);
-    setGradDate(result.student_info[0].Grad_Date);
+    const unformattedDate = result.student_info[0].Grad_Date;
+    const date = new Date(unformattedDate);
+    setGradDate(date.toISOString().split("T")[0]);
+    // const gradDate = date
+    // ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
+    //     .getUTCDate()
+    //     .toString()
+    //     .padStart(2, "0")}/${date.getUTCFullYear()}`
+    // : "Not Approved";
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
@@ -58,7 +68,7 @@ function ApplicationInfoView(studentID: props) {
     setCoursesTaken(takenList.join(", "));
   };
   const approve = async () => {
-    const response = await fetch(`${API_BASE_URL}/approveStudent`, {
+    const response = await fetch(`${API_BASE_URL}/student/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +82,7 @@ function ApplicationInfoView(studentID: props) {
   };
 
   const reject = async () => {
-    const response = await fetch(`${API_BASE_URL}/rejectStudent`, {
+    const response = await fetch(`${API_BASE_URL}/student/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +119,8 @@ function ApplicationInfoView(studentID: props) {
                 marginLeft: "0vw",
               }}
             >
-              Student: {studentName}
+              Student: {""}
+              <span style={{ color: "#33689c" }}>{studentName}</span>
             </h1>
             <h1
               style={{
@@ -118,7 +129,8 @@ function ApplicationInfoView(studentID: props) {
                 marginRight: "1vw",
               }}
             >
-              Major: {major}
+              Major: {""}
+              <span style={{ color: "#33689c" }}>{major}</span>
             </h1>
           </div>
           <div className="topInfo">
@@ -129,7 +141,8 @@ function ApplicationInfoView(studentID: props) {
                 marginLeft: "0vw",
               }}
             >
-              Email: {email}
+              Email: {""}
+              <span style={{ color: "#33689c" }}>{email}</span>
             </h1>
             <h1
               style={{
@@ -138,7 +151,8 @@ function ApplicationInfoView(studentID: props) {
                 marginRight: "1vw",
               }}
             >
-              Phone: {phone}
+              Phone: {""}
+              <span style={{ color: "#33689c" }}>{phone}</span>
             </h1>
           </div>
           <div className="topInfo">
@@ -149,7 +163,8 @@ function ApplicationInfoView(studentID: props) {
                 marginLeft: "0vw",
               }}
             >
-              Year: {year}
+              Year: {""}
+              <span style={{ color: "#33689c" }}>{year}</span>
             </h1>
             <h1
               style={{
@@ -158,16 +173,10 @@ function ApplicationInfoView(studentID: props) {
                 marginRight: "1vw",
               }}
             >
-              Project Intrest: {projectIntrest}
+              Project Intrest: {""}
+              <span style={{ color: "#33689c" }}>{projectIntrest}</span>
             </h1>
           </div>
-          {/* <div className="middleInfo">
-        <h1
-          style={{ fontSize: "48px", marginRight: "auto", marginLeft: "0vw" }}
-        >
-          Description:
-        </h1>
-      </div> */}
           <h1
             style={{
               fontSize: "32px",
@@ -176,7 +185,10 @@ function ApplicationInfoView(studentID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Grad Date: {gradDate ? gradDate : "Not Approved"}
+            Grad Date: {""}
+            <span style={{ color: "#33689c" }}>
+              {gradDate ? gradDate : "Not Approved"}
+            </span>
           </h1>
           <h1
             style={{
@@ -186,12 +198,18 @@ function ApplicationInfoView(studentID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+            Courses Taken: {""}
+            <span style={{ color: "#33689c" }}>
+              {coursesTaken ? coursesTaken : "No Courses Taken"}
+            </span>
           </h1>
           <h1
             style={{ fontSize: "32px", marginLeft: "0vw", marginRight: "auto" }}
           >
-            College: {college ? college : "Not Assigned"}
+            College: {""}
+            <span style={{ color: "#33689c" }}>
+              {college ? college : "Not Assigned"}
+            </span>
           </h1>
           <div
             style={{

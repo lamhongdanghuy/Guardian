@@ -8,6 +8,7 @@ function AddFaculty() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
+  const [role, setRole] = useState("");
   const [showResults, setShowResults] = useState(false);
   
   const sendData = async () => {
@@ -46,6 +47,7 @@ function AddFaculty() {
         L_Name,
         Email,
         P_Number,
+        role,
       }),
     });
     setShowResults(true);
@@ -104,6 +106,16 @@ function AddFaculty() {
             name="P_Number"
             onChange={(e) => setP_Number(e.target.value)}
           />
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            name="role"
+            onChange={(e) => setRole(e.target.value)}
+            defaultValue="Admin Assistant"
+          >
+            <option value="Admin Assistant">Admin Assistant</option>
+            <option value="Clinic Director">Clinic Director</option>
+          </select>
           <button onClick={sendData}>Submit</button>
         </div>
       ) : (

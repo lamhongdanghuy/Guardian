@@ -1,6 +1,9 @@
+// Audit Individal Info Page
+// Contributors: Albert Luna, Joel Chamakala
+
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 function HomeView() {
   const { user } = useContext(LoginContext);

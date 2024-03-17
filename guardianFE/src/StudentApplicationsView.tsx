@@ -1,7 +1,10 @@
+// Student Applications Tab in Dashboard
+// Contributor: Albert Luna
+
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 interface studentAppViewProp {
   onClick: Function;
@@ -28,7 +31,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
   }, []);
 
   const getApplications = async () => {
-    const response = await fetch(`${API_BASE_URL}/getApplications`, {
+    const response = await fetch(`${API_BASE_URL}/get/student/applications`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

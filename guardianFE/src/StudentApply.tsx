@@ -1,3 +1,6 @@
+// Student Apply Page
+// Contributors: Albert Luna
+
 import StudentApplyForm from "./StudentApplyForm";
 import Header from "./Header";
 

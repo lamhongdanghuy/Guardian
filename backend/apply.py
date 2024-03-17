@@ -145,7 +145,6 @@ class apply:
         if 'WICYS' in course_taken:
             WICYS = 1
 
-        print("got here")
         # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
@@ -166,13 +165,14 @@ class apply:
             return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('P_Number')
+        role = data.get('role')
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
         vals_login = [email, hashedPass, 'Faculty']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        vals_faculty = [id, f_name, l_name, email, phone_number, 'Admin Assistant', 'In Review']
+        vals_faculty = [id, f_name, l_name, email, phone_number, role, 'Active']
         DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
         print("Faculty info inserted")
     

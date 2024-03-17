@@ -1,7 +1,10 @@
+//Project Proposals Cards View in Dashboard
+// Contributors: Albert Luna
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import ProposalCard from "./ProposalCard";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 interface proposalProposalViewProp {
   onClick: Function;
@@ -26,7 +29,7 @@ function ProposalsView(props: proposalProposalViewProp) {
   }, []);
 
   const getProposals = async () => {
-    const response = await fetch(`${API_BASE_URL}/getProposals`, {
+    const response = await fetch(`${API_BASE_URL}/get/project/proposals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

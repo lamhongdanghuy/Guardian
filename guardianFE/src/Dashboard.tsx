@@ -1,3 +1,6 @@
+//Dashboard Page
+//Contributors: Albert Luna, Joel Chamakala
+
 import { useState, useContext, useEffect } from "react";
 import HomeView from "./HomeView";
 import ProjectsView from "./ProjectsView";
@@ -11,6 +14,7 @@ import ProposalInfoView from "./ProposalInfoView";
 import AddFaculty from "./AddFaculty";
 import StudentsView from "./StudentsView";
 import StudentInfoView from "./StudentInfoView";
+import MyInformationView from "./MyInformationView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -120,6 +124,12 @@ function Dashboard() {
             onClick={() => setActiveContainer("Home")}
           >
             Home
+          </div>{" "}
+          <div
+            className="sidebarItem"
+            onClick={() => setActiveContainer("My Information")}
+          >
+            My Information
           </div>
           {(user.status === "Active" || devMode) && (
             <div
@@ -181,10 +191,11 @@ function Dashboard() {
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
             >
-              Admin Panel
+              View Tables
             </div>
           )}
         </div>
+
         {/* <Link to="/dashboard">Dashboard</Link>
         <Link to="/dashboard/clients">Clients</Link>
         <Link to="/dashboard/students">Students</Link>
@@ -200,6 +211,7 @@ function Dashboard() {
         }}
       >
         {(activeContainer === "Project Info View" ||
+          activeContainer === "Student Info View" ||
           activeContainer === "Proposal Info View" ||
           activeContainer === "Application View") && (
           <button
@@ -241,6 +253,8 @@ function Dashboard() {
           <StudentsView onClick={studentCardClicked} />
         ) : activeContainer === "Student Info View" ? (
           <StudentInfoView studentID={openStudentInfo} />
+        ) : activeContainer === "My Information" ? (
+          <MyInformationView></MyInformationView>
         ) : null}
       </div>
     </div>

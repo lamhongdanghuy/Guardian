@@ -1,7 +1,10 @@
+//Projects Cards View in Dashboard
+// Contributors: Albert Luna
+
 import ProjectCard from "./ProjectCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import API_BASE_URL from './fetchApiURL';
+import API_BASE_URL from "./fetchApiURL";
 
 interface projectViewProp {
   onClick: Function;
@@ -26,7 +29,7 @@ function ProjectsView(props: projectViewProp) {
   }, []);
 
   const getProjects = async () => {
-    const response = await fetch(`${API_BASE_URL}/getProjects`, {
+    const response = await fetch(`${API_BASE_URL}/get/projects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

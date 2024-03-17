@@ -1,3 +1,6 @@
+// Client Apply Page
+// Contributors: Albert Luna
+
 import Header from "./Header";
 import ClientApplyForm from "./ClientApplyForm";
 
