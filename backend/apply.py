@@ -158,6 +158,7 @@ class apply:
     
     def faculty_apply(self, data):
         print(data)
+        # puts each piece od fata from received dictionary into a corresponding variable
         f_name = data.get('F_Name')
         l_name = data.get('L_Name')
         email = data.get('Email')
@@ -170,6 +171,7 @@ class apply:
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
         vals_login = [email, hashedPass, 'Faculty']
+        # Each block inserts the information into the relevant table in the database
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
         vals_faculty = [id, f_name, l_name, email, phone_number, role, 'Active']

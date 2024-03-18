@@ -254,6 +254,8 @@ def get_projects():
 @app.route('/faculty/info', methods=['POST'])
 @Protector
 def get_faculty_info():
+    # Accepts a JSON object with a faculty ID and
+    # Sends it to the faculty info getter method and returns the received payload
     data = request.get_json()
     dbconnect = DatabaseConnection()
     print(data)
@@ -264,6 +266,8 @@ def get_faculty_info():
 
 @app.route('/student/info', methods =['POST'])
 def student_info_get():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the student info getter method and returns the received payload
     data = request.get_json()
     dbconnect = DatabaseConnection()
     print(data)
@@ -274,6 +278,8 @@ def student_info_get():
 
 @app.route('/client/info', methods =['POST'])
 def client_info_get():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
     data = request.get_json()
     dbconnect = DatabaseConnection()
     print(data)
@@ -284,6 +290,8 @@ def client_info_get():
 
 @app.route('/student/inactivate', methods =['POST'])
 def student_inactivate():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the inactivate_student method and returns the received payload
     data = request.get_json()
     dbconnect = DatabaseConnection()
     print(data)
@@ -293,6 +301,8 @@ def student_inactivate():
 
 @app.route('/student/update', methods =['POST'])
 def student_update():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the student_update method and returns the received payload
     data = request.get_json()
     dbconnect = DatabaseConnection()
     payload = 0
@@ -398,11 +408,13 @@ def verify_email(email):
 
 @app.route('/forgotpassword', methods=['POST'])
 def forgot_password():
+    # Gets a JSON object containing email and puts it into data
     data = request.get_json()
     email = data.get('email')
     VCode = random.randint(100000, 999999)
     server = None
     try:
+        # Sends a email to the received email containing a verification code to reset password
         msg_body = 'Input verification code when updating your password. | Verification Code: {}'.format( VCode)
 
         msg = MIMEText(msg_body)
@@ -424,14 +436,17 @@ def forgot_password():
 
 @app.route('/changepassword', methods=['POST'])
 def changepassword():
+    # Gets a JSON object containing email, and password and puts it into data
     data = request.get_json()
     print(data)
+    # Stores newly created password
     email = data.get('email')
     new_password = data.get('password')
     salt = bcrypt.gensalt(rounds=12)
     hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
     
     try:
+        # SQL query to change password
         query = """UPDATE LOGIN_INFORMATION
                     SET Password = "{}"
                     WHERE Email =  "{}" """.format(str(hashed_password)[2:-1], email)

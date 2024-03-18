@@ -1,6 +1,7 @@
 from flask import jsonify
 class Application:
     def get_student_applications(self, db_Connection):
+        # Query to get all students in review
         query = """
             SELECT *
             FROM STUDENT
@@ -8,7 +9,9 @@ class Application:
             """
         
         print(query)
+
         projectData = db_Connection.select_query(query)
+        # Gets a pandas dataframe of all students with the status in review
         if projectData.empty:
             payload = {'message': 'Application not found', 'students': []}
         else:
@@ -18,6 +21,7 @@ class Application:
         return payload
     
     def approveApplication(self, db_Connection, student_ID):
+        # Query to update specific student status
         query = """
             UPDATE STUDENT
             SET Status = "Active"
@@ -29,6 +33,7 @@ class Application:
 
     
     def rejectApplication(self, db_Connection, student_ID):
+        # Query to update specific student status
         query = """
             UPDATE STUDENT
             SET Status = "Inactive"
