@@ -7,7 +7,8 @@ import { LoginContext } from "./LoginContextProvider";
 function MyInformationView() {
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [name, setname] = useState<string | null>("");
+  const [fName, setFName] = useState<string | null>("");
+  const [lName, setLName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
@@ -78,9 +79,8 @@ function MyInformationView() {
       body: JSON.stringify({ facultyID: { facultyID: user.id } }),
     });
     const result = await response.json();
-    setname(
-      result.faculty_info[0].F_Name + " " + result.faculty_info[0].L_Name
-    );
+    setFName(result.faculty_info[0].F_Name);
+    setLName(result.faculty_info[0].L_Name);
     setEmail(result.faculty_info[0].Email);
     setPhone(result.faculty_info[0].P_Number);
     setLoading(false);
@@ -96,8 +96,8 @@ function MyInformationView() {
       body: JSON.stringify({ clientID: { clientID: user.id } }),
     });
     const result = await response.json();
-    console.log(result);
-    setname(result.client_info[0].F_Name + " " + result.client_info[0].L_Name);
+    setFName(result.client_info[0].F_Name);
+    setLName(result.client_info[0].L_Name);
     setEmail(result.client_info[0].Email);
     setPhone(result.client_info[0].P_Number);
     setLoading(false);
@@ -114,9 +114,8 @@ function MyInformationView() {
       body: JSON.stringify({ studentID: { studentID: user.id } }),
     });
     const result = await response.json();
-    setname(
-      result.student_info[0].F_Name + " " + result.student_info[0].L_Name
-    );
+    setFName(result.student_info[0].F_Name);
+    setLName(result.student_info[0].L_Name);
     setMajor(result.student_info[0].Major);
     setEmail(result.student_info[0].Email);
     setPhone(result.student_info[0].P_Number);
@@ -170,7 +169,16 @@ function MyInformationView() {
                 marginLeft: "0vw",
               }}
             >
-              Name: {name}
+              First Name: {fName}
+            </h1>
+            <h1
+              style={{
+                fontSize: "48px",
+                marginRight: "auto",
+                marginLeft: "0vw",
+              }}
+            >
+              Last Name: {lName}
             </h1>
             {user.role.toUpperCase() === "STUDENT" && (
               <h1
@@ -315,6 +323,7 @@ function MyInformationView() {
             marginTop: "20vh",
           }}
         >
+          <button onClick={() => setPassForm(false)}>Back</button>{" "}
           <h1>Change Password</h1>
           <label htmlFor="VCode">Verification Code:</label>
           <input
