@@ -38,7 +38,7 @@ class infoGetter:
             query = """
                 SELECT Email, Concat(F_Name, ' ', L_Name) AS Full_Name, Role
                 FROM STUDENT
-                WHERE Student_ID = '{}';
+                WHERE Student_ID = '{}' ;
                 """.format(row['Student_ID'])
             student_info = db_connection.select_query(query)
             project_studentInfo = pd.concat([project_studentInfo,student_info])
@@ -46,14 +46,14 @@ class infoGetter:
         queryRoster = """
                 SELECT Email, Concat(F_Name, ' ', L_Name) AS Full_Name, Student_ID
                 FROM STUDENT
-                WHERE STUDENT_ID NOT IN (SELECT Student_ID FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}');""".format(id)
+                WHERE STUDENT_ID NOT IN (SELECT Student_ID FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}') AND Status = 'Active';""".format(id)
         roster = db_connection.select_query(queryRoster)
         
         proj_type_query = "SELECT Pro_Type FROM PROJECT WHERE Proj_ID = '{}'".format(id)
         proj_type = db_connection.select_query(proj_type_query).at[0, 'Pro_Type']
         print(proj_type)
         
-        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email, Student_ID FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader'".format(proj_type)
+        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email, Student_ID FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader' AND Status = 'Active'".format(proj_type)
 
         leaders_data = db_connection.select_query(leaders_query)
         

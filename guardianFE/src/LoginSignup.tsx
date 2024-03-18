@@ -198,6 +198,7 @@ function LoginSignup() {
         </div>
       ) : (
         <div>
+          <button onClick={() => setPassForm(false)}>Back</button>{" "}
           <div
             style={{
               display: "flex",
@@ -218,6 +219,7 @@ function LoginSignup() {
               type="text"
               id="VCode"
               name="VCode"
+              placeholder="Please Check Your Email"
               onChange={(event) => setVCodeInput(event.target.value)}
             />{" "}
             <br />
