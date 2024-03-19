@@ -8,9 +8,13 @@ interface ProposalCardProps {
   type: string;
   onClick: Function;
   ProposalID: string;
+  dueDate: string;
 }
 
 function ProposalCard(props: ProposalCardProps) {
+  const unforattedDate = new Date(props.dueDate);
+  const date = unforattedDate.toDateString();
+
   const handleClick = () => {
     console.log("clicked");
     console.log(props);
@@ -24,7 +28,7 @@ function ProposalCard(props: ProposalCardProps) {
         <h2
           style={{
             fontSize: "26px",
-            marginLeft: "2vw",
+            marginLeft: "1vw",
             marginRight: "auto",
             width: "60%",
             textAlign: "left",
@@ -47,7 +51,16 @@ function ProposalCard(props: ProposalCardProps) {
         </h2>
       </div>
       <div className="cardBottom">
-        {/* <h2 style={{ fontSize: "24px" }}>{props.status}</h2> */}
+        <h2
+          style={{
+            fontSize: "20px",
+            marginLeft: "auto",
+            marginRight: "1em",
+            color: "black",
+          }}
+        >
+          Due: {date}
+        </h2>
       </div>
     </div>
   );

@@ -24,7 +24,9 @@
   }
 
   .clinicDescription {
-    width: 80%;
+    width: 78%;
+    padding-left: 1vw;
+    padding-right: 1vw;
     backdrop-filter: blur(20px);
     border: 1px groove #ffffff;
     border-radius: 10px;
@@ -189,7 +191,7 @@
     width: 80%;
     border: 1px solid #6e7c85;
     border-radius: 10px 10px 0 0;
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     overflow: "hidden";
     margin-top: 2em;
   }
@@ -284,7 +286,7 @@
     margin: auto;
   }
   .studentApply {
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -308,7 +310,7 @@
     width: 40vw;
   }
   .clientApply {
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -516,6 +518,7 @@
     flex-direction: row;
     flex-grow: 1;
     padding-top: 2em;
+    align-items: center;
   }
   h1 {
     font-size: 4em;
@@ -651,7 +654,9 @@
   }
 
   .clinicDescription {
-    width: 90%;
+    width: 88%;
+    padding-left: 1vw;
+    padding-right: 1vw;
     backdrop-filter: blur(20px);
     border: 1px groove #ffffff;
     border-radius: 10px;
@@ -897,7 +902,7 @@
     margin-bottom: 2em;
   }
   .studentApply {
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -918,7 +923,7 @@
     width: 87.5%;
   }
   .clientApply {
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     align-items: center;
     border: solid 1px #6e7c85;
     border-radius: 20px;
@@ -995,7 +1000,7 @@
     width: 90%;
     border: 1px solid #6e7c85;
     border-radius: 10px 10px 0 0;
-    backdrop-filter: blur(20px);
+    background-color: #f6f7f8;
     overflow: "hidden";
     margin-top: 2em;
   }
