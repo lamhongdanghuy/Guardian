@@ -171,7 +171,7 @@ function MyInformationView() {
     } else if (
       user.role.toUpperCase() === "ADMIN ASSISTANT" ||
       user.role.toUpperCase() === "CLINIC DIRECTOR" ||
-      user.role.toUpperCase() === "BOARD DIRECTOR"
+      user.role.toUpperCase() === "BOARD OF DIRECTOR"
     ) {
       getFacultyInfo();
     }
