@@ -34,9 +34,7 @@ function ProjectInfoView(projectID: props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
   const [, Students] = useState<Member[]>([]);
-  const [, AssignedStudents] = useState<
-    Member[]
-  >([]);
+  const [, AssignedStudents] = useState<Member[]>([]);
   const dateForDisplay = date ? date.toISOString().split("T")[0] : "";
 
   const formattedDate = date
@@ -271,8 +269,10 @@ function ProjectInfoView(projectID: props) {
                         Email: event.target.value.split(",")[1],
                         Student_ID: event.target.value.split(",")[2],
                       });
+                      setProjectLeaderEmail(event.target.value.split(",")[1]);
                     } else {
                       setLeader(undefined);
+                      setProjectLeaderEmail("");
                     }
                   }}
                   required
