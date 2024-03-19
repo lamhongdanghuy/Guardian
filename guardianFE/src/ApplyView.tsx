@@ -75,6 +75,7 @@ function ApplyView() {
             overflowY: "scroll",
             maxHeight: "70vh",
             marginBottom: "5vh",
+            backgroundColor: "#f6f7f8",
           }}
         >
           <h2>Propose A New Project</h2>

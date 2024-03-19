@@ -52,7 +52,7 @@ function ClientApplyForm() {
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
     const phonePattern = /^\d{10}$/;
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     let invalidFields = [];
     if (sra === "") {
       invalidFields.push("Number of Security Risk Assessments");
