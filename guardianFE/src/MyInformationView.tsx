@@ -43,7 +43,7 @@ function MyInformationView() {
   };
   const handleEdit = async () => {
     // Send the updated info to the backend
-    // setSubmitting(true);
+    setSubmitting(true);
     await fetch("http://localhost:5000/faculty/update", {
       method: "POST",
       headers: {
@@ -59,9 +59,9 @@ function MyInformationView() {
         P_Number: phone,
       }),
     });
-    // setSubmitted(true);
-    // // Exit edit mode
-    // setSubmitting(false);
+    setSubmitted(true);
+    // Exit edit mode
+    setSubmitting(false);
     setIsEditing(false);
   };
   const resetpassword = async () => {
