@@ -56,6 +56,11 @@ class proposal:
             DatabaseConnection().update_query(assign_student_query)
         # Approves the project in the Database
         DatabaseConnection().update_query(update_query)
+        # Change status of Client and Company to active
+        activate_client_query = "UPDATE CLIENT SET Status = 'Active' WHERE Client_ID = (SELECT Client_ID FROM PROJECT WHERE Proj_ID = '{}')".format(proposal_ID)
+        DatabaseConnection().update_query(activate_client_query)
+        activate_company_query = "UPDATE COMPANY SET Status = 'Active' WHERE Company_ID = (SELECT Company_ID FROM PROJECT WHERE Proj_ID = '{}')".format(proposal_ID)
+        DatabaseConnection().update_query(activate_company_query)
         return jsonify({"message": "Proposal approved"})
     
     def reject_proposal(self, proposal_ID):
