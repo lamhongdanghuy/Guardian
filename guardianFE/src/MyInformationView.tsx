@@ -6,8 +6,6 @@ import { LoginContext } from "./LoginContextProvider";
 
 function MyInformationView() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [submitting, setSubmitting] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [fName, setFName] = useState<string | null>("");
@@ -42,8 +40,6 @@ function MyInformationView() {
     setIsEditing(false);
   };
   const handleEdit = async () => {
-    // Send the updated info to the backend
-    // setSubmitting(true);
     await fetch("http://localhost:5000/faculty/update", {
       method: "POST",
       headers: {
@@ -59,9 +55,6 @@ function MyInformationView() {
         P_Number: phone,
       }),
     });
-    // setSubmitted(true);
-    // // Exit edit mode
-    // setSubmitting(false);
     setIsEditing(false);
   };
   const resetpassword = async () => {
@@ -188,10 +181,6 @@ function MyInformationView() {
     <div>
       {loading ? (
         <h1>Loading...</h1>
-      ) : submitting ? (
-        <h1>Submitting...</h1>
-      ) : submitted ? (
-        <h1>Submitted</h1>
       ) : !PassForm ? (
         <div className="projectInfoView">
           {isEditing ? (
@@ -573,8 +562,6 @@ function MyInformationView() {
         </div>
       )}
       {!loading &&
-        !submitted &&
-        !submitting &&
         !isEditing &&
         (user.role === "Clinic Director" ||
           user.role === "Admin Assistant") && (
@@ -593,7 +580,7 @@ function MyInformationView() {
             </button>
           </div>
         )}
-      {isEditing && !submitted && !submitting && (
+      {isEditing && (
         <div
           style={{
             display: "flex",
