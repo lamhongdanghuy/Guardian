@@ -38,8 +38,25 @@ function MyInformationView() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setIsEditing(false);
+    // Fetch the my information again to revert changes
+    setLoading(true);
+    if (user.role.toUpperCase() === "CLIENT") {
+      await getClientInfo();
+    } else if (
+      user.role.toUpperCase() === "STUDENT" ||
+      user.role.toUpperCase() === "STUDENT_LEADER"
+    ) {
+      await getStudentInfo();
+    } else if (
+      user.role.toUpperCase() === "ADMIN ASSISTANT" ||
+      user.role.toUpperCase() === "CLINIC DIRECTOR" ||
+      user.role.toUpperCase() === "BOARD OF DIRECTOR"
+    ) {
+      await getFacultyInfo();
+    }
+    setLoading(false);
   };
   const handleEdit = async () => {
     // Send the updated info to the backend

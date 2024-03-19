@@ -50,12 +50,8 @@ class infoGetter:
                 FROM STUDENT
                 WHERE STUDENT_ID NOT IN (SELECT Student_ID FROM PROJECT_PARTICIPANT WHERE Proj_ID = '{}') AND Status = 'Active';""".format(id)
         roster = db_connection.select_query(queryRoster)
-        # Query to get project type
-        proj_type_query = "SELECT Pro_Type FROM PROJECT WHERE Proj_ID = '{}'".format(id)
-        proj_type = db_connection.select_query(proj_type_query).at[0, 'Pro_Type']
-        print(proj_type)
         # Query to get the project leader
-        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email, Student_ID FROM STUDENT WHERE Proj_Interest = '{}' AND Role = 'Student_Leader' AND Status = 'Active'".format(proj_type)
+        leaders_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email, Student_ID FROM STUDENT WHERE Role = 'Student_Leader' AND Status = 'Active'"
 
         leaders_data = db_connection.select_query(leaders_query)
         
