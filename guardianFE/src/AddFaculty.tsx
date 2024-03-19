@@ -118,6 +118,7 @@ function AddFaculty() {
           >
             <option value="Admin Assistant">Admin Assistant</option>
             <option value="Clinic Director">Clinic Director</option>
+            <option value="Board Of Director">Board Of Director</option>
           </select>
           <br />
           <button onClick={sendData}>Submit</button>

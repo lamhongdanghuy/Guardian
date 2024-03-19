@@ -77,6 +77,9 @@ function Header() {
               </div>
             )}
           </div>
+          <NavLink className={"navlink"} to="https://www.depaul.edu" target="_blank" rel="noopener noreferrer">
+            DePaul
+          </NavLink>
         </nav>
       </header>
     </div>
