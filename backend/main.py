@@ -28,6 +28,7 @@ import bcrypt
 from email.mime.text import MIMEText
 
 # Local application imports
+from update import Update
 from Projects import Project
 from Applications import Application
 from login import Login
@@ -262,6 +263,15 @@ def get_faculty_info():
     payload = 0
     infoInstance = infoGetter()
     payload = infoInstance.getFacultyInfo(data['facultyID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/faculty/update', methods =['POST'])
+def faculty_update():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    payload = Update().faculty_update(dbconnect, data)
     return jsonify(payload), 200
 
 @app.route('/student/info', methods =['POST'])

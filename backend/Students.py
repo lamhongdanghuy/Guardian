@@ -34,6 +34,7 @@ class Students:
         studentLName = data['studentLName']
         major = data['major']
         email = data['email']
+        oldEmail = data['oldEmail']
         phone = data['phone']
         projectIntrest = data['projectIntrest']
         gradDate = data['gradDate']
@@ -88,6 +89,10 @@ class Students:
             SEC_DAEMONS = 1
         if 'WiCyS' in course_taken:
             WICYS = 1
+
+        # Update Login Information
+        update_login_query = "UPDATE LOGIN_INFORMATION SET Email = '{}' WHERE Email = '{}'".format(email, oldEmail)
+        db_Connection.update_query(update_login_query)
 
         # Update Student Information
         update_info_query = "UPDATE STUDENT SET F_Name = '{}', L_Name = '{}', Major = '{}', Email = '{}', P_Number = '{}', Proj_Interest = '{}', Grad_Date = '{}', Year_Standing = '{}', School = '{}' WHERE Student_ID = '{}'".format(studentFName, studentLName, major, email, phone, projectIntrest, gradDate, year, college, studentID)
