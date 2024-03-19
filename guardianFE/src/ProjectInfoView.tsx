@@ -270,8 +270,10 @@ function ProjectInfoView(projectID: props) {
                         Email: event.target.value.split(",")[1],
                         Student_ID: event.target.value.split(",")[2],
                       });
+                      setProjectLeaderEmail(event.target.value.split(",")[1]);
                     } else {
                       setLeader(undefined);
+                      setProjectLeaderEmail("");
                     }
                   }}
                   required

@@ -37,7 +37,6 @@ function StudentInfoView(studentID: props) {
   const [studentLName, setStudentLName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
-  const [oldEmail, setOldEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
   const [projectIntrest, setProjectIntrest] = useState<string | null>("");
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
@@ -122,7 +121,6 @@ function StudentInfoView(studentID: props) {
         studentLName,
         major,
         email,
-        oldEmail,
         phone,
         projectIntrest,
         gradDate: gradDateFormatted,
@@ -151,7 +149,7 @@ function StudentInfoView(studentID: props) {
     setStudentFName(result.student_info[0].F_Name);
     setStudentLName(result.student_info[0].L_Name);
     setMajor(result.student_info[0].Major);
-    setOldEmail(result.student_info[0].Email);
+    setEmail(result.student_info[0].Email);
     setPhone(result.student_info[0].P_Number);
     setProjectIntrest(result.student_info[0].Proj_Interest);
     setGradDateUnformatted(result.student_info[0].Grad_Date);
@@ -500,7 +498,7 @@ function StudentInfoView(studentID: props) {
                   }}
                 >
                   Email: {""}
-                  <span style={{ color: "#33689c" }}>{oldEmail}</span>
+                  <span style={{ color: "#33689c" }}>{email}</span>
                 </h1>
                 <h1
                   style={{
@@ -597,7 +595,7 @@ function StudentInfoView(studentID: props) {
               onClick={handleInActivate}
               style={{ backgroundColor: "#D30000" }}
             >
-              In Activte Student
+              Inactivate Student
             </button>
             <button
               onClick={() => setIsEditing(true)}

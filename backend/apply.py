@@ -33,6 +33,7 @@ class apply:
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        email = email.lower()
         if self.email_exists(email):
             return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
