@@ -37,6 +37,12 @@ function Dashboard() {
     setOpenStudentInfo(studentID);
   };
 
+  const clientCardClicked = (clientID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Client Info View");
+    setOpenStudentInfo(clientID);
+  };
+
   const projectCardClicked = (projectID: string) => {
     setPrevContainer(activeContainer);
     setActiveContainer("Project Info View");
@@ -160,6 +166,17 @@ function Dashboard() {
           )}
           {(user.role === "Admin Assistant" ||
             user.role === "Clinic Director" ||
+            user.role === "Board Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Clients View")}
+            >
+              Clients
+            </div>
+          )}
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
             devMode) && (
             <div
               className="sidebarItem"
@@ -249,6 +266,10 @@ function Dashboard() {
           <ProposalInfoView proposalID={openProposal} />
         ) : activeContainer === "Add Faculty" ? (
           <AddFaculty />
+        ) : activeContainer === "Students View" ? (
+          <StudentsView onClick={studentCardClicked} />
+        ) : activeContainer === "Student Info View" ? (
+          <StudentInfoView studentID={openStudentInfo} />
         ) : activeContainer === "Students View" ? (
           <StudentsView onClick={studentCardClicked} />
         ) : activeContainer === "Student Info View" ? (
