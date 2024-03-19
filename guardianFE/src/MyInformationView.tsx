@@ -83,7 +83,7 @@ function MyInformationView() {
     setIsEditing(false);
   };
   const resetpassword = async () => {
-    const response = await fetch(`${API_BASE_URL}/:5000/forgotpassword`, {
+    const response = await fetch(`${API_BASE_URL}/forgotpassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +101,7 @@ function MyInformationView() {
         alert("Passwords do not match");
         return;
       }
-      const response = await fetch(`${API_BASE_URL}/:5000/changepassword`, {
+      const response = await fetch(`${API_BASE_URL}/changepassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +134,7 @@ function MyInformationView() {
   };
 
   const getClientInfo = async () => {
-    const response = await fetch(`${API_BASE_URL}//client/info`, {
+    const response = await fetch(`${API_BASE_URL}/client/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
