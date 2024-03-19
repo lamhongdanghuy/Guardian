@@ -1,7 +1,5 @@
-// Login Context Between Pages
-// Contributor: Albert Luna
-
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 interface LoginProviderProps {
   children: ReactNode;
@@ -38,7 +36,18 @@ const defaultContext: LoginContextProps = {
 export const LoginContext = createContext(defaultContext);
 
 export function LoginProvider({ children }: LoginProviderProps) {
-  const [user, setUser] = useState(defaultUser);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [user, setUser] = useState<User>(cookies.user || defaultUser);
+
+  useEffect(() => {
+    if (user.token) {
+      // Set the user cookie with secure flag
+      setCookie("user", user, { path: "/", secure: true });
+    } else {
+      // Remove the user cookie if the user is not logged in
+      removeCookie("user");
+    }
+  }, [user, setCookie, removeCookie]);
 
   return (
     <LoginContext.Provider value={{ user, setUser }}>
