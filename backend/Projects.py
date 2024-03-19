@@ -46,7 +46,25 @@ class Project:
         print(payload)
         return payload
     
+    def get_leader_projects(self, Student_ID, db_Connection):
+        # gets the list of projects a student with a specific Id is leading
+        query = """
+            SELECT *
+            FROM PROJECT
+            WHERE Stu_Lead_ID = '{}';
+            """.format(Student_ID)
+        
+        projectData = db_Connection.select_query(query)
+        if projectData.empty:
+            payload = {'message': 'Projects not found', 'projects': []}
+        else:
+            payload = {'message': 'Projects Successfully Retrieved!',
+                       'projects': projectData.to_dict(orient='records')}
+        print(payload)
+        return payload
+    
     def get_student_projects(self, Student_ID, db_Connection):
+        print(Student_ID)
         # gets the list of projects a student with a specific Id is involved with
         query = """
             SELECT *
@@ -54,7 +72,7 @@ class Project:
             WHERE Student_ID = '{}';
             """.format(Student_ID)
         
-        print(query)
+        
         projectIDData = db_Connection.select_query(query)
         
         projectData = pd.DataFrame()

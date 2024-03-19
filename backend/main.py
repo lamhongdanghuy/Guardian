@@ -241,13 +241,14 @@ def get_projects():
     # Accepts a JSON object with 'role'
     data = request.get_json()
     role = data['role']
-    print ("role " + role)
     projectInstance = Project()
     db_Connection = DatabaseConnection()
     # Checks if the user is a student, if so uses student specific project fetcher
     if role == 'Student':
         # Uses ID to fetch projects user is involved in
         payload = projectInstance.get_student_projects(data['userID'], db_Connection)
+    elif role == 'Student_Leader':
+        payload = projectInstance.get_leader_projects(data['userID'], db_Connection)
     else:
         payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
