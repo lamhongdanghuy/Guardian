@@ -1,5 +1,10 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { createContext, useState, ReactNode } from "react";
+
+import Cookies from "js-cookie";
+
+interface LoginProviderProps {
+  children: ReactNode;
+}
 
 interface LoginProviderProps {
   children: ReactNode;
@@ -36,18 +41,9 @@ const defaultContext: LoginContextProps = {
 export const LoginContext = createContext(defaultContext);
 
 export function LoginProvider({ children }: LoginProviderProps) {
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const [user, setUser] = useState<User>(cookies.user || defaultUser);
-
-  useEffect(() => {
-    if (user.token) {
-      // Set the user cookie with secure flag
-      setCookie("user", user, { path: "/", secure: true });
-    } else {
-      // Remove the user cookie if the user is not logged in
-      removeCookie("user");
-    }
-  }, [user, setCookie, removeCookie]);
+  const [user, setUser] = useState<User>(
+    JSON.parse(Cookies.get("user") || JSON.stringify(defaultUser))
+  );
 
   return (
     <LoginContext.Provider value={{ user, setUser }}>
