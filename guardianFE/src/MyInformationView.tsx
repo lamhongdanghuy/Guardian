@@ -10,8 +10,6 @@ function MyInformationView() {
   const [submitted, setSubmitted] = useState(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-
-
   const [fName, setFName] = useState<string | null>("");
   const [lName, setLName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
@@ -27,9 +25,9 @@ function MyInformationView() {
   const date = gradDateUnformatted ? new Date(gradDateUnformatted) : null;
   const gradDate = date
     ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-      .getUTCDate()
-      .toString()
-      .padStart(2, "0")}/${date.getUTCFullYear()}`
+        .getUTCDate()
+        .toString()
+        .padStart(2, "0")}/${date.getUTCFullYear()}`
     : "Not Approved";
 
   const { user } = useContext(LoginContext);
@@ -64,7 +62,7 @@ function MyInformationView() {
     // setSubmitted(true);
     // // Exit edit mode
     // setSubmitting(false);
-    // setIsEditing(false);
+    setIsEditing(false);
   };
   const resetpassword = async () => {
     const response = await fetch("http://localhost:5000/forgotpassword", {
@@ -197,63 +195,66 @@ function MyInformationView() {
       ) : !PassForm ? (
         <div className="projectInfoView">
           {isEditing ? (
-            <><div className="topInfo">
-              <h1
-                style={{
-                  fontSize: "48px",
-                  marginRight: "auto",
-                  marginLeft: "0vw",
-                }}
-              >
-                First Name: <input
-                  type="text"
-                  value={fName ?? ""}
-                  onChange={(e) => setFName(e.target.value)}
-                  style={{
-                    height: "30px",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
-                    alignSelf: "center",
-                    justifySelf: "center",
-                    fontSize: "24px",
-                    width: "40%",
-                  }}
-                />
-              </h1>
-              <h1
-                style={{
-                  fontSize: "48px",
-                  marginRight: "auto",
-                  marginLeft: "0vw",
-                }}
-              >
-                Last Name: <input
-                  type="text"
-                  value={lName ?? ""}
-                  onChange={(e) => setLName(e.target.value)}
-                  style={{
-                    height: "30px",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
-                    alignSelf: "center",
-                    justifySelf: "center",
-                    fontSize: "24px",
-                    width: "40%",
-                  }}
-                />
-              </h1>
-              {user.role.toUpperCase() === "STUDENT" && (
+            <>
+              <div className="topInfo">
                 <h1
                   style={{
-                    fontSize: "32px",
-                    marginLeft: "auto",
-                    marginRight: "1vw",
+                    fontSize: "48px",
+                    marginRight: "auto",
+                    marginLeft: "0vw",
                   }}
                 >
-                  Major: {major}
+                  First Name:{" "}
+                  <input
+                    type="text"
+                    value={fName ?? ""}
+                    onChange={(e) => setFName(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                      width: "40%",
+                    }}
+                  />
                 </h1>
-              )}
-            </div>
+                <h1
+                  style={{
+                    fontSize: "48px",
+                    marginRight: "auto",
+                    marginLeft: "0vw",
+                  }}
+                >
+                  Last Name:{" "}
+                  <input
+                    type="text"
+                    value={lName ?? ""}
+                    onChange={(e) => setLName(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                      width: "40%",
+                    }}
+                  />
+                </h1>
+                {user.role.toUpperCase() === "STUDENT" && (
+                  <h1
+                    style={{
+                      fontSize: "32px",
+                      marginLeft: "auto",
+                      marginRight: "1vw",
+                    }}
+                  >
+                    Major: {major}
+                  </h1>
+                )}
+              </div>
               <h1
                 style={{
                   fontSize: "32px",
@@ -272,7 +273,8 @@ function MyInformationView() {
                     marginLeft: "0vw",
                   }}
                 >
-                  Email: <input
+                  Email:{" "}
+                  <input
                     type="email"
                     value={email ?? ""}
                     onChange={(e) => setEmail(e.target.value)}
@@ -293,7 +295,8 @@ function MyInformationView() {
                     marginRight: "1vw",
                   }}
                 >
-                  Phone: <input
+                  Phone:{" "}
+                  <input
                     type="tel"
                     value={phone ?? ""}
                     onChange={(e) => setPhone(parseInt(e.target.value))}
@@ -354,7 +357,8 @@ function MyInformationView() {
                     paddingBottom: "5vh",
                   }}
                 >
-                  Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+                  Courses Taken:{" "}
+                  {coursesTaken ? coursesTaken : "No Courses Taken"}
                 </h1>
               )}
               {user.role.toUpperCase() === "STUDENT" && (
@@ -367,39 +371,42 @@ function MyInformationView() {
                 >
                   College: {college ? college : "Not Assigned"}
                 </h1>
-              )}</>
+              )}
+            </>
           ) : (
-            <> <div className="topInfo">
-              <h1
-                style={{
-                  fontSize: "48px",
-                  marginRight: "auto",
-                  marginLeft: "0vw",
-                }}
-              >
-                First Name: {fName}
-              </h1>
-              <h1
-                style={{
-                  fontSize: "48px",
-                  marginRight: "auto",
-                  marginLeft: "0vw",
-                }}
-              >
-                Last Name: {lName}
-              </h1>
-              {user.role.toUpperCase() === "STUDENT" && (
+            <>
+              {" "}
+              <div className="topInfo">
                 <h1
                   style={{
-                    fontSize: "32px",
-                    marginLeft: "auto",
-                    marginRight: "1vw",
+                    fontSize: "48px",
+                    marginRight: "auto",
+                    marginLeft: "0vw",
                   }}
                 >
-                  Major: {major}
+                  First Name: {fName}
                 </h1>
-              )}
-            </div>
+                <h1
+                  style={{
+                    fontSize: "48px",
+                    marginRight: "auto",
+                    marginLeft: "0vw",
+                  }}
+                >
+                  Last Name: {lName}
+                </h1>
+                {user.role.toUpperCase() === "STUDENT" && (
+                  <h1
+                    style={{
+                      fontSize: "32px",
+                      marginLeft: "auto",
+                      marginRight: "1vw",
+                    }}
+                  >
+                    Major: {major}
+                  </h1>
+                )}
+              </div>
               <h1
                 style={{
                   fontSize: "32px",
@@ -475,7 +482,8 @@ function MyInformationView() {
                     paddingBottom: "5vh",
                   }}
                 >
-                  Courses Taken: {coursesTaken ? coursesTaken : "No Courses Taken"}
+                  Courses Taken:{" "}
+                  {coursesTaken ? coursesTaken : "No Courses Taken"}
                 </h1>
               )}
               {user.role.toUpperCase() === "STUDENT" && (
@@ -499,7 +507,8 @@ function MyInformationView() {
                 onClick={resetpassword}
               >
                 Change Password
-              </button></>
+              </button>
+            </>
           )}
 
           {user.role != "Admin Assistant" && user.role != "Clinic Director" && (
