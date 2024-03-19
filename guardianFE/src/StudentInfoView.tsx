@@ -74,14 +74,18 @@ function StudentInfoView(studentID: props) {
 
   const gradDate = date
     ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-        .getUTCDate()
-        .toString()
-        .padStart(2, "0")}/${date.getUTCFullYear()}`
+      .getUTCDate()
+      .toString()
+      .padStart(2, "0")}/${date.getUTCFullYear()}`
     : "Not Approved";
   const { user } = useContext(LoginContext);
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     setIsEditing(false);
+    // Fetch the student information again to revert changes
+    setLoading(true);
+    await getStudentInfo();
+    setLoading(false);
   };
 
   const handleInActivate = async () => {

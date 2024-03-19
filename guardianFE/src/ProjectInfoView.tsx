@@ -33,8 +33,8 @@ function ProjectInfoView(projectID: props) {
   const { user } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
-  const [originalStudents, setOriginalStudents] = useState<Member[]>([]);
-  const [originalAssignedStudents, setOriginalAssignedStudents] = useState<
+  const [, Students] = useState<Member[]>([]);
+  const [, AssignedStudents] = useState<
     Member[]
   >([]);
   const dateForDisplay = date ? date.toISOString().split("T")[0] : "";
@@ -88,11 +88,12 @@ function ProjectInfoView(projectID: props) {
   };
 
   // Add a function to handle the cancel
-  const handleCancel = () => {
-    setStudents(originalStudents);
-    setAssignedStudents(originalAssignedStudents);
+  const handleCancel = async () => {
     // Exit edit mode
     setIsEditing(false);
+    setLoading(true);
+    await getProjectInfo();
+    setLoading(false);
   };
 
   const handleDone = async () => {
@@ -163,8 +164,8 @@ function ProjectInfoView(projectID: props) {
     setStudents(result.roster);
     setLeaders(result.av_leaders);
     setLoading(false);
-    setOriginalStudents([...result.roster]);
-    setOriginalAssignedStudents([...result.project_students]);
+    Students([...result.roster]);
+    AssignedStudents([...result.project_students]);
   };
 
   useEffect(() => {
