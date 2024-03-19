@@ -8,9 +8,13 @@ interface ProjectCardProps {
   type: string;
   projectID: string;
   onClick: Function;
+  dueDate: string;
 }
 
 function ProjectCard(props: ProjectCardProps) {
+  const unforattedDate = new Date(props.dueDate);
+  const date = unforattedDate.toDateString();
+
   const handleClick = () => {
     props.onClick(props.projectID);
   };
@@ -21,7 +25,7 @@ function ProjectCard(props: ProjectCardProps) {
         <h2
           style={{
             fontSize: "26px",
-            marginLeft: "2vw",
+            marginLeft: "1vw",
             marginRight: "auto",
             width: "60%",
             textAlign: "left",
@@ -60,7 +64,17 @@ function ProjectCard(props: ProjectCardProps) {
         >
           ⬤ {props.status}
         </h2>
-        {/* <h2 style={{ fontSize: "20px" }}>Leader: {props.projectLeader}</h2> */}
+        <h2
+          style={{
+            fontSize: "20px",
+            marginLeft: "auto",
+            marginRight: "1em",
+            color: "black",
+            textWrap: "wrap",
+          }}
+        >
+          Due: {date}
+        </h2>
       </div>
     </div>
   );

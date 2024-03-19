@@ -17,6 +17,7 @@ interface Project {
   Pro_Type: string;
   projectID: string;
   Proj_ID: string;
+  Due_Date: string;
 }
 
 function ProjectsView(props: projectViewProp) {
@@ -81,6 +82,7 @@ function ProjectsView(props: projectViewProp) {
                 type={project.Pro_Type}
                 onClick={props.onClick}
                 projectID={project.Proj_ID}
+                dueDate={project.Due_Date}
               />
             ))}
           </div>

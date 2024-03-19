@@ -25,7 +25,7 @@ function ApplicationCard(props: ApplicationCardProps) {
         <h2
           style={{
             fontSize: "26px",
-            marginLeft: "2vw",
+            marginLeft: "1vw",
             marginRight: "auto",
             textAlign: "left",
           }}
