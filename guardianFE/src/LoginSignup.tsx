@@ -195,6 +195,7 @@ function LoginSignup() {
                   opacity: email === "" ? ".5" : "1",
                 }}
                 disabled={email === "" ? true : false}
+                title="Please enter your email address to reset your password."
               >
                 Forgot Password
               </button>
