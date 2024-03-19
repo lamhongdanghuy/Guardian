@@ -593,8 +593,9 @@ function MyInformationView() {
         !submitted &&
         !submitting &&
         !isEditing &&
-        (user.role === "Clinic Director" ||
-          user.role === "Admin Assistant") && (
+        (user.role.toUpperCase() === "ADMIN ASSISTANT" ||
+        user.role.toUpperCase() === "CLINIC DIRECTOR" ||
+        user.role.toUpperCase() === "BOARD OF DIRECTOR") && (
           <div
             style={{
               marginLeft: "auto",
