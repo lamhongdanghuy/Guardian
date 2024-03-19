@@ -279,11 +279,11 @@ function ClientApplyForm() {
             <option value="Other">Other</option>
           </select>{" "}
           <br />
-          {selectedOption === "other" && (
+          {selectedOption === "Other" && (
             <textarea
               placeholder="Describe here..."
               rows={5}
-              cols={5}
+              cols={50}
               id="otherNORA"
               name="otherNORA"
               onChange={handleTextAreaChange}

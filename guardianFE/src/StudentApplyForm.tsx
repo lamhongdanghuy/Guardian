@@ -302,7 +302,7 @@ function StudentApplyForm() {
             <option value="Other">Other</option>
           </select>{" "}
           <br />
-          {selectedOption === "other" && (
+          {selectedOption === "Other" && (
             <textarea
               placeholder="Describe here..."
               rows={5}
