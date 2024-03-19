@@ -52,31 +52,37 @@ function ProposalsView(props: proposalProposalViewProp) {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <h1 style={{ fontSize: "10vh" }}>Proposals</h1>
-          <div
-            style={{
-              margin: "0 5vw",
-              display: "flex",
-              flexWrap: "wrap",
-              textAlign: "center",
-              overflowY: "scroll",
-              maxHeight: "70vh",
-              marginBottom: "5vh",
-              gap: "5vh",
-            }}
-          >
-            {proposalsList.map((proposal: Proposal) => (
-              <ProposalCard
-                name={proposal.C_Name}
-                status={proposal.Status}
-                ProposalLeader={proposal.Stu_Lead_ID}
-                type={proposal.Pro_Type}
-                onClick={props.onClick}
-                ProposalID={proposal.Proj_ID}
-                dueDate={proposal.Due_Date}
-              />
-            ))}
-          </div>
+          {proposalsList.length === 0 ? (
+            <h1 style={{ fontSize: "10vh" }}>No available proposals</h1>
+          ) : (
+            <>
+              <h1 style={{ fontSize: "10vh" }}>Proposals</h1>
+              <div
+                style={{
+                  margin: "0 5vw",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  textAlign: "center",
+                  overflowY: "scroll",
+                  maxHeight: "70vh",
+                  marginBottom: "5vh",
+                  gap: "5vh",
+                }}
+              >
+                {proposalsList.map((proposal: Proposal) => (
+                  <ProposalCard
+                    name={proposal.C_Name}
+                    status={proposal.Status}
+                    ProposalLeader={proposal.Stu_Lead_ID}
+                    type={proposal.Pro_Type}
+                    onClick={props.onClick}
+                    ProposalID={proposal.Proj_ID}
+                    dueDate={proposal.Due_Date}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

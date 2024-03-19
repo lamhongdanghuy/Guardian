@@ -61,31 +61,35 @@ function ProjectsView(props: projectViewProp) {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <h1 style={{ fontSize: "10vh" }}>Projects</h1>
-          <div
-            style={{
-              margin: "0 5vw",
-              display: "flex",
-              flexWrap: "wrap",
-              textAlign: "center",
-              overflowY: "scroll",
-              maxHeight: "70vh",
-              marginBottom: "5vh",
-              gap: "5vh",
-            }}
-          >
-            {projectsList.map((project: Project) => (
-              <ProjectCard
-                name={project.C_Name}
-                status={project.Status}
-                projectLeader={project.Stu_Lead_ID}
-                type={project.Pro_Type}
-                onClick={props.onClick}
-                projectID={project.Proj_ID}
-                dueDate={project.Due_Date}
-              />
-            ))}
-          </div>
+          {projectsList.length === 0 ? (
+            <h1 style={{ fontSize: "10vh" }}>No available projects</h1>
+          ) : (
+            <>
+              <h1 style={{ fontSize: "10vh" }}>Projects</h1><div
+                style={{
+                  margin: "0 5vw",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  textAlign: "center",
+                  overflowY: "scroll",
+                  maxHeight: "70vh",
+                  marginBottom: "5vh",
+                  gap: "5vh",
+                }}
+              >
+                {projectsList.map((project: Project) => (
+                  <ProjectCard
+                    name={project.C_Name}
+                    status={project.Status}
+                    projectLeader={project.Stu_Lead_ID}
+                    type={project.Pro_Type}
+                    onClick={props.onClick}
+                    projectID={project.Proj_ID}
+                    dueDate={project.Due_Date} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
