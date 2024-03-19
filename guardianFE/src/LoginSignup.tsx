@@ -31,7 +31,7 @@ function LoginSignup() {
   };
 
   const forgotpassword = async () => {
-    const response = await fetch("http://localhost:5000/forgotpassword", {
+    const response = await fetch(`${API_BASE_URL}/forgotpassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ function LoginSignup() {
         alert("Passwords do not match");
         return;
       }
-      const response = await fetch("http://localhost:5000/changepassword", {
+      const response = await fetch(`${API_BASE_URL}/changepassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

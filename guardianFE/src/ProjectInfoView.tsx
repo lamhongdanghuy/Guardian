@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
+import API_BASE_URL from "./fetchApiURL";
 
 interface Member {
   Email: string;
@@ -34,9 +35,7 @@ function ProjectInfoView(projectID: props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
   const [, Students] = useState<Member[]>([]);
-  const [, AssignedStudents] = useState<
-    Member[]
-  >([]);
+  const [, AssignedStudents] = useState<Member[]>([]);
   const dateForDisplay = date ? date.toISOString().split("T")[0] : "";
 
   const formattedDate = date
@@ -58,7 +57,7 @@ function ProjectInfoView(projectID: props) {
       : null;
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/project/update", {
+    await fetch(`${API_BASE_URL}/project/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +101,7 @@ function ProjectInfoView(projectID: props) {
     );
     if (confirmDone) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/project/done", {
+      await fetch(`${API_BASE_URL}/project/done`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +120,7 @@ function ProjectInfoView(projectID: props) {
     );
     if (confirmReject) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/project/reject", {
+      await fetch(`${API_BASE_URL}/project/reject`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +141,7 @@ function ProjectInfoView(projectID: props) {
   };
 
   const getProjectInfo = async () => {
-    const response = await fetch("http://localhost:5000/project/info", {
+    const response = await fetch(`${API_BASE_URL}/project/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

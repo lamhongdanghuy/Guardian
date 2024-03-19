@@ -74,9 +74,9 @@ function StudentInfoView(studentID: props) {
 
   const gradDate = date
     ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-      .getUTCDate()
-      .toString()
-      .padStart(2, "0")}/${date.getUTCFullYear()}`
+        .getUTCDate()
+        .toString()
+        .padStart(2, "0")}/${date.getUTCFullYear()}`
     : "Not Approved";
   const { user } = useContext(LoginContext);
 
@@ -94,7 +94,7 @@ function StudentInfoView(studentID: props) {
     );
     if (confirmInActivate) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/student/inactivate", {
+      await fetch(`${API_BASE_URL}/student/inactivate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function StudentInfoView(studentID: props) {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/student/update", {
+    await fetch(`${API_BASE_URL}/student/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
