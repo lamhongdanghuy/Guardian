@@ -10,7 +10,7 @@ function AddFaculty() {
   const [P_Number, setP_Number] = useState("1234567890");
   const [role, setRole] = useState("");
   const [showResults, setShowResults] = useState(false);
-  
+
   const sendData = async () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     const passwordPattern =
@@ -61,10 +61,13 @@ function AddFaculty() {
           style={{
             maxHeight: "70vh",
             marginBottom: "5vh",
-            backdropFilter: "blur(10px)",
+            backgroundColor: "#f6f7f8",
+            gap: ".25vh",
           }}
         >
-          <h2>Add Faculty Member</h2>
+          <h2 style={{ color: "#33689c", fontSize: "32px" }}>
+            Add Faculty Member
+          </h2>
           <label htmlFor="F_Name">First Name</label>
           <input
             type="text"
@@ -116,6 +119,7 @@ function AddFaculty() {
             <option value="Admin Assistant">Admin Assistant</option>
             <option value="Clinic Director">Clinic Director</option>
           </select>
+          <br />
           <button onClick={sendData}>Submit</button>
         </div>
       ) : (

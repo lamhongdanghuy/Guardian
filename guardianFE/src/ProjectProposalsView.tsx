@@ -17,6 +17,7 @@ interface Proposal {
   Pro_Type: string;
   projectID: string;
   Proj_ID: string;
+  Due_Date: string;
 }
 
 function ProposalsView(props: proposalProposalViewProp) {
@@ -72,6 +73,7 @@ function ProposalsView(props: proposalProposalViewProp) {
                 type={proposal.Pro_Type}
                 onClick={props.onClick}
                 ProposalID={proposal.Proj_ID}
+                dueDate={proposal.Due_Date}
               />
             ))}
           </div>
