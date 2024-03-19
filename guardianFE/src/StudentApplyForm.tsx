@@ -43,6 +43,7 @@ function StudentApplyForm() {
   const [selectedOption, setSelectedOption] = useState("");
   const [courseTaken] = useState<String[]>([]);
   const [availableCourses, setAvailableCourses] = useState(allCourses);
+  const [submitting, setSubmitting] = useState(false);
 
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
 
@@ -126,6 +127,7 @@ function StudentApplyForm() {
       alert("Passwords do not match!");
       return;
     }
+    setSubmitting(true);
     const response = await fetch(`${API_BASE_URL}/apply/student`, {
       method: "POST",
       headers: {
@@ -150,13 +152,14 @@ function StudentApplyForm() {
       }),
     });
     const responseData = await response.json();
+    setSubmitting(false);
     setRtnData(responseData.message);
     setShowResults(true);
   };
 
   return (
     <div>
-      {!showResults ? (
+      {!showResults && !submitting ? (
         <div className="form">
           <label htmlFor="fname">First Name:</label>
           <input
@@ -371,6 +374,8 @@ function StudentApplyForm() {
           <br />
           <button onClick={sendData}>Apply</button>
         </div>
+      ) : submitting ? (
+        <h1>Submitting...</h1>
       ) : (
         <div style={{ marginTop: "20vh" }}>
           <h1>Form Submitted!</h1>

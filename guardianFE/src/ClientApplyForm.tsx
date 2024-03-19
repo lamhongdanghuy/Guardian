@@ -25,6 +25,7 @@ function ClientApplyForm() {
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -93,6 +94,7 @@ function ClientApplyForm() {
       return;
     }
     let revenueDecimal = parseFloat(revenue);
+    setSubmitting(true);
     const response = await fetch(`${API_BASE_URL}/apply/client`, {
       method: "POST",
       headers: {
@@ -118,13 +120,14 @@ function ClientApplyForm() {
       }),
     });
     const responseData = await response.json();
+    setSubmitting(false);
     setRtnData(responseData.message);
     setShowResults(true);
   };
 
   return (
     <div>
-      {!showResults ? (
+      {!showResults && !submitting ? (
         <div className="form">
           <label htmlFor="fName">Contact Person First Name: </label>
           <input
@@ -318,6 +321,8 @@ function ClientApplyForm() {
           <br />
           <button onClick={sendData}>Submit</button>
         </div>
+      ) : submitting ? (
+        <h1>Submitting...</h1>
       ) : (
         <div style={{ marginTop: "20vh" }}>
           <h1>Form Submitted!</h1>
