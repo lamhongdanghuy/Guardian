@@ -555,8 +555,7 @@ function MyInformationView() {
             gap: ".5em",
             padding: "2em",
             borderRadius: "1em",
-            backdropFilter: "blur(15px)",
-            marginTop: "20vh",
+            backgroundColor: "#f6f7f8",
           }}
         >
           <button onClick={() => setPassForm(false)}>Back</button>{" "}
@@ -594,8 +593,8 @@ function MyInformationView() {
         !submitting &&
         !isEditing &&
         (user.role.toUpperCase() === "ADMIN ASSISTANT" ||
-        user.role.toUpperCase() === "CLINIC DIRECTOR" ||
-        user.role.toUpperCase() === "BOARD OF DIRECTOR") && (
+          user.role.toUpperCase() === "CLINIC DIRECTOR" ||
+          user.role.toUpperCase() === "BOARD OF DIRECTOR") && (
           <div
             style={{
               marginLeft: "auto",
