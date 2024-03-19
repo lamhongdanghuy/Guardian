@@ -284,12 +284,13 @@ function ClientApplyForm() {
           <br />
           {selectedOption === "Other" && (
             <textarea
-              placeholder="Describe here..."
-              rows={5}
-              cols={50}
+              placeholder="Describe here... (Less than 30 characters)"
+              rows={4}
+              cols={40}
               id="otherNORA"
               name="otherNORA"
               onChange={handleTextAreaChange}
+              maxLength={30}
             ></textarea>
           )}
           <br />
