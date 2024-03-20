@@ -24,7 +24,6 @@ function LoginSignup() {
   const [PassForm, setPassForm] = useState(false);
   const [SentCode, setSentCode] = useState(false);
 
-
   const navigator = useNavigate();
 
   const handleForgotPassword = () => {
@@ -37,7 +36,7 @@ function LoginSignup() {
       alert("Please enter a valid email address.");
       return;
     }
-    setSentCode(true)
+    setSentCode(true);
     forgotpassword();
   };
 
@@ -207,76 +206,97 @@ function LoginSignup() {
         </div>
       ) : (
         //Handle Forgot Password
-        <div> 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "35%",
-                margin: "auto",
-                border: "1px solid #6e7c85",
-                gap: ".5em",
-                padding: "2em",
-                borderRadius: "1em",
-                backdropFilter: "blur(15px)",
-              }}
-            >
-              {SentCode === false && (  //This is here before they submit the email, it disappears after
-                <div style={{ 
-                  position: "absolute", 
-                  top: "10px",  // Adjust this value as needed to move closer to top border
-                  left: "10px",  // Adjust this value as needed to move closer to left border
-                  alignSelf: "flex-start"
-                }}>
-                  <button onClick={() => setPassForm(false)}>Back</button>
-                </div>
-              )}
-              <div>
-                <h1>Change Password</h1>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "35%",
+              margin: "auto",
+              border: "1px solid #6e7c85",
+              gap: ".5em",
+              padding: "2em",
+              borderRadius: "1em",
+              backdropFilter: "blur(15px)",
+            }}
+          >
+            {SentCode === false && ( //This is here before they submit the email, it disappears after
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px", // Adjust this value as needed to move closer to top border
+                  left: "10px", // Adjust this value as needed to move closer to left border
+                  alignSelf: "flex-start",
+                }}
+              >
+                <button onClick={() => setPassForm(false)}>Back</button>
               </div>
-              
-              {SentCode === false && (  //First page after clicking "Forgot Password"
+            )}
+            <div>
+              <h1>Change Password</h1>
+            </div>
+
+            {SentCode === false && ( //First page after clicking "Forgot Password"
+              <div>
                 <div>
                   <label htmlFor="email">Email:</label>
+                </div>
+                <div>
                   <input
                     type="text"
                     id="email"
                     name="email"
                     onChange={(event) => setEmail(event.target.value)}
                   />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
+                >
                   <button onClick={() => handleSentCode()}>Send Code</button>
                 </div>
-              )}
-              {SentCode === true && ( //Second page after clicking submitting with a valid email
-                <div>
-                  <label htmlFor="VCode">Verification Code:</label>
-                  <input
-                    type="text"
-                    id="VCode"
-                    name="VCode"
-                    placeholder="Please Check Your Email"
-                    onChange={(event) => setVCodeInput(event.target.value)}
-                  />{" "}
-                  <br />
-                  <label htmlFor="password">New Password:</label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={(event) => setPassword(event.target.value)}
-                  />{" "}
-                  <br />
-                  <label htmlFor="repeatPassword">Repeat Password:</label>
-                  <input
-                    type="password"
-                    id="repeatPassword"
-                    name="repeatPassword"
-                    onChange={(event) => setRepeatPassword(event.target.value)}
-                  />{" "}
-                  <br />
-                  <button onClick={changePassword}>Change Password</button>
-                </div>
+              </div>
+            )}
+            {SentCode === true && ( //Second page after clicking submitting with a valid email
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "20px", // Adjust gap as needed for spacing
+                }}
+              >
+                <label htmlFor="VCode">Verification Code:</label>
+                <input
+                  type="text"
+                  id="VCode"
+                  name="VCode"
+                  placeholder="Please Check Your Email"
+                  onChange={(event) => setVCodeInput(event.target.value)}
+                />{" "}
+                <br />
+                <label htmlFor="password">New Password:</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />{" "}
+                <br />
+                <label htmlFor="repeatPassword">Repeat Password:</label>
+                <input
+                  type="password"
+                  id="repeatPassword"
+                  name="repeatPassword"
+                  onChange={(event) => setRepeatPassword(event.target.value)}
+                />{" "}
+                <br />
+                <button onClick={changePassword}>Change Password</button>
+              </div>
             )}
           </div>
         </div>
