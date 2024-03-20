@@ -59,7 +59,6 @@ function Dashboard() {
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
   const [openStudentInfo, setOpenStudentInfo] = useState("");
-  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.id === "") {
       navigator("/login");
@@ -85,14 +84,6 @@ function Dashboard() {
         >
           Log Out
         </button>
-
-        <button
-          onClick={() => {
-            setDevMode(!devMode);
-          }}
-        >
-          Dev Mode
-        </button>
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
@@ -116,7 +107,7 @@ function Dashboard() {
           >
             My Information
           </div>
-          {(user.status === "Active" || devMode) && (
+          {user.status === "Active" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Projects")}
@@ -124,7 +115,7 @@ function Dashboard() {
               Projects
             </div>
           )}
-          {(user.role === "client" || devMode) && (
+          {user.role === "client" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Apply")}
@@ -134,8 +125,7 @@ function Dashboard() {
           )}
           {(user.role === "Admin Assistant" ||
             user.role === "Clinic Director" ||
-            user.role === "Board Director" ||
-            devMode) && (
+            user.role === "Board Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Students View")}
@@ -144,8 +134,7 @@ function Dashboard() {
             </div>
           )}
           {(user.role === "Admin Assistant" ||
-            user.role === "Clinic Director" ||
-            devMode) && (
+            user.role === "Clinic Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -154,8 +143,7 @@ function Dashboard() {
             </div>
           )}
           {(user.role === "Admin Assistant" ||
-            user.role === "Clinic Director" ||
-            devMode) && (
+            user.role === "Clinic Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Project Proposals")}
@@ -163,7 +151,7 @@ function Dashboard() {
               Project Proposals
             </div>
           )}
-          {(user.role === "Clinic Director" || devMode) && (
+          {user.role === "Clinic Director" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Add Faculty")}
@@ -171,7 +159,7 @@ function Dashboard() {
               Add Faculty
             </div>
           )}
-          {(user.role === "Clinic Director" || devMode) && (
+          {user.role === "Clinic Director" && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Manage Tables")}
