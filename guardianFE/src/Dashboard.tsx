@@ -20,14 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const returnToLandingPage = () => {
-    setUser({
-      id: "",
-      email: "",
-      role: "",
-      token: "",
-      emailVerification: false,
-      status: "",
-    });
     navigator("/");
   };
 
@@ -61,7 +53,7 @@ function Dashboard() {
 
   const navigator = useNavigate();
   const [prevContainer, setPrevContainer] = useState("Home");
-  const { user, setUser } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
@@ -88,14 +80,7 @@ function Dashboard() {
         </div>
         <button
           onClick={() => {
-            setUser({
-              id: "",
-              email: "",
-              role: "",
-              token: "",
-              emailVerification: false,
-              status: "",
-            });
+            returnToLandingPage;
           }}
         >
           Log Out
