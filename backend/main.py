@@ -311,6 +311,29 @@ def client_comp_info_get():
     payload = infoInstance.get_specific_clients(data['clientID'], dbconnect)
     return jsonify(payload), 200
 
+@app.route('/client&comp/inactivate', methods =['POST'])
+def client_inactivate():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.inactivate(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client&comp/edit', methods =['POST'])
+def client_edit():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.edit(data, dbconnect)
+    return jsonify(payload), 200
+
+
 @app.route('/student/inactivate', methods =['POST'])
 def student_inactivate():
     # Accepts a JSON object with a student ID and

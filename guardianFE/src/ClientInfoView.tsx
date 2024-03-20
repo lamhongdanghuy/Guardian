@@ -49,13 +49,13 @@ function ClientInfoView(info: props) {
     );
     if (confirmInActivate) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/client/inactivate", {
+      await fetch(`${API_BASE_URL}/client&comp/inactivate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           token: user.token ? user.token : "",
         },
-        body: JSON.stringify({ clientID: info.clientID }),
+        body: JSON.stringify({ clientID: info.clientID}),
       });
       setSubmitted(true);
       setSubmitting(false);
@@ -65,21 +65,25 @@ function ClientInfoView(info: props) {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/client/update", {
+    await fetch(`${API_BASE_URL}/client&comp/edit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
       body: JSON.stringify({
-        clientID: info.clientID,
-        clientFName,
-        clientLName,
-        major,
-        email,
-        phone,
-        projectIntrest,
-
+        info: info.clientID,
+        F_Name: clientFName,
+        L_Name: clientLName,
+        Email: email,
+        P_Number: phone,
+        C_Name: company,
+        C_Type: type,
+        C_URL: url,
+        C_Revenue: revenue,
+        C_IT: it,
+        C_Sen_Data: sensitivedata,
+        C_SRA: sra,
       }),
     });
     setSubmitted(true);
@@ -95,7 +99,7 @@ function ClientInfoView(info: props) {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ clientID: info.clientID, companyID: info.companyID }),
+      body: JSON.stringify({ clientID: info.clientID}),
     });
     const result = await response.json();
 
@@ -237,7 +241,20 @@ function ClientInfoView(info: props) {
                   }}
                 >
                   Phone: {""}
-                  <span style={{ color: "#33689c" }}>{phone}</span>
+                  <input
+                    type="tel"
+                    value={phone ?? ""}
+                    onChange={(e) => setPhone(parseInt(e.target.value))}
+                    pattern="[0-9]{10}"
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  />
                 </h1>
               </div>
               <div className="topInfo">
@@ -249,7 +266,21 @@ function ClientInfoView(info: props) {
                   }}
                 >
                   type: {""}
-                  <span style={{ color: "#33689c" }}>{type}</span>
+                  <select
+                    value={type ?? ""}
+                    onChange={(e) => setType(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  >
+                    <option value="Non-Profit">Non-Profit</option>
+                    <option value="For Profit">For Profit</option>
+                  </select>
                 </h1>
                 <h1
                   style={{
@@ -260,8 +291,20 @@ function ClientInfoView(info: props) {
                     maxWidth: "50%",
                   }}
                 >
-                  url: {""}
-                  <span style={{ color: "#33689c" }}>{url}</span>
+                  URL: {""}
+                  <input
+                    type="text"
+                    value={url ?? ""}
+                    onChange={(e) => setUrl(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  />
                 </h1>
               </div>
               <h1
@@ -273,9 +316,19 @@ function ClientInfoView(info: props) {
                 }}
               >
                 Revenue: {""}
-                <span style={{ color: "#33689c" }}>
-                  {revenue}
-                </span>
+                <input
+                  type="number"
+                  value={revenue ?? ""}
+                  onChange={(e) => setRevenue(parseFloat(e.target.value))}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
+                />
               </h1>
               <h1
                 style={{
@@ -286,9 +339,19 @@ function ClientInfoView(info: props) {
                 }}
               >
                 Number of IT staff:{" "}
-                <span style={{ color: "#33689c" }}>
-                  {it}
-                </span>
+                <input
+                  type="number"
+                  value={it ?? ""}
+                  onChange={(e) => setIT(parseInt(e.target.value))}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
+                />
               </h1>
               <h1
                 style={{
@@ -299,9 +362,23 @@ function ClientInfoView(info: props) {
                 }}
               >
                 Last Security Risk Assement:{" "}
-                <span style={{ color: "#33689c" }}>
-                  {sra}
-                </span>
+                <select
+                    value={sra ?? ""}
+                    onChange={(e) => setSRA(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  >
+                    <option value="Never">Never</option>
+                    <option value="1-2">1 - 2 years ago</option>
+                    <option value="3-5">3 - 5 years ago</option>
+                    <option value="More than 5">5+ years ago</option>
+                  </select>
               </h1>
               <h1
                 style={{
@@ -311,9 +388,24 @@ function ClientInfoView(info: props) {
                 }}
               >
                 Sensitive Data: {""}
-                <span style={{ color: "#33689c" }}>
-                  {sensitivedata}
-                </span>
+                <textarea
+                  placeholder="Describe here... (Less than 30 characters)"
+                  rows={4}
+                  cols={40}
+                  value={sensitivedata ?? ""}
+                  id="otherNORA"
+                  name="otherNORA"
+                  onChange={(e) => setSensitiveData(e.target.value)}
+                  maxLength={30}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
+                ></textarea>
               </h1>
               <br />
             </>
@@ -372,7 +464,7 @@ function ClientInfoView(info: props) {
                     marginLeft: "0vw",
                   }}
                 >
-                  type: {""}
+                  Type: {""}
                   <span style={{ color: "#33689c" }}>{type}</span>
                 </h1>
                 <h1
@@ -384,7 +476,7 @@ function ClientInfoView(info: props) {
                     maxWidth: "50%",
                   }}
                 >
-                  url: {""}
+                  URL: {""}
                   <span style={{ color: "#33689c" }}>{url}</span>
                 </h1>
               </div>
