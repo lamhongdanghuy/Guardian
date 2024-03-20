@@ -21,13 +21,14 @@ import mariadb
 import pymysql
 from sqlalchemy import create_engine
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from Students import Students
 from ManageTable import ManageTable
 import smtplib
 import bcrypt
 from email.mime.text import MIMEText
 
 # Local application imports
+from Students import Students
+from Clients import Clients
 from update import Update
 from Projects import Project
 from Applications import Application
@@ -297,6 +298,17 @@ def client_info_get():
     payload = 0
     infoInstance = infoGetter()
     payload = infoInstance.getclientinfo(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client&comp/info', methods =['POST'])
+def client_comp_info_get():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.get_specific_clients(data['clientID'], dbconnect)
     return jsonify(payload), 200
 
 @app.route('/student/inactivate', methods =['POST'])
@@ -588,6 +600,15 @@ def getStudents():
     studentsInstace = Students()
     db_Connection = DatabaseConnection()
     payload = studentsInstace.get_students(db_Connection)
+    return jsonify(payload), 200
+
+@app.route('/getClients', methods=['POST'])
+def getClients():
+    # returns list of students
+    clientsInstace = Clients()
+    db_Connection = DatabaseConnection()
+    payload = clientsInstace.get_clients(db_Connection)
+    print(payload)
     return jsonify(payload), 200
 
 def createFirstClinicDirector():
