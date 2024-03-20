@@ -1,5 +1,5 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { createContext, useState, ReactNode } from "react";
+import Cookies from "js-cookie";
 
 interface LoginProviderProps {
   children: ReactNode;
@@ -19,6 +19,15 @@ interface LoginContextProps {
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
+// Define a custom interface for cookie options
+interface CookieOptions {
+  secure?: boolean;
+  expires?: number | Date;
+  domain?: string;
+  path?: string;
+  sameSite?: "strict" | "lax" | "none";
+}
+
 const defaultUser: User = {
   email: "",
   id: "",
@@ -36,21 +45,35 @@ const defaultContext: LoginContextProps = {
 export const LoginContext = createContext(defaultContext);
 
 export function LoginProvider({ children }: LoginProviderProps) {
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const [user, setUser] = useState<User>(cookies.user || defaultUser);
+  const [user, setUser] = useState<User>(() =>
+    JSON.parse(Cookies.get("user") || JSON.stringify(defaultUser))
+  );
 
-  useEffect(() => {
-    if (user.token) {
-      // Set the user cookie with secure flag
-      setCookie("user", user, { path: "/", secure: true });
-    } else {
-      // Remove the user cookie if the user is not logged in
-      removeCookie("user");
-    }
-  }, [user, setCookie, removeCookie]);
+  // Adjust cookie settings to include 'secure' and 'SameSite' attributes
+  const cookieOptions: CookieOptions = {
+    secure: true, // Ensures cookies are sent over secure HTTPS connections
+    sameSite: "strict", // Controls when cookies are sent in cross-site requests
+  };
+
+  // Set the cookie with the adjusted options
+  const setUserCookie = (user: User) => {
+    Cookies.set("user", JSON.stringify(user), cookieOptions);
+  };
 
   return (
-    <LoginContext.Provider value={{ user, setUser }}>
+    <LoginContext.Provider
+      value={{
+        user,
+        setUser: (newUser) => {
+          setUser((prevState) => {
+            const updatedUser =
+              typeof newUser === "function" ? newUser(prevState) : newUser;
+            setUserCookie(updatedUser);
+            return updatedUser;
+          });
+        },
+      }}
+    >
       {children}
     </LoginContext.Provider>
   );

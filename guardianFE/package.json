@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "pandas": "^0.0.3",
     "react": "^18.2.0",
@@ -21,6 +22,7 @@
     "react-table": "^7.8.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/react-table": "^7.7.19",
