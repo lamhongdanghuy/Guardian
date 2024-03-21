@@ -1,5 +1,8 @@
-#Contributor: Hong Lam
-#Minor Changes + Bugfixes: Joel Chamakala and Albert Luna
+#Contributor: Hong Lam, Joel Chamakala, and Albert Luna
+
+#Hong Lam: Base Code 80%
+#Albert Luna: Compatibility refactor with other files 10%
+#Joel Chamakala: Add Faculty Table 10%
 
 import os
 from sshtunnel import SSHTunnelForwarder

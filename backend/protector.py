@@ -1,5 +1,8 @@
 # Contributors: Jesus Ocampo and Albert Luna
 
+# Jesus Ocampo: Base Code 75%
+# Albert Luna: Rewrite and implimentation 25%
+
 import functools
 import jwt
 from flask import Flask, request

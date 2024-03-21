@@ -1,5 +1,9 @@
 #Contributors: Albert Luna, Hong Lam, Joel Chamakala
 
+#Albert Luna: Base Code getting students 30%
+#Hong Lam: Update and deactivate functionality: 60%
+#Joel Chamakala: Edit Studnet Role 10%
+
 class Students:
 
     def get_students(self, db_Connection):

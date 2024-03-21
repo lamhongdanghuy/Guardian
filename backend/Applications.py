@@ -1,6 +1,14 @@
 #Contributors: Jesus Ocampo, Albert Luna, Hong Lam
 #Bug Fixes: Joel Chamakala
 
+#Jesus Ocampo 30% Base Code
+
+#Albert Luna 25% Rewriting code for compatibility
+
+#Hong Lam 40% Adding Approve / Reject Functionality
+
+#Joel Chamakala 5% Bug Fixes
+
 from flask import jsonify
 from DatabaseTables import DataBase
 

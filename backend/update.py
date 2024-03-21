@@ -1,4 +1,4 @@
-#Contributor: Hong Lam
+#Contributor: Hong Lam 100%
 
 class Update():
     def faculty_update(self, db_Connection, data):

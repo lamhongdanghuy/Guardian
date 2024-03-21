@@ -1,5 +1,8 @@
-#Contributors: Joel Chamakala, Hong Lam, Dinh Phuong
-#Minor Changes: Albert Luna
+#Contributors: Joel Chamakala
+#Minor Changes: Albert Luna , Hong Lam
+
+#Joel Chamakala: Base Code logins in users: 85%
+#Hong Lam & Albert Luna: Hotfixes and Name Changes 15% 
 
 from flask import request, jsonify
 from datetime import datetime, timedelta

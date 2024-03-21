@@ -1,8 +1,13 @@
 # Contributors: Hong Lam and Albert Luna
 # Bugfixes: Joel Chamakala
 
+#Albert Luna: Base Code gets proposals from database 50%
+#Hong Lam: Approve and Reject functionality 40%
+#Joel Chamakala: Bugfixes 10%
+
 from connectDB import DatabaseConnection
 from flask import jsonify
+
 
 class proposal:
     def get_proposal_info(self, proposal_ID):

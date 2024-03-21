@@ -1,4 +1,11 @@
-# Contributors: Albert Luna, Hong Lam, Christian Riviera, Joel Chamakala
+# Contributors: Albert Luna, Hong Lam, Christian Riviera
+
+#Christian Riviera 30% Base Code
+
+#Albert Luna 40% Database Implementation for client apply and student apply
+
+#Hong Lam 30% add faculty and add project routes
+#
 
 import decimal
 from flask import request, jsonify

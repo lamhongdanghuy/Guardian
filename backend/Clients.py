@@ -1,4 +1,7 @@
 #Contributors: Hong Lam and Joel Chamakala
+#   Hong Lam 90% Base Code
+#   Joel Chamakala 10% Email Edit
+
 
 class Clients:
 
