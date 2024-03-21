@@ -74,7 +74,7 @@ function StudentApplyForm() {
   ) => {
     setProjectType(event.target.value);
   };
-
+  //API call to send student application and validates input fields prior
   const sendData = async () => {
     const emailPattern = /.+@depaul\.edu/;
     const passwordPattern =
