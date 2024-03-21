@@ -5,7 +5,7 @@ class Students:
         query = """
             SELECT *
             FROM STUDENT
-            WHERE Status = "Active";
+            WHERE Status = "Active" OR Status = "Inactive";
             """
         print(query)
         projectData = db_Connection.select_query(query)
