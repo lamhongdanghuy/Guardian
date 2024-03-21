@@ -32,7 +32,7 @@ class Login:
                 SELECT *
                 FROM {}
                 WHERE Email = '{}';
-                """.format(LoginData.at[0, 'Account_Type'].upper(),identifier)
+                """.format(LoginData.at[0, 'Account_Type'].upper(), identifier)
             userInfo = db_Connection.select_query(idQuery)
 
             print("Creating Payload")

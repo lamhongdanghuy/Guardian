@@ -32,10 +32,10 @@ function StudentInfoView(studentID: props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
-
   const [studentFName, setStudentFName] = useState<string | null>("");
   const [studentLName, setStudentLName] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
+  const [oldEmail, setOldEmail] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
   const [projectIntrest, setProjectIntrest] = useState<string | null>("");
@@ -121,6 +121,7 @@ function StudentInfoView(studentID: props) {
         studentLName,
         major,
         email,
+        oldEmail,
         phone,
         projectIntrest,
         gradDate: gradDateFormatted,
@@ -150,6 +151,7 @@ function StudentInfoView(studentID: props) {
     setStudentLName(result.student_info[0].L_Name);
     setMajor(result.student_info[0].Major);
     setEmail(result.student_info[0].Email);
+    setOldEmail(result.student_info[0].Email);
     setPhone(result.student_info[0].P_Number);
     setProjectIntrest(result.student_info[0].Proj_Interest);
     setGradDateUnformatted(result.student_info[0].Grad_Date);

@@ -53,6 +53,11 @@ function HomeView() {
           {sentVerify == true && <h3>Sent Verification Email</h3>}
         </div>
       )}
+      {user.emailVerification == true && user.status == "In Review" && (
+        <div className="verifiedInReview">
+          <h3 className="verifiedInReview">Your Application Is In Review</h3>
+        </div>
+      )}
     </div>
   );
 }

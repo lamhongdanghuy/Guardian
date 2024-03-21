@@ -89,7 +89,7 @@ class apply:
         major = data.get('major')
         year_standing = data.get('yearStanding')
         grad_date = pd.to_datetime(data.get('gradDate'))
-        course_taken = data.get('courseTaken')
+        course_taken = data.get('selectedCourses')
         curious = data.get('curious')
         whenHear = data.get('hear')
         eth = data.get('eth')
