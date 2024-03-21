@@ -1,3 +1,5 @@
+#Contributor: Hong Lam
+
 class Update():
     def faculty_update(self, db_Connection, data):
         facultyID = data['facultyID']

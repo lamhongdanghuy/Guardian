@@ -1,3 +1,5 @@
+#Contribution: Joel Chamakala
+
 from DatabaseTables import DataBase
 from connectDB import DatabaseConnection
 

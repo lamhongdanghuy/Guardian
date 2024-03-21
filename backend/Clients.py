@@ -1,3 +1,5 @@
+#Contributors: Hong Lam and Joel Chamakala
+
 class Clients:
 
     def get_clients(self, db_Connection):
