@@ -1,5 +1,5 @@
 //Card component for proposals on the proposals tab.
-//Contributor: Albert Luna
+//Contributor: Albert Luna Code + Style 100%
 
 interface ProposalCardProps {
   name: string;

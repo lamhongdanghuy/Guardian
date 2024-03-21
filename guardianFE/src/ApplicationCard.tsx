@@ -1,5 +1,5 @@
 //Card Component for Student Applications, Visible on Student Applications Tab
-//Contributor: Albert Luna
+//Contributor: Albert Luna 100%
 
 interface ApplicationCardProps {
   studentID: string;

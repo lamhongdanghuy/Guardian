@@ -1,5 +1,5 @@
 //Students Tab in Dashboard
-//Contributor: Albert Luna
+//Contributor: Albert Luna code and style 100%
 
 import ApplicationCard from "./ApplicationCard";
 import { useState, useEffect, useContext } from "react";

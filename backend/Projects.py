@@ -1,5 +1,10 @@
 # Contributors: Albert Luna and Hong Lam
 # Minor Changes: Joel Chamakala
+
+#Albert Luna: Base Code gets proposals from database 35%
+#Joel Chamakala: Bugfixees minor changes: 10%
+#Hong Lam: Edit, Update, Reject Approve 65%
+
 from datetime import datetime, timedelta
 import pandas as pd
 

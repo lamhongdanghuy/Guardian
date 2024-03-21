@@ -1,4 +1,4 @@
-#Contribution: Joel Chamakala
+#Contribution: Joel Chamakala 100%
 
 from DatabaseTables import DataBase
 from connectDB import DatabaseConnection

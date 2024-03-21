@@ -1,5 +1,5 @@
 //Clients Tab in Dashboard
-//Contributor: Hong Lam
+//Contributor: Hong Lam 100%
 
 import ClientCard from "./ClientCard";
 import { useState, useEffect, useContext } from "react";

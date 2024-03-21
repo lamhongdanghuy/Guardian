@@ -1,5 +1,5 @@
 //Dashboard Propose a Project Tab
-//Contributor: Albert Luna
+//Contributor: Albert Luna 100%
 
 import { LoginContext } from "./LoginContextProvider";
 import { useState, useContext } from "react";

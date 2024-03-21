@@ -1,5 +1,5 @@
 // View Tables Tab in Dashboard
-// Contributors: Albert Luna
+// Contributors: Albert Luna 100% Code and Style
 
 import { useTable } from "react-table";
 import { useState, useEffect } from "react";

@@ -1,6 +1,6 @@
 #Contributors for API Routes: All
-#Contributor for Email Validation: Dinh Phuong
-#Contributor for Reset Password Email: Christian Riviera
+#Contributor for Email Validation Functionality: Dinh Phuong 100%
+#Contributor for Reset Password Email Functionality: Christian Riviera 100%
 
 # Standard library imports
 import random

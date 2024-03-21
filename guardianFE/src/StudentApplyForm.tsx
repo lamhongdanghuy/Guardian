@@ -1,5 +1,8 @@
 //Student Apply Form
-// Contributors: Hong Lam
+// Contributors: Hong Lam + Albert Luna
+//Hong Lam: Code 95%
+//Albert Luna Color: 5%
+
 
 import { useState } from "react";
 import API_BASE_URL from "./fetchApiURL";

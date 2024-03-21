@@ -1,6 +1,9 @@
 // Project Proposal Info View in Dashboard
 // Contributors: Albert Luna, Hong Lam
 
+//Albert Luna: Base Code + Styling 70%
+//Hong Lam: Edit Functionality 30%
+
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";

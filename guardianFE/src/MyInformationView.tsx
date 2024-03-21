@@ -1,6 +1,9 @@
 //My Information Tab
 //Contributor: Albert Luna, Hong Lam
 
+//Albert Luna: Base Code + Styling 50%
+//Hong Lam: Edit Function 50%
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";

@@ -1,5 +1,10 @@
 #Contributors: Amen Akploh, Albert Luna
 #Minor Changes: Joel Chamakala, Hong Lam
+
+#Amen Akploh: Base Code gets project info 65%
+#Albert Luna: Implemntation and Compatibility Rewrite 30%
+#Joel Chamakala, Hong Lam 5%
+
 import pandas as pd;
 
 class infoGetter:

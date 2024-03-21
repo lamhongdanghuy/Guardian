@@ -1,6 +1,9 @@
 // Client Information View when clicking on a client in Dashboard
 // Contributors: Albert Luna, Hong Lam
 
+//Albert Luna: Base Code + Styling 70%
+//Hong Lam: Edit Functionality 30%
+
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";

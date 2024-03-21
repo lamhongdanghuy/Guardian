@@ -1,5 +1,5 @@
 //Header for the Home Pages
-//Contributor: Albert Luna
+//Contributor: Albert Luna code and style 100%
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";

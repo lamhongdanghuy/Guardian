@@ -1,6 +1,9 @@
 //Dashboard Page
 //Contributors: Albert Luna, Joel Chamakala
 
+//Albert Luna: 85% Base Code, Styling
+//Joel Chamakala: Design Input 15%
+
 import { useState, useContext, useEffect } from "react";
 import HomeView from "./HomeView";
 import ProjectsView from "./ProjectsView";

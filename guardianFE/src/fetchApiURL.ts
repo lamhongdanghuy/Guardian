@@ -1,5 +1,5 @@
 // API URL shortcut. Allows quick swiching between local and deployed API URLs.
-// Contributors: Joel Chamakala
+// Contributors: Joel Chamakala 100%
 
 //https://localhost:5000
 //https://18.216.233.27:5000

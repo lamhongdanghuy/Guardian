@@ -1,5 +1,5 @@
 //Project Proposals Cards View in Dashboard
-// Contributors: Albert Luna
+// Contributors: Albert Luna Code + Style 100%
 
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";

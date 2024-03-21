@@ -1,5 +1,5 @@
 // Card component for faculty members on the about page.
-// Contributor: Albert Luna
+// Contributor: Albert Luna 100%
 
 interface FacultyCardProps {
   name: string;
