@@ -1,3 +1,6 @@
+//Add Faculty Form In Dashboard
+//Contributor: Hong Lam
+
 import { useState } from "react";
 import API_BASE_URL from "./fetchApiURL";
 
@@ -11,6 +14,7 @@ function AddFaculty() {
   const [role, setRole] = useState("");
   const [showResults, setShowResults] = useState(false);
 
+  //API call to insert faculty record in database
   const sendData = async () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     const passwordPattern =
@@ -52,7 +56,7 @@ function AddFaculty() {
     });
     setShowResults(true);
   };
-
+  //html
   return (
     <div>
       {!showResults ? (

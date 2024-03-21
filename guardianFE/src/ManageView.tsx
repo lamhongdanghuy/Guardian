@@ -15,10 +15,12 @@ function ManageView() {
   const [inputForm, setInputForm] = useState(false);
   const editableTables = ["Project", "Client", "Faculty", "Student"];
 
+  //rerendering of component when new table is selected.
   useEffect(() => {
     getTable(activeTable);
   }, [activeTable]);
 
+  //API call to get table from the backend.
   const getTable = async (tableName: string) => {
     const response = await fetch(`${API_BASE_URL}/get${tableName}Table`, {
       method: "GET",

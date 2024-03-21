@@ -31,6 +31,8 @@ function Dashboard() {
     navigator("/");
   };
 
+
+  //Functions passed down to cards to update dashboard when clicked.
   const studentCardClicked = (studentID: string) => {
     setPrevContainer(activeContainer);
     setActiveContainer("Student Info View");
@@ -74,6 +76,7 @@ function Dashboard() {
     }
   }, [user]);
 
+  //Returns a dashboard with a sidebar menu and a main content window.
   return (
     <div
       className="dashboard"

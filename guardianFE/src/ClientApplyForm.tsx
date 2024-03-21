@@ -46,6 +46,7 @@ function ClientApplyForm() {
     setCompType(event.target.value);
   };
 
+  //API call to send application to the database, validates input fields prior to sending info to backend.
   const sendData = async () => {
     const enteredDate = new Date(dueDate);
     const currentDate = new Date();

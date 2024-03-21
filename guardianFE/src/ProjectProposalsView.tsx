@@ -25,10 +25,12 @@ function ProposalsView(props: proposalProposalViewProp) {
   const [proposalsList, setProposalsList] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  //gets proposals on render
   useEffect(() => {
     getProposals();
   }, []);
 
+  //API Call to get project proposals from database
   const getProposals = async () => {
     const response = await fetch(`${API_BASE_URL}/get/project/proposals`, {
       method: "POST",
@@ -46,6 +48,7 @@ function ProposalsView(props: proposalProposalViewProp) {
     setLoading(false);
   };
 
+  //Component dynamically renders number of cards based on number of records from backend.
   return (
     <div>
       {loading ? (

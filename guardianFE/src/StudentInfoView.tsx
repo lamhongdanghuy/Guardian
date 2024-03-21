@@ -41,9 +41,7 @@ function StudentInfoView(studentID: props) {
   const [projectIntrest, setProjectIntrest] = useState<string | null>("");
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
 
-  // if (coursesTaken) {
-  //   selectedCourses = coursesTaken.split(", ");
-  // }
+
   const [gradDateUnformatted, setGradDateUnformatted] = useState<string | null>(
     ""
   );
@@ -52,7 +50,7 @@ function StudentInfoView(studentID: props) {
   const [availableCourses, setAvailableCourses] = useState(allCourses);
 
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-
+  
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCourse = event.target.value;
     setSelectedCourses([...selectedCourses, selectedCourse]);
@@ -87,6 +85,7 @@ function StudentInfoView(studentID: props) {
     setLoading(false);
   };
 
+  //deactivate student
   const handleInActivate = async () => {
     const confirmInActivate = window.confirm(
       "Are you sure you want deactivate this student?"
@@ -136,6 +135,7 @@ function StudentInfoView(studentID: props) {
     setIsEditing(false);
   };
 
+  //API call to get student info from the database
   const getStudentInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
