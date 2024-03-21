@@ -55,6 +55,23 @@ class Clients:
     
     
     def edit(self, data, db_Connection):
+        # Update client information in CLIENT table
+        update_client_query = """
+            UPDATE CLIENT
+            SET F_Name = "{}", L_Name = "{}", P_Number = "{}"
+            WHERE Client_ID = "{}";
+        """.format(data['F_Name'], data['L_Name'], data['P_Number'], data['info']['clientID'])
+        db_Connection.update_query(update_client_query)
+        
+        # Update company information in COMPANY table
+        update_company_query = """
+            UPDATE COMPANY
+            SET C_Name = "{}", C_Type = "{}", C_URL = "{}", C_Revenue = "{}", C_IT = "{}", C_Sen_Data = "{}", C_SRA = "{}"
+            WHERE Company_ID = "{}";
+        """.format(data['C_Name'], data['C_Type'], data['C_URL'], data['C_Revenue'], data['C_IT'], data['C_Sen_Data'], data['C_SRA'], data['info']['companyID'])
+        db_Connection.update_query(update_company_query)
+
+        # Update email in LOGIN_INFORMATION table
         select_email_query = """
             SELECT Email
             FROM CLIENT
@@ -68,22 +85,6 @@ class Clients:
             WHERE Email = "{}";
         """.format(data['Email'], email['Email'][0])  
         db_Connection.update_query(update_login_query)
-        
-        # Update client information in CLIENT table
-        update_client_query = """
-            UPDATE CLIENT
-            SET F_Name = "{}", L_Name = "{}", Email = "{}", P_Number = "{}"
-            WHERE Client_ID = "{}";
-        """.format(data['F_Name'], data['L_Name'], data['Email'], data['P_Number'], data['info']['clientID'])
-        db_Connection.update_query(update_client_query)
-        
-        # Update company information in COMPANY table
-        update_company_query = """
-            UPDATE COMPANY
-            SET C_Name = "{}", C_Type = "{}", C_URL = "{}", C_Revenue = "{}", C_IT = "{}", C_Sen_Data = "{}", C_SRA = "{}"
-            WHERE Company_ID = "{}";
-        """.format(data['C_Name'], data['C_Type'], data['C_URL'], data['C_Revenue'], data['C_IT'], data['C_Sen_Data'], data['C_SRA'], data['info']['companyID'])
-        db_Connection.update_query(update_company_query)
-        
+
         payload = {'message': 'Edit Client, Company, and LOGIN_INFORMATION Successfully!'}
         return payload
