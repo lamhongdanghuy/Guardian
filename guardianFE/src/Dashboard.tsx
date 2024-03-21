@@ -99,7 +99,7 @@ function Dashboard() {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div>{user.email}</div>
         </div>
-        <button onClick={returnToLandingPage}>Log Out</button>
+        <button onClick={returnToLandingPage}>Logout</button>
       </div>
       <div className="sidebar">
         {/* <img src="DePaul.svg" alt="Depaul Log" /> */}
