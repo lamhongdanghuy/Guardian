@@ -556,7 +556,7 @@ function ClientInfoView(info: props) {
               onClick={handleInActivate}
               style={{ backgroundColor: "#D30000" }}
             >
-              Inactivate Client
+              Deactivate Client
             </button>
             <button
               onClick={() => setIsEditing(true)}

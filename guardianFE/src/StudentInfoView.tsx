@@ -648,7 +648,7 @@ function StudentInfoView(studentID: props) {
               onClick={handleInActivate}
               style={{ backgroundColor: "#D30000" }}
             >
-              Inactivate Student
+              Deactivate Student
             </button>
             <button
               onClick={() => setIsEditing(true)}
