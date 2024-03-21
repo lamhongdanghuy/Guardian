@@ -17,6 +17,7 @@ interface Student {
   Major: string;
   gradDate: string;
   Student_ID: string;
+  Role: string;
   onClick: Function;
 }
 
@@ -26,6 +27,7 @@ function StudentsView(props: studentAppViewProp) {
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
   console.log(applicationsList);
 
+  //gets all student applications on render
   useEffect(() => {
     getApplications();
   }, []);
@@ -50,6 +52,7 @@ function StudentsView(props: studentAppViewProp) {
     setLoading(false);
   };
 
+  //dynamically renders cards based on number of records recieved.
   return (
     <div>
       {loading ? (
@@ -82,6 +85,7 @@ function StudentsView(props: studentAppViewProp) {
                     gradDate={student.gradDate}
                     onClick={props.onClick}
                     InReview={false}
+                    Role={student.Role}
                   />
                 ))}
               </div>

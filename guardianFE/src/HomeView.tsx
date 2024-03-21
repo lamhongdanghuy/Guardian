@@ -8,7 +8,8 @@ import API_BASE_URL from "./fetchApiURL";
 function HomeView() {
   const { user } = useContext(LoginContext);
   const [sentVerify, setSentVerify] = useState(false);
-
+  
+  //verifies user is logged in.
   const sendVerify = async () => {
     const response = await fetch(
       `${API_BASE_URL}/dashboard/resend-verification-link`,
@@ -51,6 +52,11 @@ function HomeView() {
             Resend
           </button>
           {sentVerify == true && <h3>Sent Verification Email</h3>}
+        </div>
+      )}
+      {user.emailVerification == true && user.status == "In Review" && (
+        <div className="verifiedInReview">
+          <h3 className="verifiedInReview">Your Application Is In Review</h3>
         </div>
       )}
     </div>

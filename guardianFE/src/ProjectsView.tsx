@@ -25,10 +25,12 @@ function ProjectsView(props: projectViewProp) {
   const { user } = useContext(LoginContext);
   const [projectsList, setProjectsList] = useState<Project[]>([]);
 
+  //component gets projects on render
   useEffect(() => {
     getProjects();
   }, []);
 
+  //API Call to get projects from database
   const getProjects = async () => {
     const response = await fetch(`${API_BASE_URL}/get/projects`, {
       method: "POST",
@@ -54,7 +56,8 @@ function ProjectsView(props: projectViewProp) {
     setProjectsList(result.projects);
     setLoading(false);
   };
-
+  
+  //Component dynamically renders number of cards based on number of records from backend.
   return (
     <div>
       {loading ? (

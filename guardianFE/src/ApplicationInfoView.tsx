@@ -23,7 +23,7 @@ function ApplicationInfoView(studentID: props) {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const { user } = useContext(LoginContext);
-
+  //API call to get student info from database
   const getStudentInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
@@ -46,12 +46,6 @@ function ApplicationInfoView(studentID: props) {
     const unformattedDate = result.student_info[0].Grad_Date;
     const date = new Date(unformattedDate);
     setGradDate(date.toISOString().split("T")[0]);
-    // const gradDate = date
-    // ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-    //     .getUTCDate()
-    //     .toString()
-    //     .padStart(2, "0")}/${date.getUTCFullYear()}`
-    // : "Not Approved";
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
@@ -94,9 +88,9 @@ function ApplicationInfoView(studentID: props) {
     setSubmitted(true);
     return result;
   };
-
+  //runs get student info when component renders
   useEffect(() => {
-    console.log("feting info");
+    console.log("fetching info");
     getStudentInfo();
     console.log(studentID);
   }, []);

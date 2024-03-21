@@ -41,7 +41,6 @@ function StudentApplyForm() {
   const [rtnData, setRtnData] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [courseTaken] = useState<String[]>([]);
   const [availableCourses, setAvailableCourses] = useState(allCourses);
   const [submitting, setSubmitting] = useState(false);
 
@@ -74,7 +73,7 @@ function StudentApplyForm() {
   ) => {
     setProjectType(event.target.value);
   };
-
+  //API call to send student application and validates input fields prior
   const sendData = async () => {
     const emailPattern = /.+@depaul\.edu/;
     const passwordPattern =
@@ -143,7 +142,7 @@ function StudentApplyForm() {
         major,
         yearStanding,
         gradDate,
-        courseTaken,
+        selectedCourses,
         projectType,
         curious,
         hear,

@@ -18,6 +18,7 @@ interface Student {
   gradDate: string;
   Student_ID: string;
   onClick: Function;
+  Role: string;
 }
 
 function StudentApplicationsView(props: studentAppViewProp) {
@@ -26,10 +27,12 @@ function StudentApplicationsView(props: studentAppViewProp) {
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
   console.log(applicationsList);
 
+  //gets applications on render
   useEffect(() => {
     getApplications();
   }, []);
 
+  //API call to get student applications from database
   const getApplications = async () => {
     const response = await fetch(`${API_BASE_URL}/get/student/applications`, {
       method: "POST",
@@ -50,6 +53,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
     setLoading(false);
   };
 
+  //dynamically renders cards based on number of records recieved.
   return (
     <div>
       {loading ? (
@@ -82,6 +86,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
                     gradDate={student.gradDate}
                     onClick={props.onClick}
                     InReview={true}
+                    Role={student.Role}
                   />
                 ))}
               </div>

@@ -558,7 +558,7 @@ def confirm_email(token):
         query = "UPDATE LOGIN_INFORMATION SET Email_Verified = 1 WHERE email = '{}'".format(email)
         DatabaseConnection().update_query(query)
     except SignatureExpired:
-        return '<h1>The token is expired!</h1>'
+        return '<h1>The token is expired! Login to your account and resend a verification link</h1>'
     return '<h1>The email is confirmed!</h1>'
 
 @app.route('/project/propose', methods=['POST'])
