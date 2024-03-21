@@ -47,13 +47,15 @@ function ClientApplyForm() {
   };
 
   const sendData = async () => {
-    const enteredDate = new Date(dueDate);
+    const enteredDate = new Date(dueDate + "T00:00:00");
     const currentDate = new Date();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
     const phonePattern = /^\d{10}$/;
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     let invalidFields = [];
+    console.log(enteredDate);
+    console.log(currentDate);
     if (sra === "") {
       invalidFields.push("Number of Security Risk Assessments");
     }
@@ -72,6 +74,8 @@ function ClientApplyForm() {
       return;
     }
     if (enteredDate <= currentDate) {
+      console.log(enteredDate);
+      console.log(currentDate);
       alert("Please enter a future date.");
       return;
     }
