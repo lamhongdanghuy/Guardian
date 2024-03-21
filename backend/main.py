@@ -194,6 +194,7 @@ def faculty_apply():
     # Endpoint for faculty to apply. Accepts POST requests with JSON data containing email.
     # Returns a JSON response with a message and status code.
     data = request.get_json()
+    print(data)
     email = data.get('Email')
 
     applyInstance = apply()

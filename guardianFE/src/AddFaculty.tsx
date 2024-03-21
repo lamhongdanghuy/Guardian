@@ -11,7 +11,7 @@ function AddFaculty() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("Admin Assistant");
   const [showResults, setShowResults] = useState(false);
 
   //API call to insert faculty record in database
@@ -39,7 +39,7 @@ function AddFaculty() {
       return;
     }
     console.log("sending data");
-    console.log(password, F_Name, L_Name, Email, P_Number);
+    console.log(password, F_Name, L_Name, Email, P_Number, role);
     await fetch(`${API_BASE_URL}/apply/faculty`, {
       method: "POST",
       headers: {
