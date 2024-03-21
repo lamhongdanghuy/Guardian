@@ -55,8 +55,8 @@ function ClientApplyForm() {
     const phonePattern = /^\d{10}$/;
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     let invalidFields = [];
-    console.log(enteredDate);
-    console.log(currentDate);
+    //console.log(enteredDate);
+    //console.log(currentDate);
     if (sra === "") {
       invalidFields.push("Number of Security Risk Assessments");
     }
@@ -75,8 +75,8 @@ function ClientApplyForm() {
       return;
     }
     if (enteredDate <= currentDate) {
-      console.log(enteredDate);
-      console.log(currentDate);
+      //console.log(enteredDate);
+      //console.log(currentDate);
       alert("Please enter a future date.");
       return;
     }

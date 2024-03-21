@@ -43,7 +43,6 @@ function StudentInfoView(studentID: props) {
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
   const [role, setRole] = useState<string | null>("");
 
-
   const [gradDateUnformatted, setGradDateUnformatted] = useState<string | null>(
     ""
   );
@@ -52,7 +51,7 @@ function StudentInfoView(studentID: props) {
   const [availableCourses, setAvailableCourses] = useState(allCourses);
 
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-  
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCourse = event.target.value;
     setSelectedCourses([...selectedCourses, selectedCourse]);
@@ -173,14 +172,14 @@ function StudentInfoView(studentID: props) {
         }
       }
     }
-    console.log(takenList);
+    //console.log(takenList);
     setSelectedCourses(takenList as string[]);
 
     setAvailableCourses((availableCourses) =>
       availableCourses.filter((course) => !takenList.includes(course))
     );
-    console.log(selectedCourses);
-    console.log(availableCourses);
+    //console.log(selectedCourses);
+    //console.log(availableCourses);
     setCoursesTaken(takenList.join(", "));
   };
 

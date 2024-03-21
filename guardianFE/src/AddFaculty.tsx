@@ -38,8 +38,8 @@ function AddFaculty() {
       alert("Email is not valid. Please enter a valid email.");
       return;
     }
-    console.log("sending data");
-    console.log(password, F_Name, L_Name, Email, P_Number);
+    //console.log("sending data");
+    //console.log(password, F_Name, L_Name, Email, P_Number);
     await fetch(`${API_BASE_URL}/apply/faculty`, {
       method: "POST",
       headers: {

@@ -29,7 +29,7 @@ function ManageView() {
       },
     });
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     const transformedColumns = data.columns.map((column: any) => ({
       Header: column,
       accessor: column,

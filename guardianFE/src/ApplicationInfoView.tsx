@@ -34,8 +34,8 @@ function ApplicationInfoView(studentID: props) {
       body: JSON.stringify({ studentID }),
     });
     const result = await response.json();
-    console.log("hi");
-    console.log(result);
+    //console.log("hi");
+    //console.log(result);
     setStudentName(
       result.student_info[0].F_Name + " " + result.student_info[0].L_Name
     );
@@ -90,9 +90,9 @@ function ApplicationInfoView(studentID: props) {
   };
   //runs get student info when component renders
   useEffect(() => {
-    console.log("fetching info");
+    //console.log("fetching info");
     getStudentInfo();
-    console.log(studentID);
+    //console.log(studentID);
   }, []);
 
   return (

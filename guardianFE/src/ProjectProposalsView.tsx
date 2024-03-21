@@ -43,7 +43,7 @@ function ProposalsView(props: proposalProposalViewProp) {
       }),
     });
     const result = await response.json();
-    console.log(result);
+    //console.log(result);
     setProposalsList(result.projects);
     setLoading(false);
   };

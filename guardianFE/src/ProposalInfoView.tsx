@@ -11,8 +11,8 @@ interface props {
 }
 
 function ProposalInfoView(ProposalID: props) {
-  console.log(ProposalID);
-  console.log("reading proposalID");
+  //console.log(ProposalID);
+  //console.log("reading proposalID");
   interface Member {
     Full_Name: string;
     Email: string;
@@ -41,7 +41,7 @@ function ProposalInfoView(ProposalID: props) {
       )
     );
   };
-  
+
   //API call to approve project
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
@@ -96,7 +96,7 @@ function ProposalInfoView(ProposalID: props) {
       body: JSON.stringify({ ProposalID }),
     });
     const result = await response.json();
-    console.log(result);
+    //console.log(result);
 
     setCompanyName(result.project_info.Company_Name);
     setType(result.project_info.Project_Type);

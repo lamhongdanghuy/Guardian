@@ -10,7 +10,6 @@ interface clientAppViewProp {
   onClick: Function;
 }
 
-
 interface Client {
   F_Name: string;
   L_Name: string;
@@ -26,7 +25,7 @@ function ClientsView(props: clientAppViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(LoginContext);
   const [clientsList, setclientsList] = useState<Client[]>([]);
-  console.log(clientsList);
+  //console.log(clientsList);
 
   useEffect(() => {
     getApplications();
@@ -42,7 +41,7 @@ function ClientsView(props: clientAppViewProp) {
       body: JSON.stringify({ userID: user.id }),
     });
     const result = await response.json();
-    console.log(result)
+    //console.log(result)
     // Check if result.applications exists and is not empty
     if (result.applications && result.applications.length > 0) {
       setclientsList(result.applications);

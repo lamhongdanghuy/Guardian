@@ -25,7 +25,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(LoginContext);
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
-  console.log(applicationsList);
+  //console.log(applicationsList);
 
   //gets applications on render
   useEffect(() => {

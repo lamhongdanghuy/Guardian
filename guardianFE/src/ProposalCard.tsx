@@ -16,9 +16,9 @@ function ProposalCard(props: ProposalCardProps) {
   const date = unforattedDate.toDateString();
 
   const handleClick = () => {
-    console.log("clicked");
-    console.log(props);
-    console.log(props.ProposalID);
+    //console.log("clicked");
+    //console.log(props);
+    //console.log(props.ProposalID);
     props.onClick(props.ProposalID);
   };
 

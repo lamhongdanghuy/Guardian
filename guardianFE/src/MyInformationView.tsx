@@ -154,7 +154,7 @@ function MyInformationView() {
   };
   //API call gets student info if user is student
   const getStudentInfo = async () => {
-    console.log(user.id);
+    //console.log(user.id);
     const response = await fetch(`${API_BASE_URL}//student/info`, {
       method: "POST",
       headers: {
@@ -189,7 +189,7 @@ function MyInformationView() {
 
   //conditionally calls load info function based on role.
   useEffect(() => {
-    console.log(user.role);
+    //console.log(user.role);
     if (user.role.toUpperCase() === "CLIENT") {
       getClientInfo();
     } else if (

@@ -50,13 +50,13 @@ function ProjectsView(props: projectViewProp) {
       }),
     });
     const result = await response.json();
-    console.log(result);
-    console.log("reading projects");
-    console.log(result.projects);
+    //console.log(result);
+    //console.log("reading projects");
+    //console.log(result.projects);
     setProjectsList(result.projects);
     setLoading(false);
   };
-  
+
   //Component dynamically renders number of cards based on number of records from backend.
   return (
     <div>
@@ -68,7 +68,8 @@ function ProjectsView(props: projectViewProp) {
             <h1 style={{ fontSize: "10vh" }}>No available projects</h1>
           ) : (
             <>
-              <h1 style={{ fontSize: "10vh" }}>Projects</h1><div
+              <h1 style={{ fontSize: "10vh" }}>Projects</h1>
+              <div
                 style={{
                   margin: "0 5vw",
                   display: "flex",
@@ -88,7 +89,8 @@ function ProjectsView(props: projectViewProp) {
                     type={project.Pro_Type}
                     onClick={props.onClick}
                     projectID={project.Proj_ID}
-                    dueDate={project.Due_Date} />
+                    dueDate={project.Due_Date}
+                  />
                 ))}
               </div>
             </>

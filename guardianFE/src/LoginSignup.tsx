@@ -29,7 +29,7 @@ function LoginSignup() {
   const handleForgotPassword = () => {
     setPassForm(true);
   };
-  
+
   //validates user email for forgot password and continues process.
   const handleSentCode = () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
@@ -89,7 +89,7 @@ function LoginSignup() {
 
     const temp = jwtDecode(result);
     //////////////////
-    console.log(temp);
+    //console.log(temp);
     //////////////////
     if ("message" in temp && temp.message === "Login successful!") {
       setSuccess("Login Successful");

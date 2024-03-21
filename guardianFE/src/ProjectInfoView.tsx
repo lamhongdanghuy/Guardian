@@ -156,7 +156,7 @@ function ProjectInfoView(projectID: props) {
       body: JSON.stringify({ projectID }),
     });
     const result = await response.json();
-    console.log(result);
+    //console.log(result);
 
     setClientName(result.project_info[0].C_Name);
     setType(result.project_info[0].Pro_Type);
@@ -175,9 +175,9 @@ function ProjectInfoView(projectID: props) {
 
   //loads project info on component render
   useEffect(() => {
-    console.log("feting info");
+    //console.log("feting info");
     getProjectInfo();
-    console.log(projectID);
+    //console.log(projectID);
   }, []);
 
   return (

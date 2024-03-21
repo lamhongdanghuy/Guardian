@@ -42,8 +42,8 @@ function Dashboard() {
     setPrevContainer(activeContainer);
     setActiveContainer("Project Info View");
     setOpenProject(projectID);
-    console.log("card clicked");
-    console.log(projectID);
+    //console.log("card clicked");
+    //console.log(projectID);
   };
 
   const applicationCardClicked = (studentID: string) => {
@@ -53,8 +53,8 @@ function Dashboard() {
   };
 
   const proposalCardClicked = (proposalID: string) => {
-    console.log("proposal card clicked");
-    console.log(proposalID);
+    //console.log("proposal card clicked");
+    //console.log(proposalID);
     setPrevContainer(activeContainer);
     setActiveContainer("Proposal Info View");
     setOpenProposal(proposalID);
