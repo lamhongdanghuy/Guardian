@@ -69,7 +69,6 @@ function Dashboard() {
   const [openProposal, setOpenProposal] = useState("");
   const [openStudentInfo, setOpenStudentInfo] = useState("");
   const [openClientInfo, setOpenClientInfo] = useState("");
-  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.id === "") {
       navigator("/login");
@@ -137,7 +136,7 @@ function Dashboard() {
           )}
           {(user.role === "Admin Assistant" ||
             user.role === "Clinic Director" ||
-            user.role === "Board Director") && (
+            user.role === "Board Of Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Students View")}
@@ -147,8 +146,7 @@ function Dashboard() {
           )}
           {(user.role === "Admin Assistant" ||
             user.role === "Clinic Director" ||
-            user.role === "Board Director" ||
-            devMode) && (
+            user.role === "Board Of Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Clients View")}
@@ -157,8 +155,7 @@ function Dashboard() {
             </div>
           )}
           {(user.role === "Admin Assistant" ||
-            user.role === "Clinic Director" ||
-            devMode) && (
+            user.role === "Clinic Director") && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
