@@ -103,14 +103,7 @@ function Dashboard() {
         </div>
         <button
           onClick={() => {
-            setUser({
-              id: "",
-              email: "",
-              role: "",
-              token: "",
-              emailVerification: false,
-              status: "",
-            });
+            returnToLandingPage
           }}
         >
           Log Out
