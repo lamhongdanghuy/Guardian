@@ -1,3 +1,6 @@
+# Contributors: Hong Lam and Albert Luna
+# Bugfixes: Joel Chamakala
+
 from connectDB import DatabaseConnection
 from flask import jsonify
 

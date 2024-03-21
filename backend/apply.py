@@ -1,3 +1,5 @@
+# Contributors: Albert Luna, Hong Lam, Christian Riviera, Joel Chamakala
+
 import decimal
 from flask import request, jsonify
 import json

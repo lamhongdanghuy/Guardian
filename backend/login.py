@@ -1,3 +1,6 @@
+#Contributors: Joel Chamakala, Hong Lam, Dinh Phuong
+#Minor Changes: Albert Luna
+
 from flask import request, jsonify
 from datetime import datetime, timedelta
 import pandas as pd
