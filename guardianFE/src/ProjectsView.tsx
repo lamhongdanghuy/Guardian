@@ -1,5 +1,5 @@
 //Projects Cards View in Dashboard
-// Contributors: Albert Luna
+// Contributors: Albert Luna 100%
 
 import ProjectCard from "./ProjectCard";
 import { useState, useEffect, useContext } from "react";
