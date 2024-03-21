@@ -34,12 +34,14 @@ function StudentInfoView(studentID: props) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [studentFName, setStudentFName] = useState<string | null>("");
   const [studentLName, setStudentLName] = useState<string | null>("");
+  const [studentRole, setStudentRole] = useState<string | null>("");
   const [major, setMajor] = useState<string | null>("");
   const [oldEmail, setOldEmail] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
   const [projectIntrest, setProjectIntrest] = useState<string | null>("");
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
+  const [role, setRole] = useState<string | null>("");
 
   // if (coursesTaken) {
   //   selectedCourses = coursesTaken.split(", ");
@@ -119,6 +121,7 @@ function StudentInfoView(studentID: props) {
         studentID,
         studentFName,
         studentLName,
+        role,
         major,
         email,
         oldEmail,
@@ -158,6 +161,7 @@ function StudentInfoView(studentID: props) {
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
+    setStudentRole(result.student_info[0].Role);
     setLoading(false);
 
     let takenList: String[] = [];
@@ -353,7 +357,7 @@ function StudentInfoView(studentID: props) {
                     display: "flex",
                   }}
                 >
-                  Project Intrest:{" "}
+                  Project Interest:{" "}
                   <select
                     value={projectIntrest ?? ""}
                     onChange={(e) => setProjectIntrest(e.target.value)}
@@ -375,30 +379,58 @@ function StudentInfoView(studentID: props) {
                   </select>
                 </h1>
               </div>
-              <h1
-                style={{
-                  fontSize: "32px",
-                  marginLeft: "0vw",
-                  marginRight: "auto",
-                  paddingBottom: "5vh",
-                  display: "flex",
-                }}
-              >
-                Grad Date:
-                <input
-                  type="date"
-                  value={gradDateFormatted ?? ""}
-                  onChange={(e) => setGradDateUnformatted(e.target.value)}
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <h1
                   style={{
-                    height: "30px",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
-                    alignSelf: "center",
-                    justifySelf: "center",
-                    fontSize: "24px",
+                    fontSize: "32px",
+                    marginLeft: "0vw",
+                    marginRight: "auto",
+                    paddingBottom: "5vh",
+                    display: "flex",
                   }}
-                />
-              </h1>
+                >
+                  Grad Date:
+                  <input
+                    type="date"
+                    value={gradDateFormatted ?? ""}
+                    onChange={(e) => setGradDateUnformatted(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  />
+                </h1>
+
+                <h1
+                  style={{
+                    fontSize: "32px",
+                    marginLeft: "0vw",
+                    marginRight: "auto",
+                    paddingBottom: "5vh",
+                    display: "flex",
+                  }}
+                >
+                  Role:
+                  <select
+                    onChange={(e) => setRole(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                    }}
+                  >
+                    <option value="Student_Leader">Student Leader</option>
+                    <option value="Student">Student</option>
+                  </select>
+                </h1>
+              </div>
               <h1
                 style={{
                   fontSize: "32px",
@@ -537,19 +569,35 @@ function StudentInfoView(studentID: props) {
                   <span style={{ color: "#33689c" }}>{projectIntrest}</span>
                 </h1>
               </div>
-              <h1
-                style={{
-                  fontSize: "32px",
-                  marginLeft: "0vw",
-                  marginRight: "auto",
-                  paddingBottom: "5vh",
-                }}
-              >
-                Grad Date: {""}
-                <span style={{ color: "#33689c" }}>
-                  {gradDate ? gradDate : "Not Approved"}
-                </span>
-              </h1>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <h1
+                  style={{
+                    fontSize: "32px",
+                    marginLeft: "0vw",
+                    marginRight: "auto",
+                    paddingBottom: "5vh",
+                  }}
+                >
+                  Grad Date: {""}
+                  <span style={{ color: "#33689c" }}>
+                    {gradDate ? gradDate : "Not Approved"}
+                  </span>
+                </h1>
+                <h1
+                  style={{
+                    fontSize: "32px",
+                    marginLeft: "auto",
+                    marginRight: "0",
+                    paddingBottom: "5vh",
+                  }}
+                >
+                  Role: {""}
+                  <span style={{ color: "#33689c" }}>
+                    {studentRole ? studentRole : "No Role"}
+                  </span>
+                </h1>
+              </div>
+
               <h1
                 style={{
                   fontSize: "32px",

@@ -18,6 +18,7 @@ interface Student {
   gradDate: string;
   Student_ID: string;
   onClick: Function;
+  Role: string;
 }
 
 function StudentApplicationsView(props: studentAppViewProp) {
@@ -82,6 +83,7 @@ function StudentApplicationsView(props: studentAppViewProp) {
                     gradDate={student.gradDate}
                     onClick={props.onClick}
                     InReview={true}
+                    Role={student.Role}
                   />
                 ))}
               </div>
