@@ -1,5 +1,5 @@
 // Client Apply Page
-// Contributors: Hong Lam
+// Contributors: Hong Lam 100%
 
 import { useState } from "react";
 import API_BASE_URL from "./fetchApiURL";

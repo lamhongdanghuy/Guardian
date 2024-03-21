@@ -1,3 +1,7 @@
+//Contributors: Albert Luna and Hong Lam
+
+//Albert Luna: Base Code + Styling 70%
+//Hong Lam: Edit Functionality 30%
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";

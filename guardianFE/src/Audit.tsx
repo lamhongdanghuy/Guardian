@@ -1,6 +1,9 @@
 // Audit Individal Info Page
 // Contributors: Hong Lam, Albert Luna
 
+//Hong Lam: Base Code: 30%
+//Albert Luna: Stlying + Split Image Container: 70 
+
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 

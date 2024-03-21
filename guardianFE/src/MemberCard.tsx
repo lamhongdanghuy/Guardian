@@ -1,5 +1,5 @@
 // Member Card component for team members under a project
-// Contributor: Albert Luna
+// Contributor: Albert Luna 100%
 
 interface MemberCardProps {
   name: string;

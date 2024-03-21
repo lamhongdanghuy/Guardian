@@ -1,6 +1,8 @@
 //About Page
 //Contributors: Albert Luna, Hong Lam
 
+//Hong Base Code: 10%
+//Albert Luna: Images, Descriptions, Styling, Faculty, Split Action Container; 90%
 import Header from "./Header";
 import FacultyCard from "./FacultyCard";
 import { useNavigate } from "react-router-dom";

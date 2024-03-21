@@ -1,6 +1,9 @@
 // Audit Individal Info Page
 // Contributors: Albert Luna, Joel Chamakala
 
+//Albert Luna Base Code, Images, Styling 80%
+//Joel ChamakalaL: Basic Image Layout 20%
+
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";

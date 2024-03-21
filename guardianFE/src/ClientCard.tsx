@@ -1,5 +1,5 @@
 //Card Component for Client Applications, Visible on Client Applications Tab
-//Contributor: Hong Lam
+//Contributor: Hong Lam 100%
 
 interface ClientCardProps {
   name: string;

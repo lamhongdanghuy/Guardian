@@ -1,6 +1,8 @@
 //Apply Page
 //Contributors: Hong Lam, Albert Luna
 
+// Hong Lam Base Code: 50%
+// Albert Luna: Rearranging Divs and Styling: 50%
 import React from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
