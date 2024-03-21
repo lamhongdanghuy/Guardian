@@ -25,6 +25,14 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const returnToLandingPage = () => {
+    setUser({
+      id: "",
+      email: "",
+      role: "",
+      token: "",
+      emailVerification: false,
+      status: "",
+    });
     navigator("/");
   };
 
@@ -65,7 +73,7 @@ function Dashboard() {
 
   const navigator = useNavigate();
   const [prevContainer, setPrevContainer] = useState("Home");
-  const { user } = useContext(LoginContext);
+  const { user, setUser } = useContext(LoginContext);
   const [activeContainer, setActiveContainer] = useState("Home");
   const [openProject, setOpenProject] = useState("");
   const [openApplication, setOpenApplication] = useState("");
