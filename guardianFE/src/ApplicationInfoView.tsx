@@ -1,5 +1,7 @@
 //STudent Application Information Display Component
-//Contributor: Albert Luna
+//Contributor: Albert Luna, Hong Lam
+// Albert Luna Base Code 80%
+// Hong Lam 20% Approve + Reject
 
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
