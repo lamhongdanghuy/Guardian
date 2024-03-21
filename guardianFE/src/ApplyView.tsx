@@ -29,7 +29,8 @@ function ApplyView() {
   ) => {
     setProjectType(event.target.value);
   };
-
+  
+  //API call to send application to the database
   const sendData = async () => {
     let invalidFields = [];
     if (projectType === "") {

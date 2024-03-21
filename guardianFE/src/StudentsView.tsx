@@ -27,6 +27,7 @@ function StudentsView(props: studentAppViewProp) {
   const [applicationsList, setApplicationsList] = useState<Student[]>([]);
   console.log(applicationsList);
 
+  //gets all student applications on render
   useEffect(() => {
     getApplications();
   }, []);
@@ -51,6 +52,7 @@ function StudentsView(props: studentAppViewProp) {
     setLoading(false);
   };
 
+  //dynamically renders cards based on number of records recieved.
   return (
     <div>
       {loading ? (

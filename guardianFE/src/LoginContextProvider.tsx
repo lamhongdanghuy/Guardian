@@ -1,3 +1,6 @@
+//Context to keep login state when moving between tabs
+//Contributors: Albert Luna & Hong Lam
+
 import { createContext, useState, ReactNode } from "react";
 import Cookies from "js-cookie";
 
