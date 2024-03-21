@@ -158,6 +158,7 @@ function StudentInfoView(studentID: props) {
     setPhone(result.student_info[0].P_Number);
     setProjectIntrest(result.student_info[0].Proj_Interest);
     setGradDateUnformatted(result.student_info[0].Grad_Date);
+    setRole(result.student_info[0].Role);
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
@@ -416,6 +417,7 @@ function StudentInfoView(studentID: props) {
                 >
                   Role:
                   <select
+                    value={role ?? ""}
                     onChange={(e) => setRole(e.target.value)}
                     style={{
                       height: "30px",
@@ -426,8 +428,8 @@ function StudentInfoView(studentID: props) {
                       fontSize: "24px",
                     }}
                   >
-                    <option value="Student_Leader">Student Leader</option>
                     <option value="Student">Student</option>
+                    <option value="Student_Leader">Student Leader</option>
                   </select>
                 </h1>
               </div>
