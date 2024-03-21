@@ -23,7 +23,7 @@ function ApplicationInfoView(studentID: props) {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const { user } = useContext(LoginContext);
-
+  //API call to get student info from database
   const getStudentInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
@@ -88,7 +88,7 @@ function ApplicationInfoView(studentID: props) {
     setSubmitted(true);
     return result;
   };
-
+  //runs get student info when component renders
   useEffect(() => {
     console.log("fetching info");
     getStudentInfo();

@@ -95,6 +95,7 @@ function MyInformationView() {
     setPassForm(true);
   };
 
+  //API call to change password
   const changePassword = async () => {
     if (VCode == VCodeInput) {
       if (password !== repeatPassword) {
@@ -116,6 +117,7 @@ function MyInformationView() {
     }
   };
 
+  //API call gets faculty info if user is faculty
   const getFacultyInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/faculty/info`, {
       method: "POST",
@@ -133,6 +135,7 @@ function MyInformationView() {
     setLoading(false);
   };
 
+  //API call gets client info if user is client
   const getClientInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/client/info`, {
       method: "POST",
@@ -149,7 +152,7 @@ function MyInformationView() {
     setPhone(result.client_info[0].P_Number);
     setLoading(false);
   };
-
+  //API call gets student info if user is student
   const getStudentInfo = async () => {
     console.log(user.id);
     const response = await fetch(`${API_BASE_URL}//student/info`, {
@@ -184,6 +187,7 @@ function MyInformationView() {
     setCoursesTaken(takenList.join(", "));
   };
 
+  //conditionally calls load info function based on role.
   useEffect(() => {
     console.log(user.role);
     if (user.role.toUpperCase() === "CLIENT") {

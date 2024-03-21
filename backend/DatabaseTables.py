@@ -1,3 +1,4 @@
+#Contributor: Joel Chamakala
 #DO NOT DELETE A FUNCTION WITHOUT SEEING WHERE IT IS REFERENCED FIRST
 #How to use:
     #from DataBaseTables import DataBase
@@ -97,6 +98,8 @@ class DataBase:
     class COMPANY:
         def tableName():
             return "COMPANY"
+        def COMPANY_Client_ID():
+            return "Client_ID"
         def COMPANY_Company_ID():
             return "Company_ID"
         def COMPANY_C_Name():

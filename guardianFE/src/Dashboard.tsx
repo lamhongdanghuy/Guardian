@@ -14,6 +14,8 @@ import ProposalInfoView from "./ProposalInfoView";
 import AddFaculty from "./AddFaculty";
 import StudentsView from "./StudentsView";
 import StudentInfoView from "./StudentInfoView";
+import ClientsView from "./ClientsView";
+import ClientInfoView from "./ClientInfoView";
 import MyInformationView from "./MyInformationView";
 import { LoginContext } from "./LoginContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -23,10 +25,17 @@ function Dashboard() {
     navigator("/");
   };
 
+  //Functions passed down to cards to update dashboard when clicked.
   const studentCardClicked = (studentID: string) => {
     setPrevContainer(activeContainer);
     setActiveContainer("Student Info View");
     setOpenStudentInfo(studentID);
+  };
+
+  const clientCardClicked = (clientID: string) => {
+    setPrevContainer(activeContainer);
+    setActiveContainer("Client Info View");
+    setOpenClientInfo(clientID);
   };
 
   const projectCardClicked = (projectID: string) => {
@@ -59,12 +68,15 @@ function Dashboard() {
   const [openApplication, setOpenApplication] = useState("");
   const [openProposal, setOpenProposal] = useState("");
   const [openStudentInfo, setOpenStudentInfo] = useState("");
+  const [openClientInfo, setOpenClientInfo] = useState("");
+  const [devMode, setDevMode] = useState(false);
   useEffect(() => {
     if (user.id === "") {
       navigator("/login");
     }
   }, [user]);
 
+  //Returns a dashboard with a sidebar menu and a main content window.
   return (
     <div
       className="dashboard"
@@ -134,7 +146,19 @@ function Dashboard() {
             </div>
           )}
           {(user.role === "Admin Assistant" ||
-            user.role === "Clinic Director") && (
+            user.role === "Clinic Director" ||
+            user.role === "Board Director" ||
+            devMode) && (
+            <div
+              className="sidebarItem"
+              onClick={() => setActiveContainer("Clients View")}
+            >
+              Clients
+            </div>
+          )}
+          {(user.role === "Admin Assistant" ||
+            user.role === "Clinic Director" ||
+            devMode) && (
             <div
               className="sidebarItem"
               onClick={() => setActiveContainer("Student Applications")}
@@ -226,6 +250,10 @@ function Dashboard() {
           <StudentsView onClick={studentCardClicked} />
         ) : activeContainer === "Student Info View" ? (
           <StudentInfoView studentID={openStudentInfo} />
+        ) : activeContainer === "Clients View" ? (
+          <ClientsView onClick={clientCardClicked} />
+        ) : activeContainer === "Client Info View" ? (
+          <ClientInfoView clientID={openClientInfo} />
         ) : activeContainer === "My Information" ? (
           <MyInformationView></MyInformationView>
         ) : null}

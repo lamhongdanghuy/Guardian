@@ -1,3 +1,5 @@
+#Contributors: Albert Luna, Hong Lam, Joel Chamakala
+
 class Students:
 
     def get_students(self, db_Connection):
@@ -5,7 +7,7 @@ class Students:
         query = """
             SELECT *
             FROM STUDENT
-            WHERE Status = "Active";
+            WHERE Status = "Active" OR Status = "Inactive";
             """
         print(query)
         projectData = db_Connection.select_query(query)
@@ -41,6 +43,7 @@ class Students:
         year = data['year']
         college = data['college']
         course_taken = data['coursesTaken']
+        role = data['role']
         
         # Define course variables and their corresponding variable names
         CSEC390 = 0
@@ -95,7 +98,7 @@ class Students:
         db_Connection.update_query(update_login_query)
 
         # Update Student Information
-        update_info_query = "UPDATE STUDENT SET F_Name = '{}', L_Name = '{}', Major = '{}', Email = '{}', P_Number = '{}', Proj_Interest = '{}', Grad_Date = '{}', Year_Standing = '{}', School = '{}' WHERE Student_ID = '{}'".format(studentFName, studentLName, major, email, phone, projectIntrest, gradDate, year, college, studentID)
+        update_info_query = "UPDATE STUDENT SET F_Name = '{}', L_Name = '{}', Major = '{}', Email = '{}', P_Number = '{}', Proj_Interest = '{}', Grad_Date = '{}', Year_Standing = '{}', School = '{}', Role = '{}' WHERE Student_ID = '{}'".format(studentFName, studentLName, major, email, phone, projectIntrest, gradDate, year, college, role, studentID)
         db_Connection.update_query(update_info_query)
         
         # Update Student Course Information

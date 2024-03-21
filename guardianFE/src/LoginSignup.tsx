@@ -29,7 +29,8 @@ function LoginSignup() {
   const handleForgotPassword = () => {
     setPassForm(true);
   };
-
+  
+  //validates user email for forgot password and continues process.
   const handleSentCode = () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     if (!emailPattern.test(email)) {
@@ -39,7 +40,7 @@ function LoginSignup() {
     setSentCode(true);
     forgotpassword();
   };
-
+  //calls the forgot password api, starting the forgot password process.
   const forgotpassword = async () => {
     const response = await fetch(`${API_BASE_URL}/forgotpassword`, {
       method: "POST",
@@ -52,6 +53,7 @@ function LoginSignup() {
     setVCode(result.VCode);
   };
 
+  //API call to change the password once user goes through process.
   const changePassword = async () => {
     if (VCode == VCodeInput) {
       if (password !== repeatPassword) {
@@ -74,6 +76,7 @@ function LoginSignup() {
     }
   };
 
+  //API Call to log user in
   const sendLogin = async () => {
     const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",

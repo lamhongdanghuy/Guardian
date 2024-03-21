@@ -1,40 +1,39 @@
-// Student Applications Tab in Dashboard
-// Contributor: Albert Luna
+//Clients Tab in Dashboard
+//Contributor: Hong Lam
 
-import ApplicationCard from "./ApplicationCard";
+import ClientCard from "./ClientCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";
 
-interface studentAppViewProp {
+interface clientAppViewProp {
   onClick: Function;
 }
 
-interface Student {
+
+interface Client {
   F_Name: string;
   L_Name: string;
-  Year_Standing: string;
-  Major: string;
-  gradDate: string;
-  Student_ID: string;
+  C_Name: string;
+  P_Number: string;
+  Email: string;
+  Client_ID: string;
+  Company_ID: string;
   onClick: Function;
-  Role: string;
 }
 
-function StudentApplicationsView(props: studentAppViewProp) {
+function ClientsView(props: clientAppViewProp) {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(LoginContext);
-  const [applicationsList, setApplicationsList] = useState<Student[]>([]);
-  console.log(applicationsList);
+  const [clientsList, setclientsList] = useState<Client[]>([]);
+  console.log(clientsList);
 
-  //gets applications on render
   useEffect(() => {
     getApplications();
   }, []);
 
-  //API call to get student applications from database
   const getApplications = async () => {
-    const response = await fetch(`${API_BASE_URL}/get/student/applications`, {
+    const response = await fetch(`${API_BASE_URL}/getClients`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,28 +42,28 @@ function StudentApplicationsView(props: studentAppViewProp) {
       body: JSON.stringify({ userID: user.id }),
     });
     const result = await response.json();
+    console.log(result)
     // Check if result.applications exists and is not empty
     if (result.applications && result.applications.length > 0) {
-      setApplicationsList(result.applications);
+      setclientsList(result.applications);
     } else {
-      // Set applicationsList to an empty array if result.applications is empty or undefined
-      setApplicationsList([]);
+      // Set clientsList to an empty array if result.applications is empty or undefined
+      setclientsList([]);
     }
     setLoading(false);
   };
 
-  //dynamically renders cards based on number of records recieved.
   return (
     <div>
       {loading ? (
         <h1>Loading...</h1>
       ) : (
         <div>
-          {applicationsList.length === 0 ? (
-            <h1 style={{ fontSize: "10vh" }}>No available applications</h1>
+          {clientsList.length === 0 ? (
+            <h1 style={{ fontSize: "10vh" }}>No available clients</h1>
           ) : (
             <>
-              <h1 style={{ fontSize: "10vh" }}>Student Applications</h1>
+              <h1 style={{ fontSize: "10vh" }}>Clients</h1>
               <div
                 style={{
                   margin: "0 5vw",
@@ -77,16 +76,16 @@ function StudentApplicationsView(props: studentAppViewProp) {
                   gap: "5vh",
                 }}
               >
-                {applicationsList.map((student: Student) => (
-                  <ApplicationCard
-                    name={student.F_Name + " " + student.L_Name}
-                    studentID={student.Student_ID}
-                    year={student.Year_Standing}
-                    major={student.Major}
-                    gradDate={student.gradDate}
+                {clientsList.map((client: Client) => (
+                  <ClientCard
+                    key={client.Client_ID}
+                    name={`${client.F_Name} ${client.L_Name}`}
+                    company={client.C_Name}
+                    phone={client.P_Number}
+                    email={client.Email}
+                    clientID={client.Client_ID}
+                    companyID={client.Company_ID}
                     onClick={props.onClick}
-                    InReview={true}
-                    Role={student.Role}
                   />
                 ))}
               </div>
@@ -98,4 +97,4 @@ function StudentApplicationsView(props: studentAppViewProp) {
   );
 }
 
-export default StudentApplicationsView;
+export default ClientsView;

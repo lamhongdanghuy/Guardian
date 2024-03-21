@@ -3,12 +3,14 @@ import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
 import API_BASE_URL from "./fetchApiURL";
 
+//Member class
 interface Member {
   Email: string;
   Full_Name: string;
   Student_ID: string;
 }
 
+//props/agruments
 interface props {
   projectID: string;
 }
@@ -95,6 +97,7 @@ function ProjectInfoView(projectID: props) {
     setLoading(false);
   };
 
+  //API Call to set project as done
   const handleDone = async () => {
     const confirmDone = window.confirm(
       "Are you sure you want to mark this project as done?"
@@ -114,6 +117,7 @@ function ProjectInfoView(projectID: props) {
     }
   };
 
+  //API Call to reject project
   const handleReject = async () => {
     const confirmReject = window.confirm(
       "Are you sure you want to reject this project?"
@@ -133,6 +137,7 @@ function ProjectInfoView(projectID: props) {
     }
   };
 
+  //Adds student to project on frontend
   const addStudent = async (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);
     setStudents(
@@ -140,6 +145,7 @@ function ProjectInfoView(projectID: props) {
     );
   };
 
+  //API call to get project info
   const getProjectInfo = async () => {
     const response = await fetch(`${API_BASE_URL}/project/info`, {
       method: "POST",
@@ -167,6 +173,7 @@ function ProjectInfoView(projectID: props) {
     AssignedStudents([...result.project_students]);
   };
 
+  //loads project info on component render
   useEffect(() => {
     console.log("feting info");
     getProjectInfo();

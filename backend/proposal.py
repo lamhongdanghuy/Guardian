@@ -1,3 +1,6 @@
+# Contributors: Hong Lam and Albert Luna
+# Bugfixes: Joel Chamakala
+
 from connectDB import DatabaseConnection
 from flask import jsonify
 
@@ -16,7 +19,7 @@ class proposal:
         ]
         print(leaders)
         # Gets the Name and email of the student leader for the given project id
-        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role != 'Student_Leader' AND Status = 'Active' "
+        students_query = "SELECT CONCAT(F_Name, ' ', L_Name) AS Full_Name, Email FROM STUDENT WHERE Role = 'Student' AND Status = 'Active' "
         students_data = DatabaseConnection().select_query(students_query)
         students = [
             {"Full_Name": row['Full_Name'], "Email": row['Email']} for index, row in students_data.iterrows()

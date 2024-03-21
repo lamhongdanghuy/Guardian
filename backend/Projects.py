@@ -1,3 +1,5 @@
+# Contributors: Albert Luna and Hong Lam
+# Minor Changes: Joel Chamakala
 from datetime import datetime, timedelta
 import pandas as pd
 

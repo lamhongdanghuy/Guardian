@@ -1,4 +1,4 @@
-// Student Information View when clicking on a student in Dashboard
+// Client Information View when clicking on a client in Dashboard
 // Contributors: Albert Luna, Hong Lam
 
 import { useState, useEffect, useContext } from "react";
@@ -6,101 +6,56 @@ import { LoginContext } from "./LoginContextProvider";
 import API_BASE_URL from "./fetchApiURL";
 
 interface props {
-  studentID: string;
+  clientID: string,
 }
 
-const allCourses = [
-  "CSEC_390",
-  "CSEC_490",
-  "CSEC_488",
-  "IS_486",
-  "IS_487",
-  "ACC_374",
-  "ACC_376",
-  "ACC_378",
-  "ACC_636",
-  "ACC_638",
-  "ACC_639",
-  "FIN_362",
-  "SEV_621",
-  "Sec_Daemons",
-  "WiCyS",
-];
-
-function StudentInfoView(studentID: props) {
+function ClientInfoView(info: props) {
   const [loading, setLoading] = useState<boolean>(true);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [studentFName, setStudentFName] = useState<string | null>("");
-  const [studentLName, setStudentLName] = useState<string | null>("");
-  const [studentRole, setStudentRole] = useState<string | null>("");
-  const [major, setMajor] = useState<string | null>("");
-  const [oldEmail, setOldEmail] = useState<string | null>("");
+
+  const [clientFName, setClientFName] = useState<string | null>("");
+  const [clientLName, setClientLName] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
   const [phone, setPhone] = useState<number | null>();
-  const [projectIntrest, setProjectIntrest] = useState<string | null>("");
-  const [coursesTaken, setCoursesTaken] = useState<string | null>("");
-  const [role, setRole] = useState<string | null>("");
+  const [company, setCompany] = useState<string | null>("");
+  const [type, setType] = useState<string | null>("");
+  const [url, setUrl] = useState<string | null>("");
+  const [revenue, setRevenue] = useState<number | null>(null);
+  const [it, setIT] = useState<number | null>(null);
+  const [sensitivedata, setSensitiveData] = useState<string | null>("");
+  const [sra, setSRA] = useState<string | null>("");
 
 
-  const [gradDateUnformatted, setGradDateUnformatted] = useState<string | null>(
-    ""
-  );
-  const [year, setYear] = useState<string | null>("");
-  const [college, setCollege] = useState<string | null>("");
-  const [availableCourses, setAvailableCourses] = useState(allCourses);
+  // if (coursesTaken) {
+  //   selectedCourses = coursesTaken.split(", ");
+  // }
 
-  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-  
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCourse = event.target.value;
-    setSelectedCourses([...selectedCourses, selectedCourse]);
-    setAvailableCourses(
-      availableCourses.filter((course) => course !== selectedCourse)
-    );
-  };
 
-  const handleRemoveClick = (courseToRemove: string) => {
-    setSelectedCourses(
-      selectedCourses.filter((course) => course !== courseToRemove)
-    );
-    setAvailableCourses([...availableCourses, courseToRemove]);
-  };
-
-  const date = gradDateUnformatted ? new Date(gradDateUnformatted) : null;
-  const gradDateFormatted = date ? date.toISOString().split("T")[0] : "";
-
-  const gradDate = date
-    ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-        .getUTCDate()
-        .toString()
-        .padStart(2, "0")}/${date.getUTCFullYear()}`
-    : "Not Approved";
   const { user } = useContext(LoginContext);
 
   const handleCancel = async () => {
     setIsEditing(false);
-    // Fetch the student information again to revert changes
+    // Fetch the client information again to revert changes
     setLoading(true);
-    await getStudentInfo();
+    await getClientInfo();
     setLoading(false);
   };
 
-  //deactivate student
   const handleInActivate = async () => {
     const confirmInActivate = window.confirm(
-      "Are you sure you want deactivate this student?"
+      "Are you sure you want deactivate this client?"
     );
     if (confirmInActivate) {
       setSubmitting(true);
-      await fetch(`${API_BASE_URL}/student/inactivate`, {
+      await fetch(`${API_BASE_URL}/client&comp/inactivate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           token: user.token ? user.token : "",
         },
-        body: JSON.stringify({ studentID }),
+        body: JSON.stringify({ clientID: info.clientID}),
       });
       setSubmitted(true);
       setSubmitting(false);
@@ -110,26 +65,25 @@ function StudentInfoView(studentID: props) {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch(`${API_BASE_URL}/student/update`, {
+    await fetch(`${API_BASE_URL}/client&comp/edit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
       body: JSON.stringify({
-        studentID,
-        studentFName,
-        studentLName,
-        role,
-        major,
-        email,
-        oldEmail,
-        phone,
-        projectIntrest,
-        gradDate: gradDateFormatted,
-        year,
-        college,
-        coursesTaken: selectedCourses,
+        info: info.clientID,
+        F_Name: clientFName,
+        L_Name: clientLName,
+        Email: email,
+        P_Number: phone,
+        C_Name: company,
+        C_Type: type,
+        C_URL: url,
+        C_Revenue: revenue,
+        C_IT: it,
+        C_Sen_Data: sensitivedata,
+        C_SRA: sra,
       }),
     });
     setSubmitted(true);
@@ -138,54 +92,36 @@ function StudentInfoView(studentID: props) {
     setIsEditing(false);
   };
 
-  //API call to get student info from the database
-  const getStudentInfo = async () => {
-    const response = await fetch(`${API_BASE_URL}/student/info`, {
+  const getClientInfo = async () => {
+    const response = await fetch(`${API_BASE_URL}/client&comp/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         token: user.token ? user.token : "",
       },
-      body: JSON.stringify({ studentID }),
+      body: JSON.stringify({ clientID: info.clientID}),
     });
     const result = await response.json();
 
-    setStudentFName(result.student_info[0].F_Name);
-    setStudentLName(result.student_info[0].L_Name);
-    setMajor(result.student_info[0].Major);
-    setEmail(result.student_info[0].Email);
-    setOldEmail(result.student_info[0].Email);
-    setPhone(result.student_info[0].P_Number);
-    setProjectIntrest(result.student_info[0].Proj_Interest);
-    setGradDateUnformatted(result.student_info[0].Grad_Date);
-    setRole(result.student_info[0].Role);
-    setYear(result.student_info[0].Year_Standing);
-    setCollege(result.student_info[0].School);
-    setCoursesTaken(result.class_info[0]);
-    setStudentRole(result.student_info[0].Role);
+    const application = result.applications[0];
+
+    setClientFName(application.F_Name);
+    setClientLName(application.L_Name);
+    setEmail(application.Email);
+    setPhone(application.P_Number);
+    setCompany(application.C_Name);
+    setType(application.C_Type);
+    setUrl(application.C_URL);
+    setRevenue(application.C_Revenue);
+    setIT(application.C_IT);
+    setSensitiveData(application.C_Sen_Data);
+    setSRA(application.C_SRA);
+
     setLoading(false);
-
-    let takenList: String[] = [];
-    if (result.class_info && result.class_info.length > 0) {
-      for (let key in result.class_info[0]) {
-        if (result.class_info[0][key] === 1) {
-          takenList.push(key);
-        }
-      }
-    }
-    console.log(takenList);
-    setSelectedCourses(takenList as string[]);
-
-    setAvailableCourses((availableCourses) =>
-      availableCourses.filter((course) => !takenList.includes(course))
-    );
-    console.log(selectedCourses);
-    console.log(availableCourses);
-    setCoursesTaken(takenList.join(", "));
   };
 
   useEffect(() => {
-    getStudentInfo();
+    getClientInfo();
   }, []);
 
   return (
@@ -212,8 +148,8 @@ function StudentInfoView(studentID: props) {
                   First Name:{" "}
                   <input
                     type="text"
-                    value={studentFName ?? ""}
-                    onChange={(e) => setStudentFName(e.target.value)}
+                    value={clientFName ?? ""}
+                    onChange={(e) => setClientFName(e.target.value)}
                     style={{
                       height: "30px",
                       borderRadius: "5px",
@@ -233,11 +169,11 @@ function StudentInfoView(studentID: props) {
                     display: "flex",
                   }}
                 >
-                  Last Name: {""}
+                  Last Name:{""}
                   <input
                     type="text"
-                    value={studentLName ?? ""}
-                    onChange={(e) => setStudentLName(e.target.value)}
+                    value={clientLName ?? ""}
+                    onChange={(e) => setClientLName(e.target.value)}
                     style={{
                       height: "30px",
                       borderRadius: "5px",
@@ -249,29 +185,30 @@ function StudentInfoView(studentID: props) {
                     }}
                   />
                 </h1>
-              </div>
-              <h1
-                style={{
-                  fontSize: "32px",
-                  marginLeft: "0",
-                  display: "flex",
-                }}
-              >
-                Major:
-                <input
-                  type="text"
-                  value={major ?? ""}
-                  onChange={(e) => setMajor(e.target.value)}
+                <h1
                   style={{
-                    height: "30px",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
-                    alignSelf: "center",
-                    justifySelf: "center",
-                    fontSize: "24px",
+                    fontSize: "48px",
+                    marginRight: "auto",
+                    marginLeft: "0vw",
+                    display: "flex",
                   }}
-                />
-              </h1>
+                >
+                  Company: <input
+                    type="text"
+                    value={company ?? ""}
+                    onChange={(e) => setCompany(e.target.value)}
+                    style={{
+                      height: "30px",
+                      borderRadius: "5px",
+                      border: "2px solid #33689c",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                      fontSize: "24px",
+                      width: "60%",
+                    }}
+                  />
+                </h1>
+              </div>
               <div className="topInfo">
                 <h1
                   style={{
@@ -281,7 +218,7 @@ function StudentInfoView(studentID: props) {
                     display: "flex",
                   }}
                 >
-                  Email:
+                  Email: {""}
                   <input
                     type="email"
                     value={email ?? ""}
@@ -301,10 +238,9 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginLeft: "auto",
                     marginRight: "1vw",
-                    display: "flex",
                   }}
                 >
-                  Phone:
+                  Phone: {""}
                   <input
                     type="tel"
                     value={phone ?? ""}
@@ -327,13 +263,12 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginRight: "auto",
                     marginLeft: "0vw",
-                    display: "flex",
                   }}
                 >
-                  Year:
+                  type: {""}
                   <select
-                    value={year ?? ""}
-                    onChange={(e) => setYear(e.target.value)}
+                    value={type ?? ""}
+                    onChange={(e) => setType(e.target.value)}
                     style={{
                       height: "30px",
                       borderRadius: "5px",
@@ -343,11 +278,8 @@ function StudentInfoView(studentID: props) {
                       fontSize: "24px",
                     }}
                   >
-                    <option value="Freshmen">Freshmen</option>
-                    <option value="Junior">Junior</option>
-                    <option value="Sophomore">Sophomore</option>
-                    <option value="Senior">Senior</option>
-                    <option value="Graduate">Graduate</option>
+                    <option value="Non-Profit">Non-Profit</option>
+                    <option value="For Profit">For Profit</option>
                   </select>
                 </h1>
                 <h1
@@ -355,46 +287,15 @@ function StudentInfoView(studentID: props) {
                     fontSize: "32px",
                     marginLeft: "auto",
                     marginRight: "1vw",
-                    display: "flex",
+                    textAlign: "right",
+                    maxWidth: "50%",
                   }}
                 >
-                  Project Interest:{" "}
-                  <select
-                    value={projectIntrest ?? ""}
-                    onChange={(e) => setProjectIntrest(e.target.value)}
-                    style={{
-                      height: "30px",
-                      borderRadius: "5px",
-                      border: "2px solid #33689c",
-                      alignSelf: "center",
-                      justifySelf: "center",
-                      fontSize: "24px",
-                    }}
-                  >
-                    <option value="General Risk Assessment">
-                      General Risk Assessment
-                    </option>
-                    <option value="Audit">Audit</option>
-                    <option value="Policy Review">Policy Review</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </h1>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <h1
-                  style={{
-                    fontSize: "32px",
-                    marginLeft: "0vw",
-                    marginRight: "auto",
-                    paddingBottom: "5vh",
-                    display: "flex",
-                  }}
-                >
-                  Grad Date:
+                  URL: {""}
                   <input
-                    type="date"
-                    value={gradDateFormatted ?? ""}
-                    onChange={(e) => setGradDateUnformatted(e.target.value)}
+                    type="text"
+                    value={url ?? ""}
+                    onChange={(e) => setUrl(e.target.value)}
                     style={{
                       height: "30px",
                       borderRadius: "5px",
@@ -405,20 +306,65 @@ function StudentInfoView(studentID: props) {
                     }}
                   />
                 </h1>
-
-                <h1
+              </div>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Revenue: {""}
+                <input
+                  type="number"
+                  value={revenue ?? ""}
+                  onChange={(e) => setRevenue(parseFloat(e.target.value))}
                   style={{
-                    fontSize: "32px",
-                    marginLeft: "0vw",
-                    marginRight: "auto",
-                    paddingBottom: "5vh",
-                    display: "flex",
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
                   }}
-                >
-                  Role:
-                  <select
-                    value={role ?? ""}
-                    onChange={(e) => setRole(e.target.value)}
+                />
+              </h1>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Number of IT staff:{" "}
+                <input
+                  type="number"
+                  value={it ?? ""}
+                  onChange={(e) => setIT(parseInt(e.target.value))}
+                  style={{
+                    height: "30px",
+                    borderRadius: "5px",
+                    border: "2px solid #33689c",
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    fontSize: "24px",
+                  }}
+                />
+              </h1>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Last Security Risk Assement:{" "}
+                <select
+                    value={sra ?? ""}
+                    onChange={(e) => setSRA(e.target.value)}
                     style={{
                       height: "30px",
                       borderRadius: "5px",
@@ -428,63 +374,29 @@ function StudentInfoView(studentID: props) {
                       fontSize: "24px",
                     }}
                   >
-                    <option value="Student">Student</option>
-                    <option value="Student_Leader">Student Leader</option>
+                    <option value="Never">Never</option>
+                    <option value="1-2">1 - 2 years ago</option>
+                    <option value="3-5">3 - 5 years ago</option>
+                    <option value="More than 5">5+ years ago</option>
                   </select>
-                </h1>
-              </div>
-              <h1
-                style={{
-                  fontSize: "32px",
-                  marginLeft: "0vw",
-                  marginRight: "auto",
-                  display: "flex",
-                }}
-              >
-                Courses Taken:{" "}
-                <select
-                  onChange={handleSelectChange}
-                  style={{
-                    height: "30px",
-                    borderRadius: "5px",
-                    border: "2px solid #33689c",
-                    fontSize: "24px",
-                  }}
-                >
-                  <option>Select a course</option>
-                  {availableCourses.map((course) => (
-                    <option key={course} value={course}>
-                      {course}
-                    </option>
-                  ))}
-                </select>
               </h1>
-              <ul style={{ marginRight: "auto", fontSize: "28px" }}>
-                {selectedCourses.map((course) => (
-                  <li key={course}>
-                    {course}{" "}
-                    <button
-                      onClick={() => handleRemoveClick(course)}
-                      style={{ fontSize: "18px" }}
-                    >
-                      Remove
-                    </button>
-                  </li>
-                ))}
-              </ul>
               <h1
                 style={{
                   fontSize: "32px",
                   marginLeft: "0vw",
                   marginRight: "auto",
-                  display: "flex",
-                  marginBottom: "2vh",
                 }}
               >
-                College:
-                <select
-                  value={college ?? ""}
-                  onChange={(e) => setCollege(e.target.value)}
+                Sensitive Data: {""}
+                <textarea
+                  placeholder="Describe here... (Less than 30 characters)"
+                  rows={4}
+                  cols={40}
+                  value={sensitivedata ?? ""}
+                  id="otherNORA"
+                  name="otherNORA"
+                  onChange={(e) => setSensitiveData(e.target.value)}
+                  maxLength={30}
                   style={{
                     height: "30px",
                     borderRadius: "5px",
@@ -493,12 +405,9 @@ function StudentInfoView(studentID: props) {
                     justifySelf: "center",
                     fontSize: "24px",
                   }}
-                >
-                  <option value="SoC">School of Computing</option>
-                  <option value="DCOB">Driehaus College of Business</option>
-                  <option value="Law">College of Law</option>
-                </select>
+                ></textarea>
               </h1>
+              <br />
             </>
           ) : (
             <>
@@ -513,7 +422,7 @@ function StudentInfoView(studentID: props) {
                 >
                   Name:{" "}
                   <span style={{ color: "#33689c" }}>
-                    {studentFName} {studentLName}
+                    {clientFName} {clientLName}
                   </span>
                 </h1>
                 <h1
@@ -522,7 +431,7 @@ function StudentInfoView(studentID: props) {
                     marginRight: "0vw",
                   }}
                 >
-                  Major: <span style={{ color: "#33689c" }}>{major}</span>
+                  Company: <span style={{ color: "#33689c" }}>{company}</span>
                 </h1>
               </div>
               <div className="topInfo">
@@ -555,8 +464,8 @@ function StudentInfoView(studentID: props) {
                     marginLeft: "0vw",
                   }}
                 >
-                  Year: {""}
-                  <span style={{ color: "#33689c" }}>{year}</span>
+                  Type: {""}
+                  <span style={{ color: "#33689c" }}>{type}</span>
                 </h1>
                 <h1
                   style={{
@@ -567,39 +476,10 @@ function StudentInfoView(studentID: props) {
                     maxWidth: "50%",
                   }}
                 >
-                  Project Interest: {""}
-                  <span style={{ color: "#33689c" }}>{projectIntrest}</span>
+                  URL: {""}
+                  <span style={{ color: "#33689c" }}>{url}</span>
                 </h1>
               </div>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <h1
-                  style={{
-                    fontSize: "32px",
-                    marginLeft: "0vw",
-                    marginRight: "auto",
-                    paddingBottom: "5vh",
-                  }}
-                >
-                  Grad Date: {""}
-                  <span style={{ color: "#33689c" }}>
-                    {gradDate ? gradDate : "Not Approved"}
-                  </span>
-                </h1>
-                <h1
-                  style={{
-                    fontSize: "32px",
-                    marginLeft: "auto",
-                    marginRight: "0",
-                    paddingBottom: "5vh",
-                  }}
-                >
-                  Role: {""}
-                  <span style={{ color: "#33689c" }}>
-                    {studentRole ? studentRole : "No Role"}
-                  </span>
-                </h1>
-              </div>
-
               <h1
                 style={{
                   fontSize: "32px",
@@ -608,9 +488,35 @@ function StudentInfoView(studentID: props) {
                   paddingBottom: "5vh",
                 }}
               >
-                Courses Taken:{" "}
+                Revenue: {""}
                 <span style={{ color: "#33689c" }}>
-                  {coursesTaken ? coursesTaken : "No Courses Taken"}
+                  {revenue}
+                </span>
+              </h1>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Number of IT staff:{" "}
+                <span style={{ color: "#33689c" }}>
+                  {it}
+                </span>
+              </h1>
+              <h1
+                style={{
+                  fontSize: "32px",
+                  marginLeft: "0vw",
+                  marginRight: "auto",
+                  paddingBottom: "5vh",
+                }}
+              >
+                Last Security Risk Assement:{" "}
+                <span style={{ color: "#33689c" }}>
+                  {sra}
                 </span>
               </h1>
               <h1
@@ -620,9 +526,9 @@ function StudentInfoView(studentID: props) {
                   marginRight: "auto",
                 }}
               >
-                College: {""}
+                Sensitive Data: {""}
                 <span style={{ color: "#33689c" }}>
-                  {college ? college : "Not Assigned"}
+                  {sensitivedata}
                 </span>
               </h1>
               <br />
@@ -647,7 +553,7 @@ function StudentInfoView(studentID: props) {
               onClick={handleInActivate}
               style={{ backgroundColor: "#D30000" }}
             >
-              Inactivate Student
+              Inactivate Client
             </button>
             <button
               onClick={() => setIsEditing(true)}
@@ -677,4 +583,4 @@ function StudentInfoView(studentID: props) {
   );
 }
 
-export default StudentInfoView;
+export default ClientInfoView;

@@ -1,5 +1,5 @@
 // Project Proposal Info View in Dashboard
-// Contributors: Albert Luna
+// Contributors: Albert Luna, Hong Lam
 
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
@@ -33,6 +33,7 @@ function ProposalInfoView(ProposalID: props) {
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 
+  //removes student on frontend
   const handleRemove = (studentToRemove: Member) => {
     setAssignedStudents(
       assigned_students.filter(
@@ -40,7 +41,8 @@ function ProposalInfoView(ProposalID: props) {
       )
     );
   };
-
+  
+  //API call to approve project
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
       alert("Please select a project leader before approving the proposal.");
@@ -61,6 +63,7 @@ function ProposalInfoView(ProposalID: props) {
     return result;
   };
 
+  //API call to deny project
   const reject = async () => {
     setLoading(true);
     const response = await fetch(`${API_BASE_URL}/proposal/reject`, {
@@ -109,6 +112,7 @@ function ProposalInfoView(ProposalID: props) {
     setLoading(false);
   };
 
+  //loads proposal info on render
   useEffect(() => {
     getProposalInfo();
   }, []);

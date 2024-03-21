@@ -308,6 +308,7 @@
     margin-right: auto;
     padding: 1em 1em 4em 1em;
     width: 40vw;
+    background-color: #f6f7f8;
   }
   .clientApply {
     background-color: #f6f7f8;
@@ -913,6 +914,7 @@
   }
   .form {
     align-items: center;
+    background-color: #f6f7f8;
     border: solid 1px #6e7c85;
     border-radius: 20px;
     display: flex;

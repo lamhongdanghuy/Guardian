@@ -1,3 +1,6 @@
+#Contributor: Hong Lam
+#Minor Changes + Bugfixes: Joel Chamakala and Albert Luna
+
 from sqlalchemy import create_engine, Table, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
