@@ -102,9 +102,9 @@ function Dashboard() {
           <div>{user.email}</div>
         </div>
         <button
-          onClick={() => {
+          onClick={
             returnToLandingPage
-          }}
+          }
         >
           Log Out
         </button>
