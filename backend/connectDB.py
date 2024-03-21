@@ -12,7 +12,7 @@ class DatabaseConnection:
         self.db_port = 3306
         self.db_username = 'Admin' #your username
         self.db_password = 'Hhe^3828jsu37s92j' #your password
-        self.db_name = 'Guardian CyberSecurity' #your db name
+        self.db_name = 'JoelSQLTest' #your db name
         self.metadata = MetaData()
 
     def generate_engine(self):
