@@ -1,3 +1,5 @@
+#Contributors: Amen Akploh, Albert Luna
+#Minor Changes: Joel Chamakala, Hong Lam
 import pandas as pd;
 
 class infoGetter:

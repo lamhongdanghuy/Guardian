@@ -1,3 +1,7 @@
+#Contributors for API Routes: All
+#Contributor for Email Validation: Dinh Phuong
+#Contributor for Reset Password Email: Christian Riviera
+
 # Standard library imports
 import random
 import math

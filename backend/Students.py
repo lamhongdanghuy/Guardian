@@ -1,3 +1,5 @@
+#Contributors: Albert Luna, Hong Lam, Joel Chamakala
+
 class Students:
 
     def get_students(self, db_Connection):

@@ -1,3 +1,6 @@
+#Contributors: Jesus Ocampo, Albert Luna, Hong Lam
+#Bug Fixes: Joel Chamakala
+
 from flask import jsonify
 from DatabaseTables import DataBase
 

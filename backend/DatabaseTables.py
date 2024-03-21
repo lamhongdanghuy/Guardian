@@ -1,3 +1,4 @@
+#Contributor: Joel Chamakala
 #DO NOT DELETE A FUNCTION WITHOUT SEEING WHERE IT IS REFERENCED FIRST
 #How to use:
     #from DataBaseTables import DataBase

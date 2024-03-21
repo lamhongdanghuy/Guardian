@@ -1,3 +1,6 @@
+#Contributor: Hong Lam
+#Minor Changes + Bugfixes: Joel Chamakala and Albert Luna
+
 import os
 from sshtunnel import SSHTunnelForwarder
 from sqlalchemy import create_engine, Table, MetaData
