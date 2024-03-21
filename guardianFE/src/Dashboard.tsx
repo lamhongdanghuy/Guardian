@@ -93,7 +93,7 @@ function Dashboard() {
         </div>
         <button
           onClick={() => {
-            returnToLandingPage;
+            returnToLandingPage
           }}
         >
           Log Out
