@@ -46,12 +46,6 @@ function ApplicationInfoView(studentID: props) {
     const unformattedDate = result.student_info[0].Grad_Date;
     const date = new Date(unformattedDate);
     setGradDate(date.toISOString().split("T")[0]);
-    // const gradDate = date
-    // ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
-    //     .getUTCDate()
-    //     .toString()
-    //     .padStart(2, "0")}/${date.getUTCFullYear()}`
-    // : "Not Approved";
     setYear(result.student_info[0].Year_Standing);
     setCollege(result.student_info[0].School);
     setCoursesTaken(result.class_info[0]);
@@ -96,7 +90,7 @@ function ApplicationInfoView(studentID: props) {
   };
 
   useEffect(() => {
-    console.log("feting info");
+    console.log("fetching info");
     getStudentInfo();
     console.log(studentID);
   }, []);

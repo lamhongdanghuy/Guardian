@@ -12,7 +12,7 @@
 #To Change COLUMN Names REFACTOR/(Edit->Replace in Files) the function name within Table class and change string to return the same name
 class DataBase:
     class LOGIN_INFORMATION:
-        def LOGIN_INFORMATION_tableName():
+        def tableName():
             return "LOGIN_INFORMATION"
         def LOGIN_INFORMATION_Email():
             return "Email"
@@ -24,7 +24,7 @@ class DataBase:
             return "Email_Verified"
     
     class STUDENT:
-        def STUDENT_tableName():
+        def tableName():
             return "STUDENT"
         def STUDENT_Student_ID():
             return "Student_ID"
@@ -61,7 +61,7 @@ class DataBase:
         
 
     class CLIENT:
-        def CLIENT_tableName():
+        def tableName():
             return "CLIENT"
         def CLIENT_Client_ID():
             return "Client_ID"
@@ -77,7 +77,7 @@ class DataBase:
             return "Status"
     
     class FACULTY:
-        def FACULTY_tableName():
+        def tableName():
             return "FACULTY"
         def FACULTY_Faculty_ID():
             return "Faculty_ID"
@@ -95,7 +95,7 @@ class DataBase:
             return "Status"
         
     class COMPANY:
-        def COMPANY_tableName():
+        def tableName():
             return "COMPANY"
         def COMPANY_Company_ID():
             return "Company_ID"
@@ -123,7 +123,7 @@ class DataBase:
     
         
     class PROJECT:
-        def PROJECT_tableName():
+        def tableName():
             return "PROJECT"
         def PROJECT_Proj_ID():
             return "Proj_ID"
@@ -147,7 +147,7 @@ class DataBase:
             return "Status"
         
     class PROJECT_PARTICIPANT:
-        def PROJECT_PARTICIPANT_tableName():
+        def tableName():
             return "PROJECT_PARTICIPANT"
         def PROJECT_PARTICIPANT_Proj_ID():
             return "Proj_ID"
@@ -156,7 +156,7 @@ class DataBase:
         
         
     class STUDENT_CLASS:
-        def STUDENT_CLASS_tableName():
+        def tableName():
             return "STUDENT_CLASS"
         def STUDENT_CLASS_Student_ID():
             return "Student_ID"
