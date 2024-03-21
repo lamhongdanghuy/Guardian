@@ -1,6 +1,10 @@
 //Services Page
 // Contributors: Hong Lam, Albert Luna, Joel Chamakala
 
+//Hong Lam: Base Code 20%
+//Joel Chamakala: Descriptive Paragrahs Written 20% 
+//Albert Luna: style page + images: 60%
+
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 

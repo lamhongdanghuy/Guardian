@@ -1,5 +1,5 @@
 // Student Apply Page
-// Contributors: Albert Luna 100%
+// Contributors: Albert Luna Code + Style 100%
 
 import StudentApplyForm from "./StudentApplyForm";
 import Header from "./Header";

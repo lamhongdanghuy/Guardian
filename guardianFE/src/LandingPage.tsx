@@ -1,5 +1,7 @@
 // Landing Page
 // Contributors: Albert Luna, Joel Chamakala
+// Image Layout: Joel Chamakala 15%
+// Albert Luna: Base Code and Styling 85%
 
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";

@@ -1,6 +1,9 @@
 //Login Page
 //Contributors: Albert Luna, Joel Chamakala
 
+//Albert Luna: Base Code+ Forget Password + Styling 90%
+//Joel Chamakala: page reformatting/restructure div 10%
+
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
