@@ -1,3 +1,6 @@
+//Apply Page
+//Contributors: Hong Lam, Albert Luna
+
 import React from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +14,7 @@ const Apply: React.FC = () => {
         <h1>Apply</h1>
         <div className="applyContainer">
           <div className="studentApply">
-            <h2>Students</h2>
+            <h2 style={{ fontSize: "38px", color: "#33689c" }}>Students</h2>
             <p>
               If you are a student at DePaul University and are interested in
               joining the DePaul Guardian, please fill out the form below.
@@ -23,7 +26,7 @@ const Apply: React.FC = () => {
           </div>
 
           <div className="clientApply">
-            <h2>Clients</h2>
+            <h2 style={{ fontSize: "38px", color: "#33689c" }}>Clients</h2>
             <p>
               If you are a client and are interested in working with the DePaul
               Guardian, please fill out the form below.

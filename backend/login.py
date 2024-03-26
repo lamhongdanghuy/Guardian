@@ -1,3 +1,6 @@
+#Contributors: Joel Chamakala, Hong Lam, Dinh Phuong
+#Minor Changes: Albert Luna
+
 from flask import request, jsonify
 from datetime import datetime, timedelta
 import pandas as pd
@@ -32,7 +35,7 @@ class Login:
                 SELECT *
                 FROM {}
                 WHERE Email = '{}';
-                """.format(LoginData.at[0, 'Account_Type'].upper(),identifier)
+                """.format(LoginData.at[0, 'Account_Type'].upper(), identifier)
             userInfo = db_Connection.select_query(idQuery)
 
             print("Creating Payload")
@@ -55,7 +58,7 @@ class Login:
             print("Email or Password Was Incorrect")
             print("Login Failed")
             payload = ({'message': 'Invalid credentials'})
-            return payload, 401
+            return payload
             
         
         

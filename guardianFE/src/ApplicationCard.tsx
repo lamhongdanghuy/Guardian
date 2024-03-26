@@ -1,3 +1,6 @@
+//Card Component for Student Applications, Visible on Student Applications Tab
+//Contributor: Albert Luna
+
 interface ApplicationCardProps {
   studentID: string;
   name: string;
@@ -6,11 +9,13 @@ interface ApplicationCardProps {
   gradDate: string;
   onClick: Function;
   InReview: boolean;
+  Role: string;
 }
 
 function ApplicationCard(props: ApplicationCardProps) {
   const handleClick = () => {
     props.onClick(props.studentID);
+    //applicationCardClick(studentID) -> Dashboard
   };
 
   return (
@@ -22,7 +27,7 @@ function ApplicationCard(props: ApplicationCardProps) {
         <h2
           style={{
             fontSize: "26px",
-            marginLeft: "2vw",
+            marginLeft: "1vw",
             marginRight: "auto",
             textAlign: "left",
           }}
@@ -48,7 +53,9 @@ function ApplicationCard(props: ApplicationCardProps) {
         </h2>
         <h2
           style={{ fontSize: "24px", marginRight: "1vw", marginLeft: "auto" }}
-        ></h2>
+        >
+          {props.Role}
+        </h2>
       </div>
     </div>
   );

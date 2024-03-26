@@ -1,3 +1,6 @@
+// Landing Page
+// Contributors: Albert Luna, Joel Chamakala
+
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +19,7 @@ function LandingPage() {
             style={{ filter: "brightness(80%)" }}
           />
 
-          <h2 className="bannerUpperText">Welcome to the DePaul Guardian!</h2>
+          <h2 className="bannerUpperText">Welcome to DePaul Guardian!</h2>
           <h2 className="bannerLowerText">
             DePaul University's Cybersecurity Clinic
           </h2>

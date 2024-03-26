@@ -1,4 +1,8 @@
+// Client Apply Page
+// Contributors: Hong Lam
+
 import { useState } from "react";
+import API_BASE_URL from "./fetchApiURL";
 
 function ClientApplyForm() {
   const [fName, setfName] = useState("");
@@ -21,6 +25,7 @@ function ClientApplyForm() {
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -41,14 +46,17 @@ function ClientApplyForm() {
     setCompType(event.target.value);
   };
 
+  //API call to send application to the database, validates input fields prior to sending info to backend.
   const sendData = async () => {
-    const enteredDate = new Date(dueDate);
+    const enteredDate = new Date(dueDate + "T00:00:00");
     const currentDate = new Date();
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$/;
     const phonePattern = /^\d{10}$/;
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     let invalidFields = [];
+    console.log(enteredDate);
+    console.log(currentDate);
     if (sra === "") {
       invalidFields.push("Number of Security Risk Assessments");
     }
@@ -67,6 +75,8 @@ function ClientApplyForm() {
       return;
     }
     if (enteredDate <= currentDate) {
+      console.log(enteredDate);
+      console.log(currentDate);
       alert("Please enter a future date.");
       return;
     }
@@ -89,7 +99,8 @@ function ClientApplyForm() {
       return;
     }
     let revenueDecimal = parseFloat(revenue);
-    const response = await fetch("http://localhost:5000/apply/client", {
+    setSubmitting(true);
+    const response = await fetch(`${API_BASE_URL}/apply/client`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,13 +125,14 @@ function ClientApplyForm() {
       }),
     });
     const responseData = await response.json();
+    setSubmitting(false);
     setRtnData(responseData.message);
     setShowResults(true);
   };
 
   return (
     <div>
-      {!showResults ? (
+      {!showResults && !submitting ? (
         <div className="form">
           <label htmlFor="fName">Contact Person First Name: </label>
           <input
@@ -275,14 +287,15 @@ function ClientApplyForm() {
             <option value="Other">Other</option>
           </select>{" "}
           <br />
-          {selectedOption === "other" && (
+          {selectedOption === "Other" && (
             <textarea
-              placeholder="Describe here..."
-              rows={5}
-              cols={5}
+              placeholder="Describe here... (Less than 30 characters)"
+              rows={4}
+              cols={40}
               id="otherNORA"
               name="otherNORA"
               onChange={handleTextAreaChange}
+              maxLength={30}
             ></textarea>
           )}
           <br />
@@ -314,6 +327,8 @@ function ClientApplyForm() {
           <br />
           <button onClick={sendData}>Submit</button>
         </div>
+      ) : submitting ? (
+        <h1>Submitting...</h1>
       ) : (
         <div style={{ marginTop: "20vh" }}>
           <h1>Form Submitted!</h1>

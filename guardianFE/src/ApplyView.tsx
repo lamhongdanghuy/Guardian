@@ -1,5 +1,9 @@
+//Dashboard Propose a Project Tab
+//Contributor: Albert Luna
+
 import { LoginContext } from "./LoginContextProvider";
 import { useState, useContext } from "react";
+import API_BASE_URL from "./fetchApiURL";
 
 function ApplyView() {
   const [url, setURL] = useState("");
@@ -25,7 +29,8 @@ function ApplyView() {
   ) => {
     setProjectType(event.target.value);
   };
-
+  
+  //API call to send application to the database
   const sendData = async () => {
     let invalidFields = [];
     if (projectType === "") {
@@ -39,7 +44,7 @@ function ApplyView() {
       );
       return;
     }
-    const response = await fetch("http://localhost:5000/propose", {
+    const response = await fetch(`${API_BASE_URL}/propose`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,6 +76,7 @@ function ApplyView() {
             overflowY: "scroll",
             maxHeight: "70vh",
             marginBottom: "5vh",
+            backgroundColor: "#f6f7f8",
           }}
         >
           <h2>Propose A New Project</h2>

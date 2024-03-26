@@ -2,12 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
 
+//Member class
 interface Member {
   Email: string;
   Full_Name: string;
   Student_ID: string;
 }
 
+//props/agruments
 interface props {
   projectID: string;
 }
@@ -33,15 +35,16 @@ function ProjectInfoView(projectID: props) {
   const { user } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const date = targetDate ? new Date(targetDate) : null;
-  const [originalStudents, setOriginalStudents] = useState<Member[]>([]);
-  const [originalAssignedStudents, setOriginalAssignedStudents] = useState<
-    Member[]
-  >([]);
-  const formattedDate = date?.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
+  const [, Students] = useState<Member[]>([]);
+  const [, AssignedStudents] = useState<Member[]>([]);
+  const dateForDisplay = date ? date.toISOString().split("T")[0] : "";
+
+  const formattedDate = date
+    ? `${(date.getUTCMonth() + 1).toString().padStart(2, "0")}/${date
+        .getUTCDate()
+        .toString()
+        .padStart(2, "0")}/${date.getUTCFullYear()}`
+    : "Not Approved";
 
   // Add a function to handle the submit
   const handleEdit = async () => {
@@ -55,7 +58,7 @@ function ProjectInfoView(projectID: props) {
       : null;
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/project/updateProject", {
+    await fetch("http://localhost:5000/project/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,43 +88,55 @@ function ProjectInfoView(projectID: props) {
   };
 
   // Add a function to handle the cancel
-  const handleCancel = () => {
-    setStudents(originalStudents);
-    setAssignedStudents(originalAssignedStudents);
+  const handleCancel = async () => {
     // Exit edit mode
     setIsEditing(false);
+    setLoading(true);
+    await getProjectInfo();
+    setLoading(false);
   };
 
+  //API Call to set project as done
   const handleDone = async () => {
-    window.confirm("Are you sure you want to mark this project as done?");
-    setSubmitting(true);
-    await fetch("http://localhost:5000/doneProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ projectID }),
-    });
-    setSubmitted(true);
-    setSubmitting(false);
+    const confirmDone = window.confirm(
+      "Are you sure you want to mark this project as done?"
+    );
+    if (confirmDone) {
+      setSubmitting(true);
+      await fetch("http://localhost:5000/project/done", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token ? user.token : "",
+        },
+        body: JSON.stringify({ projectID }),
+      });
+      setSubmitted(true);
+      setSubmitting(false);
+    }
   };
 
+  //API Call to reject project
   const handleReject = async () => {
-    window.confirm("Are you sure you want to reject this project?");
-    setSubmitting(true);
-    await fetch("http://localhost:5000/rejectProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: user.token ? user.token : "",
-      },
-      body: JSON.stringify({ projectID }),
-    });
-    setSubmitted(true);
-    setSubmitting(false);
+    const confirmReject = window.confirm(
+      "Are you sure you want to reject this project?"
+    );
+    if (confirmReject) {
+      setSubmitting(true);
+      await fetch("http://localhost:5000/project/reject", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: user.token ? user.token : "",
+        },
+        body: JSON.stringify({ projectID }),
+      });
+      setSubmitted(true);
+      setSubmitting(false);
+    }
   };
 
+  //Adds student to project on frontend
   const addStudent = async (stu: Member) => {
     setAssignedStudents([...assigned_students, stu]);
     setStudents(
@@ -129,8 +144,9 @@ function ProjectInfoView(projectID: props) {
     );
   };
 
+  //API call to get project info
   const getProjectInfo = async () => {
-    const response = await fetch("http://localhost:5000/projectInfo", {
+    const response = await fetch("http://localhost:5000/project/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -152,10 +168,11 @@ function ProjectInfoView(projectID: props) {
     setStudents(result.roster);
     setLeaders(result.av_leaders);
     setLoading(false);
-    setOriginalStudents([...result.roster]);
-    setOriginalAssignedStudents([...result.project_students]);
+    Students([...result.roster]);
+    AssignedStudents([...result.project_students]);
   };
 
+  //loads project info on component render
   useEffect(() => {
     console.log("feting info");
     getProjectInfo();
@@ -231,6 +248,7 @@ function ProjectInfoView(projectID: props) {
               >
                 Target Date:
                 <input
+                  value={dateForDisplay}
                   type="date"
                   onChange={(e) => setTargetDate(e.target.value)}
                   style={{
@@ -258,8 +276,10 @@ function ProjectInfoView(projectID: props) {
                         Email: event.target.value.split(",")[1],
                         Student_ID: event.target.value.split(",")[2],
                       });
+                      setProjectLeaderEmail(event.target.value.split(",")[1]);
                     } else {
                       setLeader(undefined);
+                      setProjectLeaderEmail("");
                     }
                   }}
                   required
@@ -375,8 +395,6 @@ function ProjectInfoView(projectID: props) {
                   </>
                 ))}
               </div>
-              <button onClick={handleEdit}>Submit</button>
-              <button onClick={handleCancel}>Cancel</button>
             </>
           ) : (
             <>
@@ -529,20 +547,54 @@ function ProjectInfoView(projectID: props) {
                   />
                 ))}
               </div>
-
-              {((!isEditing && user.role === "Clinic Director") ||
-                user.role === "Admin Assistant") && (
-                <button onClick={() => setIsEditing(true)}>Edit</button>
-              )}
-              {(user.role === "Clinic Director" ||
-                user.role === "Admin Assistant") && (
-                <>
-                  <button onClick={handleReject}>Reject</button>
-                  <button onClick={handleDone}>Done</button>
-                </>
-              )}
             </>
           )}
+        </div>
+      )}
+      {!loading &&
+        !submitted &&
+        !submitting &&
+        !isEditing &&
+        (user.role === "Clinic Director" ||
+          user.role === "Admin Assistant") && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              margin: "0 100px",
+            }}
+          >
+            <button
+              onClick={handleReject}
+              style={{ backgroundColor: "#D30000" }}
+            >
+              Reject
+            </button>
+            <button
+              onClick={() => setIsEditing(true)}
+              style={{ backgroundColor: "#FCE205" }}
+            >
+              Edit
+            </button>
+            <button onClick={handleDone} style={{ backgroundColor: "#03C04A" }}>
+              Done
+            </button>
+          </div>
+        )}
+      {isEditing && !submitted && !submitting && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0 200px",
+          }}
+        >
+          <button onClick={handleCancel} style={{ backgroundColor: "#FCE205" }}>
+            Cancel
+          </button>
+          <button onClick={handleEdit} style={{ backgroundColor: "#03C04A" }}>
+            Submit
+          </button>
         </div>
       )}
     </div>

@@ -1,3 +1,6 @@
+//Header for the Home Pages
+//Contributor: Albert Luna
+
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -74,6 +77,9 @@ function Header() {
               </div>
             )}
           </div>
+          <NavLink className={"navlink"} to="https://www.depaul.edu" target="_blank" rel="noopener noreferrer">
+            DePaul
+          </NavLink>
         </nav>
       </header>
     </div>

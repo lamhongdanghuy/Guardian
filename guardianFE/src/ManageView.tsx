@@ -1,8 +1,12 @@
+// View Tables Tab in Dashboard
+// Contributors: Albert Luna
+
 import { useTable } from "react-table";
 import { useState, useEffect } from "react";
 import StudentApplyForm from "./StudentApplyForm";
 import AddFaculty from "./AddFaculty";
 import ClientApplyForm from "./ClientApplyForm";
+import API_BASE_URL from "./fetchApiURL";
 
 function ManageView() {
   const [columns, setColumns] = useState([]);
@@ -11,12 +15,14 @@ function ManageView() {
   const [inputForm, setInputForm] = useState(false);
   const editableTables = ["Project", "Client", "Faculty", "Student"];
 
+  //rerendering of component when new table is selected.
   useEffect(() => {
     getTable(activeTable);
   }, [activeTable]);
 
+  //API call to get table from the backend.
   const getTable = async (tableName: string) => {
-    const response = await fetch(`http://localhost:5000/get${tableName}Table`, {
+    const response = await fetch(`${API_BASE_URL}/get${tableName}Table`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

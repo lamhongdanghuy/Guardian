@@ -1,6 +1,10 @@
+// Project Proposal Info View in Dashboard
+// Contributors: Albert Luna, Hong Lam
+
 import { useEffect, useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import MemberCard from "./MemberCard";
+import API_BASE_URL from "./fetchApiURL";
 
 interface props {
   proposalID: string;
@@ -29,16 +33,22 @@ function ProposalInfoView(ProposalID: props) {
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 
+  //removes student on frontend
   const handleRemove = (studentToRemove: Member) => {
-    setAssignedStudents(assigned_students.filter(student => student.Email !== studentToRemove.Email));
+    setAssignedStudents(
+      assigned_students.filter(
+        (student) => student.Email !== studentToRemove.Email
+      )
+    );
   };
-
+  
+  //API call to approve project
   const approve = async () => {
     if (leaderEmail === null || leaderEmail === "") {
       alert("Please select a project leader before approving the proposal.");
     }
     setLoading(true);
-    const response = await fetch("http://localhost:5000/approveProposal", {
+    const response = await fetch(`${API_BASE_URL}/proposal/approve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,9 +63,10 @@ function ProposalInfoView(ProposalID: props) {
     return result;
   };
 
+  //API call to deny project
   const reject = async () => {
     setLoading(true);
-    const response = await fetch("http://localhost:5000/rejectProposal", {
+    const response = await fetch(`${API_BASE_URL}/proposal/reject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +87,7 @@ function ProposalInfoView(ProposalID: props) {
   };
 
   const getProposalInfo = async () => {
-    const response = await fetch("http://localhost:5000/proposalInfo", {
+    const response = await fetch(`${API_BASE_URL}/proposal/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,14 +103,16 @@ function ProposalInfoView(ProposalID: props) {
     setDescription(result.project_info.Project_Description);
     setStatus(result.project_info.Project_Status);
     const targetDateObj = new Date(result.project_info.Target_Date);
-    const formattedTargetDate = `${targetDateObj.getMonth() + 1
-      }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
+    const formattedTargetDate = `${
+      targetDateObj.getMonth() + 1
+    }-${targetDateObj.getDate()}-${targetDateObj.getFullYear()}`;
     setTargetDate(formattedTargetDate);
     setAvLeaders(result.av_leaders);
     setStudents(result.students);
     setLoading(false);
   };
 
+  //loads proposal info on render
   useEffect(() => {
     getProposalInfo();
   }, []);
@@ -127,7 +140,8 @@ function ProposalInfoView(ProposalID: props) {
                 marginLeft: "0vw",
               }}
             >
-              Company Name: {companyName}
+              Company Name:{" "}
+              <span style={{ color: "#33689c" }}>{companyName}</span>
             </h1>
             <h1
               style={{
@@ -136,7 +150,7 @@ function ProposalInfoView(ProposalID: props) {
                 marginRight: "1vw",
               }}
             >
-              Type: {type}
+              Type: <span style={{ color: "#33689c" }}>{type}</span>
             </h1>
           </div>
           <h1
@@ -147,7 +161,8 @@ function ProposalInfoView(ProposalID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Status: {status}
+            Status: {""}
+            <span style={{ color: "#33689c" }}>{status}</span>
           </h1>
           <div className="middleInfo">
             <h1
@@ -160,7 +175,14 @@ function ProposalInfoView(ProposalID: props) {
               Description:
             </h1>
           </div>
-          <p style={{ textAlign: "left", paddingBottom: "5vh" }}>
+          <p
+            style={{
+              color: "#33689c",
+              fontSize: "18px",
+              textAlign: "left",
+              paddingBottom: "5vh",
+            }}
+          >
             {description}
           </p>
           <h1
@@ -171,7 +193,8 @@ function ProposalInfoView(ProposalID: props) {
               paddingBottom: "5vh",
             }}
           >
-            Target Date: {targetDate}
+            Target Date: {""}
+            <span style={{ color: "#33689c" }}>{targetDate}</span>
           </h1>
           <div
             style={{
@@ -204,6 +227,7 @@ function ProposalInfoView(ProposalID: props) {
                   height: "32px",
                   borderRadius: "5px",
                   fontSize: "20px",
+                  border: "2px solid #33689c",
                 }}
               >
                 <option value="">Please Select A Leader</option>
@@ -246,6 +270,7 @@ function ProposalInfoView(ProposalID: props) {
                   height: "32px",
                   borderRadius: "5px",
                   fontSize: "20px",
+                  border: "2px solid #33689c",
                 }}
               >
                 <option value="">Add A Student</option>
@@ -273,7 +298,6 @@ function ProposalInfoView(ProposalID: props) {
                   name={student.Full_Name}
                   role="Student"
                   email={student.Email}
-
                 />
                 <button onClick={() => handleRemove(student)}>Remove</button>
               </>

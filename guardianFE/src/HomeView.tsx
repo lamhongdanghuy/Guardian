@@ -1,14 +1,18 @@
+// Audit Individal Info Page
+// Contributors: Albert Luna, Joel Chamakala
+
 import { useContext, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
-import { jwtDecode } from "jwt-decode";
+import API_BASE_URL from "./fetchApiURL";
 
 function HomeView() {
   const { user } = useContext(LoginContext);
   const [sentVerify, setSentVerify] = useState(false);
-
+  
+  //verifies user is logged in.
   const sendVerify = async () => {
     const response = await fetch(
-      "http://localhost:5000/dashboard/resend-verification-link",
+      `${API_BASE_URL}/dashboard/resend-verification-link`,
       {
         method: "POST",
         headers: {
@@ -48,6 +52,11 @@ function HomeView() {
             Resend
           </button>
           {sentVerify == true && <h3>Sent Verification Email</h3>}
+        </div>
+      )}
+      {user.emailVerification == true && user.status == "In Review" && (
+        <div className="verifiedInReview">
+          <h3 className="verifiedInReview">Your Application Is In Review</h3>
         </div>
       )}
     </div>

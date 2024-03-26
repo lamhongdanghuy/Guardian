@@ -1,3 +1,5 @@
+# Contributors: Albert Luna, Hong Lam, Christian Riviera, Joel Chamakala
+
 import decimal
 from flask import request, jsonify
 import json
@@ -15,6 +17,7 @@ class apply:
     engine = None
 
     def hash(self,password):
+        # Hashes passwords with a salt
         salt = bcrypt.gensalt(rounds=12)
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed_password
@@ -28,10 +31,11 @@ class apply:
         
     def client_apply(self,data):
         print(data)
-        
+        # puts each piece od fata from received dictionary into a coressponding variable
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
+        email = email.lower()
         if self.email_exists(email):
             return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
@@ -49,10 +53,10 @@ class apply:
         comment = data.get('comment')
 
         hashedPass = self.hash(password)
-
+        # Creates Id for company and client
         client_id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         company_id = uuid.uuid3(uuid.NAMESPACE_OID, org_name)
-        
+        # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Client']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
@@ -74,6 +78,7 @@ class apply:
         
     def student_apply(self, data):
         print(data)
+        # puts each piece od fata from received dictionary into a corresponding variable
         f_name = data.get('fName')
         l_name = data.get('lName')
         email = data.get('email')
@@ -86,13 +91,14 @@ class apply:
         major = data.get('major')
         year_standing = data.get('yearStanding')
         grad_date = pd.to_datetime(data.get('gradDate'))
-        course_taken = data.get('courseTaken')
+        course_taken = data.get('selectedCourses')
         curious = data.get('curious')
         whenHear = data.get('hear')
         eth = data.get('eth')
         gen = data.get('gen')
 
         hashedPass = self.hash(password)
+        # Creates Id for student
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
         
         CSEC390 = 0
@@ -142,8 +148,7 @@ class apply:
         if 'WICYS' in course_taken:
             WICYS = 1
 
-        print("got here")
-    
+        # Each block inserts the information into the relevant table in the database
         vals_login = [ email, hashedPass, 'Student']
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
@@ -156,6 +161,7 @@ class apply:
     
     def faculty_apply(self, data):
         print(data)
+        # puts each piece od fata from received dictionary into a corresponding variable
         f_name = data.get('F_Name')
         l_name = data.get('L_Name')
         email = data.get('Email')
@@ -163,13 +169,15 @@ class apply:
             return jsonify({'message': 'Email already exists'}), 400
         password = data.get('password')
         phone_number = data.get('P_Number')
+        role = data.get('role')
         hashedPass = self.hash(password)
         id = uuid.uuid3(uuid.NAMESPACE_OID, email)
 
         vals_login = [email, hashedPass, 'Faculty']
+        # Each block inserts the information into the relevant table in the database
         DatabaseConnection().send_insert(vals_login, 'LOGIN_INFORMATION')
         print("Login info inserted")
-        vals_faculty = [id, f_name, l_name, email, phone_number, 'Admin Assistant', 'In Review']
+        vals_faculty = [id, f_name, l_name, email, phone_number, role, 'Active']
         DatabaseConnection().send_insert(vals_faculty, 'FACULTY')
         print("Faculty info inserted")
     

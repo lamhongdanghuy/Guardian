@@ -1,4 +1,8 @@
+//Add Faculty Form In Dashboard
+//Contributor: Hong Lam
+
 import { useState } from "react";
+import API_BASE_URL from "./fetchApiURL";
 
 function AddFaculty() {
   const [F_Name, setF_Name] = useState("");
@@ -7,8 +11,10 @@ function AddFaculty() {
   const [verifyPassword, setVerifyPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [P_Number, setP_Number] = useState("1234567890");
+  const [role, setRole] = useState("");
   const [showResults, setShowResults] = useState(false);
 
+  //API call to insert faculty record in database
   const sendData = async () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
     const passwordPattern =
@@ -34,7 +40,7 @@ function AddFaculty() {
     }
     console.log("sending data");
     console.log(password, F_Name, L_Name, Email, P_Number);
-    await fetch("http://localhost:5000/apply/faculty", {
+    await fetch(`${API_BASE_URL}/apply/faculty`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,11 +51,12 @@ function AddFaculty() {
         L_Name,
         Email,
         P_Number,
+        role,
       }),
     });
     setShowResults(true);
   };
-
+  //html
   return (
     <div>
       {!showResults ? (
@@ -58,10 +65,13 @@ function AddFaculty() {
           style={{
             maxHeight: "70vh",
             marginBottom: "5vh",
-            backdropFilter: "blur(10px)",
+            backgroundColor: "#f6f7f8",
+            gap: ".25vh",
           }}
         >
-          <h2>Add Faculty Member</h2>
+          <h2 style={{ color: "#33689c", fontSize: "32px" }}>
+            Add Faculty Member
+          </h2>
           <label htmlFor="F_Name">First Name</label>
           <input
             type="text"
@@ -103,6 +113,18 @@ function AddFaculty() {
             name="P_Number"
             onChange={(e) => setP_Number(e.target.value)}
           />
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            name="role"
+            onChange={(e) => setRole(e.target.value)}
+            defaultValue="Admin Assistant"
+          >
+            <option value="Admin Assistant">Admin Assistant</option>
+            <option value="Clinic Director">Clinic Director</option>
+            <option value="Board Of Director">Board Of Director</option>
+          </select>
+          <br />
           <button onClick={sendData}>Submit</button>
         </div>
       ) : (

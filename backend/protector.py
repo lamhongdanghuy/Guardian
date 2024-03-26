@@ -1,3 +1,5 @@
+# Contributors: Jesus Ocampo and Albert Luna
+
 import functools
 import jwt
 from flask import Flask, request

@@ -1,6 +1,10 @@
+//Projects Cards View in Dashboard
+// Contributors: Albert Luna
+
 import ProjectCard from "./ProjectCard";
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from "./fetchApiURL";
 
 interface projectViewProp {
   onClick: Function;
@@ -13,6 +17,7 @@ interface Project {
   Pro_Type: string;
   projectID: string;
   Proj_ID: string;
+  Due_Date: string;
 }
 
 function ProjectsView(props: projectViewProp) {
@@ -20,12 +25,14 @@ function ProjectsView(props: projectViewProp) {
   const { user } = useContext(LoginContext);
   const [projectsList, setProjectsList] = useState<Project[]>([]);
 
+  //component gets projects on render
   useEffect(() => {
     getProjects();
   }, []);
 
+  //API Call to get projects from database
   const getProjects = async () => {
-    const response = await fetch("http://localhost:5000/getProjects", {
+    const response = await fetch(`${API_BASE_URL}/get/projects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,37 +56,43 @@ function ProjectsView(props: projectViewProp) {
     setProjectsList(result.projects);
     setLoading(false);
   };
-
+  
+  //Component dynamically renders number of cards based on number of records from backend.
   return (
     <div>
       {loading ? (
         <h1>Loading...</h1>
       ) : (
         <div>
-          <h1 style={{ fontSize: "10vh" }}>Projects</h1>
-          <div
-            style={{
-              margin: "0 5vw",
-              display: "flex",
-              flexWrap: "wrap",
-              textAlign: "center",
-              overflowY: "scroll",
-              maxHeight: "70vh",
-              marginBottom: "5vh",
-              gap: "5vh",
-            }}
-          >
-            {projectsList.map((project: Project) => (
-              <ProjectCard
-                name={project.C_Name}
-                status={project.Status}
-                projectLeader={project.Stu_Lead_ID}
-                type={project.Pro_Type}
-                onClick={props.onClick}
-                projectID={project.Proj_ID}
-              />
-            ))}
-          </div>
+          {projectsList.length === 0 ? (
+            <h1 style={{ fontSize: "10vh" }}>No available projects</h1>
+          ) : (
+            <>
+              <h1 style={{ fontSize: "10vh" }}>Projects</h1><div
+                style={{
+                  margin: "0 5vw",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  textAlign: "center",
+                  overflowY: "scroll",
+                  maxHeight: "70vh",
+                  marginBottom: "5vh",
+                  gap: "5vh",
+                }}
+              >
+                {projectsList.map((project: Project) => (
+                  <ProjectCard
+                    name={project.C_Name}
+                    status={project.Status}
+                    projectLeader={project.Stu_Lead_ID}
+                    type={project.Pro_Type}
+                    onClick={props.onClick}
+                    projectID={project.Proj_ID}
+                    dueDate={project.Due_Date} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

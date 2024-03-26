@@ -1,4 +1,10 @@
+#Contributors for API Routes: All
+#Contributor for Email Validation: Dinh Phuong
+#Contributor for Reset Password Email: Christian Riviera
+
 # Standard library imports
+import random
+import math
 import datetime
 import json
 import os
@@ -19,12 +25,15 @@ import mariadb
 import pymysql
 from sqlalchemy import create_engine
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from Students import Students
 from ManageTable import ManageTable
 import smtplib
+import bcrypt
 from email.mime.text import MIMEText
 
 # Local application imports
+from Students import Students
+from Clients import Clients
+from update import Update
 from Projects import Project
 from Applications import Application
 from login import Login
@@ -42,7 +51,6 @@ app = Flask(__name__)
 app.config["SECRET KEY"] = "1234"
 CORS(app)
 
-print(apply().hash('Abc123123!'))
 
 # query = "SELECT F_Name FROM STUDENT WHERE Student_ID = '1e919b57-21b1-3c03-aaba-1221a271b79a'"
 # data = DatabaseConnection().select_query(query).at[0, 'F_Name']
@@ -55,8 +63,8 @@ print(apply().hash('Abc123123!'))
 #SMTP server configuration
 smtp_server = 'smtp.gmail.com'
 smtp_port = 465
-sender_email = 'phuonghaodinh2002@gmail.com'
-password = 'snmz oioc xwoa nvhp'
+sender_email = 'depaulguardians@gmail.com'
+password = 'dcag dqwd azaf zzqx'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
@@ -66,8 +74,15 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 def hello():
     return "Hello World"
 
-@app.route('/approveProposal', methods=['POST'])
+@app.route('/changePassword', methods=['POST'])
+def changePassword():
+
+    return {"message":"good"}, 200
+
+@app.route('/proposal/approve', methods=['POST'])
 def approveProposal():
+    # Gets the project Id and associated information from the front end to send to the
+    # approval method and returns a response that the action has been completed
     data = request.get_json()
     print(data)
     proposal_ID = data['ProposalID']
@@ -77,31 +92,17 @@ def approveProposal():
     respone = approve.approve_proposal(proposal_ID['proposalID'], leader_email, students)
     return respone, 200
 
-@app.route('/rejectProposal', methods=['POST'])
+@app.route('/proposal/reject', methods=['POST'])
 def rejectProposal():
+    #Gets the proposal id from the frontend and sends
+    #it to the reject method before returning a response that the action has been completed
     data = request.get_json()
     proposal_ID = data['ProposalID']
     reject = proposal()
     respone = reject.reject_proposal(proposal_ID['proposalID'])
     return respone, 200
 
-@app.route('/rejectProject', methods=['POST'])
-def rejectProject():
-    data = request.get_json()
-    project_ID = data['projectID']
-    reject = Project()
-    respone = reject.reject_Project(project_ID, DatabaseConnection())
-    return respone, 200
-
-@app.route('/doneProject', methods=['POST'])
-def doneProject():
-    data = request.get_json()
-    project_ID = data['projectID']
-    reject = Project()
-    respone = reject.done_Project(project_ID, DatabaseConnection())
-    return respone, 200
-
-@app.route('/proposalInfo', methods=['POST'])
+@app.route('/proposal/info', methods=['POST'])
 def proposalInfo():
     data = request.get_json()
     proposal_ID = data['ProposalID']
@@ -109,8 +110,40 @@ def proposalInfo():
     respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
     return respone, 200
 
-@app.route('/projectInfo', methods =['POST'])
+@app.route('/project/reject', methods=['POST'])
+def rejectProject():
+    # Gets the project id from the frontend and sends
+    # it to the reject method before returning a response that the action has been completed
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.reject_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
+@app.route('/project/done', methods=['POST'])
+def doneProject():
+    # Gets the project id from the frontend and sends
+    # it to the done method before returning a response that the action has been completed
+    data = request.get_json()
+    project_ID = data['projectID']
+    reject = Project()
+    respone = reject.done_Project(project_ID, DatabaseConnection())
+    return respone, 200
+
+# @app.route('/proposalInfo', methods=['POST'])
+# def proposalInfo():
+#     # Gets the proposal id from the frontend and sends
+#     # it to the get proposalinfo method before returning the project information to the frontend
+#     data = request.get_json()
+#     proposal_ID = data['ProposalID']
+#     get_Info = proposal()
+#     respone = get_Info.get_proposal_info(proposal_ID['proposalID'])
+#     return respone, 200
+
+@app.route('/project/info', methods =['POST'])
 def project_info_get():
+    # Gets the project id from the frontend and sends
+    # it to the get projectinfo method before returning the project information to the frontend
     data = request.get_json()
     dbconnect = DatabaseConnection()
     infoInstance = infoGetter()
@@ -120,24 +153,31 @@ def project_info_get():
     # print(payload)
     return jsonify(payload), 200
 
-@app.route('/project/updateProject', methods=['POST'])
+@app.route('/project/update', methods=['POST'])
 def updateProject():
+    # Gets the project id from the frontend and sends
+    # it to the update project method before returning a response that the action has been completed
     data = request.get_json()
     print(data)
     update = Project()
     respone = update.update_Project(data, DatabaseConnection())
     return respone, 200
 
-@app.route('/studentInfo', methods =['POST'])
-def student_info_get():
-    data = request.get_json()
-    dbconnect = DatabaseConnection()
-    infoInstance = infoGetter()
-    payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
-    return jsonify(payload), 200
+# @app.route('/studentInfo', methods =['POST'])
+# def student_info_get():
+#     # Gets the student id from the frontend and sends
+#     # it to the get studentinfo method before returning the student's information to the frontend
+#     data = request.get_json()
+#     dbconnect = DatabaseConnection()
+#     infoInstance = infoGetter()
+#     payload = infoInstance.getstudentinfo(data['studentID'],dbconnect)
+#     return jsonify(payload), 200
 
 @app.route('/login', methods=['POST'])
 def login():
+    #   Accepts a JSON object with 'email' and 'password'.
+    #   Verifies the credentials with the database using Login class.
+    #   Returns a JWT token upon successful login
     data = request.get_json()
     identifier = data.get('email')
     password = data.get('password')
@@ -151,13 +191,16 @@ def login():
 
 @app.route('/apply/faculty', methods=['POST'])
 def faculty_apply():
+    # Endpoint for faculty to apply. Accepts POST requests with JSON data containing email.
+    # Returns a JSON response with a message and status code.
     data = request.get_json()
     email = data.get('Email')
 
     applyInstance = apply()
+    # Check if email already exists in the database
     if applyInstance.email_exists(email):
         return jsonify({'message': 'Email already taken'}), 400
-
+    # Process faculty application and send verification email
     applyInstance.faculty_apply(data)
     verify_email(email)
 
@@ -165,13 +208,15 @@ def faculty_apply():
 
 @app.route('/apply/student', methods=['POST'])
 def student_apply():
+    # Accepts a JSON object with 'email'
     data = request.get_json()
     email = data.get('email')
 
     applyInstance = apply()
+    # verifies if email already exist
     if applyInstance.email_exists(email):
         return jsonify({'message': 'Email already taken'}), 400
-
+    # process the application and send verification email
     applyInstance.student_apply(data)
     verify_email(email)
     notify_faculty('student')
@@ -180,43 +225,154 @@ def student_apply():
 
 @app.route('/apply/client', methods=['POST'])
 def client_apply():
+    # Accepts a JSON object with 'email'
     data = request.get_json()
     email = data.get('email')
 
     applyInstance = apply()
+    # verifies if email already exist
     if applyInstance.email_exists(email):
         return jsonify({'message': 'Email already taken'}), 400
-
+    # process the application and send verification email
     applyInstance.client_apply(data)
     verify_email(email)
     notify_faculty('client')
 
     return jsonify({'message': 'Please confirm your email!'}), 200
 
-@app.route('/getProjects', methods=['POST'])
+@app.route('/get/projects', methods=['POST'])
 @Protector
 def get_projects():
+    # Accepts a JSON object with 'role'
     data = request.get_json()
     role = data['role']
-    print ("role " + role)
     projectInstance = Project()
     db_Connection = DatabaseConnection()
+    # Checks if the user is a student, if so uses student specific project fetcher
     if role == 'Student':
+        # Uses ID to fetch projects user is involved in
         payload = projectInstance.get_student_projects(data['userID'], db_Connection)
+    elif role == 'Student_Leader':
+        payload = projectInstance.get_leader_projects(data['userID'], db_Connection)
     else:
         payload = projectInstance.get_Projects(data['userID'], db_Connection)
     return jsonify(payload), 200
 
-@app.route('/rejectStudent', methods=['POST'])
+@app.route('/faculty/info', methods=['POST'])
+@Protector
+def get_faculty_info():
+    # Accepts a JSON object with a faculty ID and
+    # Sends it to the faculty info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getFacultyInfo(data['facultyID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/faculty/update', methods =['POST'])
+def faculty_update():
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    payload = Update().faculty_update(dbconnect, data)
+    return jsonify(payload), 200
+
+@app.route('/student/info', methods =['POST'])
+def student_info_get():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the student info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getstudentinfo(data['studentID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client/info', methods =['POST'])
+def client_info_get():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    infoInstance = infoGetter()
+    payload = infoInstance.getclientinfo(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client&comp/info', methods =['POST'])
+def client_comp_info_get():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.get_specific_clients(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client&comp/inactivate', methods =['POST'])
+def client_inactivate():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.inactivate(data['clientID'], dbconnect)
+    return jsonify(payload), 200
+
+@app.route('/client&comp/edit', methods =['POST'])
+def client_edit():
+    # Accepts a JSON object with a clientID and
+    # Sends it to the client info getter method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    infoInstance = Clients()
+    payload = infoInstance.edit(data, dbconnect)
+    return jsonify(payload), 200
+
+
+@app.route('/student/inactivate', methods =['POST'])
+def student_inactivate():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the inactivate_student method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    print(data)
+    payload = 0
+    payload = Students().inactivate_student(dbconnect, data['studentID']['studentID'])
+    return jsonify(payload), 200
+
+@app.route('/student/update', methods =['POST'])
+def student_update():
+    # Accepts a JSON object with a student ID and
+    # Sends it to the student_update method and returns the received payload
+    data = request.get_json()
+    dbconnect = DatabaseConnection()
+    payload = 0
+    payload = Students().student_update(dbconnect, data)
+    return jsonify(payload), 200
+
+@app.route('/student/reject', methods=['POST'])
 def rejectApplication():
+    # Gets Student Id from frontend
+    # sends student ID to method to be rejected
     data = request.get_json()
     applicationInstance = Application()
     db_Connection = DatabaseConnection()
     payload = applicationInstance.rejectApplication(db_Connection, data['studentID']['studentID'])
     return payload, 200
 
-@app.route('/approveStudent', methods=['POST'])
+@app.route('/student/approve', methods=['POST'])
 def approveApplication():
+    # Gets Student Id from frontend
+    # sends student ID to method to be Accepted
     data = request.get_json()
     print(data)
     applicationInstance = Application()
@@ -224,18 +380,20 @@ def approveApplication():
     payload = applicationInstance.approveApplication(db_Connection, data['studentID']['studentID'])
     return payload, 200
 
-@app.route('/getApplications', methods=['POST'])
+@app.route('/get/student/applications', methods=['POST'])
 @Protector
 def get_applications():
+    # Gets a Json request and returns the list of applications
     data = request.get_json()
     applicationInstance = Application()
     db_Connection = DatabaseConnection()
     payload = applicationInstance.get_student_applications(db_Connection)
     return jsonify(payload), 200
 
-@app.route('/getProposals', methods=['POST'])
+@app.route('/get/project/proposals', methods=['POST'])
 @Protector
 def get_proposals():
+    # Gets a Json request and returns the list of proposals
     data = request.get_json()
     proposalInstance = Project()
     db_Connection = DatabaseConnection()
@@ -245,6 +403,8 @@ def get_proposals():
 @app.route('/dashboard/resend-verification-link', methods=['POST'])
 @Protector
 def resend_verification_link():
+    # Gets a json request containing email and sends a verification link to the email
+    # returns a succes string to signifiy the email being sent
     data = request.get_json()
     email = data.get('email')
     verify_email(email)
@@ -255,6 +415,8 @@ def resend_verification_link():
 @app.route('/addStudent', methods=['POST'])
 @Protector
 def add_student():
+    # Gets a json request containing a student and project
+    # Send the info to a method and returns success message
     data = request.get_json()
     payload = 0
     studentID = data['student'].get('Student_ID')
@@ -294,8 +456,60 @@ def verify_email(email):
         if server:
             server.quit()  # Close the server connection if it was successfully initialized
 
+@app.route('/forgotpassword', methods=['POST'])
+def forgot_password():
+    # Gets a JSON object containing email and puts it into data
+    data = request.get_json()
+    email = data.get('email')
+    VCode = random.randint(100000, 999999)
+    server = None
+    try:
+        # Sends a email to the received email containing a verification code to reset password
+        msg_body = 'Input verification code when updating your password. | Verification Code: {}'.format( VCode)
+
+        msg = MIMEText(msg_body)
+        msg['Subject'] = 'Reset Your DePaul Cybersecurity Password'
+        msg['From'] = sender_email
+        msg['To'] = email
+
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(sender_email, password) 
+        server.sendmail(sender_email, email, msg.as_string()) 
+        print('Email sent successfully!') 
+
+    except Exception as e:
+        print(f'An error has occurred: {e}')
+    finally:
+        if server:
+            server.quit()
+        return jsonify({'message': 'An email has been sent to reset your password', 'VCode': VCode}), 200
+
+@app.route('/changepassword', methods=['POST'])
+def changepassword():
+    # Gets a JSON object containing email, and password and puts it into data
+    data = request.get_json()
+    print(data)
+    # Stores newly created password
+    email = data.get('email')
+    new_password = data.get('password')
+    salt = bcrypt.gensalt(rounds=12)
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), salt)
+    
+    try:
+        # SQL query to change password
+        query = """UPDATE LOGIN_INFORMATION
+                    SET Password = "{}"
+                    WHERE Email =  "{}" """.format(str(hashed_password)[2:-1], email)
+        print (query)
+        DatabaseConnection().update_query(query)
+    except Exception as e:
+        print("An error has occurred: {e}")
+        return jsonify({'message' : 'An error has occurred'})
+    return jsonify({'message' : 'Your password has been changed!'})
+
 # Notifies all faculty whenever there is a new application 
 def notify_faculty(application_type):
+
     try:
         # Fetch faculty emails from the database
         query = "SELECT Email FROM FACULTY WHERE Role = 'Admin Assistant' OR Role = 'Clinic Director'"
@@ -342,16 +556,18 @@ def send_email(subject, body, email):
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
+    # Updates the Users email verification status using the received JWT token
     try:
         email = s.loads(token, salt='email-confirm', max_age=3600)
         query = "UPDATE LOGIN_INFORMATION SET Email_Verified = 1 WHERE email = '{}'".format(email)
         DatabaseConnection().update_query(query)
     except SignatureExpired:
-        return '<h1>The token is expired!</h1>'
+        return '<h1>The token is expired! Login to your account and resend a verification link</h1>'
     return '<h1>The email is confirmed!</h1>'
 
-@app.route('/propose', methods=['POST'])
+@app.route('/project/propose', methods=['POST'])
 def propose_project():
+    # adds a project proposal and returns sucess message
     data = request.get_json()
     applyInstance = apply()
     applyInstance.add_project(data)
@@ -359,50 +575,88 @@ def propose_project():
 
 @app.route('/getFacultyTable', methods=['GET'])
 def getFacultyTable():
+    # returns Faculty table from database
     payload = ManageTable.getTable('FACULTY')
     return jsonify(payload), 200
 
 @app.route('/getStudentTable', methods=['GET'])
 def getStudentTable():
+    # returns Student table from database
     payload = ManageTable.getTable('STUDENT')
     return jsonify(payload), 200
 
 @app.route('/getProjectTable', methods=['GET'])
 def getProjectTable():
+    # returns projects table from database
     payload = ManageTable.getTable('PROJECT')
     return jsonify(payload), 200
 
 @app.route('/getClientTable', methods=['GET'])
 def getClientTable():
+    # returns Client table from database
     payload = ManageTable.getTable('CLIENT')
     return jsonify(payload), 200
 
 @app.route('/getCompanyTable', methods=['GET'])
 def getCompanyTable():
+    # returns Company table from database
     payload = ManageTable.getTable('COMPANY')
     return jsonify(payload), 200
 
 @app.route('/getLoginTable', methods=['GET'])
 def getLoginTable():
+    # returns Login table from database
     payload = ManageTable.getTable('LOGIN_INFORMATION')
     return jsonify(payload), 200
 
 @app.route('/getStudentClassTable', methods=['GET'])
 def getStudentClassTable():
+    # returns StudentClass table from database
     payload = ManageTable.getTable('STUDENT_CLASS')
     return jsonify(payload), 200
 
 @app.route('/getProjectParticipantTable', methods=['GET'])
 def getProjectParticipantTable():
+    # returns projectparticipant table from database
     payload = ManageTable.getTable('PROJECT_PARTICIPANT')
     return jsonify(payload), 200
 
 @app.route('/getStudents', methods=['POST'])
 def getStudents():
+    # returns list of students
     studentsInstace = Students()
     db_Connection = DatabaseConnection()
     payload = studentsInstace.get_students(db_Connection)
     return jsonify(payload), 200
 
+@app.route('/getClients', methods=['POST'])
+def getClients():
+    # returns list of students
+    clientsInstace = Clients()
+    db_Connection = DatabaseConnection()
+    payload = clientsInstace.get_clients(db_Connection)
+    print(payload)
+    return jsonify(payload), 200
+
+def createFirstClinicDirector():
+    # creates the first clinic director account for first run
+    checkIfRoleExists = "SELECT COUNT(*) as count FROM FACULTY WHERE Role = 'Clinic Director'"
+    countOfRole = DatabaseConnection().select_query(checkIfRoleExists)
+    if (countOfRole.at[0, 'count'] == 0):
+        data = {
+            'F_Name': 'Change',
+            'L_Name': 'Me',
+            'Email': 'changeme@email.com',
+            'password': 'Abc123123!',
+            'P_Number': '1231231234',
+            'role': 'Clinic Director'
+        }
+        add_faculty = apply()
+        add_faculty.faculty_apply(data)
+        print("Clinic Director Created")
+    else:
+        print("Clinic Director Already Exists")
+        
 if __name__ == "__main__":
+    createFirstClinicDirector()
     app.run(port=5000, debug=True)
