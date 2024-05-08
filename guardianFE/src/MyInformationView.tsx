@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useContext } from "react";
 import { LoginContext } from "./LoginContextProvider";
+import API_BASE_URL from "./fetchApiURL";
 
 function MyInformationView() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -64,7 +65,7 @@ function MyInformationView() {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/faculty/update", {
+    await fetch(`${API_BASE_URL}/faculty/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +86,7 @@ function MyInformationView() {
     setIsEditing(false);
   };
   const resetpassword = async () => {
-    const response = await fetch("http://localhost:5000/forgotpassword", {
+    const response = await fetch(`${API_BASE_URL}/forgotpassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ function MyInformationView() {
         alert("Passwords do not match");
         return;
       }
-      const response = await fetch("http://localhost:5000/changepassword", {
+      const response = await fetch(`${API_BASE_URL}/changepassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +122,7 @@ function MyInformationView() {
 
   //API call gets faculty info if user is faculty
   const getFacultyInfo = async () => {
-    const response = await fetch("http://localhost:5000/faculty/info", {
+    const response = await fetch(`${API_BASE_URL}/faculty/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -139,7 +140,7 @@ function MyInformationView() {
 
   //API call gets client info if user is client
   const getClientInfo = async () => {
-    const response = await fetch("http://localhost:5000/client/info", {
+    const response = await fetch(`${API_BASE_URL}/client/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -157,7 +158,7 @@ function MyInformationView() {
   //API call gets student info if user is student
   const getStudentInfo = async () => {
     console.log(user.id);
-    const response = await fetch("http://localhost:5000/student/info", {
+    const response = await fetch(`${API_BASE_URL}/student/info`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

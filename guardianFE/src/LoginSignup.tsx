@@ -32,7 +32,7 @@ function LoginSignup() {
   const handleForgotPassword = () => {
     setPassForm(true);
   };
-  
+
   //validates user email for forgot password and continues process.
   const handleSentCode = () => {
     const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,5}/;
@@ -45,7 +45,7 @@ function LoginSignup() {
   };
   //calls the forgot password api, starting the forgot password process.
   const forgotpassword = async () => {
-    const response = await fetch("http://localhost:5000/forgotpassword", {
+    const response = await fetch(`${API_BASE_URL}/forgotpassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function LoginSignup() {
         alert("Passwords do not match");
         return;
       }
-      const response = await fetch("http://localhost:5000/changepassword", {
+      const response = await fetch(`${API_BASE_URL}/changepassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

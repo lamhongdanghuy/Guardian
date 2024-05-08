@@ -45,7 +45,6 @@ function StudentInfoView(studentID: props) {
   const [coursesTaken, setCoursesTaken] = useState<string | null>("");
   const [role, setRole] = useState<string | null>("");
 
-
   const [gradDateUnformatted, setGradDateUnformatted] = useState<string | null>(
     ""
   );
@@ -54,7 +53,7 @@ function StudentInfoView(studentID: props) {
   const [availableCourses, setAvailableCourses] = useState(allCourses);
 
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-  
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCourse = event.target.value;
     setSelectedCourses([...selectedCourses, selectedCourse]);
@@ -96,7 +95,7 @@ function StudentInfoView(studentID: props) {
     );
     if (confirmInActivate) {
       setSubmitting(true);
-      await fetch("http://localhost:5000/student/inactivate", {
+      await fetch(`${API_BASE_URL}/student/inactivate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +111,7 @@ function StudentInfoView(studentID: props) {
   const handleEdit = async () => {
     // Send the updated info to the backend
     setSubmitting(true);
-    await fetch("http://localhost:5000/student/update", {
+    await fetch(`${API_BASE_URL}/student/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
