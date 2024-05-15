@@ -71,8 +71,24 @@ s = URLSafeTimedSerializer(app.config['SECRET KEY'])
 
 #test route to check if backend up.
 @app.route('/', methods=['GET'])
-def hello():
-    return "Hello World"
+def createFirstClinicDirector():
+    # creates the first clinic director account for first run
+    checkIfRoleExists = "SELECT COUNT(*) as count FROM FACULTY WHERE Role = 'Clinic Director'"
+    countOfRole = DatabaseConnection().select_query(checkIfRoleExists)
+    if (countOfRole.at[0, 'count'] == 0):
+        data = {
+            'F_Name': 'Change',
+            'L_Name': 'Me',
+            'Email': 'changeme@email.com',
+            'password': 'Abc123123!',
+            'P_Number': '1231231234',
+            'role': 'Clinic Director'
+        }
+        add_faculty = apply()
+        add_faculty.faculty_apply(data)
+        print("Clinic Director Created")
+    else:
+        print("Clinic Director Already Exists")
 
 @app.route('/changePassword', methods=['POST'])
 def changePassword():
@@ -639,25 +655,6 @@ def getClients():
     print(payload)
     return jsonify(payload), 200
 
-def createFirstClinicDirector():
-    # creates the first clinic director account for first run
-    checkIfRoleExists = "SELECT COUNT(*) as count FROM FACULTY WHERE Role = 'Clinic Director'"
-    countOfRole = DatabaseConnection().select_query(checkIfRoleExists)
-    if (countOfRole.at[0, 'count'] == 0):
-        data = {
-            'F_Name': 'Change',
-            'L_Name': 'Me',
-            'Email': 'changeme@email.com',
-            'password': 'Abc123123!',
-            'P_Number': '1231231234',
-            'role': 'Clinic Director'
-        }
-        add_faculty = apply()
-        add_faculty.faculty_apply(data)
-        print("Clinic Director Created")
-    else:
-        print("Clinic Director Already Exists")
         
 if __name__ == "__main__":
-    createFirstClinicDirector()
     app.run(port=5000, debug=True)
