@@ -68,8 +68,7 @@ password = 'dcag dqwd azaf zzqx'
 
 #Create URLSafeTimedSerializer object
 s = URLSafeTimedSerializer(app.config['SECRET KEY'])
-def helloWorld():
-    return "Hello World"
+
 #test route to check if backend up.
 @app.route('/', methods=['GET'])
 def createFirstClinicDirector():
@@ -90,7 +89,7 @@ def createFirstClinicDirector():
         print("Clinic Director Created")
     else:
         print("Clinic Director Already Exists")
-    helloWorld()
+    return "Hello World"
 
 @app.route('/changePassword', methods=['POST'])
 def changePassword():
